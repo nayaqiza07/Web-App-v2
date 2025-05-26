@@ -11,6 +11,10 @@ Route::get('/home', function () {
     return Inertia::render('home/Home');
 })->name('home');
 
+Route::get('/shop', function () {
+    return Inertia::render('shop/ProductList');
+})->name('shop');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
