@@ -23,6 +23,14 @@ Route::get('/services', function () {
     return Inertia::render('static/Services');
 })->name('services');
 
+Route::get('/contact-us', function () {
+    return Inertia::render('static/ContactUs');
+})->name('contact-us');
+
+Route::get('/about-us', function () {
+    return Inertia::render('static/AboutUs');
+})->name('about-us');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
