@@ -1,39 +1,39 @@
+import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowUp, Facebook, Globe, Instagram } from 'lucide-react';
-import { Button } from '../../ui/button';
 
-const Footer = () => {
+const Foot = () => {
     return (
         <footer className="border-t border-[#E6E6E6]">
-            <div className="mx-auto max-w-5xl p-5 text-xs font-bold text-[#666666] md:p-10">
-                <div className="flex flex-col items-start gap-5 md:flex-row md:justify-between">
-                    <div className="flex items-center justify-between">
-                        <h1 className="text-base font-bold text-[#333333]">Horestco</h1>
-                        <Button variant="outline" size="icon" className="rounded-full lg:hidden">
-                            <ArrowUp />
-                        </Button>
+            <div className="mx-auto flex max-w-5xl flex-col gap-5 p-5 text-xs font-bold text-[#666666] md:gap-10 md:p-10">
+                <div className="flex items-center justify-between lg:hidden">
+                    <h1 className="text-base font-bold text-[#333333]">Horestco</h1>
+                    <Button variant="outline" size="icon" className="rounded-full">
+                        <ArrowUp />
+                    </Button>
+                </div>
+
+                <div className="flex flex-col gap-5 md:flex-row md:justify-between">
+                    <h1 className="hidden text-base font-bold text-[#333333] lg:block">Horestco</h1>
+                    <div className="flex justify-between gap-3">
+                        <div className="flex flex-col gap-3">
+                            <p>Gift Card</p>
+                            <p>Gift Card</p>
+                        </div>
+
+                        <div className="flex flex-col gap-3">
+                            <p>Gift Card</p>
+                            <p>Gift Card</p>
+                        </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-10 md:flex">
+                    <div className="flex justify-between gap-3">
                         <div className="flex flex-col gap-3">
-                            <h5>Gift Cards</h5>
-                            <h5>Find A Store</h5>
+                            <p>Services</p>
+                            <p>Blog</p>
                         </div>
-
                         <div className="flex flex-col gap-3">
-                            <h5>Gift Cards</h5>
-                            <h5>Find A Store</h5>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-10 md:flex">
-                        <div className="flex flex-col gap-3">
-                            <h5>Services</h5>
-                            <h5>Blog</h5>
-                        </div>
-
-                        <div className="flex flex-col gap-3">
-                            <h5>About Us</h5>
-                            <h5>Contact Us</h5>
+                            <p>About Us</p>
+                            <p>Contact Us</p>
                         </div>
                     </div>
 
@@ -46,14 +46,12 @@ const Footer = () => {
                         </Button>
                     </div>
 
-                    <div className="hidden lg:block">
-                        <Button variant="outline" size="icon" className="rounded-full">
-                            <ArrowUp />
-                        </Button>
-                    </div>
+                    <Button variant="outline" size="icon" className="hidden rounded-full lg:flex">
+                        <ArrowUp />
+                    </Button>
                 </div>
 
-                <div className="mt-5 flex flex-col gap-5 md:mt-16 md:flex-row md:items-center md:gap-16">
+                <div className="flex flex-col gap-5 md:flex-row md:items-center">
                     <div className="flex items-center gap-3">
                         <Globe size={20} />
                         <h5>Indonesia</h5>
@@ -65,7 +63,7 @@ const Footer = () => {
                         <h5>Privacy Policy</h5>
                     </div>
 
-                    <div className="flex items-center gap-24">
+                    <div className="flex items-center justify-between lg:gap-24">
                         <h5>Email</h5>
                         <ArrowRight size={20} className="sm:hidden lg:block" />
                     </div>
@@ -75,4 +73,4 @@ const Footer = () => {
     );
 };
 
-export default Footer;
+export default Foot;
