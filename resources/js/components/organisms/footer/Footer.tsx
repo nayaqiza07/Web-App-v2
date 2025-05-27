@@ -1,3 +1,4 @@
+import ScrollToTopButton from '@/components/atoms/Button/ScrollToTopButton';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowUp, Facebook, Globe, Instagram } from 'lucide-react';
 
@@ -46,9 +47,7 @@ const Footer = () => {
                         </Button>
                     </div>
 
-                    <Button variant="outline" size="icon" className="hidden rounded-full lg:flex">
-                        <ArrowUp />
-                    </Button>
+                    <ScrollToTopButton />
                 </div>
 
                 <div className="flex flex-col gap-5 md:flex-row md:items-center">
