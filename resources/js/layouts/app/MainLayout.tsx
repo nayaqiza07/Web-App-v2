@@ -8,11 +8,11 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
     return (
-        <div>
+        <>
             <Navbar />
             <div className="min-h-screen border border-red-900">{children}</div>
             <Footer />
-        </div>
+        </>
     );
 };
 

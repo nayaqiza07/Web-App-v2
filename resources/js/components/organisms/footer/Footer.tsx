@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowUp, Facebook, Globe, Instagram } from 'lucide-react';
 
-const Foot = () => {
+const Footer = () => {
     return (
         <footer className="border-t border-[#E6E6E6]">
             <div className="mx-auto flex max-w-5xl flex-col gap-5 p-5 text-xs font-bold text-[#666666] md:gap-10 md:p-10">
@@ -73,4 +73,4 @@ const Foot = () => {
     );
 };
 
-export default Foot;
+export default Footer;
