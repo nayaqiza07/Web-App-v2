@@ -10,7 +10,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     return (
         <>
             <Navbar />
-            <div className="min-h-screen border border-red-900">{children}</div>
+            <div className="min-h-screen">{children}</div>
             <Footer />
         </>
     );
