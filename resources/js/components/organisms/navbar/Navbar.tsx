@@ -21,7 +21,7 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="sticky top-0 border-b border-[#E6E6E6] bg-white">
+        <nav className="sticky top-0 z-10 border-b border-[#E6E6E6] bg-white">
             <div className="mx-auto flex max-w-5xl justify-between p-5 font-bold text-[#4D4D4D]">
                 <div className="flex items-center gap-2">
                     <NavbarMobile />

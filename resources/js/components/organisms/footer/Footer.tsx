@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUp, Facebook, Globe, Instagram } from 'lucide-react';
 const Foot = () => {
     return (
         <footer className="border-t border-[#E6E6E6]">
-            <div className="mx-auto flex max-w-5xl flex-col gap-5 p-5 text-xs font-bold text-[#666666] md:gap-10 md:p-10">
+            <div className="mx-auto flex max-w-5xl flex-col gap-5 px-5 py-10 text-xs font-bold text-[#666666] md:gap-10">
                 <div className="flex items-center justify-between lg:hidden">
                     <h1 className="text-base font-bold text-[#333333]">Horestco</h1>
                     <Button variant="outline" size="icon" className="rounded-full">
