@@ -1,20 +1,16 @@
 import ProductCard from '@/components/organisms/Card/ProductCard';
 import FilterDrawer from '@/components/organisms/Drawer/FilterDrawer';
+import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Card } from '@/components/ui/card';
 
 const ProductPage = () => {
     return (
-        <main className="mx-auto flex max-w-5xl flex-col gap-6 border p-5">
+        <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5">
             {/* Hero Section */}
-            <div className="flex flex-col gap-6">
-                <div className="border">Bradcrumbs</div>
-
-                <div className="h-[92px] rounded-xl bg-[#9333EA] md:h-[120px] lg:h-[208px]">
-                    <div className="h-full rounded-xl bg-black/30"></div>
-                </div>
-
-                <FilterDrawer />
-            </div>
+            <HeroSection variant="withBreadcrumb">
+                <div className="h-full rounded-xl bg-black/30"></div>
+            </HeroSection>
+            <FilterDrawer />
             {/* Hero Section */}
 
             <div className="flex gap-6">

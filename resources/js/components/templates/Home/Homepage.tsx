@@ -1,6 +1,7 @@
 import HeadLine from '@/components/molecules/HeadLine';
 import Activity from '@/components/organisms/Activity/Activity';
 import Subscription from '@/components/organisms/Form/Subscription';
+import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Button } from '@/components/ui/button';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { CircleAlert } from 'lucide-react';
@@ -8,10 +9,10 @@ import { CircleAlert } from 'lucide-react';
 const Homepage = () => {
     return (
         <main className="mx-auto flex max-w-5xl flex-col gap-4 p-5">
-            {/* 1 */}
-            <div className="h-[300px] rounded-2xl border">
+            {/* Hero Section */}
+            <HeroSection>
                 <PlaceholderPattern className="size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-            </div>
+            </HeroSection>
 
             <HeadLine icon={<CircleAlert size={20} />} title="What's New" />
 
