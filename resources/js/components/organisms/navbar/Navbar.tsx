@@ -2,9 +2,10 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/hooks/use-initials';
 import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Search, ShoppingCart } from 'lucide-react';
+import { Search } from 'lucide-react';
 import NavMenu from '../../atoms/NavMenu';
 import { Button } from '../../ui/button';
+import CartSheet from '../Cart/CartSheet';
 import NavbarMobile from './NavbarMobile';
 
 const Navbar = () => {
@@ -44,9 +45,7 @@ const Navbar = () => {
 
                 <div className="flex items-center gap-2">
                     <Search size={20} />
-                    <Button size="icon" variant="outline">
-                        <ShoppingCart />
-                    </Button>
+                    <CartSheet />
 
                     <div className="hidden md:block">
                         {auth.user ? (
