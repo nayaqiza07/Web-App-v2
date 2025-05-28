@@ -15,14 +15,14 @@ const Homepage = () => {
                 <PlaceholderPattern className="size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
             </HeroSection>
 
-            <HeadLine icon={<CircleAlert size={20} />} title="What's New" />
+            <HeadLine icon={<CircleAlert size={20} />} title="What's New" linkTo={route('shop')} />
 
             {/* 2 */}
             <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
                 <ProductCard />
                 <ProductCard />
-                <ProductCard />
-                <ProductCard />
+                <ProductCard className="hidden lg:flex" />
+                <ProductCard className="hidden lg:flex" />
             </div>
 
             {/* 3 */}

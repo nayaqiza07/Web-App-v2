@@ -13,7 +13,7 @@ const CartSheet = () => {
                     <ShoppingCart />
                 </Button>
             </SheetTrigger>
-            <SheetContent className="bg-background">
+            <SheetContent className="bg-card">
                 <SheetHeader>
                     <SheetTitle>Shopping Cart</SheetTitle>
                     <SheetDescription></SheetDescription>
@@ -23,7 +23,7 @@ const CartSheet = () => {
                     <EmptyState icon={<ShoppingBag size={50} />} title="Your Cart Is Empty" btnText="Continue Shopping" />
                 ) : (
                     <SheetFooter className="border-t">
-                        <div className="flex justify-between text-sm font-bold text-[#666666]">
+                        <div className="flex justify-between text-sm font-bold">
                             <p>Sub Total</p>
                             <p className="">Rp. 0</p>
                         </div>

@@ -2,9 +2,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { ShoppingCart } from 'lucide-react';
 
-const ProductCard = () => {
+interface ProductCardProps {
+    className?: string;
+}
+
+const ProductCard = ({ className }: ProductCardProps) => {
     return (
-        <Card className="gap-0 overflow-hidden py-0">
+        <Card className={`${className} gap-0 overflow-hidden py-0`}>
             <CardContent className="group relative h-[220px] bg-[#4F46E5] p-0">
                 <Button
                     size="icon"

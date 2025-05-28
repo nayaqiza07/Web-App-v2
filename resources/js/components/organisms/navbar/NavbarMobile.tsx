@@ -23,11 +23,11 @@ const NavbarMobile = () => {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button size="icon" variant="outline" className="md:hidden">
+                <Button size="icon" variant="ghost" className="md:hidden">
                     <Menu />
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="bg-background w-60">
+            <SheetContent side="left" className="bg-card w-60">
                 <SheetHeader>
                     <SheetTitle>Horestco</SheetTitle>
                     <SheetDescription></SheetDescription>
