@@ -1,10 +1,14 @@
+import AboutUsPage from '@/components/templates/Static/AboutUsPage';
+import MainLayout from '@/layouts/app/MainLayout';
 import { Head } from '@inertiajs/react';
 
 const AboutUs = () => {
     return (
         <>
             <Head title="About Us" />
-            <h1>About Us</h1>
+            <MainLayout>
+                <AboutUsPage />
+            </MainLayout>
         </>
     );
 };
