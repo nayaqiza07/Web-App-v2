@@ -7,8 +7,8 @@ const ProductPage = () => {
     return (
         <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5">
             {/* Hero Section */}
-            <HeroSection variant="withBreadcrumb">
-                <div className="h-full rounded-xl bg-black/30"></div>
+            <HeroSection variant="withBreadcrumb" color="bg-[#98C8D5]">
+                <div className="flex h-full items-center justify-center">Shop</div>
             </HeroSection>
             <FilterDrawer />
             {/* Hero Section */}
