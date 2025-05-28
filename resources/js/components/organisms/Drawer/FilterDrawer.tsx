@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { ListFilter } from 'lucide-react';
+import Sidebar from '../Sidebar/Sidebar';
 
 const FilterDrawer = () => {
     return (
@@ -12,9 +13,10 @@ const FilterDrawer = () => {
             </DrawerTrigger>
             <DrawerContent>
                 <DrawerHeader>
-                    <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                    <DrawerDescription>This action cannot be undone.</DrawerDescription>
+                    <DrawerTitle>Filter</DrawerTitle>
+                    <DrawerDescription></DrawerDescription>
                 </DrawerHeader>
+                <Sidebar className="mx-4" />
                 <DrawerFooter>
                     {/* <Button>Submit</Button>
                     <DrawerClose>
