@@ -1,7 +1,7 @@
 import ProductCard from '@/components/organisms/Card/ProductCard';
 import FilterDrawer from '@/components/organisms/Drawer/FilterDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
-import { Card } from '@/components/ui/card';
+import Sidebar from '@/components/organisms/Sidebar/Sidebar';
 
 const ProductPage = () => {
     return (
@@ -15,9 +15,7 @@ const ProductPage = () => {
 
             <div className="flex gap-6">
                 {/* Sidebar Product Start */}
-                <Card className="hidden h-[500px] w-[264px] p-4 md:flex">
-                    <div className="flex h-full w-full items-center justify-center">Sidebar</div>
-                </Card>
+                <Sidebar className="hidden h-[450px] w-[264px] md:flex" />
                 {/* Sidebar Product End */}
 
                 {/* Product List */}
