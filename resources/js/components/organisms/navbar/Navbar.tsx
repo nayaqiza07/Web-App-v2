@@ -22,13 +22,11 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="sticky top-0 border-b border-[#E6E6E6] bg-white">
-            <div className="mx-auto flex max-w-5xl justify-between p-5 font-bold text-[#4D4D4D]">
+        <nav className="sticky top-0 z-10 border-b bg-[#ffffff] dark:bg-[#1a1a1a]">
+            <div className="mx-auto flex max-w-5xl justify-between p-5 font-bold">
                 <div className="flex items-center gap-2">
                     <NavbarMobile />
-                    <Link href={route('home')} className="text-[#333333]">
-                        Horestco
-                    </Link>
+                    <Link href={route('home')}>Horestco</Link>
                 </div>
 
                 <div className="hidden items-center gap-5 text-2xl md:flex">

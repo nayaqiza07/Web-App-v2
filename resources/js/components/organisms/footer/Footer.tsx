@@ -4,17 +4,17 @@ import { ArrowRight, ArrowUp, Facebook, Globe, Instagram } from 'lucide-react';
 
 const Footer = () => {
     return (
-        <footer className="border-t border-[#E6E6E6]">
-            <div className="mx-auto flex max-w-5xl flex-col gap-5 p-5 text-xs font-bold text-[#666666] md:gap-10 md:p-10">
+        <footer className="border-t">
+            <div className="mx-auto flex max-w-5xl flex-col gap-5 p-5 text-xs font-bold md:gap-10 md:p-10">
                 <div className="flex items-center justify-between lg:hidden">
-                    <h1 className="text-base font-bold text-[#333333]">Horestco</h1>
+                    <h1 className="text-base font-bold">Horestco</h1>
                     <Button variant="outline" size="icon" className="rounded-full">
                         <ArrowUp />
                     </Button>
                 </div>
 
                 <div className="flex flex-col gap-5 md:flex-row md:justify-between">
-                    <h1 className="hidden text-base font-bold text-[#333333] lg:block">Horestco</h1>
+                    <h1 className="hidden text-base font-bold lg:block">Horestco</h1>
                     <div className="flex justify-between gap-3">
                         <div className="flex flex-col gap-3">
                             <p>Gift Card</p>
@@ -28,7 +28,7 @@ const Footer = () => {
                     </div>
 
                     <div className="flex justify-between gap-3">
-                        <div className="flex flex-col gap-3">
+                        <div className="flex flex-col gap-3 font-sans">
                             <p>Services</p>
                             <p>Blog</p>
                         </div>

@@ -9,7 +9,7 @@ const CartSheet = () => {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button size="icon" variant="outline">
+                <Button size="icon" variant="ghost">
                     <ShoppingCart />
                 </Button>
             </SheetTrigger>
