@@ -23,7 +23,7 @@ export function useBreadcrumb(): BreadcrumbItemType[] {
 
     breadcrumbs.push({
         title: (
-            <Button size="icon">
+            <Button className="size-7">
                 <House />
             </Button>
         ),

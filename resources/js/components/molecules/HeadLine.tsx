@@ -9,7 +9,7 @@ interface HeadLineProps {
 
 const HeadLine = ({ icon = <ALargeSmall size={20} />, title = 'Head Line' }: HeadLineProps) => {
     return (
-        <div className="flex items-center justify-between text-sm font-bold text-[#333333]">
+        <div className="text-primary flex items-center justify-between text-sm font-bold">
             <div className="flex items-center gap-4">
                 {icon}
                 <h3>{title}</h3>
