@@ -8,7 +8,7 @@ interface ButtonWithBadgeProps {
 
 const ButtonWithBadge = ({ title = 'Title', badgeNumber = 0 }: ButtonWithBadgeProps) => {
     return (
-        <Button variant="ghost" className="flex justify-between p-2 text-sm font-bold">
+        <Button variant="ghost" className="hover:bg-accent flex justify-between p-2 text-sm font-bold hover:border">
             <span>{title}</span>
             <Badge variant="outline" className="bg-card border">
                 {badgeNumber}

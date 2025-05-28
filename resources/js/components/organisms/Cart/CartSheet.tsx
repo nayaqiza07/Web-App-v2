@@ -13,7 +13,7 @@ const CartSheet = () => {
                     <ShoppingCart />
                 </Button>
             </SheetTrigger>
-            <SheetContent className="bg-background">
+            <SheetContent className="bg-card">
                 <SheetHeader>
                     <SheetTitle>Shopping Cart</SheetTitle>
                     <SheetDescription></SheetDescription>

@@ -27,7 +27,7 @@ const NavbarMobile = () => {
                     <Menu />
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="bg-background w-60">
+            <SheetContent side="left" className="bg-card w-60">
                 <SheetHeader>
                     <SheetTitle>Horestco</SheetTitle>
                     <SheetDescription></SheetDescription>
