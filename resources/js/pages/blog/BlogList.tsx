@@ -1,10 +1,15 @@
+import BlogListPage from '@/components/templates/Blog/BlogListPage';
+import MainLayout from '@/layouts/app/MainLayout';
 import { Head } from '@inertiajs/react';
 
 const BlogList = () => {
     return (
         <>
             <Head title="Blog" />
-            <h1>Blog</h1>
+
+            <MainLayout>
+                <BlogListPage />
+            </MainLayout>
         </>
     );
 };

@@ -1,11 +1,11 @@
 import HeroSection from '@/components/organisms/Section/HeroSection';
 
-const ContactUsPage = () => {
+const BlogListPage = () => {
     return (
         <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5">
-            <HeroSection variant="withBreadcrumb" color="bg-[#10B981]">
+            <HeroSection variant="withBreadcrumb" color="bg-[#EACFAE]">
                 <div className="flex h-full items-center justify-center">
-                    <h1>Contact Us</h1>
+                    <h1>Blog</h1>
                 </div>
                 {/* <div className="h-full rounded-xl bg-black/30"></div> */}
             </HeroSection>
@@ -13,4 +13,4 @@ const ContactUsPage = () => {
     );
 };
 
-export default ContactUsPage;
+export default BlogListPage;
