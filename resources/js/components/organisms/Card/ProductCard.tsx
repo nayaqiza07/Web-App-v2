@@ -6,9 +6,13 @@ const ProductCard = () => {
     return (
         <Card className="gap-0 overflow-hidden py-0">
             <CardContent className="group relative h-[220px] bg-[#4F46E5] p-0">
+                {/* image */}
+                <div className={`h-full w-full bg-[url(/images/image-15.jpg)] bg-cover bg-center`}></div>
+
+                {/* overlay button */}
                 <Button
                     size="icon"
-                    className="absolute right-3 bottom-3 rounded-full bg-black/30 text-xs font-bold opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-black/50"
+                    className="absolute right-3 bottom-3 rounded-full bg-black/60 text-xs font-bold opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-black/80"
                 >
                     <ShoppingCart color="white" />
                 </Button>
