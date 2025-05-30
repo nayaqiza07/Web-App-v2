@@ -16,7 +16,7 @@ const Homepage = () => {
                 <h1 className="text-4xl font-bold">New Styles Are Here</h1>
                 <p>Discover The Lasts Premium FurnitureFeatured In Our Collection</p>
                 <Link href={route('shop')}>
-                    <Button className="rounded-full bg-white text-sm font-bold text-[#1a1a1a]">Go Shopping</Button>
+                    <Button className="rounded-full bg-white text-xs font-bold text-[#1a1a1a] hover:bg-[#fafafa]">Go Shopping</Button>
                 </Link>
             </HeroSection>
 

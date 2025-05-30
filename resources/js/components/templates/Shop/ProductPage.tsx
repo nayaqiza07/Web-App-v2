@@ -25,6 +25,10 @@ const ProductPage = () => {
                         <ProductCard />
                         <ProductCard />
                         <ProductCard />
+                        <ProductCard />
+                        <ProductCard />
+                        <ProductCard />
+                        <ProductCard />
                     </div>
                 </div>
                 {/* Product List */}

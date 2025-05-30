@@ -17,9 +17,13 @@ const ProductCard = () => {
                     <ShoppingCart color="white" />
                 </Button>
             </CardContent>
-            <CardFooter className="flex flex-col items-start gap-3 border-t p-5">
-                <CardTitle>Card Title</CardTitle>
-                <h5 className="text-xs font-bold">Rp. 1</h5>
+
+            <CardFooter className="flex flex-col items-start gap-3 border-t p-5 text-xs">
+                <CardTitle>Title</CardTitle>
+                <div className="flex w-full items-center justify-between text-xs font-bold">
+                    <h5>Category</h5>
+                    <h5>Rp. 1</h5>
+                </div>
             </CardFooter>
         </Card>
     );
