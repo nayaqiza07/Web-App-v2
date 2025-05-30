@@ -15,6 +15,10 @@ Route::get('/shop', function () {
     return Inertia::render('shop/ProductList');
 })->name('shop');
 
+Route::get('/shop/1', function () {
+    return Inertia::render('shop/ProductDetail');
+})->name('product-detail');
+
 Route::get('/blog', function () {
     return Inertia::render('blog/BlogList');
 })->name('blog');
