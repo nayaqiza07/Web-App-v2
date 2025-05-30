@@ -1,3 +1,4 @@
+import ContactForm from '@/components/organisms/Form/ContactForm';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 
 const ContactUsPage = () => {
@@ -9,6 +10,7 @@ const ContactUsPage = () => {
                 </div>
                 {/* <div className="h-full rounded-xl bg-black/30"></div> */}
             </HeroSection>
+            <ContactForm />
         </main>
     );
 };

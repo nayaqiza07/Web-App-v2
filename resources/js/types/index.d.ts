@@ -41,3 +41,31 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+// Input Props
+export interface InputWithButtonProps {
+    placeholder?: string;
+    btnText?: ReactNode;
+}
+
+export interface InputWithLabelProps {
+    label: string;
+    labelFor: string;
+    id: string;
+    name: string;
+    type: string;
+    placeholder: string;
+    autoComplete: string;
+    className?: string;
+}
+
+export interface TextareaWithLabelProps {
+    label: string;
+    labelFor: string;
+    id: string;
+    name: string;
+    placeholder: string;
+    autoComplete: string;
+    rows?: number;
+    className?: string;
+}

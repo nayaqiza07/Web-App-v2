@@ -15,7 +15,7 @@ const NavMenu = ({ active = false, title, linkTo, isMobile, className }: NavbarP
             {isMobile ? (
                 <Button
                     variant="ghost"
-                    className={`${className} ${active ? 'bg-accent border' : 'hover:border'} w-full font-bold transition-colors duration-200`}
+                    className={`${className} ${active ? 'bg-accent text-accent-foreground border' : 'hover:border'} w-full font-bold transition-colors duration-200`}
                 >
                     {title}
                 </Button>
