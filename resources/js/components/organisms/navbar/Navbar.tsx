@@ -22,7 +22,7 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="bg-card sticky top-0 z-10 border-b">
+        <nav className="bg-card sticky top-0 z-40 border-b">
             <div className="mx-auto flex max-w-5xl justify-between p-5 font-bold">
                 <div className="flex items-center gap-2">
                     <NavbarMobile />
