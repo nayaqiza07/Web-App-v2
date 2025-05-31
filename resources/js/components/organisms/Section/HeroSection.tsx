@@ -6,10 +6,11 @@ interface HeroSectionProps {
     children?: ReactNode;
     variant?: 'default' | 'withBreadcrumb';
     color?: string;
-    image?: ReactNode;
+    srcImage?: string;
+    altImage?: string;
 }
 
-const HeroSection = ({ children, variant = 'default', color, image }: HeroSectionProps) => {
+const HeroSection = ({ children, variant = 'default', color, srcImage, altImage }: HeroSectionProps) => {
     const breadcrumbs = useBreadcrumb();
 
     const variants = {
@@ -22,7 +23,8 @@ const HeroSection = ({ children, variant = 'default', color, image }: HeroSectio
             {variant === 'withBreadcrumb' && <Breadcrumbs breadcrumbs={breadcrumbs} />}
             <div className={`${variants[variant]} ${color} relative overflow-hidden`}>
                 {/* image */}
-                <div className={`h-full w-full bg-cover bg-center ${image}`}></div>
+                {/* <div className={`h-full w-full bg-cover bg-center ${image}`}></div> */}
+                <img src={srcImage} alt={altImage} className="h-full w-full object-cover" />
 
                 {/* overlay background */}
                 <div className="absolute inset-0 h-full w-full bg-black/30"></div>

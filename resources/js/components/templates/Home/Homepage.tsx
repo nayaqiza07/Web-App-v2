@@ -12,7 +12,7 @@ const Homepage = () => {
     return (
         <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5">
             {/* Hero Section */}
-            <HeroSection image={'bg-[url(/images/image-18.jpg)]'}>
+            <HeroSection srcImage="/images/image-18.jpg" altImage="Image Slider">
                 <h1 className="text-2xl font-bold md:text-4xl">New Styles Are Here</h1>
                 <p className="text-xs md:text-base">Discover The Lasts Premium FurnitureFeatured In Our Collection</p>
                 <Link href={route('products')}>
@@ -47,8 +47,8 @@ const Homepage = () => {
             </div>
 
             {/* 5 */}
-            <Activity />
-            <Activity orderImage="md:order-first" color="bg-[#DD0042]" />
+            <Activity srcImage="/images/image-14.jpg" altImage="Image 14" />
+            <Activity orderImage="md:order-first" srcImage="/images/image-14.jpg" altImage="Image 14" />
 
             {/* 6 */}
             <Subscription />

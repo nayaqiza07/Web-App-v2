@@ -22,7 +22,12 @@ const ProductDetailPage = () => {
                     </div>
 
                     <div className="order-first h-[416px] w-full items-center overflow-hidden rounded-2xl lg:order-last">
-                        <div className="h-full w-full bg-[url(/images/image-18.jpg)] bg-cover bg-center transition-transform duration-200 hover:scale-125"></div>
+                        <img
+                            src={`/images/image-18.jpg`}
+                            alt={`Foto Produk ${`2`}`}
+                            // loading="lazy"
+                            className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"
+                        />
                     </div>
                 </div>
 
@@ -61,7 +66,7 @@ const ProductDetailPage = () => {
             {/* Related Products */}
             <HeadLine icon={<CircleAlert size={20} />} title="Yout Might Be Interested In These Products" />
             <div className="flex w-full flex-col gap-4">
-                <div className="grid gap-3 md:grid-cols-3 lg:grid-cols-4">
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5">
                     <ProductCard />
                     <ProductCard />
                     <ProductCard />
