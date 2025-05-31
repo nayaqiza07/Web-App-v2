@@ -23,7 +23,6 @@ const HeroSection = ({ children, variant = 'default', color, srcImage, altImage 
             {variant === 'withBreadcrumb' && <Breadcrumbs breadcrumbs={breadcrumbs} />}
             <div className={`${variants[variant]} ${color} relative overflow-hidden`}>
                 {/* image */}
-                {/* <div className={`h-full w-full bg-cover bg-center ${image}`}></div> */}
                 <img src={srcImage} alt={altImage} className="h-full w-full object-cover" />
 
                 {/* overlay background */}
