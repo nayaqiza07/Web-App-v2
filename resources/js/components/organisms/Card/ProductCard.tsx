@@ -7,7 +7,9 @@ const ProductCard = () => {
         <Card className="gap-0 overflow-hidden py-0">
             <CardContent className="group relative h-[220px] bg-[#4F46E5] p-0">
                 {/* image */}
-                <div className={`h-full w-full bg-[url(/images/image-15.jpg)] bg-cover bg-center`}></div>
+                <div
+                    className={`h-full w-full bg-[url(/images/image-15.jpg)] bg-cover bg-center transition-transform duration-200 hover:scale-125`}
+                ></div>
 
                 {/* overlay button */}
                 <Button
@@ -18,7 +20,7 @@ const ProductCard = () => {
                 </Button>
             </CardContent>
 
-            <CardFooter className="flex flex-col items-start gap-3 border-t p-5 text-xs">
+            <CardFooter className="bg-card z-10 flex flex-col items-start gap-3 border-t p-5 text-xs">
                 <CardTitle>Title</CardTitle>
                 <div className="flex w-full items-center justify-between text-xs font-bold">
                     <h5>Category</h5>

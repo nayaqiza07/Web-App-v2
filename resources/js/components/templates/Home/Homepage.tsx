@@ -13,9 +13,9 @@ const Homepage = () => {
         <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5">
             {/* Hero Section */}
             <HeroSection image={'bg-[url(/images/image-18.jpg)]'}>
-                <h1 className="text-4xl font-bold">New Styles Are Here</h1>
-                <p>Discover The Lasts Premium FurnitureFeatured In Our Collection</p>
-                <Link href={route('shop')}>
+                <h1 className="text-2xl font-bold md:text-4xl">New Styles Are Here</h1>
+                <p className="text-xs md:text-base">Discover The Lasts Premium FurnitureFeatured In Our Collection</p>
+                <Link href={route('products')}>
                     <Button className="rounded-full bg-white text-xs font-bold text-[#1a1a1a] hover:bg-[#fafafa]">Go Shopping</Button>
                 </Link>
             </HeroSection>
