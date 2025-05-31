@@ -11,11 +11,11 @@ Route::get('/', function () {
     return Inertia::render('home/Home');
 })->name('home');
 
-Route::get('/shop', function () {
+Route::get('/products', function () {
     return Inertia::render('shop/ProductList');
-})->name('shop');
+})->name('products');
 
-Route::get('/shop/1', function () {
+Route::get('/products/1', function () {
     return Inertia::render('shop/ProductDetail');
 })->name('product-detail');
 

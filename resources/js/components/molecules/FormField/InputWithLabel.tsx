@@ -6,14 +6,7 @@ const InputWithLabel = ({ label, labelFor, id, name, type, placeholder, autoComp
     return (
         <div>
             <Label htmlFor={labelFor}>{label}</Label>
-            <Input
-                id={id}
-                name={name}
-                type={type}
-                placeholder={placeholder}
-                autoComplete={autoComplete}
-                className={`${className} bg-input border-border`}
-            />
+            <Input id={id} name={name} type={type} placeholder={placeholder} autoComplete={autoComplete} className={`${className} border-border`} />
         </div>
     );
 };
