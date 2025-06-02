@@ -1,7 +1,6 @@
 import HeadLine from '@/components/molecules/HeadLine';
 import Activity from '@/components/organisms/Activity/Activity';
 import ProductCard from '@/components/organisms/Card/ProductCard';
-import Subscription from '@/components/organisms/Form/Subscription';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Button } from '@/components/ui/button';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
@@ -10,7 +9,7 @@ import { CircleAlert } from 'lucide-react';
 
 const Homepage = () => {
     return (
-        <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5">
+        <>
             {/* Hero Section */}
             <HeroSection srcImage="/images/image-18.jpg" altImage="Image Slider">
                 <h1 className="text-2xl font-bold md:text-4xl">New Styles Are Here</h1>
@@ -49,10 +48,7 @@ const Homepage = () => {
             {/* 5 */}
             <Activity srcImage="/images/image-14.jpg" altImage="Image 14" />
             <Activity orderImage="md:order-first" srcImage="/images/image-14.jpg" altImage="Image 14" />
-
-            {/* 6 */}
-            <Subscription />
-        </main>
+        </>
     );
 };
 

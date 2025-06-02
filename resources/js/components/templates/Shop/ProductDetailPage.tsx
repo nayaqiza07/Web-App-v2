@@ -11,7 +11,7 @@ import { CircleAlert } from 'lucide-react';
 const ProductDetailPage = () => {
     const breadcrumbs = useBreadcrumb();
     return (
-        <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5">
+        <>
             <Breadcrumbs breadcrumbs={breadcrumbs} />
 
             <div className="flex flex-col gap-6 md:flex-row">
@@ -73,7 +73,7 @@ const ProductDetailPage = () => {
                     <ProductCard />
                 </div>
             </div>
-        </main>
+        </>
     );
 };
 
