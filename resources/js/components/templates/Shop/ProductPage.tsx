@@ -10,6 +10,7 @@ const ProductPage = () => {
             <HeroSection variant="withBreadcrumb" color="bg-[#98C8D5]" srcImage="/images/image-1.jpg" altImage="Image Slider">
                 <h1 className="text-4xl font-bold">Shop</h1>
             </HeroSection>
+            {/* <SkeletonHeroSection variant="withBreadcrumb" /> */}
             <FilterDrawer />
             {/* Hero Section */}
 
@@ -21,14 +22,9 @@ const ProductPage = () => {
                 {/* Product List */}
                 <div className="flex w-full flex-col gap-4">
                     <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
+                        {Array.from({ length: 12 }).map((_, index) => (
+                            <ProductCard key={index} />
+                        ))}
                     </div>
                 </div>
                 {/* Product List */}
