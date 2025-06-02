@@ -1,5 +1,6 @@
 import BlogCard from '@/components/organisms/Card/BlogCard';
 import HeroSection from '@/components/organisms/Section/HeroSection';
+import SkeletonBlogCard from '@/components/organisms/Skeleton/SkeletonBlogCard';
 
 const BlogListPage = () => {
     return (
@@ -13,6 +14,7 @@ const BlogListPage = () => {
                 {Array.from({ length: 5 }).map((_, index) => (
                     <BlogCard key={index} />
                 ))}
+                <SkeletonBlogCard />
             </div>
             {/* Blog List End*/}
         </main>
