@@ -1,10 +1,9 @@
 import BlogCard from '@/components/organisms/Card/BlogCard';
 import HeroSection from '@/components/organisms/Section/HeroSection';
-import SkeletonBlogCard from '@/components/organisms/Skeleton/SkeletonBlogCard';
 
 const BlogListPage = () => {
     return (
-        <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5">
+        <>
             {/* Hero Section Start */}
             <HeroSection variant="withBreadcrumb" color="bg-[#EACFAE]" srcImage="/images/647567.jpg" altImage="Foto Blog"></HeroSection>
             {/* Hero Section End */}
@@ -14,10 +13,9 @@ const BlogListPage = () => {
                 {Array.from({ length: 5 }).map((_, index) => (
                     <BlogCard key={index} />
                 ))}
-                <SkeletonBlogCard />
             </div>
             {/* Blog List End*/}
-        </main>
+        </>
     );
 };
 
