@@ -1,4 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton';
+import SkeletonBreadcrumb from './SkeletonBreadcrumb';
 
 interface SkeletonHeroSectionProps {
     variant?: 'default' | 'withBreadcrumb';
@@ -12,7 +13,7 @@ const SkeletonHeroSection = ({ variant = 'default' }: SkeletonHeroSectionProps) 
 
     return (
         <div className="flex flex-col gap-6">
-            {variant === 'withBreadcrumb' && <Skeleton className="h-[50px]" />}
+            {variant === 'withBreadcrumb' && <SkeletonBreadcrumb />}
             <Skeleton className={`${variants[variant]}`} />
         </div>
     );
