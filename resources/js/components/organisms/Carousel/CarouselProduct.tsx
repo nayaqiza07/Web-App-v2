@@ -49,7 +49,7 @@ const CarouselProduct = ({ headLineTitle = 'Title', isFor = 'product', isAutoPla
                         <div>
                             <Button
                                 size="icon"
-                                variant="outline"
+                                variant="secondary"
                                 onClick={() => api?.scrollTo(current - 1)}
                                 className="border-border rounded-r-none border"
                             >
@@ -57,7 +57,7 @@ const CarouselProduct = ({ headLineTitle = 'Title', isFor = 'product', isAutoPla
                             </Button>
                             <Button
                                 size="icon"
-                                variant="outline"
+                                variant="secondary"
                                 onClick={() => api?.scrollTo(current + 1)}
                                 className="border-border rounded-l-none border"
                             >
@@ -69,7 +69,7 @@ const CarouselProduct = ({ headLineTitle = 'Title', isFor = 'product', isAutoPla
 
                 <CarouselContent>
                     {Array.from({ length: 10 }).map((_, index) => (
-                        <CarouselItem key={index + 1} className={`${totalItemShow}`}>
+                        <CarouselItem key={index + 1} className={`${totalItemShow} py-1`}>
                             {isFor === 'product' && <ProductCard />}
 
                             {isFor === 'category' && <CategoryCard srcImage="/images/image-9.jpg" altImage="Foto Produk ${`9`}" title="Stool" />}

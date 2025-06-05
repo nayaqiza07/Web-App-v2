@@ -33,23 +33,23 @@ const ProductDetailPage = () => {
                 {/* Left Content */}
                 <div className="flex w-full flex-col gap-6 lg:w-2/3">
                     <h1 className="text-2xl font-semibold">Blue Leather Sofa</h1>
-                    <p className="dark:text-card-foreground flex items-center gap-4 text-2xl font-bold">
+                    <p className="flex items-center gap-4 text-2xl font-bold">
                         <span>Rp. 1.000.000</span>
-                        <span className="text-xs text-[#666666] line-through">Rp.1.500.000</span>
+                        <span className="text-muted-foreground text-xs line-through">Rp.1.500.000</span>
                     </p>
 
                     <div className="flex flex-col gap-6 text-xs font-bold">
-                        <p>
+                        <p className="text-muted-foreground">
                             SKU: <span className="text-foreground">LSOFA578493</span>
                         </p>
 
-                        <p>
+                        <p className="text-muted-foreground">
                             Category:
                             <Badge variant={'outline'} className="font-bold">
                                 Category
                             </Badge>
                         </p>
-                        <p>
+                        <p className="text-muted-foreground">
                             A well-deserved nap in the daytime and nice relaxing with family and friends in the evening. Sofa is designed for maximum
                             comfort with high back and neck support. Embracing, inviting and generous.
                         </p>

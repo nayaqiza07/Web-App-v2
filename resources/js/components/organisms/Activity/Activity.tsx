@@ -13,6 +13,7 @@ const Activity = ({ orderText = 'order-last', orderImage = 'md:order-last', srcI
         <Card className="flex w-full flex-col justify-between rounded-2xl border p-2 md:h-[300px] md:flex-row">
             <div className={`${orderText} flex w-full flex-col items-center justify-center gap-6 rounded-xl py-7 md:py-0`}>
                 <h3 className="text-center text-xl font-semibold">Lorem ipsum dolor, sit amet consectetur adipisicing elit. </h3>
+
                 <Button className="font-bold">Learn More</Button>
             </div>
 
