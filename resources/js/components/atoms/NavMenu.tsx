@@ -14,17 +14,26 @@ const NavMenu = ({ active = false, title, linkTo, isMobile, className }: NavbarP
         <Link href={linkTo}>
             {isMobile ? (
                 <Button
+                    effect="ringHover"
                     variant="ghost"
-                    className={`${className} ${active ? 'bg-accent text-accent-foreground border' : 'hover:border'} w-full font-bold transition-colors duration-200`}
+                    className={`${className} ${active ? 'ring-primary/90 bg-accent text-accent-foreground border ring-2 ring-offset-2' : ''} w-full`}
                 >
                     {title}
                 </Button>
             ) : (
-                <h5
-                    className={`${className} ${active ? 'border-foreground border-b-2' : 'hover:border-foreground border-b-2 border-transparent'} text-sm transition-colors duration-200`}
+                // <h5
+                //     className={`${className} ${active ? 'border-muted-foreground border-b-2' : 'hover:border-muted-foreground border-b-2 border-transparent'} text-muted-foreground text-sm transition-colors duration-200`}
+                // >
+                //     {title}
+                // </h5>
+                <Button
+                    size="sm"
+                    effect="ringHover"
+                    variant="ghost"
+                    className={`${className} ${active ? 'ring-primary/90 bg-accent text-foreground border ring-2 ring-offset-2' : ''}`}
                 >
                     {title}
-                </h5>
+                </Button>
             )}
         </Link>
     );

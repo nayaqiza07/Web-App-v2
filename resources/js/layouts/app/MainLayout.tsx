@@ -12,7 +12,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         <>
             <Navbar />
             <div className="min-h-screen">
-                <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5">
+                <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5 md:px-9 md:py-8 lg:px-20 lg:py-12">
                     {children}
                     <Subscription />
                 </main>

@@ -14,7 +14,7 @@ const TextContent = ({
     return (
         <div>
             <div className="flex flex-col items-center gap-8 text-center font-bold md:items-start md:text-start">
-                <div className="bg-accent w-fit rounded border p-2">{icon}</div>
+                <div className="bg-card w-fit rounded border p-2">{icon}</div>
                 <div className="flex flex-col gap-2">
                     <h1>{title}</h1>
                     <p className="text-muted-foreground text-xs">{description}</p>

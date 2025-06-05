@@ -23,17 +23,17 @@ const NavbarMobile = () => {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button size="icon" variant="outline" className="md:hidden">
+                <Button size="icon" variant="outline" className="lg:hidden">
                     <Menu />
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="bg-card w-60">
+            <SheetContent side="left" className="bg-card w-full">
                 <SheetHeader>
                     <SheetTitle>Horestco</SheetTitle>
                     <SheetDescription></SheetDescription>
                 </SheetHeader>
 
-                <nav className="flex flex-col gap-2 px-4">
+                <nav className="flex flex-col gap-3 px-4">
                     {navData.map((data, index) => (
                         <NavMenu
                             key={index}
@@ -41,6 +41,7 @@ const NavbarMobile = () => {
                             linkTo={route(data.linkTo)}
                             isMobile={true}
                             active={Boolean(data.linkTo && route().current(data.linkTo))}
+                            className="text-muted-foreground"
                         />
                     ))}
                 </nav>

@@ -1,12 +1,11 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import HeadLine from '@/components/molecules/HeadLine';
-import ProductCard from '@/components/organisms/Card/ProductCard';
 import CarouselImageProduct from '@/components/organisms/Carousel/CarouselImageProduct';
+import CarouselProduct from '@/components/organisms/Carousel/CarouselProduct';
 import TabsInformation from '@/components/organisms/Tab/TabsInformation';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useBreadcrumb } from '@/hooks/use-breadcrumbs';
-import { CircleAlert } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
 
 const ProductDetailPage = () => {
     const breadcrumbs = useBreadcrumb();
@@ -34,29 +33,32 @@ const ProductDetailPage = () => {
                 {/* Left Content */}
                 <div className="flex w-full flex-col gap-6 lg:w-2/3">
                     <h1 className="text-2xl font-semibold">Blue Leather Sofa</h1>
-                    <p className="dark:text-card-foreground flex items-center gap-4 text-2xl font-bold">
+                    <p className="flex items-center gap-4 text-2xl font-bold">
                         <span>Rp. 1.000.000</span>
-                        <span className="text-xs text-[#666666] line-through">Rp.1.500.000</span>
+                        <span className="text-muted-foreground text-xs line-through">Rp.1.500.000</span>
                     </p>
 
                     <div className="flex flex-col gap-6 text-xs font-bold">
-                        <p>
+                        <p className="text-muted-foreground">
                             SKU: <span className="text-foreground">LSOFA578493</span>
                         </p>
 
-                        <p>
+                        <p className="text-muted-foreground">
                             Category:
                             <Badge variant={'outline'} className="font-bold">
                                 Category
                             </Badge>
                         </p>
-                        <p>
+                        <p className="text-muted-foreground">
                             A well-deserved nap in the daytime and nice relaxing with family and friends in the evening. Sofa is designed for maximum
                             comfort with high back and neck support. Embracing, inviting and generous.
                         </p>
                     </div>
 
-                    <Button className="bg-[#3B82F6] text-[#EFF6FF] hover:bg-[#3B82F6]/90">Add to Cart</Button>
+                    <Button>
+                        <PlusCircle />
+                        Add to Cart
+                    </Button>
                 </div>
             </div>
 
@@ -64,15 +66,7 @@ const ProductDetailPage = () => {
             <TabsInformation />
 
             {/* Related Products */}
-            <HeadLine icon={<CircleAlert size={20} />} title="Yout Might Be Interested In These Products" />
-            <div className="flex w-full flex-col gap-4">
-                <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5">
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                </div>
-            </div>
+            <CarouselProduct headLineTitle="Related Products" totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" />
         </>
     );
 };

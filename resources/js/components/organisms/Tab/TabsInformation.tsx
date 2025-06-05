@@ -17,8 +17,8 @@ const TabsInformation = () => {
             </TabsList>
 
             <TabsContent value="information" className="flex flex-col gap-3 text-xs font-bold lg:flex-row">
-                <Card className="w-full bg-transparent px-4 py-4">
-                    <h1 className="text-sm">Information</h1>
+                <Card className="text-muted-foreground w-full bg-transparent px-4 py-4">
+                    <h1 className="text-foreground text-sm">Information</h1>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi dignissimos eveniet, incidunt officiis accusantium molestias
                         ipsam amet. Explicabo quam necessitatibus commodi delectus, sapiente voluptates incidunt tenetur modi at, aperiam saepe!
@@ -29,8 +29,8 @@ const TabsInformation = () => {
                     </p>
                 </Card>
 
-                <Card className="w-full px-4 py-4">
-                    <h1 className="text-sm">Dimension</h1>
+                <Card className="text-muted-foreground w-full px-4 py-4">
+                    <h1 className="text-foreground text-sm">Dimension</h1>
                     <div className="grid gap-2 md:grid-cols-2">
                         <ul className="flex flex-col gap-2">
                             <li>Height including back cushions: 40 1/8</li>
@@ -52,8 +52,8 @@ const TabsInformation = () => {
             </TabsContent>
 
             <TabsContent value="materials">
-                <Card className="px-4 py-4">
-                    <h1 className="text-sm">Materials</h1>
+                <Card className="text-muted-foreground px-4 py-4">
+                    <h1 className="text-foreground text-sm">Materials</h1>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam perferendis eum reprehenderit repudiandae rerum quas quo
                         aspernatur voluptates assumenda deserunt, sit unde exercitationem quidem in, temporibus eaque numquam necessitatibus quae?
@@ -62,8 +62,8 @@ const TabsInformation = () => {
             </TabsContent>
 
             <TabsContent value="shipping">
-                <Card className="px-4 py-4">
-                    <h1 className="text-sm">Shipping</h1>
+                <Card className="text-muted-foreground px-4 py-4">
+                    <h1 className="text-foreground text-sm">Shipping</h1>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam perferendis eum reprehenderit repudiandae rerum quas quo
                         aspernatur voluptates assumenda deserunt, sit unde exercitationem quidem in, temporibus eaque numquam necessitatibus quae?
