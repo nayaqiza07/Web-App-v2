@@ -1,35 +1,62 @@
+import CartItem from '@/components/molecules/Cart/CartItem';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { ShoppingBag, ShoppingCart } from 'lucide-react';
 
 const CartSheet = () => {
-    const isEmpty = true;
+    const isEmpty = false;
 
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button size="icon" variant="ghost">
+                <Button size="icon" variant="ghost" className="relative">
                     <ShoppingCart />
+                    <Badge variant="destructive" className="absolute top-0 right-0 rounded-full px-1 py-0">
+                        0
+                    </Badge>
                 </Button>
             </SheetTrigger>
-            <SheetContent className="bg-card">
-                <SheetHeader>
-                    <SheetTitle>Shopping Cart</SheetTitle>
+            <SheetContent className="bg-card flex h-full flex-col gap-0">
+                <SheetHeader className="border-b">
+                    <SheetTitle className="flex items-center gap-3">
+                        Shopping Cart{' '}
+                        <Badge variant="outline" className="rounded">
+                            0
+                        </Badge>
+                    </SheetTitle>
                     <SheetDescription></SheetDescription>
                 </SheetHeader>
 
                 {isEmpty ? (
                     <EmptyState icon={<ShoppingBag size={50} />} title="Your Cart Is Empty" btnText="Continue Shopping" />
                 ) : (
-                    <SheetFooter className="border-t">
-                        <div className="flex justify-between text-sm font-bold text-[#666666]">
-                            <p>Sub Total</p>
-                            <p className="">Rp. 0</p>
+                    <>
+                        <div className="flex-1 overflow-hidden">
+                            <ScrollArea className="h-full px-4 py-2">
+                                <div className="flex flex-col gap-2">
+                                    <CartItem />
+                                    <CartItem />
+                                    <CartItem />
+                                    <CartItem />
+                                    <CartItem />
+                                    <CartItem />
+                                    <CartItem />
+                                </div>
+                            </ScrollArea>
                         </div>
-                        <Button variant="outline">View Cart</Button>
-                        <Button>Checkout</Button>
-                    </SheetFooter>
+
+                        <SheetFooter className="border-t">
+                            <div className="flex justify-between text-sm font-bold text-[#666666]">
+                                <p>Sub Total</p>
+                                <p className="">Rp. 0</p>
+                            </div>
+                            <Button variant="ghost">View Cart</Button>
+                            <Button effect="gooeyLeft">Checkout</Button>
+                        </SheetFooter>
+                    </>
                 )}
             </SheetContent>
         </Sheet>

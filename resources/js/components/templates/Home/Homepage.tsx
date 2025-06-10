@@ -36,11 +36,6 @@ const Homepage = () => {
 
             {/* 6 */}
             <CarouselProduct headLineTitle="Recent Blogs" isFor="blog" isAutoPlay totalItemShow="basis-1/2 md:basis-1/3 lg:basis-1/4" />
-
-            <div className="flex gap-5">
-                <Button effect="gooeyRight">Gooey</Button>
-                <Button effect="gooeyLeft">Gooey</Button>
-            </div>
         </>
     );
 };

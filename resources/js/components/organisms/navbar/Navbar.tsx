@@ -40,7 +40,6 @@ const Navbar = () => {
                             className="text-muted-foreground"
                         />
                     ))}
-                    {/* <TryNav data={navData} /> */}
                 </div>
 
                 <div className="flex items-center gap-2">
