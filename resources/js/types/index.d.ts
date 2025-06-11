@@ -42,7 +42,7 @@ export interface User {
     [key: string]: unknown; // This allows for additional properties...
 }
 
-// Input Props
+// Input Props Start
 export interface InputWithButtonProps {
     placeholder?: string;
     btnText?: ReactNode;
@@ -69,3 +69,17 @@ export interface TextareaWithLabelProps {
     rows?: number;
     className?: string;
 }
+// Input Props End
+
+// Select Props Start
+export interface SelectWithLabelProps {
+    label: string;
+    labelFor: string;
+    // id: string;
+    // name: string;
+    // type: string;
+    placeholder: string;
+    // autoComplete: string;
+    // className?: string;
+}
+// Select Props End

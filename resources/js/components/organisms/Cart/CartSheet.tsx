@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Link } from '@inertiajs/react';
 import { ShoppingBag, ShoppingCart } from 'lucide-react';
 
 const CartSheet = () => {
@@ -53,8 +54,11 @@ const CartSheet = () => {
                                 <p>Sub Total</p>
                                 <p className="">Rp. 0</p>
                             </div>
-                            <Button variant="ghost">View Cart</Button>
-                            <Button effect="gooeyLeft">Checkout</Button>
+                            <Link href={route('cart')} className="w-full">
+                                <Button effect="gooeyLeft" className="w-full">
+                                    Checkout
+                                </Button>
+                            </Link>
                         </SheetFooter>
                     </>
                 )}
