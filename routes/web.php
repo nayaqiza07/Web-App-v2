@@ -35,6 +35,10 @@ Route::get('/about-us', function () {
     return Inertia::render('static/AboutUs');
 })->name('about-us');
 
+Route::get('/cart', function () {
+    return Inertia::render('cart/Cart');
+})->name('cart');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');

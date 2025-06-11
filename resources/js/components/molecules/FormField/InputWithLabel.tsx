@@ -4,7 +4,7 @@ import { InputWithLabelProps } from '@/types';
 
 const InputWithLabel = ({ label, labelFor, id, name, type, placeholder, autoComplete, className }: InputWithLabelProps) => {
     return (
-        <div>
+        <div className="flex flex-col gap-2">
             <Label htmlFor={labelFor}>{label}</Label>
             <Input id={id} name={name} type={type} placeholder={placeholder} autoComplete={autoComplete} className={`${className} border-border`} />
         </div>
