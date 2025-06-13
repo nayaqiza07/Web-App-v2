@@ -1,8 +1,10 @@
 import CartItem from '@/components/molecules/Cart/CartItem';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card } from '@/components/ui/card';
 import { CornerUpLeft, CreditCard, MapPin, ReceiptText, RotateCcw, ShoppingBag, SquareUserRound, TriangleAlert } from 'lucide-react';
+import { useState } from 'react';
+import AnimatedAccordionContent from './AnimatedAccordionContent';
 
 interface OrderData {
     id: string;
@@ -16,12 +18,21 @@ interface AccordionOrdersProps {
 }
 
 const AccordionOrders = ({ data }: AccordionOrdersProps) => {
+    const [openItems, setOpenItems] = useState(data[0].id);
+
     return data.length === 0 ? (
         <div className="flex h-full border">
             <EmptyState icon={<ShoppingBag size={50} />} title="You don't have any orders" btnText="Continue Shopping" />
         </div>
     ) : (
-        <Accordion type="single" collapsible className="h-full w-full rounded-lg" defaultValue={data[0].id}>
+        <Accordion
+            type="single"
+            collapsible
+            className="h-full w-full rounded-lg"
+            // defaultValue={data[0].id}
+            value={openItems}
+            onValueChange={setOpenItems}
+        >
             {data
                 .filter((data) => Boolean(data?.id))
                 .map((dataOrder) => (
@@ -40,8 +51,7 @@ const AccordionOrders = ({ data }: AccordionOrdersProps) => {
                                 </h5>
                             </div>
                         </AccordionTrigger>
-
-                        <AccordionContent className="flex flex-col gap-4 px-4 text-balance">
+                        <AnimatedAccordionContent isOpen={openItems.includes(dataOrder.id)} className="flex flex-col gap-4 px-4 text-balance">
                             <Card className="text-muted-foreground grid rounded-md p-4 text-xs md:grid-cols-3">
                                 <div className="flex flex-col gap-5">
                                     {/* Delivery Information */}
@@ -106,7 +116,7 @@ const AccordionOrders = ({ data }: AccordionOrdersProps) => {
                             <div className="grid gap-4 lg:grid-cols-2">
                                 <CartItem />
                             </div>
-                        </AccordionContent>
+                        </AnimatedAccordionContent>
                     </AccordionItem>
                 ))}
         </Accordion>

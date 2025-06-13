@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { motion } from 'framer-motion';
@@ -29,19 +30,24 @@ const CartItem = () => {
             onClick={handleToggle}
             className="group relative flex overflow-hidden"
         >
-            {/* Card Hapus */}
-            <div className="bg-destructive border-border absolute inset-0 z-0 flex cursor-pointer items-center justify-end rounded-md border pr-4">
+            {/* Button Hapus */}
+            <Button
+                variant="destructive"
+                effect="gooeyRight"
+                gooeyColor="destructive"
+                className="border-border absolute inset-0 z-0 flex h-full cursor-pointer items-center justify-end rounded-md border pr-4"
+            >
                 <Trash2Icon size={20} className="text-destructive-foreground" />
-            </div>
+            </Button>
 
             {/* Card Utama */}
             <motion.div
-                className="relative z-10 w-full cursor-pointer text-xs"
+                className="relative z-10 h-fit w-full cursor-pointer text-xs "
                 initial={{ x: 0 }}
                 animate={{ x: isActive ? -48 : 0 }}
                 transition={{ type: 'tween', duration: 0.3 }}
             >
-                <Card className="rounded-md p-0 shadow-none">
+                <Card className="gap-0 rounded-md p-0 shadow-none">
                     <CardHeader className="flex flex-row items-center justify-between gap-5 px-3 py-2">
                         <div className="flex items-center gap-5">
                             <img

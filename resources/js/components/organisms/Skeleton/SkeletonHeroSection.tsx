@@ -1,5 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton';
-import SkeletonBreadcrumb from './SkeletonBreadcrumb';
+import SkeletonBreadcrumb from '../../molecules/Skeleton/SkeletonBreadcrumb';
 
 interface SkeletonHeroSectionProps {
     variant?: 'default' | 'withBreadcrumb';

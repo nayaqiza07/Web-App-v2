@@ -55,7 +55,7 @@ const CartSheet = () => {
                                 <p className="">Rp. 0</p>
                             </div>
                             <Link href={route('cart')} className="w-full">
-                                <Button effect="gooeyLeft" className="w-full">
+                                <Button effect="gooeyLeft" gooeyColor="default" className="w-full">
                                     Checkout
                                 </Button>
                             </Link>

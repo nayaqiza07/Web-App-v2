@@ -21,7 +21,9 @@ const SummaryCartCard = () => {
                     </p>
                 </CardContent>
                 <CardFooter className="mt-auto p-0">
-                    <Button className="w-full">Checkout</Button>
+                    <Button effect="shine" className="w-full">
+                        Checkout
+                    </Button>
                 </CardFooter>
             </Card>
         </motion.div>
