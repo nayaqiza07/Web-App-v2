@@ -14,23 +14,18 @@ const NavMenu = ({ active = false, title, linkTo, isMobile, className }: NavbarP
         <Link href={linkTo}>
             {isMobile ? (
                 <Button
-                    effect="ringHover"
+                    effect="gooeyLeft"
                     variant="ghost"
-                    className={`${className} ${active ? 'ring-primary/90 bg-accent text-accent-foreground border ring-2 ring-offset-2' : ''} w-full`}
+                    className={`${className} ${active ? 'bg-accent text-accent-foreground before:animate-shine background-position_0s_ease relative overflow-hidden before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-no-repeat' : ''} w-full`}
                 >
                     {title}
                 </Button>
             ) : (
-                // <h5
-                //     className={`${className} ${active ? 'border-muted-foreground border-b-2' : 'hover:border-muted-foreground border-b-2 border-transparent'} text-muted-foreground text-sm transition-colors duration-200`}
-                // >
-                //     {title}
-                // </h5>
                 <Button
                     size="sm"
-                    effect="ringHover"
+                    effect="gooeyLeft"
                     variant="ghost"
-                    className={`${className} ${active ? 'ring-primary/90 bg-accent text-foreground border ring-2 ring-offset-2' : ''}`}
+                    className={`${className} ${active ? 'text-accent-foreground bg-accent before:animate-shine background-position_0s_ease relative overflow-hidden before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-no-repeat' : ''} text-xs`}
                 >
                     {title}
                 </Button>
