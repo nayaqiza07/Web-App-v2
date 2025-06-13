@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetT
 import { useInitials } from '@/hooks/use-initials';
 import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Menu } from 'lucide-react';
+import { PanelLeftDashedIcon } from 'lucide-react';
 
 const NavbarMobile = () => {
     const { auth } = usePage<SharedData>().props;
@@ -24,10 +24,10 @@ const NavbarMobile = () => {
         <Sheet>
             <SheetTrigger asChild>
                 <Button size="icon" variant="outline" className="lg:hidden">
-                    <Menu />
+                    <PanelLeftDashedIcon />
                 </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="bg-card w-full">
+            <SheetContent side="left" className="bg-card">
                 <SheetHeader>
                     <SheetTitle>Horestco</SheetTitle>
                     <SheetDescription></SheetDescription>
@@ -60,7 +60,7 @@ const NavbarMobile = () => {
                     ) : (
                         <div className="flex justify-between">
                             <Link href={route('login')}>
-                                <Button>Login</Button>
+                                <Button>Log In</Button>
                             </Link>
                             <span>or</span>
                             <Link href={route('register')}>

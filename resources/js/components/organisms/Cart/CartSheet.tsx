@@ -12,9 +12,9 @@ const CartSheet = () => {
 
     return (
         <Sheet>
-            <SheetTrigger asChild>
-                <Button size="icon" variant="ghost" className="relative">
-                    <ShoppingCart />
+            <SheetTrigger>
+                <Button size="icon" variant="ghost" className="relative cursor-pointer">
+                    <ShoppingCart size={20} />
                     <Badge variant="destructive" className="absolute top-0 right-0 rounded-full px-1 py-0">
                         0
                     </Badge>

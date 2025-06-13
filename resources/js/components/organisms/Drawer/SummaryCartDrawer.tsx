@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
+import { Separator } from '@/components/ui/separator';
 import { ListCheck } from 'lucide-react';
 
 const SummaryCartDrawer = () => {
@@ -22,7 +23,9 @@ const SummaryCartDrawer = () => {
                     <p className="flex justify-between">
                         Shipping <span className="text-end">10</span>
                     </p>
-                    <p className="text-foreground mt-5 flex justify-between">
+                    <Separator className="my-5" />
+
+                    <p className="text-foreground flex justify-between">
                         Total <span className="text-end">100</span>
                     </p>
                 </div>
