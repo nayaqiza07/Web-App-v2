@@ -1,8 +1,10 @@
 import NavMenu from '@/components/atoms/NavMenu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/hooks/use-initials';
+import { cn } from '@/lib/utils';
 import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import { Button } from '../../ui/button';
 import CartSheet from '../Cart/CartSheet';
 import SearchCommand from '../Command/SearchCommand';
@@ -11,6 +13,16 @@ import NavbarMobile from './NavbarMobile';
 const Navbar = () => {
     const { auth } = usePage<SharedData>().props;
     const getInitials = useInitials();
+
+    const [isScrolled, setIsScrolled] = useState<boolean>(false);
+
+    const handleScroll = () => {
+        setIsScrolled(window.scrollY > 10); // bisa disesuaikan
+    };
+
+    useEffect(() => {
+        return () => window.addEventListener('scroll', handleScroll);
+    }, []);
 
     const navData = [
         { title: 'Home', linkTo: 'home' },
@@ -22,7 +34,7 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="bg-card sticky top-0 z-40 border-b">
+        <nav className={cn(`transation-all sticky top-0 z-40 border-b duration-300`, 'backdrop-blur-xl', isScrolled ? 'bg-card/70 shadow-md' : 'bg-card/100')}>
             <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-5 font-bold">
                 <div className="flex items-center gap-2">
                     <NavbarMobile />

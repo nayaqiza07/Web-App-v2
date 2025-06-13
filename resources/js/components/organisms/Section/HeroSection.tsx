@@ -20,14 +20,22 @@ const HeroSection = ({ children, variant = 'default', color, srcImage, altImage 
     };
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'easeOut' }}
-            className="flex flex-col gap-6"
-        >
-            {variant === 'withBreadcrumb' && <Breadcrumbs breadcrumbs={breadcrumbs} />}
-            <div className={`${variants[variant]} ${color} relative overflow-hidden`}>
+        <div className="flex flex-col gap-6">
+            {variant === 'withBreadcrumb' && (
+                <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' }}
+                >
+                    <Breadcrumbs breadcrumbs={breadcrumbs} />
+                </motion.div>
+            )}
+            <motion.div
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+                className={`${variants[variant]} ${color} relative overflow-hidden`}
+            >
                 {/* image */}
                 <img src={srcImage} alt={altImage} className="h-full w-full object-cover" />
 
@@ -36,8 +44,8 @@ const HeroSection = ({ children, variant = 'default', color, srcImage, altImage 
 
                 {/* text */}
                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-10 text-center text-white">{children}</div>
-            </div>
-        </motion.div>
+            </motion.div>
+        </div>
     );
 };
 

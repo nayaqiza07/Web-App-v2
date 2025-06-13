@@ -6,7 +6,7 @@ const Subscription = () => {
         <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'easeOut' }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
             className="flex h-[168px] flex-col items-center justify-center gap-4 border-t"
         >
             <h3 className="text-center font-bold">Sign up for the newsletter and get 10% discount</h3>
