@@ -4,7 +4,7 @@ import SelectWithLabel from '@/components/molecules/FormField/SelectWithLabel';
 const DeliveryAddressForm = () => {
     return (
         <>
-            <div className="grid gap-3 lg:grid-cols-2">
+            <div className="grid gap-3">
                 <SelectWithLabel label="Country / Region" labelFor="Region" placeholder="Select Country or Region" />
                 <div className="grid gap-3 md:grid-cols-2">
                     <SelectWithLabel label="State" labelFor="State" placeholder="Select State" />

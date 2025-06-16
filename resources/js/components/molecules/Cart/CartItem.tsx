@@ -3,10 +3,19 @@ import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { motion } from 'framer-motion';
 import { Trash2Icon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import QuantityButton from '../Button/QuantityButton';
 
-const CartItem = () => {
+interface CartItemProps {
+    data: {
+        id: number;
+        name: string;
+        price: number;
+    };
+    onDelete: (id: number) => void;
+}
+
+const CartItem: React.FC<CartItemProps> = ({ data, onDelete }) => {
     const [isActive, setIsActive] = useState<boolean>(false);
     const [isMobile, setIsMobile] = useState<boolean>(false);
 
@@ -24,7 +33,12 @@ const CartItem = () => {
     };
 
     return (
-        <div
+        <motion.div
+            layout
+            initial={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0, marginBottom: -15 }}
+            transition={{ duration: 0.5 }}
             onMouseEnter={() => !isMobile && setIsActive(true)}
             onMouseLeave={() => !isMobile && setIsActive(false)}
             onClick={handleToggle}
@@ -35,6 +49,7 @@ const CartItem = () => {
                 variant="destructive"
                 effect="gooeyRight"
                 gooeyColor="destructive"
+                onClick={() => onDelete(data.id)}
                 className="border-border absolute inset-0 z-0 flex h-full cursor-pointer items-center justify-end rounded-md border pr-4"
             >
                 <Trash2Icon size={20} className="text-destructive-foreground" />
@@ -42,7 +57,7 @@ const CartItem = () => {
 
             {/* Card Utama */}
             <motion.div
-                className="relative z-10 h-fit w-full cursor-pointer text-xs "
+                className="relative z-10 h-fit w-full cursor-pointer text-xs"
                 initial={{ x: 0 }}
                 animate={{ x: isActive ? -48 : 0 }}
                 transition={{ type: 'tween', duration: 0.3 }}
@@ -55,25 +70,25 @@ const CartItem = () => {
                                 alt="cart-image-product"
                                 className="h-[44px] w-[60px] rounded"
                             />
-                            <h2>Armchair</h2>
+                            <h2>{data.name}</h2>
                         </div>
                         <div className="hidden items-center gap-5 md:flex">
-                            <span>90</span>
+                            <span>{data.price}</span>
                             <QuantityButton />
-                            <span>90</span>
+                            <span>{data.price}</span>
                         </div>
                     </CardHeader>
 
                     <Separator className="md:hidden" />
 
                     <CardFooter className="flex items-center justify-between px-3 py-2 md:hidden">
-                        <span>90</span>
+                        <span>{data.price}</span>
                         <QuantityButton />
-                        <span>90</span>
+                        <span>{data.price}</span>
                     </CardFooter>
                 </Card>
             </motion.div>
-        </div>
+        </motion.div>
     );
 };
 

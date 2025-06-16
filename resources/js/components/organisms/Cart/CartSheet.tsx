@@ -5,14 +5,24 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Link } from '@inertiajs/react';
+import { AnimatePresence } from 'framer-motion';
 import { ShoppingBag, ShoppingCart } from 'lucide-react';
+import { useState } from 'react';
 
 const CartSheet = () => {
-    const isEmpty = false;
+    const [cart, setCart] = useState([
+        { id: 11323, name: 'Product A', price: 10000 },
+        { id: 24325, name: 'Product B', price: 15000 },
+        { id: 33233, name: 'Product C', price: 20000 },
+    ]);
+
+    const handleDeleteCart = (id: number) => {
+        setCart((prev) => prev.filter((item) => item.id !== id));
+    };
 
     return (
         <Sheet>
-            <SheetTrigger>
+            <SheetTrigger asChild>
                 <Button size="icon" variant="ghost" className="relative cursor-pointer">
                     <ShoppingCart size={20} />
                     <Badge variant="destructive" className="absolute top-0 right-0 rounded-full px-1 py-0">
@@ -31,20 +41,18 @@ const CartSheet = () => {
                     <SheetDescription></SheetDescription>
                 </SheetHeader>
 
-                {isEmpty ? (
+                {cart.length === 0 ? (
                     <EmptyState icon={<ShoppingBag size={50} />} title="Your Cart Is Empty" btnText="Continue Shopping" />
                 ) : (
                     <>
                         <div className="flex-1 overflow-hidden">
                             <ScrollArea className="h-full px-4 py-2">
                                 <div className="flex flex-col gap-2">
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
+                                    <AnimatePresence mode="popLayout">
+                                        {cart.map((data) => (
+                                            <CartItem key={data.id} data={data} onDelete={handleDeleteCart} />
+                                        ))}
+                                    </AnimatePresence>
                                 </div>
                             </ScrollArea>
                         </div>
