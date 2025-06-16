@@ -1,6 +1,8 @@
 import CartItem from '@/components/molecules/Cart/CartItem';
+import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ShoppingBagIcon } from 'lucide-react';
 import { useState } from 'react';
 import DeliveryAddressForm from '../Form/DeliveryAddressForm';
 import ProfileCustomerForm from '../Form/ProfileCustomerForm';
@@ -8,6 +10,16 @@ import AnimatedAccordionContent from './AnimatedAccordionContent';
 
 const AccordionCart = () => {
     const [openItems, setOpenItems] = useState<string[]>(['bag', 'profile', 'delivery']);
+
+    const [cart, setCart] = useState([
+        { id: 11323, name: 'Product A', price: 10000 },
+        { id: 24325, name: 'Product B', price: 15000 },
+        { id: 33233, name: 'Product C', price: 20000 },
+    ]);
+
+    const handleDeleteCart = (id: number) => {
+        setCart((prev) => prev.filter((item) => item.id !== id));
+    };
 
     return (
         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
@@ -45,9 +57,15 @@ const AccordionCart = () => {
 
                     {/* <AccordionContent className="flex flex-col gap-4 px-4 text-balance"> */}
                     <AnimatedAccordionContent isOpen={openItems.includes('bag')} className="flex flex-col gap-4 px-4 text-balance">
-                        <CartItem />
-                        <CartItem />
-                        <CartItem />
+                        {cart.length === 0 ? (
+                            <EmptyState icon={<ShoppingBagIcon size={50} />} title="Your Cart Is Empty" btnText="Continue Shopping" />
+                        ) : (
+                            <AnimatePresence mode="popLayout">
+                                {cart.map((data) => (
+                                    <CartItem key={data.id} data={data} onDelete={handleDeleteCart} />
+                                ))}
+                            </AnimatePresence>
+                        )}
                     </AnimatedAccordionContent>
                     {/* </AccordionContent> */}
                 </AccordionItem>

@@ -17,7 +17,7 @@ const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
     const handleScroll = () => {
-        setIsScrolled(window.scrollY > 10); // bisa disesuaikan
+        setIsScrolled(window.scrollY > 5); // bisa disesuaikan
     };
 
     useEffect(() => {
@@ -34,7 +34,13 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className={cn(`transation-all sticky top-0 z-40 border-b duration-300`, 'backdrop-blur-xl', isScrolled ? 'bg-card/70 shadow-md' : 'bg-card/100')}>
+        <nav
+            className={cn(
+                `transation-all sticky top-0 z-40 border-b duration-300`,
+                'backdrop-blur-xl',
+                isScrolled ? 'bg-card/70 shadow-md' : 'bg-card/100',
+            )}
+        >
             <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-5 font-bold">
                 <div className="flex items-center gap-2">
                     <NavbarMobile />
