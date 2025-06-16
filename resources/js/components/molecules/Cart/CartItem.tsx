@@ -1,8 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { priceFormat } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { Trash2Icon } from 'lucide-react';
+import { EllipsisVerticalIcon, Trash2Icon } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import QuantityButton from '../Button/QuantityButton';
 
@@ -41,7 +42,6 @@ const CartItem: React.FC<CartItemProps> = ({ data, onDelete }) => {
             transition={{ duration: 0.5 }}
             onMouseEnter={() => !isMobile && setIsActive(true)}
             onMouseLeave={() => !isMobile && setIsActive(false)}
-            onClick={handleToggle}
             className="group relative flex overflow-hidden"
         >
             {/* Button Hapus */}
@@ -64,27 +64,34 @@ const CartItem: React.FC<CartItemProps> = ({ data, onDelete }) => {
             >
                 <Card className="gap-0 rounded-md p-0 shadow-none">
                     <CardHeader className="flex flex-row items-center justify-between gap-5 px-3 py-2">
-                        <div className="flex items-center gap-5">
+                        <div className="flex w-full items-center gap-5">
                             <img
                                 src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
                                 alt="cart-image-product"
                                 className="h-[44px] w-[60px] rounded"
                             />
-                            <h2>{data.name}</h2>
+                            <div className="flex w-full justify-between">
+                                <div className="flex flex-col">
+                                    <h2>{data.name}</h2>
+                                    <p className="text-muted-foreground hidden md:flex">{priceFormat(data.price)}</p>
+                                </div>
+                                <Button variant="outline" size="icon" onClick={handleToggle} className="rounded-full md:hidden">
+                                    <EllipsisVerticalIcon />
+                                </Button>
+                            </div>
                         </div>
                         <div className="hidden items-center gap-5 md:flex">
-                            <span>{data.price}</span>
                             <QuantityButton />
-                            <span>{data.price}</span>
+                            <span>{priceFormat(data.price)}</span>
                         </div>
                     </CardHeader>
 
                     <Separator className="md:hidden" />
 
                     <CardFooter className="flex items-center justify-between px-3 py-2 md:hidden">
-                        <span>{data.price}</span>
+                        <span>{priceFormat(data.price)}</span>
                         <QuantityButton />
-                        <span>{data.price}</span>
+                        <span>{priceFormat(data.price)}</span>
                     </CardFooter>
                 </Card>
             </motion.div>

@@ -27,7 +27,7 @@ export function useBreadcrumb(): BreadcrumbItemType[] {
                 <House />
             </Button>
         ),
-        href: '/home',
+        href: '/',
     });
 
     let path = '';

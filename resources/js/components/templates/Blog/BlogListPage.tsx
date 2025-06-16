@@ -11,7 +11,7 @@ const BlogListPage = () => {
             {/* Blog List Start */}
             <div className="grid gap-3 md:grid-cols-3 lg:grid-cols-4">
                 {Array.from({ length: 5 }).map((_, index) => (
-                    <BlogCard key={index} />
+                    <BlogCard key={index} index={index} />
                 ))}
             </div>
             {/* Blog List End*/}

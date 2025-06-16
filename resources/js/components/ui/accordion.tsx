@@ -60,33 +60,4 @@ function AccordionContent({
   )
 }
 
-// Need to Fix
-// function AccordionContent({
-//   className,
-//   children,
-//   ...props
-// }: React.ComponentProps<typeof AccordionPrimitive.Content>) {
-
-//   return (
-//     <AccordionPrimitive.Content 
-//       data-slot="accordion-content" 
-//       asChild
-//       {...props}
-//       >
-//             <motion.div
-//               key="accordion-content"
-//               initial={{ height: 0, opacity: 0 }}
-//               animate={{ height: "auto", opacity: 1 }}
-//               exit={{ height: 0, opacity: 0 }}
-//               transition={{ duration: 0.3, ease: "easeInOut" }}
-//               className="overflow-hidden text-sm"
-//             >
-//               <div className={cn("pt-0 pb-4", className)}>
-//                 {children}
-//               </div>
-//             </motion.div>
-//     </AccordionPrimitive.Content>
-//   )
-// }
-
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }

@@ -2,16 +2,18 @@ import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const TabsInformation = () => {
+    const styleTabTrigger = 'data-[state=active]:border-border text-xs font-bold data-[state=active]:shadow-none';
+
     return (
         <Tabs defaultValue="information" className="w-full text-xs font-bold">
             <TabsList className="bg-transparent">
-                <TabsTrigger value="information" className="text-xs font-bold">
+                <TabsTrigger value="information" className={`${styleTabTrigger}`}>
                     Product Information
                 </TabsTrigger>
-                <TabsTrigger value="materials" className="text-xs font-bold">
+                <TabsTrigger value="materials" className={`${styleTabTrigger}`}>
                     Materials
                 </TabsTrigger>
-                <TabsTrigger value="shipping" className="text-xs font-bold">
+                <TabsTrigger value="shipping" className={`${styleTabTrigger}`}>
                     Shipping
                 </TabsTrigger>
             </TabsList>
