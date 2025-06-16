@@ -1,4 +1,3 @@
-import CartItem from '@/components/molecules/Cart/CartItem';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card } from '@/components/ui/card';
@@ -113,9 +112,7 @@ const AccordionOrders = ({ data }: AccordionOrdersProps) => {
                                 </div>
                             </Card>
 
-                            <div className="grid gap-4 lg:grid-cols-2">
-                                <CartItem />
-                            </div>
+                            <div className="grid gap-4 lg:grid-cols-2">Test</div>
                         </AnimatedAccordionContent>
                     </AccordionItem>
                 ))}

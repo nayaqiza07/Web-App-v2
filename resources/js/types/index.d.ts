@@ -55,7 +55,9 @@ export interface InputWithLabelProps {
     name: string;
     type: string;
     placeholder: string;
+    value?: string | number;
     autoComplete: string;
+    disabled?: boolean;
     className?: string;
 }
 

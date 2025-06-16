@@ -1,6 +1,7 @@
 import CartItem from '@/components/molecules/Cart/CartItem';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { priceFormat } from '@/lib/utils';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ShoppingBagIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -20,6 +21,8 @@ const AccordionCart = () => {
     const handleDeleteCart = (id: number) => {
         setCart((prev) => prev.filter((item) => item.id !== id));
     };
+
+    const totalAmount = cart.map((data) => data.price).reduce((acc, curr) => acc + curr, 0);
 
     return (
         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
@@ -47,10 +50,10 @@ const AccordionCart = () => {
                             transition={{ delay: 0.2, duration: 0.4, ease: 'easeOut' }}
                         >
                             <h5>
-                                Products: <span className="text-foreground">3</span>
+                                Products: <span className="text-foreground">{cart.length}</span>
                             </h5>
                             <h5>
-                                Amount: <span className="text-foreground">180</span>
+                                Amount: <span className="text-foreground">{priceFormat(totalAmount)}</span>
                             </h5>
                         </motion.div>
                     </AccordionTrigger>

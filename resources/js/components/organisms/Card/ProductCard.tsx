@@ -5,7 +5,7 @@ import { ShoppingCart } from 'lucide-react';
 const ProductCard = () => {
     return (
         <Card className="gap-0 overflow-hidden py-0">
-            <CardContent className="group relative h-[150px] overflow-hidden bg-[#4F46E5] p-0">
+            <CardContent className="group relative h-[200px] overflow-hidden bg-[#4F46E5] p-0">
                 {/* image */}
                 <img
                     src={`/images/image-15.jpg`}

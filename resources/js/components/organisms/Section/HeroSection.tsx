@@ -21,15 +21,7 @@ const HeroSection = ({ children, variant = 'default', color, srcImage, altImage 
 
     return (
         <div className="flex flex-col gap-6">
-            {variant === 'withBreadcrumb' && (
-                <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' }}
-                >
-                    <Breadcrumbs breadcrumbs={breadcrumbs} />
-                </motion.div>
-            )}
+            {variant === 'withBreadcrumb' && <Breadcrumbs breadcrumbs={breadcrumbs} />}
             <motion.div
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
