@@ -5,6 +5,7 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
+// Formatting Price Number
 export const priceFormat = (price: number) => {
     const rupiahformat = new Intl.NumberFormat('id-ID', {
         style: 'currency',
@@ -13,4 +14,9 @@ export const priceFormat = (price: number) => {
         maximumFractionDigits: 0,
     }).format(price);
     return rupiahformat;
+};
+
+export const truncateText = (text: string, maxLength: number = 50): string => {
+    if (!text) return '';
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 };

@@ -2,8 +2,10 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import { useBreadcrumb } from '@/hooks/use-breadcrumbs';
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
+import SkeletonHeroSection from '../Skeleton/SkeletonHeroSection';
 
 interface HeroSectionProps {
+    isLoading?: boolean;
     children?: ReactNode;
     variant?: 'default' | 'withBreadcrumb';
     color?: string;
@@ -11,7 +13,7 @@ interface HeroSectionProps {
     altImage?: string;
 }
 
-const HeroSection = ({ children, variant = 'default', color, srcImage, altImage }: HeroSectionProps) => {
+const HeroSection = ({ isLoading = false, children, variant = 'default', color, srcImage, altImage }: HeroSectionProps) => {
     const breadcrumbs = useBreadcrumb();
 
     const variants = {
@@ -19,9 +21,12 @@ const HeroSection = ({ children, variant = 'default', color, srcImage, altImage 
         withBreadcrumb: 'h-[92px] rounded-xl md:h-[120px] lg:h-[208px]',
     };
 
-    return (
-        <div className="flex flex-col gap-6">
+    return isLoading ? (
+        <SkeletonHeroSection variant={variant} />
+    ) : (
+        <section className="flex flex-col gap-6">
             {variant === 'withBreadcrumb' && <Breadcrumbs breadcrumbs={breadcrumbs} />}
+
             <motion.div
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -37,7 +42,7 @@ const HeroSection = ({ children, variant = 'default', color, srcImage, altImage 
                 {/* text */}
                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-10 text-center text-white">{children}</div>
             </motion.div>
-        </div>
+        </section>
     );
 };
 

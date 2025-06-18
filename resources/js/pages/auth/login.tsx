@@ -53,6 +53,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                             placeholder="email@example.com"
+                            className="border-border"
                         />
                         <InputError message={errors.email} />
                     </div>
@@ -75,6 +76,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
                             placeholder="Password"
+                            className="border-border"
                         />
                         <InputError message={errors.password} />
                     </div>
@@ -86,6 +88,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             checked={data.remember}
                             onClick={() => setData('remember', !data.remember)}
                             tabIndex={3}
+                            className="border-border"
                         />
                         <Label htmlFor="remember">Remember me</Label>
                     </div>

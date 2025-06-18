@@ -4,13 +4,17 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { motion } from 'framer-motion';
+import SkeletonSidebar from '../Skeleton/SkeletonSidebar';
 
 interface SidebarProps {
+    isLoading?: boolean;
     className?: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
-    return (
+const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) => {
+    return isLoading ? (
+        <SkeletonSidebar />
+    ) : (
         <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -32,8 +36,8 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
                 <Separator />
                 <CardContent className="p-2">
                     <div className="flex gap-3">
-                        <Input className="bg-card" />
-                        <Input className="bg-card" />
+                        <Input placeholder="Min" className="bg-accent border-border" />
+                        <Input placeholder="Max" className="bg-accent border-border" />
                     </div>
                 </CardContent>
             </Card>

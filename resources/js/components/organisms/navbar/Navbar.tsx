@@ -21,6 +21,7 @@ const Navbar = () => {
     };
 
     useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
         return () => window.addEventListener('scroll', handleScroll);
     }, []);
 

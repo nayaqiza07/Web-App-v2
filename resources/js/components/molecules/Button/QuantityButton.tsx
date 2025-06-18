@@ -14,7 +14,7 @@ const QuantityButton = () => {
     };
 
     return (
-        <div className="border-border flex overflow-hidden rounded-md border">
+        <div className="border-border flex w-fit overflow-hidden rounded-md border">
             <Button
                 variant="secondary"
                 size="icon"

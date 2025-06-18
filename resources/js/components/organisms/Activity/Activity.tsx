@@ -2,16 +2,20 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import React from 'react';
+import SkeletonActivity from '../Skeleton/SkeletonActivity';
 
 interface ActivityProps {
+    isLoading?: boolean;
     orderText?: string;
     orderImage?: string;
     srcImage?: string;
     altImage?: string;
 }
 
-const Activity: React.FC<ActivityProps> = ({ orderText = 'order-last', orderImage = 'md:order-last', srcImage, altImage }) => {
-    return (
+const Activity: React.FC<ActivityProps> = ({ isLoading = false, orderText = 'order-last', orderImage = 'md:order-last', srcImage, altImage }) => {
+    return isLoading ? (
+        <SkeletonActivity />
+    ) : (
         <motion.div
             initial={{ opacity: 0, x: orderImage === 'md:order-first' ? 100 : -100 }}
             whileInView={{ opacity: 1, x: 0 }}

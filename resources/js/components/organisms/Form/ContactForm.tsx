@@ -1,6 +1,7 @@
 import InputWithLabel from '@/components/molecules/FormField/InputWithLabel';
 import TextareaWithLabel from '@/components/molecules/FormField/TextareaWithLabel';
 import { Button } from '@/components/ui/button';
+import { SendIcon } from 'lucide-react';
 
 const ContactForm = () => {
     return (
@@ -24,7 +25,9 @@ const ContactForm = () => {
                     placeholder="Enter Your Message"
                     autoComplete="off"
                 />
-                <Button className="w-fit">Send Message</Button>
+                <Button effect="expandIcon" icon={SendIcon} iconPlacement="right" className="w-fit">
+                    Send Message
+                </Button>
             </div>
         </div>
     );

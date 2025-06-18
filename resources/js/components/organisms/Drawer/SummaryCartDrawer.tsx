@@ -1,10 +1,17 @@
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ListCheck } from 'lucide-react';
 
-const SummaryCartDrawer = () => {
-    return (
+interface SummaryCartDrawerProps {
+    isLoading?: boolean;
+}
+
+const SummaryCartDrawer: React.FC<SummaryCartDrawerProps> = ({ isLoading = false }) => {
+    return isLoading ? (
+        <Skeleton className="fixed right-9 bottom-9 z-10 size-9 rounded-full md:hidden" />
+    ) : (
         <Drawer>
             <DrawerTrigger asChild>
                 <Button size="icon" className="fixed right-9 bottom-9 z-10 rounded-full md:hidden">
