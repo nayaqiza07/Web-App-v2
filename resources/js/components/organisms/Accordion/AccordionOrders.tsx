@@ -3,6 +3,7 @@ import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/acco
 import { Card } from '@/components/ui/card';
 import { CornerUpLeft, CreditCard, MapPin, ReceiptText, RotateCcw, ShoppingBag, SquareUserRound, TriangleAlert } from 'lucide-react';
 import { useState } from 'react';
+import SkeletonAccordionOrder from '../Skeleton/SkeletonAccordionOrder';
 import AnimatedAccordionContent from './AnimatedAccordionContent';
 
 interface OrderData {
@@ -13,13 +14,16 @@ interface OrderData {
 }
 
 interface AccordionOrdersProps {
-    data: OrderData[];
+    isLoading?: boolean;
+    data?: OrderData[];
 }
 
-const AccordionOrders = ({ data }: AccordionOrdersProps) => {
-    const [openItems, setOpenItems] = useState(data[0].id);
+const AccordionOrders: React.FC<AccordionOrdersProps> = ({ isLoading = false, data = [] }) => {
+    const [openItems, setOpenItems] = useState(data[0]?.id ?? '');
 
-    return data.length === 0 ? (
+    return isLoading ? (
+        <SkeletonAccordionOrder />
+    ) : data.length === 0 ? (
         <div className="flex h-full border">
             <EmptyState icon={<ShoppingBag size={50} />} title="You don't have any orders" btnText="Continue Shopping" />
         </div>

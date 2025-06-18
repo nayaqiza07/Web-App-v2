@@ -2,38 +2,50 @@ import ProductCard from '@/components/organisms/Card/ProductCard';
 import FilterDrawer from '@/components/organisms/Drawer/FilterDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import Sidebar from '@/components/organisms/Sidebar/Sidebar';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 const ProductPage = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <>
             {/* Hero Section */}
-            <HeroSection variant="withBreadcrumb" color="bg-[#98C8D5]" srcImage="/images/image-1.jpg" altImage="Image Slider">
+            <HeroSection isLoading={isLoading} variant="withBreadcrumb" color="bg-[#98C8D5]" srcImage="/images/image-1.jpg" altImage="Image Slider">
                 <h1 className="text-4xl font-bold">Shop</h1>
             </HeroSection>
             {/* <SkeletonHeroSection variant="withBreadcrumb" /> */}
             <FilterDrawer />
             {/* Hero Section */}
 
-            <div className="flex gap-5">
+            <section className="flex gap-5">
                 {/* Sidebar Product Start */}
-                <Sidebar className="hidden h-[450px] w-[264px] md:flex" />
+                <Sidebar isLoading={isLoading} className="hidden h-[450px] w-[264px] md:flex" />
                 {/* Sidebar Product End */}
 
                 {/* Product List */}
-                <motion.div
+                {/* <motion.div
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1, ease: 'easeOut' }}
                     // className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4"
                     className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3"
-                >
-                    {Array.from({ length: 20 }).map((_, index) => (
-                        <ProductCard key={index} />
+                > */}
+                <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+                    {Array.from({ length: 15 }).map((_, index) => (
+                        <ProductCard isLoading={isLoading} key={index} />
                     ))}
-                </motion.div>
+                </div>
+                {/* </motion.div> */}
                 {/* Product List */}
-            </div>
+            </section>
         </>
     );
 };

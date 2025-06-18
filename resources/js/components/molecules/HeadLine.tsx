@@ -1,5 +1,5 @@
 import { ALargeSmall, ArrowRight } from 'lucide-react';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Button } from '../ui/button';
 
 interface HeadLineProps {
@@ -8,9 +8,9 @@ interface HeadLineProps {
     button?: ReactNode;
 }
 
-const HeadLine = ({ icon = <ALargeSmall size={20} />, title = 'Head Line', button }: HeadLineProps) => {
+const HeadLine: React.FC<HeadLineProps> = ({ icon = <ALargeSmall size={20} />, title = 'Head Line', button }) => {
     return (
-        <div className="flex items-center justify-between text-xs font-bold">
+        <div className="flex items-center justify-between font-bold">
             <div className="flex items-center gap-4">
                 {icon}
                 <h3>{title}</h3>

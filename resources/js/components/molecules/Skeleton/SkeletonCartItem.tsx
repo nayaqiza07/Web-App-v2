@@ -8,7 +8,7 @@ const SkeletonCartItem = () => {
                     <Skeleton className="h-[44px] w-[60px] rounded" />
                     <Skeleton className="h-4 w-15 rounded" />
                 </div>
-                <div className="hidden w-full items-center justify-between gap-3 md:flex">
+                <div className="hidden items-center justify-between gap-3 md:flex">
                     <Skeleton className="size-7 rounded-full p-0" />
                     <Skeleton className="h-8 w-20 rounded" />
                     <Skeleton className="size-7 rounded-full" />

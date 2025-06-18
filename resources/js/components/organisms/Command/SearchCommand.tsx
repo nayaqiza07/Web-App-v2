@@ -14,6 +14,7 @@ import {
     CommandSeparator,
     CommandShortcut,
 } from '@/components/ui/command';
+import { priceFormat } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -92,77 +93,40 @@ const SearchCommand = () => {
 
                     {/* For Categories */}
                     <CommandGroup heading="Categories">
-                        <CommandItem>
-                            <span>Categories 1</span>
-                            <CommandShortcut>
-                                <Badge variant="outline">1</Badge>
-                            </CommandShortcut>
-                        </CommandItem>
-                        <CommandItem>
-                            <span>Categories 2</span>
-                            <CommandShortcut>
-                                <Badge variant="outline">2</Badge>
-                            </CommandShortcut>
-                        </CommandItem>
-                        <CommandItem>
-                            <span>Categories 3</span>
-                            <CommandShortcut>
-                                <Badge variant="outline">3</Badge>
-                            </CommandShortcut>
-                        </CommandItem>
+                        {Array.from({ length: 5 }).map((_, index) => (
+                            <CommandItem key={index}>
+                                <span>Categories {index + 1}</span>
+                                <CommandShortcut>
+                                    <Badge variant="outline">{index + 1}</Badge>
+                                </CommandShortcut>
+                            </CommandItem>
+                        ))}
                     </CommandGroup>
                     <CommandSeparator />
 
                     {/* For Products */}
                     <CommandGroup heading="Products">
-                        <CommandItem>
-                            <div className="flex items-start gap-3">
-                                <img
-                                    src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-                                    alt="cart-image-product"
-                                    className="h-[44px] w-[60px] rounded"
-                                />
-                                <div className="flex flex-col justify-between">
-                                    <h2>Armchair</h2>
-                                    <div className="flex gap-5">
-                                        <p className="flex items-center gap-2">
-                                            <Badge className="rounded px-1">Rp</Badge>
-                                            <span>1000</span>
-                                        </p>
-                                        <p className="flex items-center gap-2">
-                                            <Badge variant="outline" className="rounded px-1">
-                                                SKU
-                                            </Badge>
-                                            <span>123456</span>
-                                        </p>
+                        {Array.from({ length: 5 }).map((_, index) => (
+                            <CommandItem key={index}>
+                                <div className="flex w-full gap-3">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+                                        alt="cart-image-product"
+                                        className="h-[44px] w-[60px] rounded"
+                                    />
+                                    <div className="flex w-full flex-col justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <h2>Product {index + 1}</h2>
+                                            <Badge variant="blue">New</Badge>
+                                        </div>
+                                        <div className="text-muted-foreground flex items-center justify-between gap-5 text-xs">
+                                            <p>Categories {index + 1}</p>
+                                            <p className="text-foreground">{priceFormat(1000000)}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </CommandItem>
-                        <CommandItem>
-                            <div className="flex items-start gap-3">
-                                <img
-                                    src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-                                    alt="cart-image-product"
-                                    className="h-[44px] w-[60px] rounded"
-                                />
-                                <div className="flex flex-col justify-between">
-                                    <h2>Coffe Table</h2>
-                                    <div className="flex gap-5">
-                                        <p className="flex items-center gap-2">
-                                            <Badge className="rounded px-1">Rp</Badge>
-                                            <span>2000</span>
-                                        </p>
-                                        <p className="flex items-center gap-2">
-                                            <Badge variant="outline" className="rounded px-1">
-                                                SKU
-                                            </Badge>
-                                            <span>789798</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </CommandItem>
+                            </CommandItem>
+                        ))}
                     </CommandGroup>
                     <CommandSeparator />
 

@@ -2,9 +2,16 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { motion } from 'framer-motion';
+import SkeletonSummaryCartCard from '../Skeleton/SkeletonSummaryCartCard';
 
-const SummaryCartCard = () => {
-    return (
+interface SummaryCartCardProps {
+    isLoading?: boolean;
+}
+
+const SummaryCartCard: React.FC<SummaryCartCardProps> = ({ isLoading = false }) => {
+    return isLoading ? (
+        <SkeletonSummaryCartCard />
+    ) : (
         <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
             <Card className="sticky top-20 hidden h-fit p-4 text-xs md:flex">
                 <CardHeader className="p-0 text-base">Summary</CardHeader>

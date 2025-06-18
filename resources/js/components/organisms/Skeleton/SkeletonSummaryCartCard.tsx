@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const SkeletonSummaryCartCard = () => {
     return (
-        <Skeleton className="flex h-fit flex-col gap-5 p-4">
+        <Skeleton className="hidden h-fit flex-col gap-5 p-4 md:flex">
             <Skeleton className="h-6 w-20" />
 
             <div className="flex flex-col gap-2">

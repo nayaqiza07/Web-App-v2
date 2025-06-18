@@ -7,9 +7,14 @@ import { ShoppingBagIcon } from 'lucide-react';
 import { useState } from 'react';
 import DeliveryAddressForm from '../Form/DeliveryAddressForm';
 import ProfileCustomerForm from '../Form/ProfileCustomerForm';
+import SkeletonAccordionCart from '../Skeleton/SkeletonAccordionCart';
 import AnimatedAccordionContent from './AnimatedAccordionContent';
 
-const AccordionCart = () => {
+interface AccordionCartProps {
+    isLoading?: boolean;
+}
+
+const AccordionCart: React.FC<AccordionCartProps> = ({ isLoading = false }) => {
     const [openItems, setOpenItems] = useState<string[]>(['bag', 'profile', 'delivery']);
 
     const [cart, setCart] = useState([
@@ -24,7 +29,9 @@ const AccordionCart = () => {
 
     const totalAmount = cart.map((data) => data.price).reduce((acc, curr) => acc + curr, 0);
 
-    return (
+    return isLoading ? (
+        <SkeletonAccordionCart />
+    ) : (
         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
             <Accordion
                 type="multiple"
