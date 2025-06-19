@@ -31,7 +31,7 @@ const Homepage = () => {
             </HeroSection>
 
             {/* 2 */}
-            <CarouselProduct isLoading={isLoading} headLineTitle="What's New" isAutoPlay totalItemShow="basis-1/2 md:basis-1/3 lg:basis-1/4" />
+            <CarouselProduct isLoading={isLoading} headLineTitle="What's New" isAutoPlay totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" />
 
             {/* 3 */}
             <CarouselProduct isLoading={isLoading} headLineTitle="Categories" isFor="category" isAutoPlay totalItemShow="md:basis-1/2" />
@@ -44,7 +44,7 @@ const Homepage = () => {
             <Activity isLoading={isLoading} orderImage="md:order-first" srcImage="/images/image-14.jpg" altImage="Image 14" />
 
             {/* 6 */}
-            <CarouselProduct isLoading={isLoading} headLineTitle="Recent Blogs" isFor="blog" isAutoPlay totalItemShow="md:basis-1/3 lg:basis-1/4" />
+            <CarouselProduct isLoading={isLoading} headLineTitle="Recent Blogs" isFor="blog" isAutoPlay totalItemShow="md:basis-1/4 lg:basis-1/5" />
         </>
     );
 };

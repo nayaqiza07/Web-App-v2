@@ -1,6 +1,6 @@
+import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { useBreadcrumb } from '@/hooks/use-breadcrumbs';
-import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 import SkeletonHeroSection from '../Skeleton/SkeletonHeroSection';
 
@@ -27,12 +27,7 @@ const HeroSection = ({ isLoading = false, children, variant = 'default', color, 
         <section className="flex flex-col gap-6">
             {variant === 'withBreadcrumb' && <Breadcrumbs breadcrumbs={breadcrumbs} />}
 
-            <motion.div
-                initial={{ opacity: 0, y: -50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
-                className={`${variants[variant]} ${color} relative overflow-hidden`}
-            >
+            <AnimatedMotion as="div" duration={1} variantName="slideDown" className={`${variants[variant]} ${color} relative overflow-hidden`}>
                 {/* image */}
                 <img src={srcImage} alt={altImage} className="h-full w-full object-cover" />
 
@@ -40,8 +35,16 @@ const HeroSection = ({ isLoading = false, children, variant = 'default', color, 
                 <div className="absolute inset-0 h-full w-full bg-black/30"></div>
 
                 {/* text */}
-                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-10 text-center text-white">{children}</div>
-            </motion.div>
+                <AnimatedMotion
+                    as="div"
+                    delay={0.3}
+                    duration={1}
+                    variantName="fadeIn"
+                    className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-10 text-center text-white"
+                >
+                    {children}
+                </AnimatedMotion>
+            </AnimatedMotion>
         </section>
     );
 };

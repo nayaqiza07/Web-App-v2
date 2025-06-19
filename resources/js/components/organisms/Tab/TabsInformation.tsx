@@ -1,6 +1,6 @@
+import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { motion } from 'framer-motion';
 import SkeletonTabsInformation from '../Skeleton/SkeletonTabsInformation';
 
 interface TabsInformationProps {
@@ -14,7 +14,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false }) 
     return isLoading ? (
         <SkeletonTabsInformation />
     ) : (
-        <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 1, ease: 'easeOut' }}>
+        <AnimatedMotion as="div" delay={0.3} duration={1} variantName="slideLeft">
             <Tabs defaultValue="information" className="w-full text-xs font-bold">
                 <TabsList className="bg-transparent">
                     <TabsTrigger value="information" className={`${styleTabTrigger}`}>
@@ -87,7 +87,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false }) 
                     </Card>
                 </TabsContent>
             </Tabs>
-        </motion.div>
+        </AnimatedMotion>
     );
 };
 

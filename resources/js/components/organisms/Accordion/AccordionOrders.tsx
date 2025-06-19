@@ -1,29 +1,27 @@
+import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card } from '@/components/ui/card';
 import { CornerUpLeft, CreditCard, MapPin, ReceiptText, RotateCcw, ShoppingBag, SquareUserRound, TriangleAlert } from 'lucide-react';
 import { useState } from 'react';
-import SkeletonAccordionOrder from '../Skeleton/SkeletonAccordionOrder';
+import HoverCardInvoice from '../HoverCard/HoverCardInvoice';
 import AnimatedAccordionContent from './AnimatedAccordionContent';
 
 interface OrderData {
     id: string;
-    amount: number;
+    amount: number | string;
     products: number;
     status: string;
 }
 
 interface AccordionOrdersProps {
-    isLoading?: boolean;
     data?: OrderData[];
 }
 
-const AccordionOrders: React.FC<AccordionOrdersProps> = ({ isLoading = false, data = [] }) => {
+const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
     const [openItems, setOpenItems] = useState(data[0]?.id ?? '');
 
-    return isLoading ? (
-        <SkeletonAccordionOrder />
-    ) : data.length === 0 ? (
+    return data.length === 0 ? (
         <div className="flex h-full border">
             <EmptyState icon={<ShoppingBag size={50} />} title="You don't have any orders" btnText="Continue Shopping" />
         </div>
@@ -41,7 +39,7 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ isLoading = false, da
                 .map((dataOrder) => (
                     <AccordionItem key={dataOrder.id} value={dataOrder.id} className="bg-background my-2 rounded-lg border-0 first:mt-0 last:mb-0">
                         <AccordionTrigger className="flex cursor-pointer flex-col items-center p-4 hover:no-underline md:flex-row">
-                            <h3 className="w-full">Order #{dataOrder.id}</h3>
+                            <HoverCardInvoice trigger={`Order # ${dataOrder.id}`} />
                             <div className="text-muted-foreground flex w-full flex-col justify-end gap-1 text-xs md:flex-row md:gap-6">
                                 <h5>
                                     Amount: <span className="text-foreground">{dataOrder.amount}</span>
@@ -58,16 +56,16 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ isLoading = false, da
                             <Card className="text-muted-foreground grid rounded-md p-4 text-xs md:grid-cols-3">
                                 <div className="flex flex-col gap-5">
                                     {/* Delivery Information */}
-                                    <div className="flex gap-5">
+                                    <AnimatedMotion as="div" delay={0.3} duration={1} variantName="fadeIn" className="flex gap-5">
                                         <MapPin size={15} />
                                         <div>
                                             <h5 className="text-muted-foreground">Delivery</h5>
                                             <p className="text-foreground">Lorem ipsum dolor sit amet.</p>
                                         </div>
-                                    </div>
+                                    </AnimatedMotion>
 
                                     {/* Recipient Information */}
-                                    <div className="flex gap-5">
+                                    <AnimatedMotion as="div" delay={0.4} duration={1} variantName="fadeIn" className="flex gap-5">
                                         <SquareUserRound size={15} />
                                         <div className="text-foreground flex flex-col gap-2">
                                             <h5 className="text-muted-foreground">Recipient of the order</h5>
@@ -75,11 +73,11 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ isLoading = false, da
                                             <p>E-mail</p>
                                             <p>Phone</p>
                                         </div>
-                                    </div>
+                                    </AnimatedMotion>
                                 </div>
 
                                 {/* Payment Information */}
-                                <div className="flex gap-5">
+                                <AnimatedMotion as="div" delay={0.5} duration={1} variantName="fadeIn" className="flex gap-5">
                                     <CreditCard size={15} />
                                     <div className="grid w-full grid-cols-2">
                                         <div className="text-muted-foreground flex flex-col gap-2">
@@ -93,10 +91,10 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ isLoading = false, da
                                             <p>100</p>
                                         </div>
                                     </div>
-                                </div>
+                                </AnimatedMotion>
 
                                 {/* Pasca Order Information */}
-                                <div className="flex flex-col gap-2">
+                                <AnimatedMotion as="div" delay={0.6} duration={1} variantName="fadeIn" className="flex flex-col gap-2">
                                     <div className="flex gap-5">
                                         <ReceiptText size={15} />
                                         <h5>Electronic Check</h5>
@@ -113,7 +111,7 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ isLoading = false, da
                                         <CornerUpLeft size={15} />
                                         <h5>Return Products</h5>
                                     </div>
-                                </div>
+                                </AnimatedMotion>
                             </Card>
 
                             <div className="grid gap-4 lg:grid-cols-2">Test</div>

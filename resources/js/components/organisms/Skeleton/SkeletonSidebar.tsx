@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const SkeletonSidebar = () => {
     return (
-        <div className="flex w-[264px] flex-col gap-3">
+        <div className="hidden w-[264px] flex-col gap-3 md:flex">
             <Skeleton className="flex h-[450px] flex-col gap-1 rounded-xl p-2">
                 {Array.from({ length: 6 }).map((_, index) => (
                     <Skeleton key={index} className="flex h-9 items-center gap-3 px-4 py-2">

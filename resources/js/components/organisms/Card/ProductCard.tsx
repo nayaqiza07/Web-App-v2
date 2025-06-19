@@ -1,7 +1,7 @@
+import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { priceFormat, truncateText } from '@/lib/utils';
-import { motion } from 'framer-motion';
 import { ShoppingCart } from 'lucide-react';
 import SkeletonProductCard from '../Skeleton/SkeletonProductCard';
 
@@ -13,9 +13,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false }) => {
     return isLoading ? (
         <SkeletonProductCard />
     ) : (
-        <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
+        <AnimatedMotion as="div" duration={1} variantName="slideLeft">
             <Card className="gap-0 overflow-hidden py-0">
-                <CardContent className="group relative overflow-hidden p-0">
+                <CardContent className="group relative h-[150px] overflow-hidden p-0">
                     {/* image */}
                     <img
                         src={`/images/image-15.jpg`}
@@ -33,15 +33,25 @@ const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false }) => {
                     </Button>
                 </CardContent>
 
-                <CardFooter className="flex flex-col items-start gap-3 border-t p-4">
-                    <CardTitle className="w-full">{truncateText('Title title title title title title title title', 25)}</CardTitle>
-                    <div className="text-muted-foreground flex w-full items-center justify-between text-xs font-bold">
+                <CardFooter className="flex flex-col items-start gap-3 border-t p-4 text-xs">
+                    <AnimatedMotion as="h1" delay={0.3} duration={1} variantName="fadeIn">
+                        <CardTitle className="text-card-foreground w-full">
+                            {truncateText('Title title title title title title title title', 25)}
+                        </CardTitle>
+                    </AnimatedMotion>
+                    <AnimatedMotion
+                        as="h1"
+                        delay={0.4}
+                        duration={1}
+                        variantName="fadeIn"
+                        className="text-muted-foreground flex w-full items-center justify-between text-xs font-bold"
+                    >
                         <h5>Category</h5>
                         <h5>{priceFormat(1000000)}</h5>
-                    </div>
+                    </AnimatedMotion>
                 </CardFooter>
             </Card>
-        </motion.div>
+        </AnimatedMotion>
     );
 };
 

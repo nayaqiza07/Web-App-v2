@@ -1,6 +1,6 @@
+import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import SkeletonCarouselImageProduct from '@/components/molecules/Skeleton/SkeletonCarouselImageProduct';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { motion } from 'framer-motion';
 
 interface CarouselImageProductProps {
     isLoading?: boolean;
@@ -11,10 +11,11 @@ const CarouselImageProduct: React.FC<CarouselImageProductProps> = ({ isLoading =
     return isLoading ? (
         <SkeletonCarouselImageProduct />
     ) : (
-        <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, duration: 1, ease: 'easeOut' }}
+        <AnimatedMotion
+            as="div"
+            delay={0.3}
+            duration={1}
+            variantName="slideRight"
             className="order-last mx-auto flex w-[260px] items-center justify-center lg:order-first lg:w-fit"
         >
             <Carousel
@@ -41,7 +42,7 @@ const CarouselImageProduct: React.FC<CarouselImageProductProps> = ({ isLoading =
                 <CarouselPrevious className="bg-card" />
                 <CarouselNext className="bg-card" />
             </Carousel>
-        </motion.div>
+        </AnimatedMotion>
     );
 };
 

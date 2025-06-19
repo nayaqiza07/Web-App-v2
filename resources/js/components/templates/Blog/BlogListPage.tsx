@@ -26,8 +26,8 @@ const BlogListPage = () => {
             {/* Hero Section End */}
 
             {/* Blog List Start */}
-            <div className="grid gap-3 md:grid-cols-3 lg:grid-cols-4">
-                {Array.from({ length: 5 }).map((_, index) => (
+            <div className="grid gap-3 md:grid-cols-4 lg:grid-cols-5">
+                {Array.from({ length: 15 }).map((_, index) => (
                     <BlogCard isLoading={isLoading} key={index} index={index} />
                 ))}
             </div>

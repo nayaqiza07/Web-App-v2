@@ -22,7 +22,8 @@ const ProductPage = () => {
                 <h1 className="text-4xl font-bold">Shop</h1>
             </HeroSection>
             {/* <SkeletonHeroSection variant="withBreadcrumb" /> */}
-            <FilterDrawer />
+
+            <FilterDrawer isLoading={isLoading} />
             {/* Hero Section */}
 
             <section className="flex gap-5">
@@ -31,19 +32,11 @@ const ProductPage = () => {
                 {/* Sidebar Product End */}
 
                 {/* Product List */}
-                {/* <motion.div
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1, ease: 'easeOut' }}
-                    // className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4"
-                    className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3"
-                > */}
-                <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid w-full grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
                     {Array.from({ length: 15 }).map((_, index) => (
                         <ProductCard isLoading={isLoading} key={index} />
                     ))}
                 </div>
-                {/* </motion.div> */}
                 {/* Product List */}
             </section>
         </>

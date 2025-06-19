@@ -1,15 +1,15 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
 import { Link } from '@inertiajs/react';
-import { motion } from 'framer-motion';
 import { Fragment } from 'react';
+import AnimatedMotion from './atoms/Animated/AnimatedMotion';
 import SkeletonBreadcrumb from './molecules/Skeleton/SkeletonBreadcrumb';
 
 export function Breadcrumbs({ isLoading = false, breadcrumbs }: { isLoading?: boolean; breadcrumbs: BreadcrumbItemType[] }) {
     return isLoading ? (
         <SkeletonBreadcrumb />
     ) : (
-        <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' }}>
+        <AnimatedMotion as="div" delay={0.3} duration={0.5} variantName="slideRight">
             {breadcrumbs.length > 0 && (
                 <Breadcrumb>
                     <BreadcrumbList>
@@ -33,6 +33,6 @@ export function Breadcrumbs({ isLoading = false, breadcrumbs }: { isLoading?: bo
                     </BreadcrumbList>
                 </Breadcrumb>
             )}
-        </motion.div>
+        </AnimatedMotion>
     );
 }
