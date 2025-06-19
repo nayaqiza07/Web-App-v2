@@ -4,7 +4,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const SkeletonAccordionOrder = () => {
     return (
-        <div className="flex flex-col gap-5">
+        <Skeleton className="flex h-fit flex-col gap-5 rounded-xl p-4">
             <Skeleton className="flex h-fit flex-col gap-5 p-4">
                 <div className="flex flex-col justify-between gap-3 md:items-center lg:flex-row">
                     <Skeleton className="h-6 w-30" />
@@ -35,7 +35,7 @@ const SkeletonAccordionOrder = () => {
                     </div>
                 </Skeleton>
             ))}
-        </div>
+        </Skeleton>
     );
 };
 

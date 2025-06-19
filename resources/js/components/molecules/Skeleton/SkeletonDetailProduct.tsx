@@ -14,7 +14,7 @@ const SkeletonDetailProduct = () => {
                 <Skeleton className="h-10 w-25" />
                 <Skeleton className="h-4 w-40" />
             </div>
-            <Skeleton className="h-30" />
+            <Skeleton className="h-20" />
             <Skeleton className="h-10" />
         </div>
     );

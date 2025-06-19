@@ -28,7 +28,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ isLoading = false, index }) => {
     ) : (
         <motion.div custom={index} variants={blogCardVariants} initial="hidden" animate="visible">
             <Card className="flex h-[125px] flex-row gap-3 overflow-hidden p-2 md:h-full md:flex-col">
-                <CardContent className="relative overflow-hidden rounded-lg p-0 md:h-[200px]">
+                <CardContent className="relative overflow-hidden rounded-lg p-0 md:h-[150px]">
                     <img
                         src={`/images/image-0.jpg`}
                         alt={`Foto Produk ${`1`}`}
@@ -37,11 +37,11 @@ const BlogCard: React.FC<BlogCardProps> = ({ isLoading = false, index }) => {
                     />
                 </CardContent>
 
-                <CardFooter className="flex flex-col justify-between p-1 text-xs font-bold md:gap-6">
-                    <h1 className="w-full text-base">{truncateText('Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo, autem?', 20)}</h1>
-                    <div className="flex w-full items-center justify-between">
-                        <h3 className="text-muted-foreground order-last md:order-first">by Admin</h3>
-                        <h3 className="text-muted-foreground text-end">20 June 2025</h3>
+                <CardFooter className="flex flex-col justify-between p-1 text-xs font-bold md:gap-3">
+                    <h1 className="w-full">{truncateText('Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo, autem?', 30)}</h1>
+                    <div className="text-muted-foreground flex w-full items-center justify-between">
+                        <h3 className="order-last md:order-first">by Admin</h3>
+                        <h3 className="text-end">20 June 2025</h3>
                     </div>
                 </CardFooter>
             </Card>

@@ -1,9 +1,9 @@
+import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import ButtonWithBadge from '@/components/molecules/Button/ButtonWithBadge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { motion } from 'framer-motion';
 import SkeletonSidebar from '../Skeleton/SkeletonSidebar';
 
 interface SidebarProps {
@@ -15,33 +15,38 @@ const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) 
     return isLoading ? (
         <SkeletonSidebar />
     ) : (
-        <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: 'easeOut' }}
-            className={`${className} sticky top-20 flex h-full flex-col gap-3`}
-        >
-            <Card className={`bg-background w-full gap-1 p-2`}>
-                <ScrollArea className="h-[425px]">
-                    {Array.from({ length: 12 }).map((_, index) => (
-                        <ButtonWithBadge key={index} title={`Category ${index + 1}`} badgeNumber={index + 1} index={index} />
-                    ))}
-                </ScrollArea>
-            </Card>
+        <div className={`${className} sticky top-20 flex h-full flex-col gap-3`}>
+            <AnimatedMotion as="div" duration={1} variantName="slideRight">
+                <Card className={`bg-background w-full gap-0 py-0 text-xs`}>
+                    <CardHeader className="px-3 py-4">
+                        <CardTitle>Category</CardTitle>
+                    </CardHeader>
+                    <Separator />
+                    <CardContent className="p-1">
+                        <ScrollArea className="h-[200px] p-2 md:h-[375px]">
+                            {Array.from({ length: 12 }).map((_, index) => (
+                                <ButtonWithBadge key={index} title={`Category ${index + 1}`} badgeNumber={index + 1} index={index} />
+                            ))}
+                        </ScrollArea>
+                    </CardContent>
+                </Card>
+            </AnimatedMotion>
 
-            <Card className={`bg-background w-full gap-0 py-0 text-xs`}>
-                <CardHeader className="px-2 py-4">
-                    <CardTitle>Price</CardTitle>
-                </CardHeader>
-                <Separator />
-                <CardContent className="p-2">
-                    <div className="flex gap-3">
-                        <Input placeholder="Min" className="bg-accent border-border" />
-                        <Input placeholder="Max" className="bg-accent border-border" />
-                    </div>
-                </CardContent>
-            </Card>
-        </motion.div>
+            <AnimatedMotion as="div" delay={0.3} duration={1} variantName="slideRight">
+                <Card className={`bg-background w-full gap-0 py-0 text-xs`}>
+                    <CardHeader className="px-3 py-4">
+                        <CardTitle>Price</CardTitle>
+                    </CardHeader>
+                    <Separator />
+                    <CardContent className="p-2">
+                        <div className="flex gap-3">
+                            <Input placeholder="Min" className="bg-accent border-border" />
+                            <Input placeholder="Max" className="bg-accent border-border" />
+                        </div>
+                    </CardContent>
+                </Card>
+            </AnimatedMotion>
+        </div>
     );
 };
 

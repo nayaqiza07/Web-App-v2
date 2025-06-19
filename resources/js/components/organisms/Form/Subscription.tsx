@@ -1,5 +1,5 @@
+import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import InputWithButton from '@/components/molecules/FormField/InputWithButton';
-import { motion } from 'framer-motion';
 import SkeletonSubscription from '../Skeleton/SkeletonSubscription';
 
 const Subscription = () => {
@@ -12,10 +12,10 @@ const Subscription = () => {
                 {isLoading ? (
                     <SkeletonSubscription />
                 ) : (
-                    <motion.div
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, ease: 'easeOut' }}
+                    <AnimatedMotion
+                        as="div"
+                        duration={0.5}
+                        variantName="slideUp"
                         className="flex h-[168px] flex-col items-center justify-center gap-4 border-t"
                     >
                         <h3 className="text-center font-bold">Sign up for the newsletter and get 10% discount</h3>
@@ -30,7 +30,7 @@ const Subscription = () => {
                                 size: 'sm',
                             }}
                         />
-                    </motion.div>
+                    </AnimatedMotion>
                 )}
             </>
         )

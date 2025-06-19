@@ -1,22 +1,34 @@
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ListFilter } from 'lucide-react';
 import Sidebar from '../Sidebar/Sidebar';
 
-const FilterDrawer = () => {
+interface FilterDrawerProps {
+    isLoading?: boolean;
+}
+
+const FilterDrawer: React.FC<FilterDrawerProps> = ({ isLoading }) => {
     return (
         <Drawer>
-            <DrawerTrigger asChild className="md:hidden">
-                <Button>
-                    <ListFilter /> Filter
-                </Button>
-            </DrawerTrigger>
+            {isLoading ? (
+                <Skeleton className="h-10 md:hidden" />
+            ) : (
+                <DrawerTrigger asChild className="md:hidden">
+                    <Button>
+                        <ListFilter /> Filter
+                    </Button>
+                </DrawerTrigger>
+            )}
             <DrawerContent>
                 <DrawerHeader>
                     <DrawerTitle>Filter</DrawerTitle>
                     <DrawerDescription></DrawerDescription>
                 </DrawerHeader>
-                <Sidebar className="mx-4" />
+                <ScrollArea className="h-[300px]">
+                    <Sidebar className="mx-4" />
+                </ScrollArea>
                 <DrawerFooter>
                     {/* <Button>Submit</Button>
                     <DrawerClose>

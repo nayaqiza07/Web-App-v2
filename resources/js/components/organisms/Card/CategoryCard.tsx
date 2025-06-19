@@ -1,3 +1,6 @@
+import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
+import { Button } from '@/components/ui/button';
+
 interface CategoryCardProps {
     srcImage: string;
     altImage: string;
@@ -6,7 +9,12 @@ interface CategoryCardProps {
 
 const CategoryCard = ({ srcImage, altImage, title }: CategoryCardProps) => {
     return (
-        <div className="group relative h-[240px] w-full overflow-hidden rounded-2xl border">
+        <AnimatedMotion
+            as="div"
+            duration={1}
+            variantName="slideLeft"
+            className="group relative h-[280px] w-full overflow-hidden rounded-2xl lg:h-[240px]"
+        >
             <img
                 src={srcImage}
                 alt={altImage}
@@ -14,10 +22,11 @@ const CategoryCard = ({ srcImage, altImage, title }: CategoryCardProps) => {
                 className="h-full w-full object-cover"
             />
 
-            <div className="absolute inset-0 flex h-full w-full items-center justify-center bg-black/30">
-                <h1 className="text-4xl font-bold text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">{title}</h1>
+            <div className="absolute inset-0 flex h-full w-full items-end justify-between bg-black/30 p-5 font-bold">
+                <h2 className="text-card text-xl">{title}</h2>
+                <Button className="bg-primary/60 hover:bg-primary/80">Shop Now</Button>
             </div>
-        </div>
+        </AnimatedMotion>
     );
 };
 
