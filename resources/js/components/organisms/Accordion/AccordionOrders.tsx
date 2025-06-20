@@ -2,8 +2,11 @@ import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card } from '@/components/ui/card';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { motion } from 'framer-motion';
 import { CornerUpLeft, CreditCard, MapPin, ReceiptText, RotateCcw, ShoppingBag, SquareUserRound, TriangleAlert } from 'lucide-react';
 import { useState } from 'react';
+import InvoiceDrawer from '../Drawer/InvoiceDrawer';
 import HoverCardInvoice from '../HoverCard/HoverCardInvoice';
 import AnimatedAccordionContent from './AnimatedAccordionContent';
 
@@ -20,6 +23,8 @@ interface AccordionOrdersProps {
 
 const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
     const [openItems, setOpenItems] = useState(data[0]?.id ?? '');
+
+    const isMobile = useIsMobile();
 
     return data.length === 0 ? (
         <div className="flex h-full border">
@@ -38,20 +43,33 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
                 .filter((data) => Boolean(data?.id))
                 .map((dataOrder) => (
                     <AccordionItem key={dataOrder.id} value={dataOrder.id} className="bg-background my-2 rounded-lg border-0 first:mt-0 last:mb-0">
-                        <AccordionTrigger className="flex cursor-pointer flex-col items-center p-4 hover:no-underline md:flex-row">
-                            <HoverCardInvoice trigger={`Order # ${dataOrder.id}`} />
-                            <div className="text-muted-foreground flex w-full flex-col justify-end gap-1 text-xs md:flex-row md:gap-6">
-                                <h5>
-                                    Amount: <span className="text-foreground">{dataOrder.amount}</span>
-                                </h5>
-                                <h5>
-                                    Products: <span className="text-foreground">{dataOrder.products}</span>
-                                </h5>
-                                <h5>
-                                    Status: <span className="text-[#16A34A]">{dataOrder.status}</span>
-                                </h5>
+                        <AccordionTrigger className="w-full p-4 hover:no-underline">
+                            <div className="flex w-full cursor-pointer flex-col gap-3 md:items-center lg:flex-row">
+                                {isMobile ? (
+                                    <InvoiceDrawer trigger={`Order #${dataOrder.id}`} />
+                                ) : (
+                                    <HoverCardInvoice trigger={`Order #${dataOrder.id}`} />
+                                )}
+
+                                <motion.div
+                                    className="text-muted-foreground flex flex-1 flex-col justify-end gap-1 text-xs md:flex-row md:gap-5"
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.2, duration: 0.4, ease: 'easeOut' }}
+                                >
+                                    <h5>
+                                        Amount: <span className="text-foreground">{dataOrder.amount}</span>
+                                    </h5>
+                                    <h5>
+                                        Products: <span className="text-foreground">{dataOrder.products}</span>
+                                    </h5>
+                                    <h5>
+                                        Status: <span className="text-[#16A34A]">{dataOrder.status}</span>
+                                    </h5>
+                                </motion.div>
                             </div>
                         </AccordionTrigger>
+
                         <AnimatedAccordionContent isOpen={openItems.includes(dataOrder.id)} className="flex flex-col gap-4 px-4 text-balance">
                             <Card className="text-muted-foreground grid rounded-md p-4 text-xs md:grid-cols-3">
                                 <div className="flex flex-col gap-5">

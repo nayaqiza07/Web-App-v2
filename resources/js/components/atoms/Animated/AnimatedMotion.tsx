@@ -22,7 +22,7 @@ const AnimatedMotion: React.FC<AnimatedMotionProps> = ({
     className = '',
     ...props
 }) => {
-    const MotionTag = motion(Tag);
+    const MotionTag = motion.create(Tag);
     const variants = animationVariants[variantName];
 
     return (
