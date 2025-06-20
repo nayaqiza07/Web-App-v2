@@ -7,9 +7,10 @@ import SkeletonBlogCard from '../Skeleton/SkeletonBlogCard';
 interface BlogCardProps {
     isLoading?: boolean;
     index?: number;
+    isCarousel?: boolean;
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ isLoading = false, index }) => {
+const BlogCard: React.FC<BlogCardProps> = ({ isLoading = false, index, isCarousel }) => {
     const blogCardVariants = {
         hidden: { opacity: 0, y: 100 },
         visible: (i: number) => ({
@@ -26,7 +27,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ isLoading = false, index }) => {
     return isLoading ? (
         <SkeletonBlogCard />
     ) : (
-        <motion.div custom={index} variants={blogCardVariants} initial="hidden" animate="visible">
+        <motion.div custom={index} variants={blogCardVariants} initial={!isCarousel ? 'hidden' : false} animate="visible">
             <Card className="flex h-[125px] flex-row gap-3 overflow-hidden p-2 md:h-full md:flex-col">
                 <CardContent className="relative overflow-hidden rounded-lg p-0 md:h-[150px]">
                     <img

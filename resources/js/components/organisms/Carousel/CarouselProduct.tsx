@@ -79,16 +79,16 @@ const CarouselProduct = ({ isLoading = false, headLineTitle = 'Title', isFor = '
                 <CarouselContent>
                     {Array.from({ length: 10 }).map((_, index) => (
                         <CarouselItem key={index + 1} className={`${totalItemShow} py-1`}>
-                            {isFor === 'product' && (isLoading ? <SkeletonProductCard /> : <ProductCard />)}
+                            {isFor === 'product' && (isLoading ? <SkeletonProductCard /> : <ProductCard isCarousel />)}
 
                             {isFor === 'category' &&
                                 (isLoading ? (
                                     <SkeletonCategoryCard />
                                 ) : (
-                                    <CategoryCard srcImage="/images/image-9.jpg" altImage="Foto Produk ${`9`}" title="Stool" />
+                                    <CategoryCard srcImage="/images/image-9.jpg" altImage="Foto Produk ${`9`}" title="Stool" isCarousel />
                                 ))}
 
-                            {isFor === 'blog' && (isLoading ? <SkeletonBlogCard /> : <BlogCard />)}
+                            {isFor === 'blog' && (isLoading ? <SkeletonBlogCard /> : <BlogCard isCarousel />)}
                         </CarouselItem>
                     ))}
                 </CarouselContent>
