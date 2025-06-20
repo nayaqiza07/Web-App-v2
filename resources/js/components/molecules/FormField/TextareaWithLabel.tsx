@@ -4,8 +4,10 @@ import { TextareaWithLabelProps } from '@/types';
 
 const TextareaWithLabel = ({ label, labelFor, id, name, placeholder, autoComplete, rows = 5, className }: TextareaWithLabelProps) => {
     return (
-        <div>
-            <Label htmlFor={labelFor}>{label}</Label>
+        <div className="flex flex-col gap-1">
+            <Label htmlFor={labelFor} className="text-xs">
+                {label}
+            </Label>
             <Textarea
                 id={id}
                 name={name}

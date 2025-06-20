@@ -16,13 +16,9 @@ const BlogListPage = () => {
     return (
         <>
             {/* Hero Section Start */}
-            <HeroSection
-                isLoading={isLoading}
-                variant="withBreadcrumb"
-                color="bg-[#EACFAE]"
-                srcImage="/images/647567.jpg"
-                altImage="Foto Blog"
-            ></HeroSection>
+            <HeroSection isLoading={isLoading} variant="withBreadcrumb" color="bg-[#EACFAE]" srcImage="/images/647567.jpg" altImage="Foto Blog">
+                <h1 className="text-4xl font-bold">Blog</h1>
+            </HeroSection>
             {/* Hero Section End */}
 
             {/* Blog List Start */}

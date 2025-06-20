@@ -1,5 +1,6 @@
 import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import InputWithButton from '@/components/molecules/FormField/InputWithButton';
+import { Separator } from '@/components/ui/separator';
 import SkeletonSubscription from '../Skeleton/SkeletonSubscription';
 
 const Subscription = () => {
@@ -16,8 +17,10 @@ const Subscription = () => {
                         as="div"
                         duration={0.5}
                         variantName="slideUp"
-                        className="flex h-[168px] flex-col items-center justify-center gap-4 border-t"
+                        className="flex h-[168px] flex-col items-center justify-center gap-4"
                     >
+                        <Separator className="via-border bg-gradient-to-r from-transparent to-transparent" />
+
                         <h3 className="text-center font-bold">Sign up for the newsletter and get 10% discount</h3>
                         <InputWithButton
                             placeholder="E-mail Address"

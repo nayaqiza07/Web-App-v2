@@ -1,5 +1,3 @@
-// lib/motion/variants.ts
-
 import { Variants } from 'framer-motion';
 
 // Kumpulan animasi reusable

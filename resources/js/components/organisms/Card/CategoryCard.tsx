@@ -5,14 +5,16 @@ interface CategoryCardProps {
     srcImage: string;
     altImage: string;
     title: string;
+    isCarousel?: boolean;
 }
 
-const CategoryCard = ({ srcImage, altImage, title }: CategoryCardProps) => {
+const CategoryCard = ({ srcImage, altImage, title, isCarousel }: CategoryCardProps) => {
     return (
         <AnimatedMotion
             as="div"
             duration={1}
             variantName="slideLeft"
+            initial={!isCarousel ? 'hidden' : false}
             className="group relative h-[280px] w-full overflow-hidden rounded-2xl lg:h-[240px]"
         >
             <img
