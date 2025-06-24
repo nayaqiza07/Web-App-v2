@@ -23,6 +23,7 @@ const Subscription = () => {
 
                         <h3 className="text-center font-bold">Sign up for the newsletter and get 10% discount</h3>
                         <InputWithButton
+                            id="emailSubs"
                             placeholder="E-mail Address"
                             btnText="Send"
                             inputVariant="rounded"

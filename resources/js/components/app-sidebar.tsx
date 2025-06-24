@@ -1,3 +1,4 @@
+import AppearanceToggleTab from '@/components/appearance-tabs';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
@@ -36,6 +37,8 @@ export function AppSidebar() {
 
             <SidebarContent>
                 <NavMain items={mainNavItems} />
+
+                <AppearanceToggleTab className="mx-auto mt-auto mb-5 w-fit" />
             </SidebarContent>
 
             <SidebarFooter className="border-t">

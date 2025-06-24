@@ -40,8 +40,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) 
                     <Separator />
                     <CardContent className="p-2">
                         <div className="flex gap-3">
-                            <Input placeholder="Min" className="bg-accent border-border" />
-                            <Input placeholder="Max" className="bg-accent border-border" />
+                            <Input placeholder="Min" id="min" className="bg-accent border-border" />
+                            <Input placeholder="Max" id="max" className="bg-accent border-border" />
                         </div>
                     </CardContent>
                 </Card>

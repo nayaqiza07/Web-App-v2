@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
@@ -46,12 +46,12 @@ const buttonVariants = cva(
         shineHover:
           'relative overflow-hidden before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] hover:before:bg-[position:-100%_0,0_0] before:duration-1000',
         gooeyRight:
-          cn('relative z-0 cursor-pointer overflow-hidden transition-all duration-500',
+          cn('relative z-0 overflow-hidden transition-all duration-500',
             'after:absolute before:absolute',
             'before:inset-0 before:-z-10 before:translate-x-[150%] before:translate-y-[150%] before:scale-[2.5] before:rounded-[100%] before:transition-transform before:duration-1000 hover:before:translate-x-0 hover:before:translate-y-0 before:bg-gradient-to-r to-transparent before:to-transparent'
           ),
         gooeyLeft:
-          cn('relative z-0 cursor-pointer overflow-hidden transition-all duration-500',
+          cn('relative z-0 overflow-hidden transition-all duration-500',
             'after:absolute before:absolute',
             'after:inset-0 after:-z-10 after:translate-x-[-150%] after:translate-y-[150%] after:scale-[2.5] after:rounded-[100%] after:transition-transform after:duration-1000 hover:after:translate-x-0 hover:after:translate-y-0 after:bg-gradient-to-l to-transparent after:to-transparent'
           ),

@@ -1,7 +1,12 @@
 import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { MailIcon, MapPinIcon, PhoneCallIcon, SendIcon } from 'lucide-react';
+import SkeletonChatWithUs from '../Skeleton/SkeletonChatWithUs';
 
-const ChatWithUs = () => {
+interface ChatWithUsProps {
+    isLoading?: boolean;
+}
+
+const ChatWithUs: React.FC<ChatWithUsProps> = ({ isLoading = false }) => {
     const data = [
         {
             title: 'Chat With Us',
@@ -23,8 +28,10 @@ const ChatWithUs = () => {
         },
     ];
 
-    return (
-        <div className="flex flex-col gap-8 p-4 text-center text-xs font-semibold md:text-start">
+    return isLoading ? (
+        <SkeletonChatWithUs />
+    ) : (
+        <div className="flex flex-col gap-8 text-center text-xs font-semibold md:p-4 md:text-start">
             {data.length > 0 &&
                 data.map((data, index) => (
                     <AnimatedMotion as="div" delay={index * 0.5} duration={1} variantName="slideLeft" key={index} className="flex flex-col gap-2">

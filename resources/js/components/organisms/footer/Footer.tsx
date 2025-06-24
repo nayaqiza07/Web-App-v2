@@ -1,5 +1,6 @@
 import ScrollToTopButton from '@/components/atoms/Button/ScrollToTopButton';
 import { Button } from '@/components/ui/button';
+import { Link } from '@inertiajs/react';
 import { ArrowRight, ArrowUp, Facebook, Globe, Instagram } from 'lucide-react';
 
 const Footer = () => {
@@ -29,12 +30,12 @@ const Footer = () => {
 
                     <div className="flex justify-between gap-3">
                         <div className="flex flex-col gap-3 font-sans">
-                            <p>Services</p>
-                            <p>Blog</p>
+                            <Link href={route('services')}>Services</Link>
+                            <Link href={route('blog')}>Blog</Link>
                         </div>
                         <div className="flex flex-col gap-3">
-                            <p>About Us</p>
-                            <p>Contact Us</p>
+                            <Link href={route('about-us')}>About Us</Link>
+                            <Link href={route('contact-us')}>Contact Us</Link>
                         </div>
                     </div>
 

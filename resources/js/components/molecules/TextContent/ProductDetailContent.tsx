@@ -19,7 +19,7 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading }
     ) : (
         <AnimatedMotion as="div" delay={0.3} duration={1} variantName="slideLeft" className="flex w-full flex-col justify-between gap-6 lg:w-2/3">
             <AnimatedMotion as="h1" delay={0.3} duration={1} variantName="fadeIn" className="text-2xl font-semibold">
-                <h1>Blue Leather Sofa</h1>
+                Blue Leather Sofa
             </AnimatedMotion>
             <p className="flex items-center gap-4 text-2xl font-bold">
                 <AnimatedMotion as="span" delay={0.4} duration={1} variantName="fadeIn">

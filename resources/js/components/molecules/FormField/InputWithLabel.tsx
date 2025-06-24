@@ -11,6 +11,7 @@ const InputWithLabel: React.FC<InputWithLabelProps> = ({
     type,
     placeholder,
     value,
+    onChange,
     disabled,
     autoComplete,
     className,
@@ -26,6 +27,7 @@ const InputWithLabel: React.FC<InputWithLabelProps> = ({
                 type={type}
                 placeholder={placeholder}
                 value={value}
+                onChange={onChange}
                 autoComplete={autoComplete}
                 disabled={disabled}
                 className={`${className} border-border`}
