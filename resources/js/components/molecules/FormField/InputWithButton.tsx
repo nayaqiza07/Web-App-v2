@@ -40,12 +40,14 @@ type InputWithButtonVariantProps = {
 
 // === COMPONENT ===
 export interface InputWithButtonProps extends React.InputHTMLAttributes<HTMLInputElement>, InputWithButtonVariantProps {
+    id: string;
     placeholder: string;
     btnText: string | ReactNode;
     btnProps?: ButtonProps;
 }
 
 const InputWithButton = ({
+    id,
     placeholder,
     btnText,
     btnProps,
@@ -55,7 +57,7 @@ const InputWithButton = ({
 }: InputWithButtonProps) => {
     return (
         <div className="relative w-full max-w-sm">
-            <Input {...inputProps} placeholder={placeholder} className={cn(inputVariants({ variant: inputVariant }), inputProps.className)} />
+            <Input {...inputProps} id={id} placeholder={placeholder} className={cn(inputVariants({ variant: inputVariant }), inputProps.className)} />
             <Button {...btnProps} className={cn(buttonVariants({ variant: buttonVariant }), btnProps?.className)}>
                 {btnText}
             </Button>

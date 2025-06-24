@@ -35,20 +35,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false, isCarousel
                 </CardContent>
 
                 <CardFooter className="flex flex-col items-start gap-3 border-t p-4 text-xs">
-                    <AnimatedMotion as="h1" delay={0.3} duration={1} variantName="fadeIn" initial={!isCarousel ? 'hidden' : false}>
+                    <AnimatedMotion as="h1" initial={!isCarousel ? 'hidden' : false} delay={0.3} duration={1} variantName="fadeIn">
                         <CardTitle className="text-card-foreground w-full">
                             {truncateText('Title title title title title title title title', 25)}
                         </CardTitle>
                     </AnimatedMotion>
                     <AnimatedMotion
-                        as="h1"
+                        as="div"
+                        initial={!isCarousel ? 'hidden' : false}
                         delay={0.4}
                         duration={1}
                         variantName="fadeIn"
                         className="text-muted-foreground flex w-full items-center justify-between text-xs font-bold"
                     >
-                        <h5>Category</h5>
-                        <h5>{priceFormat(1000000)}</h5>
+                        <span>Category</span>
+                        <span>{priceFormat(1000000)}</span>
                     </AnimatedMotion>
                 </CardFooter>
             </Card>

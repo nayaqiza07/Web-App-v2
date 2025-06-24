@@ -56,6 +56,7 @@ export interface InputWithLabelProps {
     type: string;
     placeholder: string;
     value?: string | number;
+    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     autoComplete: string;
     disabled?: boolean;
     className?: string;
@@ -77,9 +78,11 @@ export interface TextareaWithLabelProps {
 export interface SelectWithLabelProps {
     label: string;
     labelFor: string;
-    // id: string;
+    id: string;
     // name: string;
     // type: string;
+    value?: string;
+    onValueChange?: (value: string) => void;
     placeholder: string;
     // autoComplete: string;
     // className?: string;

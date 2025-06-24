@@ -3,10 +3,17 @@ import InputWithLabel from '@/components/molecules/FormField/InputWithLabel';
 import TextareaWithLabel from '@/components/molecules/FormField/TextareaWithLabel';
 import { Button } from '@/components/ui/button';
 import { SendIcon } from 'lucide-react';
+import SkeletonContactForm from '../Skeleton/SkeletonContactForm';
 
-const ContactForm = () => {
-    return (
-        <div className="h-fit p-4">
+interface ContactFormProps {
+    isLoading?: boolean;
+}
+
+const ContactForm: React.FC<ContactFormProps> = ({ isLoading = false }) => {
+    return isLoading ? (
+        <SkeletonContactForm />
+    ) : (
+        <div className="h-fit md:p-4">
             <div className="flex flex-col gap-5">
                 <AnimatedMotion as="div" duration={1} variantName="slideRight">
                     <InputWithLabel labelFor="name" label="Name" id="name" name="name" type="text" placeholder="Your Name" autoComplete="off" />

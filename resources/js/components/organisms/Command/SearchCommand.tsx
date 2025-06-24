@@ -1,6 +1,7 @@
 import { Calculator, Calendar, LayoutGrid, SearchIcon, SearchXIcon, Settings, Smile } from 'lucide-react';
 
 import AppearanceToggleTab from '@/components/appearance-tabs';
+import CornerPlusBadge from '@/components/atoms/Badge/CornerPlusBadge';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -117,7 +118,7 @@ const SearchCommand = () => {
                                     <div className="flex w-full flex-col justify-between">
                                         <div className="flex items-center gap-3">
                                             <h2>Product {index + 1}</h2>
-                                            <Badge variant="blue">New</Badge>
+                                            <CornerPlusBadge>New</CornerPlusBadge>
                                         </div>
                                         <div className="text-muted-foreground flex items-center justify-between gap-5 text-xs">
                                             <p>Categories {index + 1}</p>

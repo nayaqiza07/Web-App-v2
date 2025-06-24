@@ -46,6 +46,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-2">
                     <NavbarMobile />
                     <Link href={route('home')}>Horestco</Link>
+
                     <div className="ml-5 hidden items-center gap-1 lg:flex">
                         {navData.map((data, index) => (
                             <NavMenu
@@ -68,7 +69,8 @@ const Navbar = () => {
                         {auth.user ? (
                             <Link href={route('dashboard')}>
                                 <Avatar className="h-8 w-8 overflow-hidden rounded-full">
-                                    <AvatarImage src={auth.user.avatar} alt={auth.user.name} />
+                                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                    {/* <AvatarImage src={auth.user.avatar} alt={auth.user.name} /> */}
                                     <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                         {getInitials(auth.user.name)}
                                     </AvatarFallback>
