@@ -16,7 +16,7 @@ type AddressFormInput = {
 };
 
 const AddressForm = () => {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<AddressFormInput>>({
+    const { data, setData } = useForm<Required<AddressFormInput>>({
         region: '',
         state: '',
         city: '',
