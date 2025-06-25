@@ -39,6 +39,10 @@ Route::get('/cart', function () {
     return Inertia::render('cart/Cart');
 })->name('cart');
 
+Route::get('/support', function () {
+    return Inertia::render('static/Support');
+})->name('support');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');

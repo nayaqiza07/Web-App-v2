@@ -66,7 +66,13 @@ const ServicesPage = () => {
                 ))}
             </div>
 
-            <Activity isLoading={isLoading} srcImage="/images/image-14.jpg" altImage="Image 14" />
+            <Activity
+                isLoading={isLoading}
+                text="Horestco is a young but reputable company with a team that has many years of first hand experience in the furniture manufacturing and hospitality industry"
+                btnLink={route('about-us')}
+                srcImage="/images/image-14.jpg"
+                altImage="Image 14"
+            />
         </>
     );
 };

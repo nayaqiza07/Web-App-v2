@@ -26,7 +26,7 @@ const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({ title = 'Title', badg
     };
 
     return (
-        <motion.div custom={index} variants={buttonWithBadgeVariants} initial="hidden" animate="visible">
+        <motion.div custom={index} variants={buttonWithBadgeVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <Button
                 variant="ghost"
                 className={cn(

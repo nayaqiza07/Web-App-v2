@@ -16,7 +16,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) 
         <SkeletonSidebar />
     ) : (
         <div className={`${className} sticky top-20 flex h-full flex-col gap-3`}>
-            <AnimatedMotion as="div" duration={1} variantName="slideRight">
+            <AnimatedMotion as="div" duration={1} variantName="slideRight" animate="visible">
                 <Card className={`bg-background w-full gap-0 py-0 text-xs`}>
                     <CardHeader className="px-3 py-4">
                         <CardTitle>Category</CardTitle>
@@ -32,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) 
                 </Card>
             </AnimatedMotion>
 
-            <AnimatedMotion as="div" delay={0.3} duration={1} variantName="slideRight">
+            <AnimatedMotion as="div" delay={0.3} duration={1} variantName="slideRight" whileInView="visible" viewport={{ once: true }}>
                 <Card className={`bg-background w-full gap-0 py-0 text-xs`}>
                     <CardHeader className="px-3 py-4">
                         <CardTitle>Price</CardTitle>

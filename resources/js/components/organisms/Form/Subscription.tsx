@@ -17,6 +17,8 @@ const Subscription = () => {
                         as="div"
                         duration={0.5}
                         variantName="slideUp"
+                        whileInView="visible"
+                        viewport={{ once: true }}
                         className="flex h-[168px] flex-col items-center justify-center gap-4"
                     >
                         <Separator className="via-border bg-gradient-to-r from-transparent to-transparent" />

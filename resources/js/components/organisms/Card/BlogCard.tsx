@@ -17,7 +17,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ isLoading = false, index, isCarouse
             opacity: 1,
             y: 0,
             transition: {
-                delay: i * 0.2,
+                delay: i * 0.1,
                 duration: 0.6,
                 ease: easeOut,
             },
@@ -27,7 +27,13 @@ const BlogCard: React.FC<BlogCardProps> = ({ isLoading = false, index, isCarouse
     return isLoading ? (
         <SkeletonBlogCard />
     ) : (
-        <motion.div custom={index} variants={blogCardVariants} initial={!isCarousel ? 'hidden' : false} animate="visible">
+        <motion.div
+            custom={index}
+            variants={blogCardVariants}
+            initial={!isCarousel ? 'hidden' : false}
+            whileInView="visible"
+            viewport={{ once: true }}
+        >
             <Card className="flex h-[125px] flex-row gap-3 overflow-hidden p-2 md:h-full md:flex-col">
                 <CardContent className="relative overflow-hidden rounded-lg p-0 md:h-[150px]">
                     <img

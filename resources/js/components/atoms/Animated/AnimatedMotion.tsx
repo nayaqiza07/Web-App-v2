@@ -8,6 +8,11 @@ interface AnimatedMotionProps {
     variantName: keyof typeof animationVariants;
     initial?: string | boolean;
     animate?: string;
+    whileInView?: string;
+    viewport?: {
+        once?: boolean;
+        amount?: number;
+    };
     delay?: number;
     duration?: number;
     ease?: string;
@@ -19,7 +24,9 @@ const AnimatedMotion: React.FC<AnimatedMotionProps> = ({
     as: Tag = 'div',
     variantName,
     initial = 'hidden',
-    animate = 'visible',
+    animate,
+    whileInView,
+    viewport,
     delay = 0,
     duration = 0.6,
     ease = 'easeOut',
@@ -30,7 +37,16 @@ const AnimatedMotion: React.FC<AnimatedMotionProps> = ({
     const variants = animationVariants[variantName];
 
     return (
-        <MotionTag initial={initial} animate={animate} transition={{ duration, delay, ease }} variants={variants} className={className} {...props}>
+        <MotionTag
+            initial={initial}
+            animate={animate}
+            whileInView={whileInView}
+            viewport={viewport}
+            transition={{ duration, delay, ease }}
+            variants={variants}
+            className={className}
+            {...props}
+        >
             {children}
         </MotionTag>
     );

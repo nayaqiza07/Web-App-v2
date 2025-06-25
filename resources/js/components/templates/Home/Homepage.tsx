@@ -20,7 +20,7 @@ const Homepage = () => {
     return (
         <>
             {/* Hero Section */}
-            <HeroSection isLoading={isLoading} srcImage="/images/image-18.jpg" altImage="Image Slider">
+            <HeroSection isLoading={isLoading} srcImage="/images/image-18.jpg" altImage="Image Slider" className="gap-10">
                 <h1 className="text-2xl font-bold md:text-4xl">New Styles Are Here</h1>
                 <p className="text-xs md:text-base">Discover The Lasts Premium FurnitureFeatured In Our Collection</p>
                 <Link href={route('products')}>
@@ -40,8 +40,22 @@ const Homepage = () => {
             <CallToAction />
 
             {/* 5 */}
-            <Activity isLoading={isLoading} srcImage="/images/image-14.jpg" altImage="Image 14" />
-            <Activity isLoading={isLoading} orderImage="md:order-first" srcImage="/images/image-14.jpg" altImage="Image 14" />
+            <Activity
+                isLoading={isLoading}
+                text="Horestco Crafting premium hotel, outdoor & restaurant furniture. Explore our quality solutions and elevate your space today."
+                btnLink={route('about-us')}
+                srcImage="/images/image-14.jpg"
+                altImage="Image 14"
+            />
+
+            <Activity
+                isLoading={isLoading}
+                text="Feel free to contact us or even better visit us"
+                btnLink={route('contact-us')}
+                orderImage="md:order-first"
+                srcImage="/images/image-14.jpg"
+                altImage="Image 14"
+            />
 
             {/* 6 */}
             <CarouselProduct isLoading={isLoading} headLineTitle="Recent Blogs" isFor="blog" isAutoPlay totalItemShow="md:basis-1/4 lg:basis-1/5" />

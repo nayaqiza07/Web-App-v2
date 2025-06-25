@@ -14,7 +14,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false, isCarousel
     return isLoading ? (
         <SkeletonProductCard />
     ) : (
-        <AnimatedMotion as="div" duration={1} variantName="slideLeft" initial={!isCarousel ? 'hidden' : false}>
+        <AnimatedMotion
+            as="div"
+            duration={1}
+            variantName="slideLeft"
+            initial={!isCarousel ? 'hidden' : false}
+            whileInView="visible"
+            viewport={{ once: true }}
+        >
             <Card className="gap-0 overflow-hidden py-0">
                 <CardContent className="group relative h-[150px] overflow-hidden p-0">
                     {/* image */}
@@ -35,7 +42,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false, isCarousel
                 </CardContent>
 
                 <CardFooter className="flex flex-col items-start gap-3 border-t p-4 text-xs">
-                    <AnimatedMotion as="h1" initial={!isCarousel ? 'hidden' : false} delay={0.3} duration={1} variantName="fadeIn">
+                    <AnimatedMotion
+                        as="h1"
+                        initial={!isCarousel ? 'hidden' : false}
+                        delay={0.3}
+                        duration={1}
+                        variantName="fadeIn"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                    >
                         <CardTitle className="text-card-foreground w-full">
                             {truncateText('Title title title title title title title title', 25)}
                         </CardTitle>
@@ -45,6 +60,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false, isCarousel
                         initial={!isCarousel ? 'hidden' : false}
                         delay={0.4}
                         duration={1}
+                        whileInView="visible"
+                        viewport={{ once: true }}
                         variantName="fadeIn"
                         className="text-muted-foreground flex w-full items-center justify-between text-xs font-bold"
                     >

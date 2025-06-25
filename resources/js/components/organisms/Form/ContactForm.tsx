@@ -15,11 +15,11 @@ const ContactForm: React.FC<ContactFormProps> = ({ isLoading = false }) => {
     ) : (
         <div className="h-fit md:p-4">
             <div className="flex flex-col gap-5">
-                <AnimatedMotion as="div" duration={1} variantName="slideRight">
+                <AnimatedMotion as="div" duration={1} variantName="slideRight" animate="visible">
                     <InputWithLabel labelFor="name" label="Name" id="name" name="name" type="text" placeholder="Your Name" autoComplete="off" />
                 </AnimatedMotion>
 
-                <AnimatedMotion as="div" delay={0.2} duration={1} variantName="slideRight">
+                <AnimatedMotion as="div" delay={0.2} duration={1} variantName="slideRight" animate="visible">
                     <InputWithLabel
                         labelFor="email"
                         label="Email"
@@ -31,7 +31,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isLoading = false }) => {
                     />
                 </AnimatedMotion>
 
-                <AnimatedMotion as="div" delay={0.4} duration={1} variantName="slideRight">
+                <AnimatedMotion as="div" delay={0.4} duration={1} variantName="slideRight" animate="visible">
                     <TextareaWithLabel
                         labelFor="message"
                         label="Message"
@@ -42,7 +42,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isLoading = false }) => {
                     />
                 </AnimatedMotion>
 
-                <AnimatedMotion as="div" delay={0.6} duration={1} variantName="slideRight">
+                <AnimatedMotion as="div" delay={0.6} duration={1} variantName="slideRight" animate="visible">
                     <Button effect="expandIcon" icon={SendIcon} iconPlacement="right" className="w-full">
                         Send Message
                     </Button>

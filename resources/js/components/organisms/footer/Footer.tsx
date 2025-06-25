@@ -15,15 +15,17 @@ const Footer = () => {
                 </div>
 
                 <div className="flex flex-col gap-5 md:flex-row md:justify-between">
-                    <h1 className="hidden text-base font-bold lg:block">Horestco</h1>
+                    <Link href={route('home')}>
+                        <h1 className="hidden text-base font-bold lg:block">Horestco</h1>
+                    </Link>
                     <div className="flex justify-between gap-3">
                         <div className="flex flex-col gap-3">
-                            <p>Gift Card</p>
-                            <p>Gift Card</p>
+                            <Link href={route('support')}>Support</Link>
+                            <Link href="#">Catalog</Link>
                         </div>
 
                         <div className="flex flex-col gap-3">
-                            <p>Gift Card</p>
+                            <Link href="#">Portfolio</Link>
                             <p>Gift Card</p>
                         </div>
                     </div>
