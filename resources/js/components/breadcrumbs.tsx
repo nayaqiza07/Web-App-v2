@@ -9,7 +9,7 @@ export function Breadcrumbs({ isLoading = false, breadcrumbs }: { isLoading?: bo
     return isLoading ? (
         <SkeletonBreadcrumb />
     ) : (
-        <AnimatedMotion as="div" delay={0.3} duration={0.5} variantName="slideRight">
+        <AnimatedMotion as="div" delay={0.3} duration={0.5} animate="visible" variantName="slideRight">
             {breadcrumbs.length > 0 && (
                 <Breadcrumb>
                     <BreadcrumbList>

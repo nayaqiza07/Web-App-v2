@@ -40,7 +40,7 @@ const SearchCommand = () => {
                 size="sm"
                 effect="shine"
                 onClick={() => setOpen(true)}
-                className="bg-accent hover:bg-accent text-muted-foreground hidden text-xs lg:flex"
+                className="bg-accent hover:bg-accent text-muted-foreground hidden cursor-text text-xs lg:flex"
             >
                 Search ...
                 <div>

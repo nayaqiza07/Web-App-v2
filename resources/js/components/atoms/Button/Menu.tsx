@@ -8,7 +8,8 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { EllipsisVerticalIcon, PackageCheckIcon, SquarePenIcon, Trash2Icon } from 'lucide-react';
+import { EllipsisVerticalIcon, PackageCheckIcon, SquarePenIcon } from 'lucide-react';
+import { DeleteBUtton } from './DeleteButton';
 
 export function Menu({ onSetDefault, isDefault }: { onSetDefault: () => void; isDefault: boolean }) {
     return (
@@ -26,14 +27,17 @@ export function Menu({ onSetDefault, isDefault }: { onSetDefault: () => void; is
                         <PackageCheckIcon />
                         Set as Default
                     </DropdownMenuItem>
+
                     <DropdownMenuItem>
                         <SquarePenIcon />
                         Edit
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive focus:text-destructive-foreground focus:bg-destructive">
-                        <Trash2Icon className="text-desrtuctive" />
-                        Delete
-                    </DropdownMenuItem>
+
+                    <DeleteBUtton />
+
+                    {/* <DropdownMenuItem variant="destructive" onSelect={(e) => e.preventDefault()}>
+                        <DeleteBUtton />
+                    </DropdownMenuItem> */}
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>

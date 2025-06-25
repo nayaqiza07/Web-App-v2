@@ -24,8 +24,8 @@ const addressData = [
         region: 'Indonesia',
         state: 'Jawa Tengah',
         city: 'Jepara',
-        address: 'Jl. Langon, Tahunan',
-        zip_code: '55566',
+        address: 'Jalan Sultan Hadlirin, Desa Langon RT.12/RW.05, Kecamatan Tahunan, Kabupaten Jepara',
+        zip_code: '59425',
     },
     {
         region: 'Indonesia',
@@ -62,8 +62,13 @@ export default function Address() {
                                         {isDefault ? <CornerPlusBadge>Default</CornerPlusBadge> : <MapIcon size={16} />}
                                         <Menu onSetDefault={() => setDefaultAddressIndex(index)} isDefault={isDefault} />
                                     </CardTitle>
-                                    <CardFooter className="p-0 text-xs">
-                                        {data.address}, {data.city}, {data.state}, {data.region}, {data.zip_code}
+                                    <CardFooter className="flex h-full flex-col items-start justify-between gap-10 p-0 text-xs">
+                                        <p>
+                                            {data.address}, {data.zip_code}
+                                        </p>
+                                        <p>
+                                            {data.city}, {data.state}, {data.region}
+                                        </p>
                                     </CardFooter>
                                 </Card>
                             );

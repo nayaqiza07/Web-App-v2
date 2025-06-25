@@ -8,6 +8,7 @@ const SelectWithLabel = ({ label, labelFor, id, value, onValueChange, placeholde
             <Label htmlFor={labelFor} className="text-xs">
                 {label}
             </Label>
+
             <Select value={value} onValueChange={onValueChange}>
                 <SelectTrigger id={id} className="border-border border">
                     <SelectValue placeholder={placeholder} />
