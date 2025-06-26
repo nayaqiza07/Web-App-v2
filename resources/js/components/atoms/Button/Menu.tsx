@@ -11,9 +11,9 @@ import {
 import { EllipsisVerticalIcon, PackageCheckIcon, SquarePenIcon } from 'lucide-react';
 import { DeleteBUtton } from './DeleteButton';
 
-export function Menu({ onSetDefault, isDefault }: { onSetDefault: () => void; isDefault: boolean }) {
+export function Menu({ onSetDefault, isDefault, onDelete }: { onSetDefault: () => void; isDefault: boolean; onDelete: () => void }) {
     return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="size-7">
                     <EllipsisVerticalIcon />
@@ -33,10 +33,10 @@ export function Menu({ onSetDefault, isDefault }: { onSetDefault: () => void; is
                         Edit
                     </DropdownMenuItem>
 
-                    <DeleteBUtton />
+                    <DeleteBUtton onDelete={onDelete} />
 
-                    {/* <DropdownMenuItem variant="destructive" onSelect={(e) => e.preventDefault()}>
-                        <DeleteBUtton />
+                    {/* <DropdownMenuItem variant="destructive">
+                        <DeleteBUtton onDelete={onDelete} />
                     </DropdownMenuItem> */}
                 </DropdownMenuGroup>
             </DropdownMenuContent>

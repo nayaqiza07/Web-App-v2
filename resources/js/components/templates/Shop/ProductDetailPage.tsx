@@ -6,9 +6,15 @@ import CarouselImageProduct from '@/components/organisms/Carousel/CarouselImageP
 import CarouselProduct from '@/components/organisms/Carousel/CarouselProduct';
 import TabsInformation from '@/components/organisms/Tab/TabsInformation';
 import { useBreadcrumb } from '@/hooks/use-breadcrumbs';
+import { Product } from '@/types';
 import { useEffect, useState } from 'react';
 
-const ProductDetailPage = () => {
+interface ProductDetailPageProps {
+    PRODUCTS: Product;
+    PRODUCT: Product;
+}
+
+const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ PRODUCTS, PRODUCT }) => {
     const breadcrumbs = useBreadcrumb();
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -38,10 +44,12 @@ const ProductDetailPage = () => {
                             delay={0 / 3}
                             duration={1}
                             variantName="scaleIn"
+                            animate="visible"
                             className="order-first h-[416px] w-full items-center overflow-hidden rounded-2xl lg:order-last"
                         >
                             <img
-                                src={`/images/image-18.jpg`}
+                                src={PRODUCT.thumbnail}
+                                // src={`/images/image-18.jpg`}
                                 alt={`Foto Produk ${`2`}`}
                                 // loading="lazy"
                                 className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"
@@ -51,14 +59,19 @@ const ProductDetailPage = () => {
                 </div>
 
                 {/* Left Content */}
-                <ProductDetailContent isLoading={isLoading} />
+                <ProductDetailContent isLoading={isLoading} PRODUCT={PRODUCT} />
             </section>
 
             {/* Information */}
-            <TabsInformation isLoading={isLoading} />
+            <TabsInformation isLoading={isLoading} PRODUCT={PRODUCT} />
 
             {/* Related Products */}
-            <CarouselProduct isLoading={isLoading} headLineTitle="Related Products" totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" />
+            <CarouselProduct
+                isLoading={isLoading}
+                PRODUCTS={PRODUCTS}
+                headLineTitle="Related Products"
+                totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5"
+            />
         </>
     );
 };

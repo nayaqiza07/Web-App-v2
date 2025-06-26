@@ -16,6 +16,7 @@ const CarouselImageProduct: React.FC<CarouselImageProductProps> = ({ isLoading =
             delay={0.3}
             duration={1}
             variantName="slideRight"
+            animate="visible"
             className="order-last mx-auto flex w-[260px] items-center justify-center lg:order-first lg:w-fit"
         >
             <Carousel

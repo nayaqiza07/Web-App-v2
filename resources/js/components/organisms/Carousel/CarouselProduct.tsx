@@ -2,6 +2,8 @@ import HeadLine from '@/components/molecules/HeadLine';
 import SkeletonHeadLine from '@/components/molecules/Skeleton/SkeletonHeadLine';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { Product } from '@/types';
+import { Link } from '@inertiajs/react';
 import Autoplay from 'embla-carousel-autoplay';
 import { ArrowLeft, ArrowRight, CircleAlert } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -18,9 +20,17 @@ interface CarouselProductProps {
     isFor?: 'category' | 'product' | 'blog';
     totalItemShow: string;
     isAutoPlay?: boolean;
+    PRODUCTS: Product;
 }
 
-const CarouselProduct = ({ isLoading = false, headLineTitle = 'Title', isFor = 'product', isAutoPlay, totalItemShow = '' }: CarouselProductProps) => {
+const CarouselProduct: React.FC<CarouselProductProps> = ({
+    isLoading = false,
+    headLineTitle = 'Title',
+    isFor = 'product',
+    isAutoPlay,
+    totalItemShow = '',
+    PRODUCTS,
+}) => {
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
 
@@ -77,20 +87,28 @@ const CarouselProduct = ({ isLoading = false, headLineTitle = 'Title', isFor = '
                 )}
 
                 <CarouselContent>
-                    {Array.from({ length: 10 }).map((_, index) => (
-                        <CarouselItem key={index + 1} className={`${totalItemShow} py-1`}>
-                            {isFor === 'product' && (isLoading ? <SkeletonProductCard /> : <ProductCard isCarousel />)}
+                    {PRODUCTS.length > 0 &&
+                        PRODUCTS.map((data, index) => (
+                            <CarouselItem key={index} className={`${totalItemShow} py-1`}>
+                                {isFor === 'product' &&
+                                    (isLoading ? (
+                                        <SkeletonProductCard />
+                                    ) : (
+                                        <Link href={route('products.show', { slug: data.slug })}>
+                                            <ProductCard data={data} isCarousel />
+                                        </Link>
+                                    ))}
 
-                            {isFor === 'category' &&
-                                (isLoading ? (
-                                    <SkeletonCategoryCard />
-                                ) : (
-                                    <CategoryCard srcImage="/images/image-9.jpg" altImage="Foto Produk ${`9`}" title="Stool" isCarousel />
-                                ))}
+                                {isFor === 'category' &&
+                                    (isLoading ? (
+                                        <SkeletonCategoryCard />
+                                    ) : (
+                                        <CategoryCard srcImage="/images/image-9.jpg" altImage="Foto Produk ${`9`}" title="Stool" isCarousel />
+                                    ))}
 
-                            {isFor === 'blog' && (isLoading ? <SkeletonBlogCard /> : <BlogCard isCarousel />)}
-                        </CarouselItem>
-                    ))}
+                                {isFor === 'blog' && (isLoading ? <SkeletonBlogCard /> : <BlogCard isCarousel />)}
+                            </CarouselItem>
+                        ))}
                 </CarouselContent>
             </Carousel>
         </section>

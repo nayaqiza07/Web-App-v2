@@ -2,21 +2,20 @@ import InputWithLabel from '@/components/molecules/FormField/InputWithLabel';
 import SelectWithLabel from '@/components/molecules/FormField/SelectWithLabel';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { AddressFormInput } from '@/types';
 import { useForm } from '@inertiajs/react';
 import { PlusCircleIcon } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
-type AddressFormInput = {
-    region: string;
-    state: string;
-    city: string;
-    address: string;
-    zip: string;
-};
+interface AddressFormProps {
+    addressData: AddressFormInput[];
+    onAddAddress: (newAddress: AddressFormInput) => void;
+}
 
-const AddressForm = () => {
-    const { data, setData } = useForm<Required<AddressFormInput>>({
+const AddressForm: React.FC<AddressFormProps> = ({ onAddAddress }) => {
+    const { data, setData, reset } = useForm<Required<AddressFormInput>>({
+        id: '',
         region: '',
         state: '',
         city: '',
@@ -26,7 +25,10 @@ const AddressForm = () => {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+
         console.log(data);
+        onAddAddress(data);
+        reset();
     };
 
     return (
@@ -105,9 +107,11 @@ const AddressForm = () => {
                                 return values.length > 0 && values.join(', ');
                             })()}
                         </Card>
-                        <Button type="submit" effect="shine">
-                            Save
-                        </Button>
+                        <SheetClose asChild>
+                            <Button type="submit" effect="shine">
+                                Save
+                            </Button>
+                        </SheetClose>
                     </SheetFooter>
                 </form>
             </SheetContent>

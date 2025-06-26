@@ -50,6 +50,7 @@ const ContactUsPage = () => {
                 <h1 className="text-2xl font-bold md:text-4xl">Contact Us</h1>
                 <p className="text-xs md:text-base">Feel free to contact us or even better visit us</p>
             </HeroSection>
+
             <div className="grid gap-3 md:grid-cols-[2fr_auto_1fr] md:gap-8">
                 <ContactForm isLoading={isLoading} />
                 {/* <Separator orientation="vertical" /> */}

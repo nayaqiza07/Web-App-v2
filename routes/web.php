@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -11,9 +12,11 @@ Route::get('/', function () {
     return Inertia::render('home/Home');
 })->name('home');
 
-Route::get('/products', function () {
-    return Inertia::render('shop/ProductList');
-})->name('products');
+// Product Route
+Route::controller(ProductController::class)->group(function () {
+    Route::get('/products', 'index')->name('products.index');
+    Route::get('/products/{slug}', 'show')->name('products.show');
+});
 
 Route::get('/products/1', function () {
     return Inertia::render('shop/ProductDetail');

@@ -4,8 +4,8 @@ const RatingIcon = () => {
     return (
         <div className="relative">
             <div className="flex gap-0.5">
-                {Array.from({ length: 5 }, () => (
-                    <Star size={15} fill="#CFD5E1" strokeWidth={0} />
+                {Array.from({ length: 5 }).map((_, index) => (
+                    <Star size={15} key={index} fill="#CFD5E1" strokeWidth={0} />
                 ))}
             </div>
             <div className="absolute top-0 flex gap-0.5">
