@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useInitials } from '@/hooks/use-initials';
+import { useNavMenu } from '@/hooks/use-nav-menu';
 import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { PanelLeftDashedIcon } from 'lucide-react';
@@ -11,14 +12,7 @@ const NavbarMobile = () => {
     const { auth } = usePage<SharedData>().props;
     const getInitials = useInitials();
 
-    const navData = [
-        { title: 'Home', linkTo: 'home' },
-        { title: 'Products', linkTo: 'products.index' },
-        { title: 'Services', linkTo: 'services' },
-        { title: 'Blog', linkTo: 'blog' },
-        { title: 'About Us', linkTo: 'about-us' },
-        { title: 'Contact Us', linkTo: 'contact-us' },
-    ];
+    const navMenu = useNavMenu();
 
     return (
         <Sheet>
@@ -34,13 +28,13 @@ const NavbarMobile = () => {
                 </SheetHeader>
 
                 <nav className="flex flex-col gap-3 px-4">
-                    {navData.map((data, index) => (
+                    {navMenu.map((menu, index) => (
                         <NavMenu
                             key={index}
-                            title={data.title}
-                            linkTo={route(data.linkTo)}
+                            title={menu.title}
+                            linkTo={route(menu.linkTo)}
                             isMobile={true}
-                            active={Boolean(data.linkTo && route().current(data.linkTo))}
+                            active={menu.isActive ?? route().current(menu.linkTo)}
                             className="text-muted-foreground"
                         />
                     ))}

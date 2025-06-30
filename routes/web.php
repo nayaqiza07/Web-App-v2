@@ -18,10 +18,6 @@ Route::controller(ProductController::class)->group(function () {
     Route::get('/products/{slug}', 'show')->name('products.show');
 });
 
-Route::get('/products/1', function () {
-    return Inertia::render('shop/ProductDetail');
-})->name('product-detail');
-
 Route::get('/blog', function () {
     return Inertia::render('blog/BlogList');
 })->name('blog');

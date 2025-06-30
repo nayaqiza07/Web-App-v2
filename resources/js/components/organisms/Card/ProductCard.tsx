@@ -38,6 +38,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false, isCarousel
                     {/* overlay button */}
                     <Button
                         size="icon"
+                        onClick={(e) => {
+                            e.stopPropagation(); // cegah bubbling ke parent
+                            e.preventDefault(); // cegah default behavior (jika dalam <a>)
+                            // aksi lainnya di sini
+                            console.log('Button clicked');
+                        }}
                         className="absolute right-3 bottom-3 rounded-full bg-black/60 text-xs font-bold opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-black/80"
                     >
                         <ShoppingCart color="white" />

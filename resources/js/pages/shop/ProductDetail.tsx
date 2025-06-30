@@ -31,10 +31,6 @@ const ProductDetail: React.FC<ProductDetailProps> = (props) => {
         }
     }, [PRODUCT, PRODUCTS, setIsLoading, setProducts, setSelectedProduct, setError]);
 
-    if (!PRODUCT) {
-        return <div>Product not found.</div>;
-    }
-
     return (
         <>
             <Head title={PRODUCT.name} />
