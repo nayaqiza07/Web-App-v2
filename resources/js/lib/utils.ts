@@ -6,13 +6,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Formatting Price Number
-export const priceFormat = (price: number) => {
+export const priceFormat = (price?: number) => {
     const rupiahformat = new Intl.NumberFormat('id-ID', {
         style: 'currency',
         currency: 'IDR',
         minimumFractionDigits: 0,
         maximumFractionDigits: 0,
-    }).format(price);
+    }).format(price ?? 0);
     return rupiahformat;
 };
 

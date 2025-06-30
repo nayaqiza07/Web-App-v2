@@ -2,7 +2,7 @@ import HeadLine from '@/components/molecules/HeadLine';
 import SkeletonHeadLine from '@/components/molecules/Skeleton/SkeletonHeadLine';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { Product } from '@/types';
+import { useProductStore } from '@/stores/useProductStore';
 import { Link } from '@inertiajs/react';
 import Autoplay from 'embla-carousel-autoplay';
 import { ArrowLeft, ArrowRight, CircleAlert } from 'lucide-react';
@@ -20,7 +20,6 @@ interface CarouselProductProps {
     isFor?: 'category' | 'product' | 'blog';
     totalItemShow: string;
     isAutoPlay?: boolean;
-    PRODUCTS: Product;
 }
 
 const CarouselProduct: React.FC<CarouselProductProps> = ({
@@ -29,8 +28,8 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({
     isFor = 'product',
     isAutoPlay,
     totalItemShow = '',
-    PRODUCTS,
 }) => {
+    const PRODUCTS = useProductStore((state) => state.products);
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
 
@@ -86,30 +85,46 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({
                     />
                 )}
 
-                <CarouselContent>
-                    {PRODUCTS.length > 0 &&
-                        PRODUCTS.map((data, index) => (
-                            <CarouselItem key={index} className={`${totalItemShow} py-1`}>
-                                {isFor === 'product' &&
-                                    (isLoading ? (
+                {isFor === 'product' && (
+                    <CarouselContent>
+                        {PRODUCTS.length > 0 &&
+                            PRODUCTS.map((data, index) => (
+                                <CarouselItem key={index} className={`${totalItemShow} py-1`}>
+                                    {isLoading ? (
                                         <SkeletonProductCard />
                                     ) : (
                                         <Link href={route('products.show', { slug: data.slug })}>
                                             <ProductCard data={data} isCarousel />
                                         </Link>
-                                    ))}
+                                    )}
+                                </CarouselItem>
+                            ))}
+                    </CarouselContent>
+                )}
 
-                                {isFor === 'category' &&
-                                    (isLoading ? (
-                                        <SkeletonCategoryCard />
-                                    ) : (
-                                        <CategoryCard srcImage="/images/image-9.jpg" altImage="Foto Produk ${`9`}" title="Stool" isCarousel />
-                                    ))}
-
-                                {isFor === 'blog' && (isLoading ? <SkeletonBlogCard /> : <BlogCard isCarousel />)}
+                {isFor === 'category' && (
+                    <CarouselContent>
+                        {Array.from({ length: 5 }).map((_, index) => (
+                            <CarouselItem key={index} className={`${totalItemShow} py-1`}>
+                                {isLoading ? (
+                                    <SkeletonCategoryCard />
+                                ) : (
+                                    <CategoryCard srcImage="/images/image-9.jpg" altImage="Foto Produk ${`9`}" title="Stool" isCarousel />
+                                )}
                             </CarouselItem>
                         ))}
-                </CarouselContent>
+                    </CarouselContent>
+                )}
+
+                {isFor === 'blog' && (
+                    <CarouselContent>
+                        {Array.from({ length: 10 }).map((_, index) => (
+                            <CarouselItem key={index} className={`${totalItemShow} py-1`}>
+                                {isLoading ? <SkeletonBlogCard /> : <BlogCard isCarousel />}
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                )}
             </Carousel>
         </section>
     );

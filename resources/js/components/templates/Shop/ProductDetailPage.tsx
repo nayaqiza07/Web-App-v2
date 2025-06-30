@@ -6,26 +6,21 @@ import CarouselImageProduct from '@/components/organisms/Carousel/CarouselImageP
 import CarouselProduct from '@/components/organisms/Carousel/CarouselProduct';
 import TabsInformation from '@/components/organisms/Tab/TabsInformation';
 import { useBreadcrumb } from '@/hooks/use-breadcrumbs';
-import { Product } from '@/types';
-import { useEffect, useState } from 'react';
+import { useProductStore } from '@/stores/useProductStore';
 
-interface ProductDetailPageProps {
-    PRODUCTS: Product;
-    PRODUCT: Product;
-}
-
-const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ PRODUCTS, PRODUCT }) => {
+const ProductDetailPage = () => {
     const breadcrumbs = useBreadcrumb();
 
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const PRODUCT = useProductStore((state) => state.selectedProduct);
+    const isLoading = useProductStore((state) => state.isLoading);
+    const error = useProductStore((state) => state.error);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
+    if (error) {
+        return <div className="text-red-500">{error}</div>;
+    }
 
-        return () => clearTimeout(timer);
-    }, []);
+    const isClient = typeof window !== 'undefined';
+    const isLargeScreen = isClient && window.innerWidth >= 1024;
 
     return (
         <>
@@ -34,7 +29,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ PRODUCTS, PRODUCT
             <section className="flex flex-col gap-6 md:flex-row">
                 {/* Right Content */}
                 <div className="flex h-[416px] w-full flex-col gap-3 lg:flex-row">
-                    <CarouselImageProduct isLoading={isLoading} orientation={window.innerWidth >= 1024 ? 'vertical' : 'horizontal'} />
+                    <CarouselImageProduct isLoading={isLoading} orientation={isLargeScreen ? 'vertical' : 'horizontal'} />
 
                     {isLoading ? (
                         <SkeletonImageDetailProduct />
@@ -48,9 +43,9 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ PRODUCTS, PRODUCT
                             className="order-first h-[416px] w-full items-center overflow-hidden rounded-2xl lg:order-last"
                         >
                             <img
-                                src={PRODUCT.thumbnail}
+                                src={PRODUCT?.thumbnail}
                                 // src={`/images/image-18.jpg`}
-                                alt={`Foto Produk ${`2`}`}
+                                alt={`Foto Produk ${PRODUCT?.name}`}
                                 // loading="lazy"
                                 className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"
                             />
@@ -66,12 +61,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ PRODUCTS, PRODUCT
             <TabsInformation isLoading={isLoading} PRODUCT={PRODUCT} />
 
             {/* Related Products */}
-            <CarouselProduct
-                isLoading={isLoading}
-                PRODUCTS={PRODUCTS}
-                headLineTitle="Related Products"
-                totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5"
-            />
+            <CarouselProduct isLoading={isLoading} headLineTitle="Related Products" totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" />
         </>
     );
 };
