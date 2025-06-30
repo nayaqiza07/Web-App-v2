@@ -1,6 +1,7 @@
 import NavMenu from '@/components/atoms/NavMenu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/hooks/use-initials';
+import { useNavMenu } from '@/hooks/use-nav-menu';
 import { cn } from '@/lib/utils';
 import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
@@ -20,19 +21,12 @@ const Navbar = () => {
         setIsScrolled(window.scrollY > 5); // bisa disesuaikan
     };
 
+    const navMenu = useNavMenu();
+
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.addEventListener('scroll', handleScroll);
     }, []);
-
-    const navData = [
-        { title: 'Home', linkTo: 'home' },
-        { title: 'Products', linkTo: 'products.index' },
-        { title: 'Services', linkTo: 'services' },
-        { title: 'Blog', linkTo: 'blog' },
-        { title: 'About Us', linkTo: 'about-us' },
-        { title: 'Contact Us', linkTo: 'contact-us' },
-    ];
 
     return (
         <nav
@@ -48,13 +42,13 @@ const Navbar = () => {
                     <Link href={route('home')}>Horestco</Link>
 
                     <div className="ml-5 hidden items-center gap-1 lg:flex">
-                        {navData.map((data, index) => (
+                        {navMenu.map((menu, index) => (
                             <NavMenu
                                 key={index}
-                                title={data.title}
-                                linkTo={route(data.linkTo)}
+                                title={menu.title}
+                                linkTo={route(menu.linkTo)}
                                 isMobile={false}
-                                active={Boolean(data.linkTo && route().current(data.linkTo))}
+                                active={menu.isActive ?? route().current(menu.linkTo)}
                                 className="text-muted-foreground"
                             />
                         ))}

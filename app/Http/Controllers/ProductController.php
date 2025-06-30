@@ -8,7 +8,7 @@ use Inertia\Inertia;
 
 class ProductController extends Controller
 {
-    // Get Product
+    // Get Products
     public function index()
     {
         $json = Storage::disk('public')->get('products.json');

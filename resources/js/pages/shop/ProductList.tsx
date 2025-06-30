@@ -31,7 +31,7 @@ const ProductList: React.FC<ProductListProps> = (props) => {
 
     return (
         <>
-            <Head title="Product List" />
+            <Head title="Products" />
             <MainLayout>
                 <ProductPage />
             </MainLayout>
