@@ -8,7 +8,7 @@ import SkeletonTabsInformation from '../Skeleton/SkeletonTabsInformation';
 
 interface TabsInformationProps {
     isLoading?: boolean;
-    PRODUCT: Product;
+    PRODUCT: Product | null;
 }
 
 const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false, PRODUCT }) => {
@@ -39,7 +39,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false, PR
                     <Card className="text-muted-foreground w-full bg-transparent px-1 py-4">
                         <ScrollArea className="h-50 px-3">
                             <h1 className="text-foreground mb-5 text-sm">Information</h1>
-                            <p>{PRODUCT.information}</p>
+                            <p>{PRODUCT?.information}</p>
                         </ScrollArea>
                     </Card>
 
@@ -71,7 +71,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false, PR
                     <Card className="text-muted-foreground px-1 py-4">
                         <ScrollArea className="h-50 px-3">
                             <h1 className="text-foreground mb-5 text-sm">Materials</h1>
-                            <p>{PRODUCT.material}</p>
+                            <p>{PRODUCT?.material}</p>
                         </ScrollArea>
                     </Card>
                 </TabsContent>
@@ -80,7 +80,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false, PR
                     <Card className="text-muted-foreground px-1 py-4">
                         <ScrollArea className="h-50 px-3">
                             <h1 className="text-foreground mb-5 text-sm">Shipping</h1>
-                            <p>{PRODUCT.shipping}</p>
+                            <p>{PRODUCT?.shipping}</p>
                         </ScrollArea>
                     </Card>
                 </TabsContent>

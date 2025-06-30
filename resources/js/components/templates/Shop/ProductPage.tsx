@@ -2,24 +2,17 @@ import ProductCard from '@/components/organisms/Card/ProductCard';
 import FilterDrawer from '@/components/organisms/Drawer/FilterDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import Sidebar from '@/components/organisms/Sidebar/Sidebar';
-import { Product } from '@/types';
+import { useProductStore } from '@/stores/useProductStore';
 import { Link } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
 
-interface ProductPageProps {
-    PRODUCTS: Product[];
-}
+const ProductPage: React.FC = () => {
+    const PRODUCTS = useProductStore((state) => state.products);
+    const isLoading = useProductStore((state) => state.isLoading);
+    const error = useProductStore((state) => state.error);
 
-const ProductPage: React.FC<ProductPageProps> = ({ PRODUCTS = [] }) => {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    }, []);
+    if (error) {
+        return <div className="text-red-500">{error}</div>;
+    }
 
     return (
         <>

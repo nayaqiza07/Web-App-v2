@@ -10,7 +10,7 @@ import SkeletonDetailProduct from '../Skeleton/SkeletonDetailProduct';
 
 interface ProductDetailContentProps {
     isLoading?: boolean;
-    PRODUCT: Product;
+    PRODUCT: Product | null;
 }
 
 const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, PRODUCT }) => {
@@ -26,11 +26,11 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
             className="flex w-full flex-col justify-between gap-6 lg:w-2/3"
         >
             <AnimatedMotion as="h1" delay={0.3} duration={1} variantName="fadeIn" animate="visible" className="text-2xl font-semibold">
-                {PRODUCT.name}
+                {PRODUCT?.name}
             </AnimatedMotion>
             <p className="flex items-center gap-4 text-2xl font-bold">
                 <AnimatedMotion as="span" delay={0.4} duration={1} variantName="fadeIn" animate="visible">
-                    {priceFormat(PRODUCT.price)}
+                    {priceFormat(PRODUCT?.price)}
                 </AnimatedMotion>
                 <AnimatedMotion
                     as="span"
@@ -40,7 +40,7 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
                     animate="visible"
                     className="text-muted-foreground text-xs line-through"
                 >
-                    {priceFormat(PRODUCT.price)}
+                    {priceFormat(PRODUCT?.price)}
                 </AnimatedMotion>
             </p>
 
@@ -52,7 +52,7 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
                 <AnimatedMotion as="p" delay={0.8} duration={1} variantName="fadeIn" animate="visible" className="text-muted-foreground">
                     Category:
                     <Badge variant={'outline'} className="font-bold">
-                        {PRODUCT.category}
+                        {PRODUCT?.category}
                     </Badge>
                 </AnimatedMotion>
 
@@ -66,12 +66,12 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
                 >
                     <QuantityButton />
                     <p className="text-muted-foreground">
-                        Sub Total: <span className="text-foreground">{priceFormat(PRODUCT.price)}</span>
+                        Sub Total: <span className="text-foreground">{priceFormat(PRODUCT?.price)}</span>
                     </p>
                 </AnimatedMotion>
 
                 <AnimatedMotion as="p" delay={1} duration={1} variantName="fadeIn" animate="visible" className="text-muted-foreground">
-                    {PRODUCT.short_description}
+                    {PRODUCT?.short_description}
                 </AnimatedMotion>
             </div>
 
