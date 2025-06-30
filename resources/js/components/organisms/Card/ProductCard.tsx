@@ -2,16 +2,18 @@ import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { priceFormat, truncateText } from '@/lib/utils';
+import { Product } from '@/types';
 import { ShoppingCart } from 'lucide-react';
 import SkeletonProductCard from '../Skeleton/SkeletonProductCard';
 
 interface ProductCardProps {
     isLoading?: boolean;
     isCarousel?: boolean;
+    data: Product;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false, isCarousel }) => {
-    return isLoading ? (
+const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false, isCarousel, data }) => {
+    return isLoading || !data ? (
         <SkeletonProductCard />
     ) : (
         <AnimatedMotion
@@ -26,7 +28,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false, isCarousel
                 <CardContent className="group relative h-[150px] overflow-hidden p-0">
                     {/* image */}
                     <img
-                        src={`/images/image-15.jpg`}
+                        src={data.thumbnail}
+                        // src={`/images/image-15.jpg`}
                         alt={`Foto Produk ${`1`}`}
                         // loading="lazy"
                         className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"
@@ -41,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false, isCarousel
                     </Button>
                 </CardContent>
 
-                <CardFooter className="flex flex-col items-start gap-3 border-t p-4 text-xs">
+                <CardFooter className="flex flex-col items-start gap-3 border-t p-3 text-xs">
                     <AnimatedMotion
                         as="h1"
                         initial={!isCarousel ? 'hidden' : false}
@@ -51,9 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false, isCarousel
                         whileInView="visible"
                         viewport={{ once: true }}
                     >
-                        <CardTitle className="text-card-foreground w-full">
-                            {truncateText('Title title title title title title title title', 25)}
-                        </CardTitle>
+                        <CardTitle className="text-card-foreground w-full">{truncateText(data.name, 17)}</CardTitle>
                     </AnimatedMotion>
                     <AnimatedMotion
                         as="div"
@@ -65,8 +66,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ isLoading = false, isCarousel
                         variantName="fadeIn"
                         className="text-muted-foreground flex w-full items-center justify-between text-xs font-bold"
                     >
-                        <span>Category</span>
-                        <span>{priceFormat(1000000)}</span>
+                        <span>{truncateText(data.category, 5)}</span>
+                        <span>{priceFormat(data.price)}</span>
                     </AnimatedMotion>
                 </CardFooter>
             </Card>

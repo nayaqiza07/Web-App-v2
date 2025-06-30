@@ -32,6 +32,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ isLoading = false }) => {
                 </AnimatedMotion>
 
                 <AnimatedMotion as="div" delay={0.4} duration={1} variantName="slideRight" animate="visible">
+                    <InputWithLabel labelFor="phone" label="Phone" id="phone" name="phone" type="tel" placeholder="Phone Number" autoComplete="off" />
+                </AnimatedMotion>
+
+                <AnimatedMotion as="div" delay={0.6} duration={1} variantName="slideRight" animate="visible">
                     <TextareaWithLabel
                         labelFor="message"
                         label="Message"
@@ -42,7 +46,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isLoading = false }) => {
                     />
                 </AnimatedMotion>
 
-                <AnimatedMotion as="div" delay={0.6} duration={1} variantName="slideRight" animate="visible">
+                <AnimatedMotion as="div" delay={0.8} duration={1} variantName="slideRight" animate="visible">
                     <Button effect="expandIcon" icon={SendIcon} iconPlacement="right" className="w-full">
                         Send Message
                     </Button>

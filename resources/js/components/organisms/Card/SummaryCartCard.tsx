@@ -12,7 +12,7 @@ const SummaryCartCard: React.FC<SummaryCartCardProps> = ({ isLoading = false }) 
     return isLoading ? (
         <SkeletonSummaryCartCard />
     ) : (
-        <AnimatedMotion as="div" duration={1} variantName="slideLeft">
+        <AnimatedMotion as="div" duration={1} animate="visible" variantName="slideLeft">
             <Card className="sticky top-20 hidden h-fit p-4 text-xs md:flex">
                 <CardHeader className="p-0 text-base">Summary</CardHeader>
                 <CardContent className="text-muted-foreground h-full p-0">

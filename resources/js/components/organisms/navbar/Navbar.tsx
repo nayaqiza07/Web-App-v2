@@ -27,7 +27,7 @@ const Navbar = () => {
 
     const navData = [
         { title: 'Home', linkTo: 'home' },
-        { title: 'Products', linkTo: 'products' },
+        { title: 'Products', linkTo: 'products.index' },
         { title: 'Services', linkTo: 'services' },
         { title: 'Blog', linkTo: 'blog' },
         { title: 'About Us', linkTo: 'about-us' },

@@ -74,7 +74,7 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
                             <Card className="text-muted-foreground grid rounded-md p-4 text-xs md:grid-cols-3">
                                 <div className="flex flex-col gap-5">
                                     {/* Delivery Information */}
-                                    <AnimatedMotion as="div" delay={0.3} duration={1} variantName="fadeIn" className="flex gap-5">
+                                    <AnimatedMotion as="div" delay={0.3} duration={1} variantName="fadeIn" className="flex gap-5" animate="visible">
                                         <MapPin size={15} />
                                         <div>
                                             <h5 className="text-muted-foreground">Delivery</h5>
@@ -83,7 +83,7 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
                                     </AnimatedMotion>
 
                                     {/* Recipient Information */}
-                                    <AnimatedMotion as="div" delay={0.4} duration={1} variantName="fadeIn" className="flex gap-5">
+                                    <AnimatedMotion as="div" delay={0.4} duration={1} variantName="fadeIn" className="flex gap-5" animate="visible">
                                         <SquareUserRound size={15} />
                                         <div className="text-foreground flex flex-col gap-2">
                                             <h5 className="text-muted-foreground">Recipient of the order</h5>
@@ -95,7 +95,7 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
                                 </div>
 
                                 {/* Payment Information */}
-                                <AnimatedMotion as="div" delay={0.5} duration={1} variantName="fadeIn" className="flex gap-5">
+                                <AnimatedMotion as="div" delay={0.5} duration={1} variantName="fadeIn" className="flex gap-5" animate="visible">
                                     <CreditCard size={15} />
                                     <div className="grid w-full grid-cols-2">
                                         <div className="text-muted-foreground flex flex-col gap-2">
@@ -112,7 +112,14 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
                                 </AnimatedMotion>
 
                                 {/* Pasca Order Information */}
-                                <AnimatedMotion as="div" delay={0.6} duration={1} variantName="fadeIn" className="flex flex-col gap-2">
+                                <AnimatedMotion
+                                    as="div"
+                                    delay={0.6}
+                                    duration={1}
+                                    variantName="fadeIn"
+                                    className="flex flex-col gap-2"
+                                    animate="visible"
+                                >
                                     <div className="flex gap-5">
                                         <ReceiptText size={15} />
                                         <h5>Electronic Check</h5>

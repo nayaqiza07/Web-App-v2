@@ -35,6 +35,7 @@ export interface User {
     id: number;
     name: string;
     email: string;
+    phone: string;
     avatar?: string;
     email_verified_at: string | null;
     created_at: string;
@@ -56,7 +57,7 @@ export interface InputWithLabelProps {
     type: string;
     placeholder: string;
     value?: string | number;
-    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    onChange?: (e) => void;
     autoComplete: string;
     disabled?: boolean;
     className?: string;
@@ -88,3 +89,30 @@ export interface SelectWithLabelProps {
     // className?: string;
 }
 // Select Props End
+
+// Address Form Input Start
+export interface AddressFormInput {
+    id?: string;
+    region: string;
+    state: string;
+    city: string;
+    address: string;
+    zip: string;
+}
+// Address Form Input End
+
+// Products Start
+export type Product = {
+    id: number;
+    name: string;
+    thumbnail: string;
+    slug: string;
+    category: string;
+    price: number;
+    short_description: string;
+    information: string;
+    material: string;
+    shipping: string;
+    stock: number;
+};
+// Products End

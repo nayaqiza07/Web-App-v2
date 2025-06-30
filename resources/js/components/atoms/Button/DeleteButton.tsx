@@ -11,10 +11,10 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Trash2Icon } from 'lucide-react';
 
-export function DeleteBUtton() {
+export function DeleteBUtton({ onDelete }: { onDelete: () => void }) {
     return (
         <AlertDialog>
-            <AlertDialogTrigger asChild>
+            <AlertDialogTrigger className="w-full">
                 <span className="text-destructive hover:bg-destructive hover:text-destructive-foreground flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm">
                     <Trash2Icon className="size-4" />
                     Delete
@@ -29,7 +29,9 @@ export function DeleteBUtton() {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Continue</AlertDialogAction>
+                    <AlertDialogAction onClick={onDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                        Delete
+                    </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
