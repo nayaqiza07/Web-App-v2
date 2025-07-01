@@ -14,6 +14,15 @@ interface ProductDetailContentProps {
 }
 
 const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, PRODUCT }) => {
+    const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        console.log({
+            product_id: PRODUCT?.id,
+            name: PRODUCT?.name,
+            price: PRODUCT?.price,
+        });
+    };
+
     return isLoading ? (
         <SkeletonDetailProduct />
     ) : (
@@ -75,8 +84,8 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
                 </AnimatedMotion>
             </div>
 
-            <AnimatedMotion as="p" delay={1.1} duration={1} variantName="fadeIn" animate="visible" className="w-full">
-                <Button effect="expandIcon" icon={PlusCircleIcon} iconPlacement="right" className="w-full">
+            <AnimatedMotion as="div" delay={1.1} duration={1} variantName="fadeIn" animate="visible" className="w-full">
+                <Button effect="expandIcon" icon={PlusCircleIcon} iconPlacement="right" onClick={handleAddToCart} className="w-full">
                     Add to Cart
                 </Button>
             </AnimatedMotion>

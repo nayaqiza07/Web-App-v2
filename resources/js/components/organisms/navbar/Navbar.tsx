@@ -18,7 +18,7 @@ const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
     const handleScroll = () => {
-        setIsScrolled(window.scrollY > 5); // bisa disesuaikan
+        setIsScrolled(window.scrollY > 10); // bisa disesuaikan
     };
 
     const navMenu = useNavMenu();

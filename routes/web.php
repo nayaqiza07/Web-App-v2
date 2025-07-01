@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 Route::get('/welcome', function () {
@@ -9,38 +9,17 @@ Route::get('/welcome', function () {
 })->name('welcome');
 
 Route::get('/', function () {
-    return Inertia::render('home/Home');
+    $json = Storage::disk('public')->get('products.json');
+    $products = json_decode($json, true);
+    
+    return Inertia::render('home/Home', [
+         'PRODUCTS' => $products ?? []
+    ]);
 })->name('home');
-
-// Product Route
-Route::controller(ProductController::class)->group(function () {
-    Route::get('/products', 'index')->name('products.index');
-    Route::get('/products/{slug}', 'show')->name('products.show');
-});
-
-Route::get('/blog', function () {
-    return Inertia::render('blog/BlogList');
-})->name('blog');
-
-Route::get('/services', function () {
-    return Inertia::render('static/Services');
-})->name('services');
-
-Route::get('/contact-us', function () {
-    return Inertia::render('static/ContactUs');
-})->name('contact-us');
-
-Route::get('/about-us', function () {
-    return Inertia::render('static/AboutUs');
-})->name('about-us');
 
 Route::get('/cart', function () {
     return Inertia::render('cart/Cart');
 })->name('cart');
-
-Route::get('/support', function () {
-    return Inertia::render('static/Support');
-})->name('support');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
@@ -54,3 +33,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
+
+require __DIR__.'/modules/product.php';
+require __DIR__.'/modules/category.php';
+require __DIR__.'/modules/blog.php';
+require __DIR__.'/modules/static.php';

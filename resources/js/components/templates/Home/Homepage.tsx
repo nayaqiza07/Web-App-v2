@@ -3,19 +3,11 @@ import Activity from '@/components/organisms/Activity/Activity';
 import CarouselProduct from '@/components/organisms/Carousel/CarouselProduct';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Button } from '@/components/ui/button';
+import { useProductStore } from '@/stores/useProductStore';
 import { Link } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
 
 const Homepage = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    }, []);
+    const isLoading = useProductStore((state) => state.isLoading);
 
     return (
         <>
@@ -31,7 +23,7 @@ const Homepage = () => {
             </HeroSection>
 
             {/* 2 */}
-            {/* <CarouselProduct isLoading={isLoading} headLineTitle="What's New" isAutoPlay totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" /> */}
+            <CarouselProduct isLoading={isLoading} headLineTitle="What's New" isAutoPlay totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" />
 
             {/* 3 */}
             <CarouselProduct isLoading={isLoading} headLineTitle="Categories" isFor="category" isAutoPlay totalItemShow="md:basis-1/2" />

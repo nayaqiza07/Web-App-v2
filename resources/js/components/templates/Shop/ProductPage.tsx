@@ -2,13 +2,11 @@ import ProductCard from '@/components/organisms/Card/ProductCard';
 import FilterDrawer from '@/components/organisms/Drawer/FilterDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import Sidebar from '@/components/organisms/Sidebar/Sidebar';
+import SkeletonProductCard from '@/components/organisms/Skeleton/SkeletonProductCard';
 import { useProductStore } from '@/stores/useProductStore';
-import { Link } from '@inertiajs/react';
 
 const ProductPage: React.FC = () => {
-    const PRODUCTS = useProductStore((state) => state.products);
-    const isLoading = useProductStore((state) => state.isLoading);
-    const error = useProductStore((state) => state.error);
+    const { products, isLoading, error } = useProductStore();
 
     if (error) {
         return <div className="text-red-500">{error}</div>;
@@ -32,12 +30,9 @@ const ProductPage: React.FC = () => {
 
                 {/* Product List */}
                 <div className="grid w-full grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-                    {PRODUCTS.length > 0 &&
-                        PRODUCTS.map((data) => (
-                            <Link href={route('products.show', { slug: data.slug })} key={data.id}>
-                                <ProductCard isLoading={isLoading} data={data} />
-                            </Link>
-                        ))}
+                    {isLoading
+                        ? Array.from({ length: 12 }).map((_, index) => <SkeletonProductCard key={index} />)
+                        : products.length > 0 && products.map((data) => <ProductCard key={data.id} data={data} />)}
                 </div>
                 {/* Product List */}
             </section>

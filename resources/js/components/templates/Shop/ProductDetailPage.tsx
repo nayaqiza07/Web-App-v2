@@ -11,9 +11,7 @@ import { useProductStore } from '@/stores/useProductStore';
 const ProductDetailPage = () => {
     const breadcrumbs = useBreadcrumb();
 
-    const PRODUCT = useProductStore((state) => state.selectedProduct);
-    const isLoading = useProductStore((state) => state.isLoading);
-    const error = useProductStore((state) => state.error);
+    const { selectedProduct, isLoading, error } = useProductStore();
 
     if (error) {
         return <div className="text-red-500">{error}</div>;
@@ -43,9 +41,9 @@ const ProductDetailPage = () => {
                             className="order-first h-[416px] w-full items-center overflow-hidden rounded-2xl lg:order-last"
                         >
                             <img
-                                src={PRODUCT?.thumbnail}
+                                src={selectedProduct?.thumbnail}
                                 // src={`/images/image-18.jpg`}
-                                alt={`Foto Produk ${PRODUCT?.name}`}
+                                alt={`Foto Produk ${selectedProduct?.name}`}
                                 // loading="lazy"
                                 className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"
                             />
@@ -54,11 +52,11 @@ const ProductDetailPage = () => {
                 </div>
 
                 {/* Left Content */}
-                <ProductDetailContent isLoading={isLoading} PRODUCT={PRODUCT} />
+                <ProductDetailContent isLoading={isLoading} PRODUCT={selectedProduct} />
             </section>
 
             {/* Information */}
-            <TabsInformation isLoading={isLoading} PRODUCT={PRODUCT} />
+            <TabsInformation isLoading={isLoading} PRODUCT={selectedProduct} />
 
             {/* Related Products */}
             <CarouselProduct isLoading={isLoading} headLineTitle="Related Products" totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" />

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
+import { useCategoryStore } from '@/stores/useCategoryStore';
 import SkeletonSidebar from '../Skeleton/SkeletonSidebar';
 
 interface SidebarProps {
@@ -12,6 +13,8 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) => {
+    const { categories } = useCategoryStore();
+
     return isLoading ? (
         <SkeletonSidebar />
     ) : (
@@ -24,9 +27,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) 
                     <Separator />
                     <CardContent className="p-1">
                         <ScrollArea className="h-[200px] p-2 md:h-[375px]">
-                            {Array.from({ length: 12 }).map((_, index) => (
-                                <ButtonWithBadge key={index} title={`Category ${index + 1}`} badgeNumber={index + 1} index={index} />
-                            ))}
+                            {categories.length > 0 &&
+                                categories.map((category, index) => (
+                                    <ButtonWithBadge key={index} title={String(category)} badgeNumber={index + 1} index={index} />
+                                ))}
                         </ScrollArea>
                     </CardContent>
                 </Card>

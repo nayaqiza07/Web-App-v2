@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const SkeletonProductCard = () => {
     return (
-        <Skeleton className="flex flex-col rounded-xl">
+        <Skeleton onClick={(e) => e.stopPropagation()} className="flex flex-col rounded-xl">
             <Skeleton className="relative h-[150px] w-full rounded-t-xl rounded-b-none">
                 <Skeleton className="absolute right-3 bottom-3 size-8 rounded-full" />
             </Skeleton>
