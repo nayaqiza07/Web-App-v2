@@ -3,7 +3,6 @@ import SkeletonHeadLine from '@/components/molecules/Skeleton/SkeletonHeadLine';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { useProductStore } from '@/stores/useProductStore';
-import { Link } from '@inertiajs/react';
 import Autoplay from 'embla-carousel-autoplay';
 import { ArrowLeft, ArrowRight, CircleAlert } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -85,22 +84,25 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({
                     />
                 )}
 
-                {isFor === 'product' && (
-                    <CarouselContent>
-                        {PRODUCTS.length > 0 &&
-                            PRODUCTS.map((data, index) => (
+                {isFor === 'product' &&
+                    (isLoading ? (
+                        <CarouselContent>
+                            {Array.from({ length: 5 }).map((_, index) => (
                                 <CarouselItem key={index} className={`${totalItemShow} py-1`}>
-                                    {isLoading ? (
-                                        <SkeletonProductCard />
-                                    ) : (
-                                        <Link href={route('products.show', { slug: data.slug })}>
-                                            <ProductCard data={data} isCarousel />
-                                        </Link>
-                                    )}
+                                    <SkeletonProductCard />
                                 </CarouselItem>
                             ))}
-                    </CarouselContent>
-                )}
+                        </CarouselContent>
+                    ) : (
+                        <CarouselContent>
+                            {PRODUCTS.length > 0 &&
+                                PRODUCTS.map((data, index) => (
+                                    <CarouselItem key={index} className={`${totalItemShow} py-1`}>
+                                        <ProductCard data={data} isCarousel />
+                                    </CarouselItem>
+                                ))}
+                        </CarouselContent>
+                    ))}
 
                 {isFor === 'category' && (
                     <CarouselContent>

@@ -72,6 +72,8 @@ export interface TextareaWithLabelProps {
     autoComplete: string;
     rows?: number;
     className?: string;
+    value?: string | number;
+    onChange?: (e) => void;
 }
 // Input Props End
 
@@ -91,14 +93,14 @@ export interface SelectWithLabelProps {
 // Select Props End
 
 // Address Form Input Start
-export interface AddressFormInput {
+export type AddressFormInput = {
     id?: string;
     region: string;
     state: string;
     city: string;
     address: string;
     zip: string;
-}
+};
 // Address Form Input End
 
 // Products Start
@@ -116,3 +118,11 @@ export type Product = {
     stock: number;
 };
 // Products End
+
+// Category Start
+export type Category = {
+    id: number;
+    name: string;
+    slug: string;
+};
+// Category End

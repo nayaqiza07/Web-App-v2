@@ -14,8 +14,14 @@ class ProductController extends Controller
         $json = Storage::disk('public')->get('products.json');
         $products = json_decode($json, true);
 
+        $categories = collect($products)
+            -> pluck('category')
+            -> unique()
+            -> values();
+
         return Inertia::render('shop/ProductList', [
-            'PRODUCTS' => $products ?? []
+            'PRODUCTS' => $products ?? [],
+            'CATEGORIES' => $categories ?? []
         ]);
     }
 
