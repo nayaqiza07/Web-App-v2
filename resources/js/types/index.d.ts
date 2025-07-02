@@ -104,6 +104,8 @@ export type AddressFormInput = {
 // Address Form Input End
 
 // Products Start
+type IconKey = 'check' | 'money' | 'shield';
+
 export type Product = {
     id: number;
     name: string;
@@ -113,6 +115,7 @@ export type Product = {
     price: number;
     short_description: string;
     information: string;
+    dimension: { key: string; value: string }[];
     material: string;
     shipping: string;
     stock: number;

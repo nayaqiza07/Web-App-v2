@@ -1,9 +1,11 @@
 import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
+import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import ReviewContent from '@/components/molecules/TextContent/ReviewContent';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Product } from '@/types';
+import { FileTextIcon } from 'lucide-react';
 import SkeletonTabsInformation from '../Skeleton/SkeletonTabsInformation';
 
 interface TabsInformationProps {
@@ -46,23 +48,20 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false, PR
                     <Card className="text-muted-foreground w-full px-1 py-4">
                         <ScrollArea className="h-50 px-3">
                             <h1 className="text-foreground mb-5 text-sm">Dimension</h1>
-                            <div className="grid gap-2 md:grid-cols-2">
-                                <ul className="flex flex-col gap-2">
-                                    <li>Height including back cushions: 40 1/8</li>
-                                    <li>Width: 74 3/8</li>
-                                    <li>Height under furniture: 2 2/3</li>
-                                    <li>Depth: 98 cm</li>
-                                    <li>Seat Width: 141 cm</li>
-                                </ul>
 
-                                <ul className="flex flex-col gap-2">
-                                    <li>Backrest Height: 29 7/8</li>
-                                    <li>Depth: 38 5/8</li>
-                                    <li>Width: 189 cm</li>
-                                    <li>Height under furniture: 7 cm</li>
-                                    <li>Backrest Height: 76 cm</li>
-                                </ul>
-                            </div>
+                            {PRODUCT?.dimension && PRODUCT?.dimension.length > 0 ? (
+                                <div className="grid gap-2 md:grid-cols-2">
+                                    <ul className="flex flex-col gap-2">
+                                        {PRODUCT?.dimension.map((item, index) => (
+                                            <li key={index} className="list-disc">
+                                                {item.key}: {item.value}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ) : (
+                                <EmptyState title="No dimension data available" icon={<FileTextIcon />} />
+                            )}
                         </ScrollArea>
                     </Card>
                 </TabsContent>

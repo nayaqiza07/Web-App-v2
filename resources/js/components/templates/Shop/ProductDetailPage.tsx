@@ -43,7 +43,7 @@ const ProductDetailPage = () => {
                             <img
                                 src={selectedProduct?.thumbnail}
                                 // src={`/images/image-18.jpg`}
-                                alt={`Foto Produk ${selectedProduct?.name}`}
+                                alt={selectedProduct?.name}
                                 // loading="lazy"
                                 className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"
                             />
