@@ -1,0 +1,252 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Models\Product;
+use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
+
+// Components
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+
+class ProductResource extends Resource
+{
+    protected static ?string $model = Product::class;
+
+    protected static ?string $slug = 'shop/products';
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?string $navigationGroup = 'Shop';
+
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
+
+    protected static ?int $navigationSort = 1;
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Group::make()
+                ->schema([
+                    Section::make()
+                    ->schema([
+                        TextInput::make('name')
+                            ->required()
+                            ->maxLength(255)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+                                if ($operation !== 'create') {
+                                    return;
+                                }
+
+                                $set ('slug', Str::slug($state));
+                            }),
+
+                        TextInput::make('slug')
+                            ->disabled()
+                            ->dehydrated()
+                            ->required()
+                            ->maxLength(255)
+                            ->unique(Product::class, 'slug', ignoreRecord: true),
+
+                        FileUpload::make('thumbnail')
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2),
+
+                    // Pricing
+                    Section::make('Pricing')
+                    ->schema([
+                        TextInput::make('price')
+                            ->numeric()
+                            ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
+                            ->required(),
+
+                        TextInput::make('old_price')
+                            ->label('Compare at price')
+                            ->numeric()
+                            ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
+                    ])
+                    ->columns(2),
+
+                    // Description Section
+                    Section::make('Description')
+                    ->schema([
+                        MarkdownEditor::make('information')
+                            ->columnSpanFull(),
+
+                        KeyValue::make('dimension')
+                            ->addAction(
+                                fn (Action $action) => $action
+                                    ->icon('heroicon-m-plus-circle')
+                                    ->iconButton(),
+                            )
+                            ->addActionLabel(false)
+                            ->keyLabel('Name')
+                            ->keyPlaceholder('Ex: Width')
+                            ->valueLabel('Size')
+                            ->valuePlaceholder('Size in cm')
+                            ->reorderable(),
+
+                        KeyValue::make('material')
+                            ->addAction(
+                                fn (Action $action) => $action
+                                    ->icon('heroicon-m-plus-circle')
+                                    ->iconButton(),
+                            )
+                            ->keyLabel('No')
+                            ->keyPlaceholder('Auto Numbering')
+                            ->valueLabel('List')
+                            ->valuePlaceholder('Ex: Stainless')
+                            ->editableKeys(false)
+                            ->reorderable(),
+
+                        MarkdownEditor::make('shipping')
+                            ->columnSpanFull(),
+                    ])
+                    ->collapsible()
+                    ->columns(2),
+
+                    // Inventory Section
+                    Section::make('Inventory')
+                    ->schema([
+                        TextInput::make('sku')
+                            ->label('SKU (Stock Keeping Unit)')
+                            ->required()
+                            ->columnSpanFull(),
+
+                        TextInput::make('stock')
+                            ->numeric()
+                            ->rules(['integer', 'min:0'])
+                            ->required(),
+
+                        TextInput::make('security_stock')
+                            ->label('Security Stock')
+                            ->helperText('The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.')
+                            ->numeric()
+                            ->rules(['integer', 'min:0'])
+                            ->required(),
+                    ])
+                    ->columns(2)
+                ])
+                ->columnSpan(['lg' => 2]),
+
+               Group::make()
+                ->schema([
+                    // Status Section
+                   Section::make('Status')
+                    ->schema([
+                        Toggle::make('is_visible')
+                            ->label('Visible to customers')
+                            ->helperText('This product will be hidden')
+                            ->default(true),
+
+                        DatePicker::make('published_at')
+                            ->label('Availability')
+                            ->default(now())
+                            ->required(),
+                    ]),
+                        
+                    // Relation Section
+                    Section::make('Relation')
+                    ->schema([
+                        Select::make('categories')
+                            ->searchable()
+                            ->required(),
+                    ]),
+                ])
+                ->columnSpan(['lg' => 1])
+            ])
+            ->columns(3);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                ImageColumn::make('thumbnail')
+                    ->label('Thumbnail'),
+                    
+                TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('is_visible')
+                    ->label('Visibility')
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('price')
+                    ->label('Price')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('sku')
+                    ->label('SKU')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('stock')
+                    ->label("Stock")
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('published_at')
+                    ->label('Published date')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListProducts::route('/'),
+            'create' => Pages\CreateProduct::route('/create'),
+            'edit' => Pages\EditProduct::route('/{record}/edit'),
+        ];
+    }
+}

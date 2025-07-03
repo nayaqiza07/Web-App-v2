@@ -51,6 +51,7 @@ export default function Register() {
                             onChange={(e) => setData('name', e.target.value)}
                             disabled={processing}
                             placeholder="Full name"
+                            className="border-border"
                         />
                         <InputError message={errors.name} className="mt-2" />
                     </div>
@@ -67,6 +68,7 @@ export default function Register() {
                             onChange={(e) => setData('email', e.target.value)}
                             disabled={processing}
                             placeholder="email@example.com"
+                            className="border-border"
                         />
                         <InputError message={errors.email} />
                     </div>
@@ -83,6 +85,7 @@ export default function Register() {
                             onChange={(e) => setData('phone', e.target.value)}
                             disabled={processing}
                             placeholder="+62812456789"
+                            className="border-border"
                         />
                         <InputError message={errors.phone} />
                     </div>
@@ -99,6 +102,7 @@ export default function Register() {
                             onChange={(e) => setData('password', e.target.value)}
                             disabled={processing}
                             placeholder="Password"
+                            className="border-border"
                         />
                         <InputError message={errors.password} />
                     </div>
@@ -115,6 +119,7 @@ export default function Register() {
                             onChange={(e) => setData('password_confirmation', e.target.value)}
                             disabled={processing}
                             placeholder="Confirm password"
+                            className="border-border"
                         />
                         <InputError message={errors.password_confirmation} />
                     </div>
