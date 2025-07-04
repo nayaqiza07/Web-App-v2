@@ -1,17 +1,19 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Link } from '@inertiajs/react';
 import { easeOut, motion } from 'framer-motion';
 import React from 'react';
 
 interface ButtonWithBadgeProps {
     title: string;
+    linkTo: string;
     badgeNumber: number;
     className?: string;
     index?: number;
 }
 
-const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({ title = 'Title', badgeNumber = 0, className = '', index }) => {
+const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({ title = 'Title', linkTo, badgeNumber = 0, className = '', index }) => {
     const buttonWithBadgeVariants = {
         hidden: { opacity: 0, x: -100 },
         visible: (i: number) => ({
@@ -27,18 +29,20 @@ const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({ title = 'Title', badg
 
     return (
         <motion.div custom={index} variants={buttonWithBadgeVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <Button
-                variant="ghost"
-                className={cn(
-                    'hover:bg-accent hover:border-border flex w-full justify-between border border-transparent p-2 text-xs font-bold',
-                    className,
-                )}
-            >
-                <span>{title}</span>
-                <Badge variant="outline" className="bg-card border">
-                    {badgeNumber}
-                </Badge>
-            </Button>
+            <Link href={linkTo}>
+                <Button
+                    variant="ghost"
+                    className={cn(
+                        'hover:bg-accent hover:border-border flex w-full justify-between border border-transparent p-2 text-xs font-bold',
+                        className,
+                    )}
+                >
+                    <span>{title}</span>
+                    <Badge variant="outline" className="bg-card border">
+                        {badgeNumber}
+                    </Badge>
+                </Button>
+            </Link>
         </motion.div>
     );
 };

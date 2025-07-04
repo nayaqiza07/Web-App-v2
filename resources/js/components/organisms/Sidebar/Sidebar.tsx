@@ -15,6 +15,8 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) => {
     const { categories } = useCategoryStore();
 
+    console.log(categories);
+
     return isLoading ? (
         <SkeletonSidebar />
     ) : (
@@ -29,7 +31,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) 
                         <ScrollArea className="h-[200px] p-2 md:h-[375px]">
                             {categories.length > 0 &&
                                 categories.map((category, index) => (
-                                    <ButtonWithBadge key={index} title={String(category)} badgeNumber={index + 1} index={index} />
+                                    <ButtonWithBadge
+                                        key={index}
+                                        linkTo={route('products.showByCategory', { slug: category.slug })}
+                                        title={category.name}
+                                        badgeNumber={index + 1}
+                                        index={index}
+                                    />
                                 ))}
                         </ScrollArea>
                     </CardContent>

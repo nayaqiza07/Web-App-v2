@@ -49,18 +49,18 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false, PR
                         <ScrollArea className="h-50 px-3">
                             <h1 className="text-foreground mb-5 text-sm">Dimension</h1>
 
-                            {PRODUCT?.dimension && PRODUCT?.dimension.length > 0 ? (
+                            {PRODUCT && PRODUCT.dimensions ? (
                                 <div className="grid gap-2 md:grid-cols-2">
                                     <ul className="flex flex-col gap-2">
-                                        {PRODUCT?.dimension.map((item, index) => (
-                                            <li key={index} className="list-disc">
-                                                {item.key}: {item.value}
+                                        {Object.entries(PRODUCT?.dimensions).map(([key, value]) => (
+                                            <li key={key} className="list-disc">
+                                                {key}: {value} cm
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
                             ) : (
-                                <EmptyState title="No dimension data available" icon={<FileTextIcon />} />
+                                <EmptyState title="No dimensions data available" icon={<FileTextIcon />} />
                             )}
                         </ScrollArea>
                     </Card>
@@ -70,7 +70,20 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false, PR
                     <Card className="text-muted-foreground px-1 py-4">
                         <ScrollArea className="h-50 px-3">
                             <h1 className="text-foreground mb-5 text-sm">Materials</h1>
-                            <p>{PRODUCT?.material}</p>
+
+                            {PRODUCT && PRODUCT.materials ? (
+                                <div className="grid gap-2 md:grid-cols-2">
+                                    <ul className="flex flex-col gap-2">
+                                        {Object.entries(PRODUCT?.materials).map(([key, value]) => (
+                                            <li key={key} className="list-disc">
+                                                {key}: {value}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ) : (
+                                <EmptyState title="No materials data available" icon={<FileTextIcon />} />
+                            )}
                         </ScrollArea>
                     </Card>
                 </TabsContent>

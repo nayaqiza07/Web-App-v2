@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -10,16 +11,19 @@ class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * Get all Categories
      */
     public function index()
     {
-        $json = Storage::disk('public')->get('products.json');
-        $products = json_decode($json, true);
+        // $json = Storage::disk('public')->get('products.json');
+        // $products = json_decode($json, true);
 
-        $categories = collect($products)
-            -> pluck('category')
-            -> unique()
-            -> values();
+        // $categories = collect($products)
+        //     -> pluck('category')
+        //     -> unique()
+        //     -> values();
+
+        $categories = Category::orderBy('name', 'asc')->get();
 
         return Inertia::render('shop/ProductList', [
             'CATEGORIES' => $categories ?? [],
@@ -27,50 +31,21 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
+     * Get Category by Slug
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        //
-    }
+        $category = Category::where('slug', $slug)->firstOrFail();
+        $products = $category->products()->latest()->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        if (!$category) {
+            abort(404);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return Inertia::render('shop/ProductList', [
+            'CATEGORY' => $category,
+            'PRODUCTS' => $products,
+        ]);
     }
 }

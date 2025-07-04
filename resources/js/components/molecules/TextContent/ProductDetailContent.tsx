@@ -56,6 +56,7 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
                 <AnimatedMotion as="span" delay={0.4} duration={1} variantName="fadeIn" animate="visible">
                     {priceFormat(PRODUCT?.price)}
                 </AnimatedMotion>
+
                 <AnimatedMotion
                     as="span"
                     delay={0.6}
@@ -64,19 +65,19 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
                     animate="visible"
                     className="text-muted-foreground text-xs line-through"
                 >
-                    {priceFormat(PRODUCT?.price)}
+                    {PRODUCT && PRODUCT.old_price > 0 && priceFormat(PRODUCT.old_price)}
                 </AnimatedMotion>
             </p>
 
             <div className="flex flex-col gap-6 text-xs font-bold">
                 <AnimatedMotion as="p" delay={0.7} duration={1} variantName="fadeIn" animate="visible" className="text-muted-foreground">
-                    SKU: <span className="text-foreground">LSOFA578493</span>
+                    SKU: <span className="text-foreground">{PRODUCT?.sku}</span>
                 </AnimatedMotion>
 
                 <AnimatedMotion as="p" delay={0.8} duration={1} variantName="fadeIn" animate="visible" className="text-muted-foreground">
                     Category:
                     <Badge variant={'outline'} className="font-bold">
-                        {PRODUCT?.category}
+                        {PRODUCT?.category.name}
                     </Badge>
                 </AnimatedMotion>
 

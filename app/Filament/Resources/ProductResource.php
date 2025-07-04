@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
+
 // Components
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
@@ -25,6 +26,8 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Support\RawJs;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 
@@ -74,51 +77,55 @@ class ProductResource extends Resource
                     ])
                     ->columns(2),
 
-                    // Pricing
+                    /** Pricing Section */
                     Section::make('Pricing')
                     ->schema([
                         TextInput::make('price')
                             ->numeric()
-                            ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
+                            ->rules(['regex:/^\d{1,10}(\.\d{0,2})?$/'])
+                            ->mask(RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
                             ->required(),
-
-                        TextInput::make('old_price')
+                            
+                            TextInput::make('old_price')
                             ->label('Compare at price')
                             ->numeric()
-                            ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/']),
+                            ->mask(RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
+                            ->rules(['regex:/^\d{1,10}(\.\d{0,2})?$/']),
                     ])
                     ->columns(2),
 
-                    // Description Section
+                    /** Description Section */
                     Section::make('Description')
                     ->schema([
                         MarkdownEditor::make('information')
                             ->columnSpanFull(),
 
-                        KeyValue::make('dimension')
+                        KeyValue::make('dimensions')
                             ->addAction(
                                 fn (Action $action) => $action
                                     ->icon('heroicon-m-plus-circle')
                                     ->iconButton(),
                             )
-                            ->addActionLabel(false)
+                            ->rules(['array'])
                             ->keyLabel('Name')
                             ->keyPlaceholder('Ex: Width')
                             ->valueLabel('Size')
                             ->valuePlaceholder('Size in cm')
                             ->reorderable(),
 
-                        KeyValue::make('material')
+                        KeyValue::make('materials')
                             ->addAction(
                                 fn (Action $action) => $action
                                     ->icon('heroicon-m-plus-circle')
                                     ->iconButton(),
                             )
+                            ->rules(['array'])
                             ->keyLabel('No')
-                            ->keyPlaceholder('Auto Numbering')
+                            ->keyPlaceholder('Ex: 1')
                             ->valueLabel('List')
                             ->valuePlaceholder('Ex: Stainless')
-                            ->editableKeys(false)
                             ->reorderable(),
 
                         MarkdownEditor::make('shipping')
@@ -127,7 +134,7 @@ class ProductResource extends Resource
                     ->collapsible()
                     ->columns(2),
 
-                    // Inventory Section
+                    /** Inventory Section */
                     Section::make('Inventory')
                     ->schema([
                         TextInput::make('sku')
@@ -153,7 +160,7 @@ class ProductResource extends Resource
 
                Group::make()
                 ->schema([
-                    // Status Section
+                    /** Status Section */
                    Section::make('Status')
                     ->schema([
                         Toggle::make('is_visible')
@@ -162,17 +169,23 @@ class ProductResource extends Resource
                             ->default(true),
 
                         DatePicker::make('published_at')
+                            ->suffixIcon('heroicon-m-calendar-days')
                             ->label('Availability')
                             ->default(now())
-                            ->required(),
+                            ->required()
+                            ->native(false)
+                            ->closeOnDateSelection(),
                     ]),
                         
-                    // Relation Section
+                    /** Relation Section */
                     Section::make('Relation')
                     ->schema([
-                        Select::make('categories')
-                            ->searchable()
-                            ->required(),
+                        Select::make('category_id')
+                            ->suffixIcon('heroicon-m-tag')
+                            ->label('Categories')
+                            ->relationship('category', 'name')
+                            ->required()
+                            ->native(false),
                     ]),
                 ])
                 ->columnSpan(['lg' => 1])
@@ -192,13 +205,19 @@ class ProductResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('is_visible')
+                TextColumn::make('category.name')
+                    ->label('Category')
+                    ->searchable()
+                    ->sortable(),
+
+                IconColumn::make('is_visible')
                     ->label('Visibility')
                     ->sortable()
                     ->toggleable(),
 
                 TextColumn::make('price')
                     ->label('Price')
+                    ->money('IDR', true)
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
@@ -215,11 +234,19 @@ class ProductResource extends Resource
                     ->sortable()
                     ->toggleable(),
 
+                TextColumn::make('security_stock')
+                    ->label('Security Stock')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+
                 TextColumn::make('published_at')
                     ->label('Published date')
                     ->searchable()
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
             ])
             ->filters([
                 //
