@@ -70,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                             variantName="fadeIn"
                             className="text-muted-foreground flex w-full items-center justify-between text-xs font-bold"
                         >
-                            <span>{truncateText(data.category, 5)}</span>
+                            <span>{truncateText(data.category.name, 5)}</span>
                             <span>{priceFormat(data.price)}</span>
                         </AnimatedMotion>
                     </CardFooter>

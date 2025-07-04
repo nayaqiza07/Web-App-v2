@@ -8,8 +8,6 @@ import { useProductStore } from '@/stores/useProductStore';
 const ProductPage: React.FC = () => {
     const { products, isLoading, error } = useProductStore();
 
-    console.log(products);
-
     if (error) {
         return <div className="text-red-500">{error}</div>;
     }

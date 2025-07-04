@@ -109,15 +109,17 @@ type IconKey = 'check' | 'money' | 'shield';
 export type Product = {
     id: number;
     name: string;
-    thumbnail: string;
     slug: string;
-    category: string;
+    thumbnail: string;
+    category: { name: string };
     price: number;
+    old_price: number;
     short_description: string;
     information: string;
-    dimension: { key: string; value: string }[];
-    material: string;
+    dimensions: Record<string, string | number>;
+    materials: Record<string, string | number>;
     shipping: string;
+    sku: string;
     stock: number;
 };
 // Products End

@@ -1,0 +1,96 @@
+<?php
+
+namespace App\Filament\Resources\CategoryResource\RelationManagers;
+
+use App\Filament\Resources\ProductResource;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+class ProductsRelationManager extends RelationManager
+{
+    protected static string $relationship = 'products';
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public function form(Form $form): Form
+    {
+        return ProductResource::form($form);
+    }
+
+    public function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                ImageColumn::make('thumbnail')
+                    ->label('Thumbnail'),
+                    
+                TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('category.name')
+                    ->label('Category')
+                    ->searchable()
+                    ->sortable(),
+
+                IconColumn::make('is_visible')
+                    ->label('Visibility')
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('price')
+                    ->label('Price')
+                    ->money('IDR', true)
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('sku')
+                    ->label('SKU')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('stock')
+                    ->label("Stock")
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                TextColumn::make('security_stock')
+                    ->label('Security Stock')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+
+                TextColumn::make('published_at')
+                    ->label('Published date')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
+            ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+}

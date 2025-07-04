@@ -14,31 +14,31 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
-            // Detail
+            /** Detail */
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('thumbnail');
+            $table->string('thumbnail')->nullable();
             
-            // Pricing
+            /** Pricing */
             $table->decimal('price', 10, 2);
             $table->decimal('old_price', 10, 2)->nullable();
 
-            // Description
+            /** Description */
             $table->longText('information')->nullable();
             $table->json('dimensions')->nullable();
             $table->json('materials')->nullable();
             $table->longText('shipping')->nullable();
 
-            // Inventory
+            /** Inventory */
             $table->string('sku')->unique();
             $table->integer('stock')->default(0);
             $table->integer('security_stock')->default(0);
 
-            // Status
+            /** Status */
             $table->boolean('is_visible')->default(false);
             $table->date('published_at')->nullable();
 
-            // Relation
+            /** Relation */
             $table->foreignId('category_id')->constrained(
                 table: 'categories', indexName: 'products_category_id'
             );
