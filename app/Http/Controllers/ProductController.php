@@ -16,20 +16,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $json = Storage::disk('public')->get('products.json');
-        // $products = json_decode($json, true);
-
-        // $categories = collect($products)
-        //     -> pluck('category')
-        //     -> unique()
-        //     -> values();
-        
         $products = Product::all();
-        $categories = Category::orderBy('name', 'asc')->get();
+        $categories = Category::withCount('products')->orderBy('name', 'asc')->get();
 
         return Inertia::render('shop/ProductList', [
-            'PRODUCTS' => $products ?? [],
-            'CATEGORIES' => $categories ?? []
+            'PRODUCTS' => $products,
+            'CATEGORIES' => $categories
         ]);
     }
 
@@ -40,10 +32,11 @@ class ProductController extends Controller
     public function show(string $slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
+        $products = Product::all();
 
         return Inertia::render('shop/ProductDetail', [
-            'PRODUCTS' => $products ?? [],
-            'PRODUCT' => $product ?? []
+            'PRODUCTS' => $products,
+            'PRODUCT' => $product
         ]);
     }
 
@@ -55,10 +48,12 @@ class ProductController extends Controller
     {
         $category = Category::where('slug', $slug)->firstOrFail();
         $products = $category->products()->latest()->get();
+        $categories = Category::withCount('products')->orderBy('name', 'asc')->get();
 
         return Inertia::render('shop/ProductList', [
             'CATEGORY' => $category,
             'PRODUCTS' => $products,
+            'CATEGORIES' => $categories,
         ]);
     }
 }

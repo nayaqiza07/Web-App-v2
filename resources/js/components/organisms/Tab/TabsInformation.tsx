@@ -52,7 +52,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false, PR
                             {PRODUCT && PRODUCT.dimensions ? (
                                 <div className="grid gap-2 md:grid-cols-2">
                                     <ul className="flex flex-col gap-2">
-                                        {Object.entries(PRODUCT?.dimensions).map(([key, value]) => (
+                                        {Object.entries(PRODUCT.dimensions).map(([key, value]) => (
                                             <li key={key} className="list-disc">
                                                 {key}: {value} cm
                                             </li>
@@ -74,7 +74,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false, PR
                             {PRODUCT && PRODUCT.materials ? (
                                 <div className="grid gap-2 md:grid-cols-2">
                                     <ul className="flex flex-col gap-2">
-                                        {Object.entries(PRODUCT?.materials).map(([key, value]) => (
+                                        {Object.entries(PRODUCT.materials).map(([key, value]) => (
                                             <li key={key} className="list-disc">
                                                 {key}: {value}
                                             </li>

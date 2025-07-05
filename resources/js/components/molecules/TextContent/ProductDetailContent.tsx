@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { priceFormat } from '@/lib/utils';
 import { Product } from '@/types';
+import { Link } from '@inertiajs/react';
 import { BanknoteIcon, CircleCheckIcon, PlusCircleIcon, ShieldHalfIcon } from 'lucide-react';
 import React from 'react';
 import QuantityButton from '../Button/QuantityButton';
@@ -37,6 +38,8 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
             price: PRODUCT?.price,
         });
     };
+
+    console.log(PRODUCT);
 
     return isLoading ? (
         <SkeletonDetailProduct />
@@ -76,9 +79,13 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
 
                 <AnimatedMotion as="p" delay={0.8} duration={1} variantName="fadeIn" animate="visible" className="text-muted-foreground">
                     Category:
-                    <Badge variant={'outline'} className="font-bold">
-                        {PRODUCT?.category.name}
-                    </Badge>
+                    {PRODUCT?.category.slug && (
+                        <Link href={route('products.showByCategory', { slug: PRODUCT?.category.slug })}>
+                            <Badge variant={'outline'} className="font-bold">
+                                {PRODUCT?.category.name}
+                            </Badge>
+                        </Link>
+                    )}
                 </AnimatedMotion>
 
                 <AnimatedMotion as="div" delay={0.9} duration={1} variantName="fadeIn" animate="visible" className="flex flex-col gap-2">

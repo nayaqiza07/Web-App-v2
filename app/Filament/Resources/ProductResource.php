@@ -198,7 +198,9 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('thumbnail')
-                    ->label('Thumbnail'),
+                    ->label('Thumbnail')
+                    ->width(50)
+                    ->height(50),
                     
                 TextColumn::make('name')
                     ->label('Name')

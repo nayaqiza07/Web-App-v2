@@ -7,6 +7,8 @@ interface CategoryState {
     setCategories: (categories: Category[]) => void;
 
     // Category Detail
+    selectedCategory: Category | null;
+    setSelectedCategory: (category: Category | null) => void;
 
     // Loading
     isLoading: boolean;
@@ -23,6 +25,9 @@ export const useCategoryStore = create<CategoryState>((set) => ({
     setCategories: (categories) => set({ categories }),
 
     // Category Detail
+    selectedCategory: null,
+    setSelectedCategory: (category: Category | null) => set({ selectedCategory: category }),
+
     // Loading
     isLoading: false,
     setIsLoading: (loading) => set({ isLoading: loading }),

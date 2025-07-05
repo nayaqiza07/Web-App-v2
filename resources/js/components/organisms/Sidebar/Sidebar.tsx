@@ -15,8 +15,6 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) => {
     const { categories } = useCategoryStore();
 
-    console.log(categories);
-
     return isLoading ? (
         <SkeletonSidebar />
     ) : (
@@ -35,8 +33,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) 
                                         key={index}
                                         linkTo={route('products.showByCategory', { slug: category.slug })}
                                         title={category.name}
-                                        badgeNumber={index + 1}
+                                        badgeNumber={category.products_count}
                                         index={index}
+                                        active={route().current('products.showByCategory', { slug: category.slug })}
+                                        className="mb-0.5"
                                     />
                                 ))}
                         </ScrollArea>
