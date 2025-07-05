@@ -1,4 +1,5 @@
 import { Button, ButtonProps } from '@/components/ui/button';
+import { Link } from '@inertiajs/react';
 import { ReactNode } from 'react';
 
 interface EmptyStateProps {
@@ -6,11 +7,12 @@ interface EmptyStateProps {
     title: string;
     desc?: string;
     btnText?: string;
+    btnLink?: string;
     btnProps?: ButtonProps;
     className?: string;
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, desc, btnText, btnProps, className = '' }) => {
+const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, desc, btnText, btnLink, btnProps, className = '' }) => {
     return (
         <div className={`${className} flex flex-1 flex-col items-center justify-center gap-4 px-4 py-10`}>
             {icon}
@@ -19,9 +21,11 @@ const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, desc, btnText, btn
                 <p className="text-muted-foreground text-xs">{desc}</p>
             </div>
             {btnText && (
-                <Button className="text-xs" size="sm" {...btnProps}>
-                    {btnText}
-                </Button>
+                <Link href={btnLink ?? '#'}>
+                    <Button className="text-xs" size="sm" {...btnProps}>
+                        {btnText}
+                    </Button>
+                </Link>
             )}
         </div>
     );

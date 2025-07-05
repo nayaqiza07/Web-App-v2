@@ -16,9 +16,10 @@ const ProductDetail: React.FC<ProductDetailProps> = (props) => {
     const { setProducts, setSelectedProduct, setIsLoading, setError } = useProductStore();
 
     useEffect(() => {
-        setIsLoading(true);
+        const loading = !PRODUCTS?.length || !PRODUCT?.id;
+        setIsLoading(loading);
 
-        const timeout = setTimeout(() => {
+        if (!loading) {
             try {
                 setProducts(PRODUCTS);
                 setSelectedProduct(PRODUCT);
@@ -28,9 +29,7 @@ const ProductDetail: React.FC<ProductDetailProps> = (props) => {
             } finally {
                 setIsLoading(false);
             }
-        }, 2000);
-
-        return () => clearTimeout(timeout);
+        }
     }, [PRODUCTS, PRODUCT, setProducts, setSelectedProduct, setIsLoading, setError]);
 
     return (

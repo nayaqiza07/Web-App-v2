@@ -111,10 +111,9 @@ export type Product = {
     name: string;
     slug: string;
     thumbnail: string;
-    category: { name: string };
+    category: { name: string; slug: string };
     price: number;
     old_price: number;
-    short_description: string;
     information: string;
     dimensions: Record<string, string | number>;
     materials: Record<string, string | number>;
@@ -129,5 +128,7 @@ export type Category = {
     id: number;
     name: string;
     slug: string;
+    thumbnail: string;
+    products_count: number;
 };
 // Category End

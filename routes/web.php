@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -9,8 +10,7 @@ Route::get('/welcome', function () {
 })->name('welcome');
 
 Route::get('/', function () {
-    $json = Storage::disk('public')->get('products.json');
-    $products = json_decode($json, true);
+    $products = Product::all();
     
     return Inertia::render('home/Home', [
          'PRODUCTS' => $products ?? []
@@ -35,6 +35,5 @@ require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
 
 require __DIR__.'/modules/product.php';
-require __DIR__.'/modules/category.php';
 require __DIR__.'/modules/blog.php';
 require __DIR__.'/modules/static.php';

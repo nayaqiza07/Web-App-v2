@@ -14,9 +14,9 @@ Route::prefix('products')->name('products.')->controller(ProductController::clas
      * 2. Product Detail (show)
      */
     Route::get('/{slug}', 'show')->name('show');
-
+    
     /** 
-     * 3. Product List (show) 
+     * 3. Product List by Category (showByCategory) 
      */
     Route::get('/category/{slug}', 'showByCategory')->name('showByCategory');
 });

@@ -11,9 +11,10 @@ interface ButtonWithBadgeProps {
     badgeNumber: number;
     className?: string;
     index?: number;
+    active?: boolean;
 }
 
-const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({ title = 'Title', linkTo, badgeNumber = 0, className = '', index }) => {
+const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({ active = false, title = 'Title', linkTo, badgeNumber = 0, className = '', index }) => {
     const buttonWithBadgeVariants = {
         hidden: { opacity: 0, x: -100 },
         visible: (i: number) => ({
@@ -34,13 +35,16 @@ const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({ title = 'Title', link
                     variant="ghost"
                     className={cn(
                         'hover:bg-accent hover:border-border flex w-full justify-between border border-transparent p-2 text-xs font-bold',
+                        active && 'border-border bg-accent',
                         className,
                     )}
                 >
                     <span>{title}</span>
-                    <Badge variant="outline" className="bg-card border">
-                        {badgeNumber}
-                    </Badge>
+                    {badgeNumber > 0 && (
+                        <Badge variant="outline" className="bg-card border">
+                            {badgeNumber}
+                        </Badge>
+                    )}
                 </Button>
             </Link>
         </motion.div>

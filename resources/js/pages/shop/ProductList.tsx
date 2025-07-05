@@ -9,31 +9,30 @@ import { useEffect } from 'react';
 interface ProductListProps {
     PRODUCTS: Product[];
     CATEGORIES: Category[];
+    CATEGORY: Category;
 }
 
 const ProductList: React.FC<ProductListProps> = (props) => {
-    const { PRODUCTS, CATEGORIES } = props;
+    const { PRODUCTS, CATEGORIES, CATEGORY } = props;
 
     const { setProducts, setIsLoading, setError } = useProductStore();
-    const { setCategories } = useCategoryStore();
+    const { setCategories, setSelectedCategory } = useCategoryStore();
 
     useEffect(() => {
-        setIsLoading(true);
+        const loading = !PRODUCTS || !CATEGORIES;
+        setIsLoading(loading);
 
-        const timeout = setTimeout(() => {
+        if (!loading) {
             try {
                 setProducts(PRODUCTS);
                 setCategories(CATEGORIES);
+                setSelectedCategory(CATEGORY);
                 setError(null);
             } catch {
                 setError('Gagal memuat produk');
-            } finally {
-                setIsLoading(false);
             }
-        }, 2000);
-
-        return () => clearTimeout(timeout);
-    }, [PRODUCTS, CATEGORIES, setIsLoading, setProducts, setCategories, setError]);
+        }
+    }, [PRODUCTS, CATEGORIES, CATEGORY, setIsLoading, setProducts, setCategories, setSelectedCategory, setError]);
 
     return (
         <>

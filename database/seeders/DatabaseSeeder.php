@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
-use App\Models\Product;
 use App\Models\User;
+use App\Models\Product;
+use App\Models\Category;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -137,6 +138,74 @@ class DatabaseSeeder extends Seeder
                 
                 /** Relation */
                 'category_id' => Category::where('slug', 'terrace-set')->first()
+            ],
+            [
+                /** Detail */
+                "name" => "Windsor Sliding Table",
+                "slug" => "windsor-sliding-table",
+                "thumbnail" => "https://i.pinimg.com/736x/73/04/dc/7304dcb8a8fe7955b742246d6fc0ea7e.jpg",
+
+                /** Pricing */
+                "price" => 2118684,
+                'old_price' => 0,
+
+                /** Description */
+                "information" => "A blend of steel powder coated in black with solid wood top. The table blends with all the modern decor and can be slide in most of the sofas for use of laptop, tablet or even for a comfortable meal.",
+                "dimensions" => [
+                    "Width" => "50",
+                    "Depth" => "30",
+                    "Height" => "60",
+                ],
+                "materials" => [
+                    "Frame" => "Stainless",
+                ],
+                "shipping" => "World Wide",
+
+                /** Inventory */
+                "sku" => 'WST503060S',
+                "stock" => 25,
+                "security_stock" => 5,
+
+                /** Status */
+                'is_visible' => true,
+                'published_at' => date(now()),
+                
+                /** Relation */
+                'category_id' => Category::where('slug', 'side-table')->first()
+            ],
+            [
+                /** Detail */
+                "name" => "Front Bar Outdoor Kitchen",
+                "slug" => Str::slug("Front Bar Outdoor Kitchen"),
+                "thumbnail" => "https://i.pinimg.com/736x/14/ef/1d/14ef1dab1670e259441fcdfbed69abd8.jpg",
+
+                /** Pricing */
+                "price" => 41518505,
+                'old_price' => 0,
+
+                /** Description */
+                "information" => "The Front Bar Outdoor Kitchen is a perfect blend of elegance and functionality, crafted from premium Grade A Teak wood. It provides ample space and storage with three shelves and six larger drawers, ensuring you have everything you need within arm’s reach. Designed to withstand the elements, the hardware is made from high-quality stainless steel 304#, offering durability and a sleek appearance. The natural finish enhances the wood’s beauty, making it an attractive addition to any outdoor space. Please note, the tandoor is not included with this unit.",
+                "dimensions" => [
+                    "Width" => "342",
+                    "Depth" => "73",
+                    "Height" => "92",
+                ],
+                "materials" => [
+                    "Frame" => "Teak Wood",
+                ],
+                "shipping" => "World Wide",
+
+                /** Inventory */
+                "sku" => 'FBOK3427392TW',
+                "stock" => 2,
+                "security_stock" => 1,
+
+                /** Status */
+                'is_visible' => true,
+                'published_at' => date(now()),
+                
+                /** Relation */
+                'category_id' => Category::where('slug', 'storage')->first()
             ],
         ]);
     }
