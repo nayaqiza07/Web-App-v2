@@ -16,11 +16,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        $categories = Category::withCount('products')->orderBy('name', 'asc')->get();
+        $products = Product::filter()->get();
+        $categories = Category::filter()->get();
 
         return Inertia::render('shop/ProductList', [
-            'PRODUCTS' => $products,
+            'PRODUCTS' => [
+                'data' => $products,
+                'total' => $products->count()
+            ],
             'CATEGORIES' => $categories
         ]);
     }
@@ -31,8 +34,8 @@ class ProductController extends Controller
      */
     public function show(string $slug)
     {
-        $product = Product::where('slug', $slug)->firstOrFail();
-        $products = Product::all();
+        $product = Product::filter()->slug($slug)->firstOrFail();
+        $products = Product::filter()->get();
 
         return Inertia::render('shop/ProductDetail', [
             'PRODUCTS' => $products,
@@ -46,13 +49,16 @@ class ProductController extends Controller
      */
     public function showByCategory(string $slug)
     {
-        $category = Category::where('slug', $slug)->firstOrFail();
+        $category = Category::filter()->slug($slug)->firstOrFail();
         $products = $category->products()->latest()->get();
-        $categories = Category::withCount('products')->orderBy('name', 'asc')->get();
+        $categories = Category::filter()->get();
 
         return Inertia::render('shop/ProductList', [
             'CATEGORY' => $category,
-            'PRODUCTS' => $products,
+            'PRODUCTS' => [
+                'data' => $products,
+                'total' => Product::filter()->count()
+            ],
             'CATEGORIES' => $categories,
         ]);
     }

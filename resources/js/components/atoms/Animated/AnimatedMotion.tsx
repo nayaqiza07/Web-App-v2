@@ -1,5 +1,5 @@
 import { animationVariants } from '@/lib/motion/variants';
-import { motion } from 'framer-motion';
+import { motion, MotionProps } from 'framer-motion';
 import React, { ElementType, ReactNode } from 'react';
 
 interface AnimatedMotionProps {
@@ -7,8 +7,9 @@ interface AnimatedMotionProps {
     as?: ElementType;
     variantName: keyof typeof animationVariants;
     initial?: string | boolean;
-    animate?: string;
+    animate?: MotionProps['whileHover'] | string;
     whileInView?: string;
+    whileHover?: MotionProps['whileHover'];
     viewport?: {
         once?: boolean;
         amount?: number;
@@ -26,6 +27,7 @@ const AnimatedMotion: React.FC<AnimatedMotionProps> = ({
     initial = 'hidden',
     animate,
     whileInView,
+    whileHover,
     viewport,
     delay = 0,
     duration = 0.6,
@@ -40,7 +42,9 @@ const AnimatedMotion: React.FC<AnimatedMotionProps> = ({
         <MotionTag
             initial={initial}
             animate={animate}
+            layout
             whileInView={whileInView}
+            whileHover={whileHover}
             viewport={viewport}
             transition={{ duration, delay, ease }}
             variants={variants}

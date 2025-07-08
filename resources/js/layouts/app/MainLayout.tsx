@@ -1,13 +1,29 @@
 import Footer from '@/components/organisms/footer/Footer';
 import Subscription from '@/components/organisms/Form/Subscription';
 import Navbar from '@/components/organisms/navbar/Navbar';
-import { ReactNode } from 'react';
+import { useLoadingStore } from '@/stores/useLoadingStore';
+import { router } from '@inertiajs/react';
+import { ReactNode, useEffect, useRef } from 'react';
 
 interface MainLayoutProps {
     children: ReactNode;
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
+    const hasMounted = useRef(false);
+    const { setIsLoading } = useLoadingStore();
+
+    useEffect(() => {
+        const start = () => setIsLoading(true);
+        const finish = () => setTimeout(() => setIsLoading(false), 1500);
+
+        if (hasMounted.current) return;
+        hasMounted.current = true;
+
+        router.on('start', start);
+        router.on('finish', finish);
+    }, [setIsLoading]);
+
     return (
         <>
             <Navbar />

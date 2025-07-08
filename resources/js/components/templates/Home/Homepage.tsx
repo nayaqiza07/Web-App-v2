@@ -3,11 +3,11 @@ import Activity from '@/components/organisms/Activity/Activity';
 import CarouselProduct from '@/components/organisms/Carousel/CarouselProduct';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Button } from '@/components/ui/button';
-import { useProductStore } from '@/stores/useProductStore';
+import { useLoadingStore } from '@/stores/useLoadingStore';
 import { Link } from '@inertiajs/react';
 
 const Homepage = () => {
-    const isLoading = useProductStore((state) => state.isLoading);
+    const { isLoading } = useLoadingStore();
 
     return (
         <>

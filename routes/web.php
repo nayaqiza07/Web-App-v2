@@ -10,10 +10,10 @@ Route::get('/welcome', function () {
 })->name('welcome');
 
 Route::get('/', function () {
-    $products = Product::all();
+    $products = Product::filter()->get();
     
     return Inertia::render('home/Home', [
-         'PRODUCTS' => $products ?? []
+         'PRODUCTS' => $products
     ]);
 })->name('home');
 

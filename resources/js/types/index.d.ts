@@ -106,12 +106,11 @@ export type AddressFormInput = {
 // Products Start
 type IconKey = 'check' | 'money' | 'shield';
 
-export type Product = {
+export type ProductData = {
     id: number;
     name: string;
     slug: string;
     thumbnail: string;
-    category: { name: string; slug: string };
     price: number;
     old_price: number;
     information: string;
@@ -120,6 +119,13 @@ export type Product = {
     shipping: string;
     sku: string;
     stock: number;
+    is_visible: boolean;
+    category: { name: string; slug: string };
+};
+
+export type ProductList = {
+    data: ProductData[];
+    total: number;
 };
 // Products End
 

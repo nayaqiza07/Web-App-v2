@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,10 +21,28 @@ class Category extends Model
         'is_visible' => 'boolean'
     ];
 
-    // protected $with =['products'];
+    /**
+     * Filtering Category Data
+     */
+    public function scopeFilter(Builder $query): Builder
+    {
+        return $query->where('is_visible', true)->withCount('products')->orderBy('name', 'asc');
+    }
 
+    /**
+     * Show by Slug
+     */
+    public function scopeSlug(Builder $query, string $slug): Builder
+    {
+        return $query->where('slug', $slug);
+    }
+
+    /**
+     * Relation with Product
+     * 1 Category hasMany Products
+     */
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class)->where('is_visible', true);
     }
 }
