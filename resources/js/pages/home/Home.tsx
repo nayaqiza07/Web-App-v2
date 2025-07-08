@@ -12,24 +12,16 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = (props) => {
     const { PRODUCTS } = props;
 
-    const { setProducts, setIsLoading, setError } = useProductStore();
+    const { setProducts, setError } = useProductStore();
 
     useEffect(() => {
-        setIsLoading(true);
-
-        const timeout = setTimeout(() => {
-            try {
-                setProducts(PRODUCTS);
-                setError(null);
-            } catch {
-                setError('Gagal memuat produk');
-            } finally {
-                setIsLoading(false);
-            }
-        }, 2000);
-
-        return () => clearTimeout(timeout);
-    }, [PRODUCTS, setIsLoading, setProducts, setError]);
+        try {
+            setProducts(PRODUCTS);
+            setError(null);
+        } catch {
+            setError('Gagal memuat produk');
+        }
+    }, [PRODUCTS, setProducts, setError]);
 
     return (
         <>

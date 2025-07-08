@@ -13,24 +13,17 @@ interface ProductDetailProps {
 const ProductDetail: React.FC<ProductDetailProps> = (props) => {
     const { PRODUCTS, PRODUCT } = props;
 
-    const { setProducts, setSelectedProduct, setIsLoading, setError } = useProductStore();
+    const { setProducts, setSelectedProduct, setError } = useProductStore();
 
     useEffect(() => {
-        const loading = !PRODUCTS?.length || !PRODUCT?.id;
-        setIsLoading(loading);
-
-        if (!loading) {
-            try {
-                setProducts(PRODUCTS);
-                setSelectedProduct(PRODUCT);
-                setError(null);
-            } catch {
-                setError('Failed Load Data');
-            } finally {
-                setIsLoading(false);
-            }
+        try {
+            setProducts(PRODUCTS);
+            setSelectedProduct(PRODUCT);
+            setError(null);
+        } catch {
+            setError('Failed Load Data');
         }
-    }, [PRODUCTS, PRODUCT, setProducts, setSelectedProduct, setIsLoading, setError]);
+    }, [PRODUCTS, PRODUCT, setProducts, setSelectedProduct, setError]);
 
     return (
         <>

@@ -5,12 +5,14 @@ import HeroSection from '@/components/organisms/Section/HeroSection';
 import Sidebar from '@/components/organisms/Sidebar/Sidebar';
 import SkeletonProductCard from '@/components/organisms/Skeleton/SkeletonProductCard';
 import { useCategoryStore } from '@/stores/useCategoryStore';
+import { useLoadingStore } from '@/stores/useLoadingStore';
 import { useProductStore } from '@/stores/useProductStore';
 import { ArmchairIcon } from 'lucide-react';
 
 const ProductPage: React.FC = () => {
-    const { products, isLoading, error } = useProductStore();
+    const { products, error } = useProductStore();
     const { selectedCategory } = useCategoryStore();
+    const { isLoading } = useLoadingStore();
 
     if (error) {
         return <div className="text-red-500">{error}</div>;
@@ -46,8 +48,8 @@ const ProductPage: React.FC = () => {
                 <div className="grid w-full grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
                     {isLoading ? (
                         Array.from({ length: 12 }).map((_, index) => <SkeletonProductCard key={index} />)
-                    ) : products.length > 0 ? (
-                        products.map((data) => <ProductCard key={data.id} data={data} />)
+                    ) : products.data.length > 0 ? (
+                        products.data.map((data) => <ProductCard key={data.id} data={data} />)
                     ) : (
                         <EmptyState
                             icon={<ArmchairIcon size={50} />}

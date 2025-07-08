@@ -15,24 +15,19 @@ interface ProductListProps {
 const ProductList: React.FC<ProductListProps> = (props) => {
     const { PRODUCTS, CATEGORIES, CATEGORY } = props;
 
-    const { setProducts, setIsLoading, setError } = useProductStore();
+    const { setProducts, setError } = useProductStore();
     const { setCategories, setSelectedCategory } = useCategoryStore();
 
     useEffect(() => {
-        const loading = !PRODUCTS || !CATEGORIES;
-        setIsLoading(loading);
-
-        if (!loading) {
-            try {
-                setProducts(PRODUCTS);
-                setCategories(CATEGORIES);
-                setSelectedCategory(CATEGORY);
-                setError(null);
-            } catch {
-                setError('Gagal memuat produk');
-            }
+        try {
+            setProducts(PRODUCTS);
+            setCategories(CATEGORIES);
+            setSelectedCategory(CATEGORY);
+            setError(null);
+        } catch {
+            setError('Gagal memuat produk');
         }
-    }, [PRODUCTS, CATEGORIES, CATEGORY, setIsLoading, setProducts, setCategories, setSelectedCategory, setError]);
+    }, [PRODUCTS, CATEGORIES, CATEGORY, setProducts, setCategories, setSelectedCategory, setError]);
 
     return (
         <>

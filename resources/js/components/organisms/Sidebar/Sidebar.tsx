@@ -1,10 +1,13 @@
 import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
+import CornerPlusBadge from '@/components/atoms/Badge/CornerPlusBadge';
 import ButtonWithBadge from '@/components/molecules/Button/ButtonWithBadge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { useCategoryStore } from '@/stores/useCategoryStore';
+import { useProductStore } from '@/stores/useProductStore';
+import { Link } from '@inertiajs/react';
 import SkeletonSidebar from '../Skeleton/SkeletonSidebar';
 
 interface SidebarProps {
@@ -14,6 +17,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) => {
     const { categories } = useCategoryStore();
+    const { products } = useProductStore();
 
     return isLoading ? (
         <SkeletonSidebar />
@@ -21,8 +25,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) 
         <div className={`${className} sticky top-20 flex h-full flex-col gap-3`}>
             <AnimatedMotion as="div" duration={1} variantName="slideRight" animate="visible">
                 <Card className={`bg-background w-full gap-0 py-0 text-xs`}>
-                    <CardHeader className="px-3 py-4">
-                        <CardTitle>Category</CardTitle>
+                    <CardHeader className="flex px-3 py-4">
+                        <CardTitle className="flex items-center justify-between">
+                            Category
+                            <Link href={route('products.index')}>
+                                <CornerPlusBadge>{products.total} Products</CornerPlusBadge>
+                            </Link>
+                        </CardTitle>
                     </CardHeader>
                     <Separator />
                     <CardContent className="p-1">

@@ -6,12 +6,14 @@ import CarouselImageProduct from '@/components/organisms/Carousel/CarouselImageP
 import CarouselProduct from '@/components/organisms/Carousel/CarouselProduct';
 import TabsInformation from '@/components/organisms/Tab/TabsInformation';
 import { useBreadcrumb } from '@/hooks/use-breadcrumbs';
+import { useLoadingStore } from '@/stores/useLoadingStore';
 import { useProductStore } from '@/stores/useProductStore';
 
 const ProductDetailPage = () => {
     const breadcrumbs = useBreadcrumb();
 
-    const { selectedProduct, isLoading, error } = useProductStore();
+    const { selectedProduct, error } = useProductStore();
+    const { isLoading } = useLoadingStore();
 
     if (error) {
         return <div className="text-red-500">{error}</div>;
@@ -42,7 +44,6 @@ const ProductDetailPage = () => {
                         >
                             <img
                                 src={selectedProduct?.thumbnail}
-                                // src={`/images/image-18.jpg`}
                                 alt={selectedProduct?.name}
                                 // loading="lazy"
                                 className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -47,10 +48,31 @@ class Product extends Model
         'is_visible' => 'boolean'
     ];
 
+    /**
+     * Filtering Products Data
+     */
+    public function scopeFilter(Builder $query): Builder
+    {
+        return $query->where('is_visible', true)
+            ->whereHas('category', fn ($query) => $query->where('is_visible', true));
+    }
+
+    /**
+     * Show by Slug
+     */
+    public function scopeSlug(Builder $query, string $slug): Builder
+    {
+        return $query->where('slug', $slug);
+    }
+
     protected $with = ['category'];
 
+    /**
+     * Relation with Category
+     * Many Products belongsTo 1 Category
+     */
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->where('is_visible', true);
     }
 }
