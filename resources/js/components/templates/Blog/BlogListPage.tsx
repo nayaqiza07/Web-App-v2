@@ -1,17 +1,14 @@
+import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import BlogCard from '@/components/organisms/Card/BlogCard';
 import HeroSection from '@/components/organisms/Section/HeroSection';
-import { useEffect, useState } from 'react';
+import SkeletonBlogCard from '@/components/organisms/Skeleton/SkeletonBlogCard';
+import { useBlogStore } from '@/stores/useBlogStore';
+import { useLoadingStore } from '@/stores/useLoadingStore';
+import { NewspaperIcon } from 'lucide-react';
 
 const BlogListPage = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    }, []);
+    const { isLoading } = useLoadingStore();
+    const { blogs } = useBlogStore();
 
     return (
         <>
@@ -23,9 +20,20 @@ const BlogListPage = () => {
 
             {/* Blog List Start */}
             <div className="grid gap-3 md:grid-cols-4 lg:grid-cols-5">
-                {Array.from({ length: 15 }).map((_, index) => (
-                    <BlogCard isLoading={isLoading} key={index} index={index} />
-                ))}
+                {isLoading ? (
+                    Array.from({ length: 15 }).map((_, index) => <SkeletonBlogCard key={index} />)
+                ) : blogs.length > 0 ? (
+                    blogs.map((blog, index) => <BlogCard key={index} index={index} data={blog} />)
+                ) : (
+                    <EmptyState
+                        icon={<NewspaperIcon size={50} />}
+                        title="No Blogs Found"
+                        desc="Your search did not match any Blogs"
+                        btnText="Go to Blogs"
+                        btnLink={route('blogs.index')}
+                        className="col-span-full"
+                    />
+                )}
             </div>
             {/* Blog List End*/}
         </>

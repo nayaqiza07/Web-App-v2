@@ -50,7 +50,7 @@ const Homepage = () => {
             />
 
             {/* 6 */}
-            <CarouselProduct isLoading={isLoading} headLineTitle="Recent Blogs" isFor="blog" isAutoPlay totalItemShow="md:basis-1/4 lg:basis-1/5" />
+            {/* <CarouselProduct isLoading={isLoading} headLineTitle="Recent Blogs" isFor="blog" isAutoPlay totalItemShow="md:basis-1/4 lg:basis-1/5" /> */}
         </>
     );
 };

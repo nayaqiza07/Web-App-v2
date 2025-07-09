@@ -15,19 +15,22 @@ class EditProduct extends EditRecord
     {
         return Notification::make()
             ->success()
-            ->title('Product updated')
-            ->body('The product has been saved successfully.');
+            ->title('Product Updated')
+            ->body('The product has been updated successfully.');
     }
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
-            Actions\ForceDeleteAction::make(),
-            Actions\RestoreAction::make(),
+            $this->getCancelFormAction()
+            ->formId('form'),
 
             $this->getSaveFormAction()
             ->formId('form'),
+
+            Actions\DeleteAction::make(),
+            Actions\ForceDeleteAction::make(),
+            Actions\RestoreAction::make(),
         ];
     }
 }

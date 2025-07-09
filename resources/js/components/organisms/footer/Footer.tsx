@@ -20,7 +20,7 @@ const Footer = () => {
                     </Link>
                     <div className="flex justify-between gap-3">
                         <div className="flex flex-col gap-3">
-                            <Link href={route('support')}>Support</Link>
+                            <Link href={route('support.index')}>Support</Link>
                             <Link href="#">Catalog</Link>
                         </div>
 
@@ -33,11 +33,11 @@ const Footer = () => {
                     <div className="flex justify-between gap-3">
                         <div className="flex flex-col gap-3 font-sans">
                             <Link href={route('services')}>Services</Link>
-                            <Link href={route('blog.index')}>Blog</Link>
+                            <Link href={route('blogs.index')}>Blog</Link>
                         </div>
                         <div className="flex flex-col gap-3">
                             <Link href={route('about-us')}>About Us</Link>
-                            <Link href={route('contact-us')}>Contact Us</Link>
+                            <Link href={route('contact-us.indexOnContactUs')}>Contact Us</Link>
                         </div>
                     </div>
 

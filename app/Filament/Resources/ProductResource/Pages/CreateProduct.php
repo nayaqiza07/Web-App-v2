@@ -16,6 +16,20 @@ class CreateProduct extends CreateRecord
         return Notification::make()
             ->success()
             ->title('Product Created')
-            ->body('The product has been created succesfully.');
+            ->body('The product has been created successfully.');
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            $this->getCancelFormAction()
+            ->formId('form'),
+
+            $this->getCreateAnotherFormAction()
+            ->formId('form'),
+            
+            $this->getCreateFormAction()
+            ->formId('form'),
+        ];
     }
 }

@@ -3,46 +3,13 @@ import FaqAccordion from '@/components/organisms/Accordion/FaqAccordion';
 import ContactForm from '@/components/organisms/Form/ContactForm';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Separator } from '@/components/ui/separator';
-import { useEffect, useState } from 'react';
+import { useLoadingStore } from '@/stores/useLoadingStore';
+import { useSupportStore } from '@/stores/useSupportStore';
 
 const ContactUsPage = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { isLoading } = useLoadingStore();
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    }, []);
-
-    const faqData = [
-        {
-            id: '1',
-            title: 'FAQ 1',
-            body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. At dicta optio sunt consectetur facilis dolores necessitatibus quo quae delectus, inventore tempore qui ullam eaque libero, tenetur porro, excepturi dolore dolor vero quasi voluptatem eum! Nihil dolor aperiam optio, mollitia autem, minus fugit sunt nulla cupiditate aliquid placeat deleniti? Nesciunt, ducimus.',
-        },
-        {
-            id: '2',
-            title: 'FAQ 2',
-            body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. At dicta optio sunt consectetur facilis dolores necessitatibus quo quae delectus.',
-        },
-        {
-            id: '3',
-            title: 'FAQ 3',
-            body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. At dicta optio sunt consectetur facilis dolores necessitatibus quo quae delectus. inventore tempore qui ullam eaque libero, tenetur porro, excepturi dolore dolor vero quasi voluptatem eum! Nihil dolor aperiam optio.',
-        },
-        {
-            id: '4',
-            title: 'FAQ 4',
-            body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. At dicta optio sunt consectetur facilis dolores necessitatibus quo quae delectus. inventore tempore qui ullam eaque libero, tenetur porro, excepturi dolore dolor vero quasi voluptatem eum! Nihil dolor aperiam optio.',
-        },
-        {
-            id: '5',
-            title: 'FAQ 5',
-            body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. At dicta optio sunt consectetur facilis dolores necessitatibus quo quae delectus. inventore tempore qui ullam eaque libero, tenetur porro, excepturi dolore dolor vero quasi voluptatem eum! Nihil dolor aperiam optio. minus fugit sunt nulla cupiditate aliquid placeat deleniti? Nesciunt, ducimus.',
-        },
-    ];
+    const { faqs } = useSupportStore();
 
     return (
         <>
@@ -57,7 +24,7 @@ const ContactUsPage = () => {
                 <Separator orientation="vertical" className="via-border bg-gradient-to-b from-transparent to-transparent" />
                 <ChatWithUs isLoading={isLoading} />
             </div>
-            <FaqAccordion data={faqData} isLoading={isLoading} />
+            <FaqAccordion data={faqs} isLoading={isLoading} />
         </>
     );
 };
