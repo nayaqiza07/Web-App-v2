@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -11,9 +12,14 @@ Route::get('/welcome', function () {
 
 Route::get('/', function () {
     $products = Product::filter()->get();
+    $categories = Category::filter()->get();
     
     return Inertia::render('home/Home', [
-         'PRODUCTS' => $products
+         'PRODUCTS' => [
+                'data' => $products,
+                'total' => Product::filter()->count()
+            ],
+         'CATEGORIES' => $categories
     ]);
 })->name('home');
 
