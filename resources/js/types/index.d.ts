@@ -121,6 +121,10 @@ export type ProductData = {
     stock: number;
     is_visible: boolean;
     category: { name: string; slug: string };
+
+    // Accessor
+    discount_percentage?: number;
+    is_new?: boolean;
 };
 
 export type ProductList = {

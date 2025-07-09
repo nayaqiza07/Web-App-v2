@@ -1,14 +1,16 @@
 import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { Button } from '@/components/ui/button';
+import { Link } from '@inertiajs/react';
 
 interface CategoryCardProps {
     srcImage: string;
     altImage: string;
     title: string;
     isCarousel?: boolean;
+    linkTo: string;
 }
 
-const CategoryCard = ({ srcImage, altImage, title, isCarousel }: CategoryCardProps) => {
+const CategoryCard = ({ srcImage, altImage, title, isCarousel, linkTo = route('#') }: CategoryCardProps) => {
     return (
         <AnimatedMotion
             as="div"
@@ -25,8 +27,10 @@ const CategoryCard = ({ srcImage, altImage, title, isCarousel }: CategoryCardPro
             />
 
             <div className="absolute inset-0 flex h-full w-full items-end justify-between bg-black/30 p-5 font-bold">
-                <h2 className="text-card text-xl">{title}</h2>
-                <Button className="bg-primary/60 hover:bg-primary/80">Shop Now</Button>
+                <h2 className="text-card text-xl text-white">{title}</h2>
+                <Link href={linkTo}>
+                    <Button className="bg-primary/60 hover:bg-primary/80">Shop Now</Button>
+                </Link>
             </div>
         </AnimatedMotion>
     );

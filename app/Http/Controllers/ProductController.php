@@ -7,16 +7,18 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ProductController extends Controller
 {
     /**
-     * Display the specified resource.
-     * Get all Products
+     * Display the list of visible products and categories for the shop
+     * 
+     * @return \Inertia\Response
      */
-    public function index()
+    public function index(): Response
     {
-        $products = Product::filter()->get();
+        $products = Product::filter()->latest()->get();
         $categories = Category::filter()->get();
 
         return Inertia::render('shop/ProductList', [
@@ -29,25 +31,32 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     * Get Product by Slug
+     * Display the specified product by slug
+     * 
+     * @param string $slug
+     * @return \Inertia\Response
      */
-    public function show(string $slug)
+    public function show(string $slug): Response
     {
         $product = Product::filter()->slug($slug)->firstOrFail();
         $products = Product::filter()->get();
 
         return Inertia::render('shop/ProductDetail', [
-            'PRODUCTS' => $products,
+            'PRODUCTS' => [
+                'data' => $products,
+                'total' => Product::filter()->count()
+            ],
             'PRODUCT' => $product
         ]);
     }
 
     /**
-     * Display the specified resource.
-     * Get Product by Category
+     * Display the specified product by category
+     * 
+     * @param string $slug
+     * @return \Inertia\Response
      */
-    public function showByCategory(string $slug)
+    public function showByCategory(string $slug): Response
     {
         $category = Category::filter()->slug($slug)->firstOrFail();
         $products = $category->products()->latest()->get();

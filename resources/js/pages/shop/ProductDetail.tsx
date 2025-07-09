@@ -1,13 +1,13 @@
 import ProductDetailPage from '@/components/templates/Shop/ProductDetailPage';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useProductStore } from '@/stores/useProductStore';
-import { Product } from '@/types';
+import { ProductData, ProductList } from '@/types';
 import { Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface ProductDetailProps {
-    PRODUCT: Product;
-    PRODUCTS: Product[];
+    PRODUCT: ProductData;
+    PRODUCTS: ProductList;
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = (props) => {

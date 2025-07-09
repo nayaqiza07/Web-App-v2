@@ -2,12 +2,12 @@ import ProductPage from '@/components/templates/Shop/ProductPage';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useCategoryStore } from '@/stores/useCategoryStore';
 import { useProductStore } from '@/stores/useProductStore';
-import { Category, Product } from '@/types';
+import { Category, ProductList as ProductListType } from '@/types';
 import { Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface ProductListProps {
-    PRODUCTS: Product[];
+    PRODUCTS: ProductListType;
     CATEGORIES: Category[];
     CATEGORY: Category;
 }

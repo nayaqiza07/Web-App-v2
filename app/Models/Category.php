@@ -22,7 +22,10 @@ class Category extends Model
     ];
 
     /**
-     * Filtering Category Data
+     * Scope to show visible category with count of products & order by ascending (a-z)
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFilter(Builder $query): Builder
     {
@@ -30,7 +33,11 @@ class Category extends Model
     }
 
     /**
-     * Show by Slug
+     * Scope to show category by slug (show product by category)
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $slug
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSlug(Builder $query, string $slug): Builder
     {
@@ -40,6 +47,8 @@ class Category extends Model
     /**
      * Relation with Product
      * 1 Category hasMany Products
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function products(): HasMany
     {

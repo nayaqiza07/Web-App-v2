@@ -2,16 +2,16 @@ import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { priceFormat } from '@/lib/utils';
-import { Product } from '@/types';
+import { ProductData } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BanknoteIcon, CircleCheckIcon, PlusCircleIcon, ShieldHalfIcon } from 'lucide-react';
+import { BanknoteIcon, CircleCheckIcon, PlusCircleIcon, ShieldHalfIcon, TicketPercentIcon } from 'lucide-react';
 import React from 'react';
 import QuantityButton from '../Button/QuantityButton';
 import SkeletonDetailProduct from '../Skeleton/SkeletonDetailProduct';
 
 interface ProductDetailContentProps {
     isLoading?: boolean;
-    PRODUCT: Product | null;
+    PRODUCT: ProductData | null;
 }
 
 const shipping = [
@@ -39,8 +39,6 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
         });
     };
 
-    console.log(PRODUCT);
-
     return isLoading ? (
         <SkeletonDetailProduct />
     ) : (
@@ -50,14 +48,24 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
             duration={1}
             variantName="slideLeft"
             animate="visible"
-            className="flex w-full flex-col justify-between gap-6 lg:w-2/3"
+            className="flex w-full flex-col justify-between gap-3 lg:w-2/3"
         >
+            {(PRODUCT?.discount_percentage || PRODUCT?.is_new) && (
+                <AnimatedMotion as="div" delay={0.2} duration={1} variantName="fadeIn" animate="visible" className="flex items-center gap-2">
+                    {PRODUCT?.discount_percentage && <Badge variant="destructive">{PRODUCT?.discount_percentage}% Off</Badge>}
+                    {PRODUCT?.is_new && <Badge variant="blue">NEW</Badge>}
+                </AnimatedMotion>
+            )}
             <AnimatedMotion as="h1" delay={0.3} duration={1} variantName="fadeIn" animate="visible" className="text-2xl font-semibold">
                 {PRODUCT?.name}
             </AnimatedMotion>
             <p className="flex items-center gap-4 text-2xl font-bold">
                 <AnimatedMotion as="span" delay={0.4} duration={1} variantName="fadeIn" animate="visible">
-                    {priceFormat(PRODUCT?.price)}
+                    <span
+                        className={`${PRODUCT?.discount_percentage && 'border-destructive/10 bg-destructive/10 text-destructive dark:bg-destructive rounded-md border px-2 py-0.5 dark:text-white'} flex items-center gap-2`}
+                    >
+                        {PRODUCT?.discount_percentage && <TicketPercentIcon />} {priceFormat(PRODUCT?.price)}
+                    </span>
                 </AnimatedMotion>
 
                 <AnimatedMotion
@@ -74,11 +82,11 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
 
             <div className="flex flex-col gap-6 text-xs font-bold">
                 <AnimatedMotion as="p" delay={0.7} duration={1} variantName="fadeIn" animate="visible" className="text-muted-foreground">
-                    SKU: <span className="text-foreground">{PRODUCT?.sku}</span>
+                    <span>SKU:</span> <span className="text-foreground">{PRODUCT?.sku}</span>
                 </AnimatedMotion>
 
                 <AnimatedMotion as="p" delay={0.8} duration={1} variantName="fadeIn" animate="visible" className="text-muted-foreground">
-                    Category:
+                    <span className="mr-1">Category:</span>
                     {PRODUCT?.category.slug && (
                         <Link href={route('products.showByCategory', { slug: PRODUCT?.category.slug })}>
                             <Badge variant={'outline'} className="font-bold">

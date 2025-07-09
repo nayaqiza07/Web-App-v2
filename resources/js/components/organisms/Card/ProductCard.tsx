@@ -2,10 +2,10 @@ import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import CustomBadge from '@/components/atoms/Badge/CustomBadge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
-import { priceFormat, truncateText } from '@/lib/utils';
+import { cn, priceFormat, truncateText } from '@/lib/utils';
 import { ProductData } from '@/types';
 import { Link } from '@inertiajs/react';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, TicketPercentIcon } from 'lucide-react';
 
 interface ProductCardProps {
     isCarousel?: boolean;
@@ -13,17 +13,13 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
-    const hasDiscount = () => {
-        if (!data.old_price || data.old_price <= data.price) return null;
+    const badges = [
+        data.discount_percentage && { variant: 'discount', label: '- ' + data.discount_percentage + '%' },
+        data.is_new && { variant: 'new', label: 'NEW' },
+    ].filter(Boolean) as Array<{ variant: 'discount' | 'new'; label: string }>;
 
-        return Math.round(((data.old_price - data.price) / data.old_price) * 100);
-    };
-
-    const discount = hasDiscount();
-
-    const badges = [discount !== null && { variant: 'discount', label: hasDiscount() + '%' }, { variant: 'new', label: 'NEW' }].filter(
-        Boolean,
-    ) as Array<{ variant: 'discount' | 'new'; label: string }>;
+    const styleDicsountPrice =
+        'before:animate-shine relative overflow-hidden before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-no-repeat background-position_0s_ease';
 
     return (
         <AnimatedMotion
@@ -36,7 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
             animate={{
                 scale: 1,
                 transition: {
-                    duration: 0.2, // juga atur durasi kembali ke normal saat hover keluar
+                    duration: 0.2,
                 },
             }}
             className="h-fit"
@@ -50,7 +46,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                         ))}
                     </div>
 
-                    {/* <CustomBadge variant="new" label={`New`} /> */}
+                    {data.discount_percentage && (
+                        <div className="absolute bottom-3 -left-[5px] z-10">
+                            <div className="flex h-fit w-fit flex-col text-xs font-bold text-white">
+                                <span className="size-[5px] rounded-tl-full bg-[#8e1a29]"></span>
+                                <span
+                                    className={cn(
+                                        `bg-destructive flex items-center gap-1 rounded-tr-4xl rounded-br-4xl rounded-bl-3xl px-4.5 py-[2px]`,
+                                        styleDicsountPrice,
+                                    )}
+                                >
+                                    <TicketPercentIcon size={16} /> {priceFormat(data.price)}
+                                </span>
+                            </div>
+                        </div>
+                    )}
 
                     <Card className="gap-0 overflow-hidden py-0">
                         <CardContent className="group relative h-[150px] overflow-hidden p-0">
@@ -76,7 +86,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                             </Button>
                         </CardContent>
 
-                        <CardFooter className="flex flex-col items-start gap-3 border-t p-3 text-xs">
+                        <CardFooter className="flex min-h-25 flex-col items-start justify-between border-t p-3 text-xs">
                             <AnimatedMotion
                                 as="h1"
                                 initial={!isCarousel ? 'hidden' : false}
@@ -87,7 +97,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                                 viewport={{ once: true }}
                                 className="w-full"
                             >
-                                <CardTitle className="text-card-foreground text-sm">{truncateText(data.name, 18)}</CardTitle>
+                                <CardTitle className="text-card-foreground text-sm">{truncateText(data.name, 17)}</CardTitle>
                                 <p className="text-muted-foreground">{data?.category?.name}</p>
                             </AnimatedMotion>
                             <AnimatedMotion
@@ -98,12 +108,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                                 whileInView="visible"
                                 viewport={{ once: true }}
                                 variantName="fadeIn"
-                                className="flex w-full items-end justify-between text-xs font-bold"
+                                className="flex w-full items-end justify-between text-xs font-semibold"
                             >
-                                <span>{priceFormat(data.price)}</span>
-                                <span className="text-muted-foreground text-[9px] line-through">
+                                {/* {data.discount_percentage ? (
+                                    <Badge variant="destructiveTransparent" className="border-destructive/10">
+                                        <TicketPercentIcon /> {priceFormat(data.price)}
+                                    </Badge>
+                                ) : (
+                                    <span>{priceFormat(data.price)}</span>
+                                    )} */}
+                                {!data.discount_percentage && <span>{priceFormat(data.price)}</span>}
+                                {/* <span className="text-muted-foreground text-[9px] line-through">
                                     {data.old_price && data.old_price > 0 && priceFormat(data.old_price)}
-                                </span>
+                                </span> */}
                             </AnimatedMotion>
                         </CardFooter>
                     </Card>

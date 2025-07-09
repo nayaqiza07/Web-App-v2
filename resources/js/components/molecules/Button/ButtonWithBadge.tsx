@@ -14,7 +14,14 @@ interface ButtonWithBadgeProps {
     active?: boolean;
 }
 
-const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({ active = false, title = 'Title', linkTo, badgeNumber = 0, className = '', index }) => {
+const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({
+    active = false,
+    title = 'Title',
+    linkTo = route('#'),
+    badgeNumber = 0,
+    className = '',
+    index,
+}) => {
     const buttonWithBadgeVariants = {
         hidden: { opacity: 0, x: -100 },
         visible: (i: number) => ({
