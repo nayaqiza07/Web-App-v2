@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Blog;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
@@ -19,8 +20,8 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test',
-            'email' => 'test@example.com',
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
         ]);
 
         Category::factory()->createMany([
@@ -164,7 +165,7 @@ class DatabaseSeeder extends Seeder
                 "shipping" => "World Wide",
 
                 /** Inventory */
-                "sku" => 'MTS626487454550SSW',
+                "sku" => 'MTS454550SSW',
                 "stock" => 7,
                 "security_stock" => 5,
 
@@ -484,6 +485,35 @@ class DatabaseSeeder extends Seeder
                 /** Relation */
                 'category_id' => Category::where('slug', 'chair')->first()
             ],
+        ]);
+
+        Blog::factory()->createMany([
+            [
+                /** Detail */
+                'title' => 'Teak Wood, the Most Superior Wood',
+                'slug' => Str::slug('Teak Wood, the Most Superior Wood'),
+                'thumbnail' => 'https://images.unsplash.com/photo-1515446134809-993c501ca304?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+
+                /** Body */
+                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit officia eius soluta nihil optio est id alias voluptatum reprehenderit! Doloremque in fugit perferendis repudiandae velit ipsa illo aliquam incidunt suscipit? Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi soluta consequuntur, deleniti aperiam eum nostrum veritatis animi similique necessitatibus nisi suscipit assumenda sed. Earum dicta hic natus molestiae similique impedit accusamus recusandae pariatur cum vero, tenetur, distinctio tempore autem modi sint repellendus quo assumenda esse, fugit vitae sit dolores eos? Assumenda, maxime dicta temporibus distinctio aperiam porro modi natus laboriosam amet fugit quaerat dolorum culpa sint, animi aspernatur doloremque quibusdam nemo quis? Facere necessitatibus laudantium culpa aspernatur accusantium? Iusto iste illo deserunt aspernatur! Eos reiciendis quod doloribus! Nostrum enim incidunt ducimus natus accusantium? Temporibus eveniet, maxime veniam a quas similique!',
+                
+                /** Status */
+                'is_visible' => true,
+                'published_at' => date(now())
+            ],
+            [
+                /** Detail */
+                'title' => 'What is Synthetic Webbing?',
+                'slug' => Str::slug('What is Synthetic Webbing?'),
+                'thumbnail' => 'https://plus.unsplash.com/premium_photo-1746025617447-4379b460d5a5?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+
+                /** Body */
+                'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit officia eius soluta nihil optio est id alias voluptatum reprehenderit! Doloremque in fugit perferendis repudiandae velit ipsa illo aliquam incidunt suscipit? Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi soluta consequuntur, deleniti aperiam eum nostrum veritatis animi similique necessitatibus nisi suscipit assumenda sed. Earum dicta hic natus molestiae similique impedit accusamus recusandae pariatur cum vero, tenetur, distinctio tempore autem modi sint repellendus quo assumenda esse, fugit vitae sit dolores eos?',
+                
+                /** Status */
+                'is_visible' => true,
+                'published_at' => date(now())
+            ]
         ]);
     }
 }

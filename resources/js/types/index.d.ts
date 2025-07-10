@@ -142,3 +142,23 @@ export type Category = {
     products_count: number;
 };
 // Category End
+
+// Blog Start
+export type Blog = {
+    id: number;
+    title: string;
+    slug: string;
+    thumbnail: string;
+    body: string;
+    published_at: string;
+};
+// Blog End
+
+// Static Start
+// Faq
+export type Faq = {
+    id: number;
+    question: string;
+    answer: string;
+};
+// Static End

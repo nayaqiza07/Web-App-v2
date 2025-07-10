@@ -1,17 +1,17 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { truncateText } from '@/lib/utils';
+import { Blog } from '@/types';
 import { Link } from '@inertiajs/react';
 import { easeOut, motion } from 'framer-motion';
 import React from 'react';
-import SkeletonBlogCard from '../Skeleton/SkeletonBlogCard';
 
 interface BlogCardProps {
-    isLoading?: boolean;
     index?: number;
     isCarousel?: boolean;
+    data: Blog;
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ isLoading = false, index, isCarousel }) => {
+const BlogCard: React.FC<BlogCardProps> = ({ index, isCarousel, data }) => {
     const blogCardVariants = {
         hidden: { opacity: 0, y: 100 },
         visible: (i: number) => ({
@@ -25,9 +25,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ isLoading = false, index, isCarouse
         }),
     };
 
-    return isLoading ? (
-        <SkeletonBlogCard />
-    ) : (
+    return (
         <motion.div
             custom={index}
             variants={blogCardVariants}
@@ -42,22 +40,22 @@ const BlogCard: React.FC<BlogCardProps> = ({ isLoading = false, index, isCarouse
             }}
             viewport={{ once: true }}
         >
-            <Link href={route('blog.show', { slug: 1 })}>
+            <Link href={route('blogs.show', { slug: data.slug })}>
                 <Card className="flex h-[125px] flex-row gap-3 overflow-hidden p-2 md:h-full md:flex-col">
-                    <CardContent className="relative overflow-hidden rounded-lg p-0 md:h-[150px]">
+                    <CardContent className="relative w-[150px] overflow-hidden rounded-lg p-0 md:h-[150px] md:w-full">
                         <img
-                            src={`/images/image-0.jpg`}
-                            alt={`Foto Produk ${`1`}`}
+                            src={data.thumbnail}
+                            alt={`Foto Produk ${data.title}`}
                             // loading="lazy"
                             className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"
                         />
                     </CardContent>
 
-                    <CardFooter className="flex flex-col justify-between p-1 text-xs font-bold md:gap-3">
-                        <h1 className="w-full">{truncateText('Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo, autem?', 30)}</h1>
+                    <CardFooter className="flex flex-1 flex-col justify-between p-1 text-xs font-bold md:gap-3">
+                        <h1 className="w-full">{truncateText(data.title, 35)}</h1>
                         <div className="text-muted-foreground flex w-full items-center justify-between">
-                            <h3 className="order-last md:order-first">by Admin</h3>
-                            <h3 className="text-end">20 June 2025</h3>
+                            <h3 className="order-last md:order-first">by Horestco</h3>
+                            <h3 className="text-end">{data.published_at}</h3>
                         </div>
                     </CardFooter>
                 </Card>

@@ -24,6 +24,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Support\RawJs;
@@ -41,7 +42,7 @@ class ProductResource extends Resource
 
     protected static ?string $navigationGroup = 'Shop';
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
 
     protected static ?int $navigationSort = 1;
 
@@ -187,6 +188,19 @@ class ProductResource extends Resource
                             ->required()
                             ->native(false),
                     ]),
+
+                    /** Timestamp Section */
+                    Section::make()
+                    ->schema([
+                        Placeholder::make('created_at')
+                            ->label('Created at')
+                            ->content(fn (Product $record): ?string => $record->created_at?->diffForHumans()),
+
+                        Placeholder::make('updated_at')
+                            ->label('Updated at')
+                            ->content(fn (Product $record): ?string => $record->updated_at?->diffForHumans())
+                    ])
+                    ->hidden(fn (?Product $record) => $record === null)
                 ])
                 ->columnSpan(['lg' => 1])
             ])
@@ -204,6 +218,8 @@ class ProductResource extends Resource
                     
                 TextColumn::make('name')
                     ->label('Name')
+                    ->description(fn (Product $record): string => 'SKU: ' . $record->sku)
+                    ->limit(25)
                     ->searchable()
                     ->sortable(),
 
@@ -212,8 +228,11 @@ class ProductResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                IconColumn::make('is_visible')
+                TextColumn::make('is_visible')
                     ->label('Visibility')
+                    ->badge()
+                    ->color(fn (bool $state): string => $state ? 'success' : 'danger')
+                    ->formatStateUsing(fn (bool $state): string => $state ? '• Visible •' : '• Invisible •')
                     ->sortable()
                     ->toggleable(),
 
@@ -224,11 +243,12 @@ class ProductResource extends Resource
                     ->sortable()
                     ->toggleable(),
 
-                TextColumn::make('sku')
-                    ->label('SKU')
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(),
+                // TextColumn::make('sku')
+                //     ->label('SKU')
+                //     ->searchable()
+                //     ->sortable()
+                //     ->toggleable()
+                //     ->toggledHiddenByDefault(),
 
                 TextColumn::make('stock')
                     ->label("Stock")
@@ -249,6 +269,11 @@ class ProductResource extends Resource
                     ->sortable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
+
+                TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

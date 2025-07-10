@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Filament\Resources\BlogResource\Pages;
+namespace App\Filament\Resources\FaqResource\Pages;
 
-use App\Filament\Resources\BlogResource;
+use App\Filament\Resources\FaqResource;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 
-class EditBlog extends EditRecord
+class EditFaq extends EditRecord
 {
-    protected static string $resource = BlogResource::class;
+    protected static string $resource = FaqResource::class;
 
     public function getSavedNotification(): ?Notification
     {
         return Notification::make()
             ->success()
-            ->title('Blog Updated')
-            ->Body('The blog has been updated successfully');
+            ->title('Faq Updated')
+            ->Body('The faq has been updated successfully');
     }
 
     protected function getHeaderActions(): array

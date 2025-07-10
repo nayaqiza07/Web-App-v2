@@ -11,20 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blogs', function (Blueprint $table) {
+        Schema::create('faqs', function (Blueprint $table) {
             $table->id();
 
-            /** Detail */
-            $table->string('title')->unique();
-            $table->string('slug')->unique();
-            $table->string('thumbnail')->nullable();
-
-            /** Body */
-            $table->longText('body')->nullable();
-            
-            /** Status */
+            $table->string('question')->unique();
+            $table->text('answer')->nullable();
             $table->boolean('is_visible')->default(false);
-            $table->date('published_at')->nullable();
 
             $table->softDeletes();
             $table->timestamps();
@@ -36,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('blogs');
+        Schema::dropIfExists('faqs');
     }
 };

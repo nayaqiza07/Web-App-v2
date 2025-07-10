@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Filament\Resources\CategoryResource\Pages;
+namespace App\Filament\Resources\FaqResource\Pages;
 
-use App\Filament\Resources\CategoryResource;
+use App\Filament\Resources\FaqResource;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateCategory extends CreateRecord
+class CreateFaq extends CreateRecord
 {
-    protected static string $resource = CategoryResource::class;
+    protected static string $resource = FaqResource::class;
 
     protected function getCreatedNotification(): ?Notification
     {
         return Notification::make()
             ->success()
-            ->title('Category Created')
-            ->body('The category has been created successfully.');
+            ->title('Faq Created')
+            ->body('The faq has been created successfully.');
     }
 
     protected function getHeaderActions(): array

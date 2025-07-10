@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -15,7 +16,11 @@ class BlogController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('blog/BlogList');
+        $blogs = Blog::filter()->get();
+
+        return Inertia::render('blog/BlogList', [
+            'BLOGS' => $blogs
+        ]);
     }
 
     /**
@@ -26,6 +31,10 @@ class BlogController extends Controller
      */
     Public function show(string $slug): Response
     {
-        return Inertia::render('blog/BlogDetail');
+        $blog = Blog::filter()->slug($slug)->firstOrFail();
+
+        return Inertia::render('blog/BlogDetail', [
+            'BLOG' => $blog
+        ]);
     }
 }

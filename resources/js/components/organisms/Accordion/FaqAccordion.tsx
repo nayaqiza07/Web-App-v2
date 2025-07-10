@@ -1,23 +1,18 @@
 import CornerPlusBox from '@/components/atoms/Box/CornerPlusBox';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Faq } from '@/types';
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import SkeletonFaq from '../Skeleton/SkeletonFaq';
 import AnimatedAccordionContent from './AnimatedAccordionContent';
 
-type DataType = {
-    id: string;
-    title: string;
-    body: string;
-};
-
 interface FaqAccordionProps {
     isLoading?: boolean;
-    data?: DataType[];
+    data?: Faq[];
 }
 
 const FaqAccordion: React.FC<FaqAccordionProps> = ({ data = [], isLoading = false }) => {
-    const [openItems, setOpenItems] = useState(data[0]?.id ?? '');
+    const [openItems, setOpenItems] = useState<string>(String(data[0]?.id ?? ''));
 
     return (
         <div className="mx-auto my-10 w-4/5 md:w-3/4">
@@ -58,10 +53,15 @@ const FaqAccordion: React.FC<FaqAccordionProps> = ({ data = [], isLoading = fals
                                         viewport={{ once: true }}
                                         transition={{ delay: 0.3, duration: 1, ease: 'easeOut' }}
                                     >
-                                        <AccordionItem value={data.id} className="border-b-0">
-                                            <AccordionTrigger className="hover:bg-accent z-10 px-2 hover:no-underline">{data.title}</AccordionTrigger>
-                                            <AnimatedAccordionContent isOpen={openItems.includes(data.id)} className="text-muted-foreground px-2">
-                                                {data.body}
+                                        <AccordionItem value={String(data.id)} className="border-b-0">
+                                            <AccordionTrigger className="hover:bg-accent z-10 px-2 hover:no-underline">
+                                                {data.question}
+                                            </AccordionTrigger>
+                                            <AnimatedAccordionContent isOpen={openItems === String(data.id)} className="px-2">
+                                                <p
+                                                    className="prose dark:prose-invert text-muted-foreground max-w-none text-sm"
+                                                    dangerouslySetInnerHTML={{ __html: data.answer ?? '' }}
+                                                />
                                             </AnimatedAccordionContent>
                                         </AccordionItem>
                                     </motion.div>

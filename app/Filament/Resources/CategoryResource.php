@@ -34,7 +34,7 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationGroup = 'Shop';
 
-    protected static ?string $navigationIcon = 'heroicon-o-queue-list';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     protected static ?int $navigationSort = 2;
 
@@ -98,11 +98,14 @@ class CategoryResource extends Resource
 
                 TextColumn::make('slug')
                     ->label('Slug')
-                    ->searchable()
-                    ->sortable(),
-
-                IconColumn::make('is_visible')
+                    ->searchable(),
+                
+                TextColumn::make('is_visible')
                     ->label('Visibility')
+                    ->badge()
+                    ->color(fn (bool $state): string => $state ? 'success' : 'danger')
+                    ->formatStateUsing(fn (bool $state): string => $state ? '• Visible •' : '• Invisible •')
+                    ->searchable()
                     ->sortable(),
 
                 TextColumn::make('updated_at')

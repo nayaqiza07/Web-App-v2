@@ -4,7 +4,7 @@ use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::prefix('blog')->name('blog.')->controller(BlogController::class)->group(function () {
+Route::prefix('blogs')->name('blogs.')->controller(BlogController::class)->group(function () {
     /**  
      * 1. Blog List (index) 
      */

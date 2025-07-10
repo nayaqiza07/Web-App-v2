@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
@@ -16,6 +17,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -27,7 +29,7 @@ class BlogResource extends Resource
 
     protected static ?string $slug = 'content/blogs';
 
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $recordTitleAttribute = 'title';
 
     protected static ?string $navigationGroup = 'Content';
 
@@ -67,7 +69,9 @@ class BlogResource extends Resource
 
                     Section::make()
                     ->schema([
-                        RichEditor::make('body'),
+                        RichEditor::make('body')
+                            ->disableGrammarly()
+                            ->extraAttributes(['style' => 'height: 500px;']),
                     ])
                 ])
                 ->columnSpan(['lg' => 2]),
@@ -90,6 +94,19 @@ class BlogResource extends Resource
                             ->native(false)
                             ->closeOnDateSelection(),
                     ]),
+
+                    /** Timestamp Section */
+                    Section::make()
+                    ->schema([
+                        Placeholder::make('created_at')
+                            ->label('Created at')
+                            ->content(fn (Blog $record): ?string => $record->created_at?->diffForHumans()),
+
+                        Placeholder::make('updated_at')
+                            ->label('Updated at')
+                            ->content(fn (Blog $record): ?string => $record->updated_at?->diffForHumans())
+                    ])
+                    ->hidden(fn (?Blog $record) => $record === null)
                 ])
                 ->columnSpan(['lg' => 1])
             ])
@@ -100,36 +117,63 @@ class BlogResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('thumbnail')
+                    ->label('Thumbnail')
+                    ->width(50)
+                    ->height(50),
+
                 Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
+                    ->limit(25)
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
                 Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('thumbnail')
-                    ->searchable(),
-                Tables\Columns\IconColumn::make('is_visible')
-                    ->boolean(),
+                    ->limit(20)
+                    ->searchable()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('is_visible')
+                    ->label('Visibility')
+                    ->badge()
+                    ->color(fn (bool $state): string => $state ? 'success' : 'danger')
+                    ->formatStateUsing(fn (bool $state): string => $state ? '• Visible •' : '• Invisible •')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
                 Tables\Columns\TextColumn::make('published_at')
                     ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
             ]);
     }
 
