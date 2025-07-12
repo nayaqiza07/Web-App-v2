@@ -5,7 +5,6 @@ import { useForm } from '@inertiajs/react';
 import { easeOut, motion } from 'framer-motion';
 import { SendIcon } from 'lucide-react';
 import { FormEventHandler } from 'react';
-import SkeletonContactForm from '../Skeleton/SkeletonContactForm';
 
 type ContactUsForm = {
     name: string;
@@ -14,11 +13,7 @@ type ContactUsForm = {
     message: string;
 };
 
-interface ContactFormProps {
-    isLoading?: boolean;
-}
-
-const ContactForm: React.FC<ContactFormProps> = ({ isLoading = false }) => {
+const ContactForm = () => {
     const { data, setData, reset } = useForm<Required<ContactUsForm>>({
         name: '',
         email: '',
@@ -32,9 +27,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isLoading = false }) => {
         reset();
     };
 
-    return isLoading ? (
-        <SkeletonContactForm />
-    ) : (
+    return (
         <div className="h-fit md:p-4">
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1, ease: easeOut }}>

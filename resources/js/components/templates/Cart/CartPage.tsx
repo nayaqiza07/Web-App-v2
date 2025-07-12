@@ -4,15 +4,19 @@ import SummaryCartDrawer from '@/components/organisms/Drawer/SummaryCartDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Separator } from '@/components/ui/separator';
 import { useLoadingStore } from '@/stores/useLoadingStore';
+import SkeletonCartPage from '../SkeletonPage/SkeletonCartPage';
 
 const CartPage = () => {
     const { isLoading } = useLoadingStore();
+
+    if (isLoading) {
+        return <SkeletonCartPage />;
+    }
 
     return (
         <>
             {/* Hero Section */}
             <HeroSection
-                isLoading={isLoading}
                 variant="withBreadcrumb"
                 srcImage="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
                 altImage="Image Cart"
@@ -21,10 +25,10 @@ const CartPage = () => {
             </HeroSection>
 
             <div className="grid gap-5 md:grid-cols-[2fr_auto_1fr]">
-                <AccordionCart isLoading={isLoading} />
+                <AccordionCart />
                 <Separator orientation="vertical" className="via-border hidden bg-gradient-to-b from-transparent to-transparent md:block" />
-                <SummaryCartCard isLoading={isLoading} />
-                <SummaryCartDrawer isLoading={isLoading} />
+                <SummaryCartCard />
+                <SummaryCartDrawer />
             </div>
         </>
     );

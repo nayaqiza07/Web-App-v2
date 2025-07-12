@@ -1,11 +1,15 @@
 import TextContent from '@/components/molecules/TextContent/TextContent';
 import HeroSection from '@/components/organisms/Section/HeroSection';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useLoadingStore } from '@/stores/useLoadingStore';
 import { BoxesIcon, ContainerIcon, FactoryIcon, UsersIcon } from 'lucide-react';
+import SkeletonAboutUsPage from '../SkeletonPage/SkeletonAboutUsPage';
 
 const AboutUsPage = () => {
     const { isLoading } = useLoadingStore();
+
+    if (isLoading) {
+        return <SkeletonAboutUsPage />;
+    }
 
     const dataContent = [
         {
@@ -36,7 +40,7 @@ const AboutUsPage = () => {
 
     return (
         <>
-            <HeroSection isLoading={isLoading} variant="withBreadcrumb" color="bg-[#BECBC3]" className="md:gap-3">
+            <HeroSection variant="withBreadcrumb" color="bg-[#BECBC3]" className="md:gap-3">
                 <h1 className="text-2xl font-bold md:text-4xl">About Us</h1>
                 <p className="text-xs md:text-base">
                     Horestco is a young but reputable company with a team that has many years of first hand experience in the furniture manufacturing
@@ -45,52 +49,30 @@ const AboutUsPage = () => {
             </HeroSection>
 
             <div className="my-5 text-center">
-                {isLoading ? (
-                    <Skeleton className="h-40" />
-                ) : (
-                    <p className="text-muted-foreground">
-                        We specialize in manufacturing genuine high quality and heavy-duty classic wooden and rattan furniture as well as innovative
-                        and contemporary stainless steel and synthetic wicker furniture to furnish commercial spaces, hotels, resorts and restaurants.
-                        With Kaizen, the Japanase philosophy of constant improvement as a guiding force, we continuously improve our products and
-                        services with feedback from our clients. Nothing motivates us more than watching people happily using our furniture for years.
-                        Maintaining high standards of production practices, we aspire to serve the hospitality market with a variety of choices,
-                        designs and materials to choose from.
-                    </p>
-                )}
+                <p className="text-muted-foreground">
+                    We specialize in manufacturing genuine high quality and heavy-duty classic wooden and rattan furniture as well as innovative and
+                    contemporary stainless steel and synthetic wicker furniture to furnish commercial spaces, hotels, resorts and restaurants. With
+                    Kaizen, the Japanase philosophy of constant improvement as a guiding force, we continuously improve our products and services with
+                    feedback from our clients. Nothing motivates us more than watching people happily using our furniture for years. Maintaining high
+                    standards of production practices, we aspire to serve the hospitality market with a variety of choices, designs and materials to
+                    choose from.
+                </p>
             </div>
 
             <div className="my-5 flex flex-col gap-5">
-                {isLoading ? (
-                    <>
-                        <Skeleton className="h-10 w-50" />
-                        <Skeleton className="h-40" />
-                    </>
-                ) : (
-                    <>
-                        <h1 className="col-span-4 text-2xl font-bold">Why Choose Us?</h1>
-                        <p className="text-muted-foreground">
-                            We listen to and understand a client's goals, concerns and the end-use of the furniture and its environment. We
-                            manufacture furniture at highly competitive prices without compromising quality. We take pride in what we do and we only
-                            make what we are best at. We will ensure that your furniture has been made only by the best craftsmen, skilled and
-                            dedicated in their craft. We are more than willing to manufacture specific custom designs or custom make our standard
-                            furniture to suit our customer's needs. For a selection of furniture that we have made for various projects, please visit
-                            our contract furniture page.
-                        </p>
-                    </>
-                )}
+                <h1 className="col-span-4 text-2xl font-bold">Why Choose Us?</h1>
+                <p className="text-muted-foreground">
+                    We listen to and understand a client's goals, concerns and the end-use of the furniture and its environment. We manufacture
+                    furniture at highly competitive prices without compromising quality. We take pride in what we do and we only make what we are best
+                    at. We will ensure that your furniture has been made only by the best craftsmen, skilled and dedicated in their craft. We are more
+                    than willing to manufacture specific custom designs or custom make our standard furniture to suit our customer's needs. For a
+                    selection of furniture that we have made for various projects, please visit our contract furniture page.
+                </p>
             </div>
 
             <div className="my-5 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
                 {dataContent.map((data, index) => (
-                    <TextContent
-                        isLoading={isLoading}
-                        isBordered
-                        key={index}
-                        icon={data.icon}
-                        title={data.title}
-                        description={data.description}
-                        index={index}
-                    />
+                    <TextContent isBordered key={index} icon={data.icon} title={data.title} description={data.description} index={index} />
                 ))}
             </div>
         </>

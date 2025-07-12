@@ -2,6 +2,8 @@ import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { priceFormat } from '@/lib/utils';
+import { useCartStore } from '@/stores/useCartStore';
 import SkeletonSummaryCartCard from '../Skeleton/SkeletonSummaryCartCard';
 
 interface SummaryCartCardProps {
@@ -9,6 +11,8 @@ interface SummaryCartCardProps {
 }
 
 const SummaryCartCard: React.FC<SummaryCartCardProps> = ({ isLoading = false }) => {
+    const { totalPrice } = useCartStore();
+
     return isLoading ? (
         <SkeletonSummaryCartCard />
     ) : (
@@ -17,14 +21,14 @@ const SummaryCartCard: React.FC<SummaryCartCardProps> = ({ isLoading = false }) 
                 <CardHeader className="p-0 text-base">Summary</CardHeader>
                 <CardContent className="text-muted-foreground h-full p-0">
                     <p className="flex justify-between">
-                        Sub Total <span className="text-end">90</span>
+                        Sub Total <span className="text-end">{priceFormat(totalPrice())}</span>
                     </p>
                     <p className="flex justify-between">
-                        Shipping <span className="text-end">10</span>
+                        Shipping <span className="text-end">{priceFormat(totalPrice())}</span>
                     </p>
                     <Separator className="my-5" />
                     <p className="text-foreground flex justify-between">
-                        Total <span className="text-end">100</span>
+                        Total <span className="text-end">{priceFormat(totalPrice())}</span>
                     </p>
                 </CardContent>
                 <CardFooter className="mt-auto p-0">

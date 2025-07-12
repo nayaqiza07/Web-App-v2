@@ -5,14 +5,19 @@ import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Button } from '@/components/ui/button';
 import { useLoadingStore } from '@/stores/useLoadingStore';
 import { Link } from '@inertiajs/react';
+import SkeletonHomepage from '../SkeletonPage/SkeletonHomepage';
 
 const Homepage = () => {
     const { isLoading } = useLoadingStore();
 
+    if (isLoading) {
+        return <SkeletonHomepage />;
+    }
+
     return (
         <>
             {/* Hero Section */}
-            <HeroSection isLoading={isLoading} srcImage="/images/image-18.jpg" altImage="Image Slider" className="gap-10">
+            <HeroSection srcImage="/images/image-18.jpg" altImage="Image Slider" className="gap-10">
                 <h1 className="text-2xl font-bold md:text-4xl">New Styles Are Here</h1>
                 <p className="text-xs md:text-base">Discover The Lasts Premium FurnitureFeatured In Our Collection</p>
                 <Link href={route('products.index')}>
@@ -23,17 +28,16 @@ const Homepage = () => {
             </HeroSection>
 
             {/* 2 */}
-            <CarouselProduct isLoading={isLoading} headLineTitle="What's New" isAutoPlay totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" />
+            <CarouselProduct headLineTitle="What's New" isAutoPlay totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" />
 
             {/* 3 */}
-            <CarouselProduct isLoading={isLoading} headLineTitle="Categories" isFor="category" isAutoPlay totalItemShow="md:basis-1/2" />
+            <CarouselProduct headLineTitle="Categories" isFor="category" isAutoPlay totalItemShow="md:basis-1/2" />
 
             {/* 4 */}
             <CallToAction />
 
             {/* 5 */}
             <Activity
-                isLoading={isLoading}
                 text="Horestco Crafting premium hotel, outdoor & restaurant furniture. Explore our quality solutions and elevate your space today."
                 btnLink={route('about-us')}
                 srcImage="/images/image-14.jpg"
@@ -41,7 +45,6 @@ const Homepage = () => {
             />
 
             <Activity
-                isLoading={isLoading}
                 text="Feel free to contact us or even better visit us"
                 btnLink={route('contact-us.indexOnContactUs')}
                 orderImage="md:order-first"
@@ -50,7 +53,7 @@ const Homepage = () => {
             />
 
             {/* 6 */}
-            <CarouselProduct isLoading={isLoading} headLineTitle="Recent Blogs" isFor="blog" isAutoPlay totalItemShow="md:basis-1/4 lg:basis-1/5" />
+            <CarouselProduct headLineTitle="Recent Blogs" isFor="blog" isAutoPlay totalItemShow="md:basis-1/4 lg:basis-1/5" />
         </>
     );
 };

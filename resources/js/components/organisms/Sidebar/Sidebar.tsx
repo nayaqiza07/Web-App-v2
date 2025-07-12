@@ -8,20 +8,16 @@ import { Separator } from '@/components/ui/separator';
 import { useCategoryStore } from '@/stores/useCategoryStore';
 import { useProductStore } from '@/stores/useProductStore';
 import { Link } from '@inertiajs/react';
-import SkeletonSidebar from '../Skeleton/SkeletonSidebar';
 
 interface SidebarProps {
-    isLoading?: boolean;
     className?: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isLoading = false, className = '' }) => {
+const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
     const { categories } = useCategoryStore();
     const { products } = useProductStore();
 
-    return isLoading ? (
-        <SkeletonSidebar />
-    ) : (
+    return (
         <div className={`${className} sticky top-20 flex h-full flex-col gap-3`}>
             <AnimatedMotion as="div" duration={1} variantName="slideRight" animate="visible">
                 <Card className={`bg-background w-full gap-0 py-0 text-xs`}>

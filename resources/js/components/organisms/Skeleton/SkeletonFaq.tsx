@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const SkeletonFaq = () => {
     return (
-        <>
+        <div className="mx-auto w-4/5 md:w-3/4">
             <div className="mb-10 flex flex-col items-center justify-center gap-2 text-center text-xs">
                 <Skeleton className="h-6 w-40" />
                 <Skeleton className="h-4 w-80" />
@@ -22,7 +22,7 @@ const SkeletonFaq = () => {
                     <Skeleton className="size-4" />
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

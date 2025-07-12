@@ -2,6 +2,7 @@ import CartItem from '@/components/molecules/Cart/CartItem';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { priceFormat } from '@/lib/utils';
+import { useCartStore } from '@/stores/useCartStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ShoppingBagIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -17,17 +18,7 @@ interface AccordionCartProps {
 const AccordionCart: React.FC<AccordionCartProps> = ({ isLoading = false }) => {
     const [openItems, setOpenItems] = useState<string[]>(['bag', 'profile', 'delivery']);
 
-    const [cart, setCart] = useState([
-        { id: 11323, name: 'Product A', price: 10000 },
-        { id: 24325, name: 'Product B', price: 15000 },
-        { id: 33233, name: 'Product C', price: 20000 },
-    ]);
-
-    const handleDeleteCart = (id: number) => {
-        setCart((prev) => prev.filter((item) => item.id !== id));
-    };
-
-    const totalAmount = cart.map((data) => data.price).reduce((acc, curr) => acc + curr, 0);
+    const { items, totalItems, totalPrice, removeItem } = useCartStore();
 
     return isLoading ? (
         <SkeletonAccordionCart />
@@ -57,22 +48,27 @@ const AccordionCart: React.FC<AccordionCartProps> = ({ isLoading = false }) => {
                             transition={{ delay: 0.2, duration: 0.4, ease: 'easeOut' }}
                         >
                             <h5>
-                                Products: <span className="text-foreground">{cart.length}</span>
+                                Products: <span className="text-foreground">{totalItems() ?? 0}</span>
                             </h5>
                             <h5>
-                                Amount: <span className="text-foreground">{priceFormat(totalAmount)}</span>
+                                Amount: <span className="text-foreground">{priceFormat(totalPrice())}</span>
                             </h5>
                         </motion.div>
                     </AccordionTrigger>
 
                     {/* <AccordionContent className="flex flex-col gap-4 px-4 text-balance"> */}
                     <AnimatedAccordionContent isOpen={openItems.includes('bag')} className="flex flex-col gap-4 px-4 text-balance">
-                        {cart.length === 0 ? (
-                            <EmptyState icon={<ShoppingBagIcon size={50} />} title="Your Cart Is Empty" btnText="Continue Shopping" />
+                        {items.length === 0 ? (
+                            <EmptyState
+                                icon={<ShoppingBagIcon size={50} />}
+                                title="Your Cart Is Empty"
+                                btnText="Continue Shopping"
+                                btnLink={route('products.index')}
+                            />
                         ) : (
                             <AnimatePresence mode="popLayout">
-                                {cart.map((data) => (
-                                    <CartItem key={data.id} data={data} onDelete={handleDeleteCart} />
+                                {items.map((data) => (
+                                    <CartItem key={data.id} data={data} onDelete={removeItem} />
                                 ))}
                             </AnimatePresence>
                         )}

@@ -10,6 +10,7 @@ import QuantityButton from '../Button/QuantityButton';
 interface CartItemProps {
     data: {
         id: number;
+        thumbnail: string;
         name: string;
         price: number;
     };
@@ -65,11 +66,7 @@ const CartItem: React.FC<CartItemProps> = ({ data, onDelete }) => {
                 <Card className="gap-0 rounded-md p-0 shadow-none">
                     <CardHeader className="flex flex-row items-center justify-between gap-5 px-3 py-2">
                         <div className="flex w-full items-center gap-5">
-                            <img
-                                src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-                                alt="cart-image-product"
-                                className="h-[44px] w-[60px] rounded"
-                            />
+                            <img src={data.thumbnail} alt="cart-image-product" className="h-[44px] w-[60px] rounded" />
                             <div className="flex w-full justify-between">
                                 <div className="flex flex-col">
                                     <h2>{data.name}</h2>

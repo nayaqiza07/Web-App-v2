@@ -2,6 +2,7 @@ import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { priceFormat } from '@/lib/utils';
+import { useCartStore } from '@/stores/useCartStore';
 import { ProductData } from '@/types';
 import { Link } from '@inertiajs/react';
 import { BanknoteIcon, CircleCheckIcon, PlusCircleIcon, ShieldHalfIcon, TicketPercentIcon } from 'lucide-react';
@@ -30,12 +31,16 @@ const shipping = [
 ];
 
 const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, PRODUCT }) => {
+    const { addItem } = useCartStore();
+
     const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        console.log({
-            product_id: PRODUCT?.id,
+        addItem({
+            id: PRODUCT?.id,
+            thumbnail: PRODUCT?.thumbnail,
             name: PRODUCT?.name,
             price: PRODUCT?.price,
+            quantity: 1,
         });
     };
 
@@ -127,7 +132,7 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ isLoading, 
             </div>
 
             <AnimatedMotion as="div" delay={1.1} duration={1} variantName="fadeIn" animate="visible" className="w-full">
-                <Button effect="expandIcon" icon={PlusCircleIcon} iconPlacement="right" onClick={handleAddToCart} className="w-full">
+                <Button effect="expandIcon" type="button" icon={PlusCircleIcon} iconPlacement="right" onClick={handleAddToCart} className="w-full">
                     Add to Cart
                 </Button>
             </AnimatedMotion>
