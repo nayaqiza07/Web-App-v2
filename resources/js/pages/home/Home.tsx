@@ -1,31 +1,34 @@
 import Homepage from '@/components/templates/Home/Homepage';
 import MainLayout from '@/layouts/app/MainLayout';
+import { useBlogStore } from '@/stores/useBlogStore';
 import { useCategoryStore } from '@/stores/useCategoryStore';
 import { useProductStore } from '@/stores/useProductStore';
-import { Category, ProductList } from '@/types';
+import { Blog, Category, ProductList } from '@/types';
 import { Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface HomeProps {
     PRODUCTS: ProductList;
     CATEGORIES: Category[];
+    BLOGS: Blog[];
 }
 
 const Home: React.FC<HomeProps> = (props) => {
-    const { PRODUCTS, CATEGORIES } = props;
+    const { PRODUCTS, CATEGORIES, BLOGS } = props;
 
-    const { setProducts, setError } = useProductStore();
+    const { setProducts } = useProductStore();
     const { setCategories } = useCategoryStore();
+    const { setBlogs } = useBlogStore();
 
     useEffect(() => {
         try {
             setProducts(PRODUCTS);
             setCategories(CATEGORIES);
-            setError(null);
-        } catch {
-            setError('Gagal memuat produk');
+            setBlogs(BLOGS);
+        } catch (error) {
+            console.log(error);
         }
-    }, [PRODUCTS, CATEGORIES, setProducts, setCategories, setError]);
+    }, [PRODUCTS, CATEGORIES, BLOGS, setProducts, setCategories, setBlogs]);
 
     return (
         <>

@@ -17,7 +17,9 @@ class FaqFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'question' => fake()->sentence(),
+            'answer' => fake()->paragraph(),
+            'is_visible' => true
         ];
     }
 }

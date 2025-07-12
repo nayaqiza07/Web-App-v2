@@ -32,7 +32,7 @@ class CategoryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'Shop';
+    protected static ?string $navigationGroup = 'Shop Management';
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
@@ -108,17 +108,22 @@ class CategoryResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('updated_at')
-                    ->label('Updated at')
+                TextColumn::make('published_at')
                     ->date()
-                    ->sortable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->modalHeading(fn ($record) => 'View Product: ' . $record->name),
+
                 Tables\Actions\EditAction::make(),
             ])
+            ->recordUrl(null)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
@@ -137,6 +142,16 @@ class CategoryResource extends Resource
         return [
             ProductsRelationManager::class
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return static::getModel()::count() > 0 ? 'success' : 'success';
     }
 
     public static function getPages(): array

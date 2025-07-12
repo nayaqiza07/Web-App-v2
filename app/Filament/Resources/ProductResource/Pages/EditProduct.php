@@ -14,7 +14,7 @@ class EditProduct extends EditRecord
     protected function getSavedNotification(): ?Notification
     {
         return Notification::make()
-            ->success()
+            ->info()
             ->title('Product Updated')
             ->body('The product has been updated successfully.');
     }

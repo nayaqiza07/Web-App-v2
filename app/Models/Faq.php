@@ -16,6 +16,7 @@ class Faq extends Model
         'question',
         'answer',
         'is_visible',
+        'published_at'
     ];
 
     protected $casts = [

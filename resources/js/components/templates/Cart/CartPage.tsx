@@ -3,18 +3,10 @@ import SummaryCartCard from '@/components/organisms/Card/SummaryCartCard';
 import SummaryCartDrawer from '@/components/organisms/Drawer/SummaryCartDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Separator } from '@/components/ui/separator';
-import { useEffect, useState } from 'react';
+import { useLoadingStore } from '@/stores/useLoadingStore';
 
 const CartPage = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    }, []);
+    const { isLoading } = useLoadingStore();
 
     return (
         <>

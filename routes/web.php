@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Blog;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
@@ -13,13 +14,15 @@ Route::get('/welcome', function () {
 Route::get('/', function () {
     $products = Product::filter()->get();
     $categories = Category::filter()->get();
+    $blogs = Blog::filter()->latest()->get();
     
     return Inertia::render('home/Home', [
-         'PRODUCTS' => [
-                'data' => $products,
-                'total' => Product::filter()->count()
-            ],
-         'CATEGORIES' => $categories
+        'PRODUCTS' => [
+            'data' => $products,
+            'total' => Product::filter()->count()
+        ],
+        'CATEGORIES' => $categories,
+        'BLOGS' => $blogs
     ]);
 })->name('home');
 

@@ -18,14 +18,11 @@ class ProductController extends Controller
      */
     public function index(): Response
     {
-        $products = Product::filter()->latest()->get();
+        $products = Product::filter()->latest()->paginate(16);
         $categories = Category::filter()->get();
 
         return Inertia::render('shop/ProductList', [
-            'PRODUCTS' => [
-                'data' => $products,
-                'total' => $products->count()
-            ],
+            'PRODUCTS' => $products,
             'CATEGORIES' => $categories
         ]);
     }
@@ -59,15 +56,16 @@ class ProductController extends Controller
     public function showByCategory(string $slug): Response
     {
         $category = Category::filter()->slug($slug)->firstOrFail();
-        $products = $category->products()->latest()->get();
+        $products = $category->products()->latest()->paginate(16);
         $categories = Category::filter()->get();
 
         return Inertia::render('shop/ProductList', [
             'CATEGORY' => $category,
-            'PRODUCTS' => [
-                'data' => $products,
-                'total' => Product::filter()->count()
-            ],
+            'PRODUCTS' => $products,
+            // 'PRODUCTS' => [
+            //     'data' => $products,
+            //     'total' => Product::filter()->count()
+            // ],
             'CATEGORIES' => $categories,
         ]);
     }

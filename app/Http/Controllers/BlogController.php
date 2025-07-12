@@ -16,7 +16,7 @@ class BlogController extends Controller
      */
     public function index(): Response
     {
-        $blogs = Blog::filter()->get();
+        $blogs = Blog::filter()->paginate(15);
 
         return Inertia::render('blog/BlogList', [
             'BLOGS' => $blogs

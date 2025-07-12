@@ -1,19 +1,11 @@
 import TextContent from '@/components/molecules/TextContent/TextContent';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useLoadingStore } from '@/stores/useLoadingStore';
 import { BoxesIcon, ContainerIcon, FactoryIcon, UsersIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
 
 const AboutUsPage = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    }, []);
+    const { isLoading } = useLoadingStore();
 
     const dataContent = [
         {

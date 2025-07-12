@@ -1,3 +1,4 @@
+import { Paginate } from '@/components/atoms/Pagination/Paginate';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import ProductCard from '@/components/organisms/Card/ProductCard';
 import FilterDrawer from '@/components/organisms/Drawer/FilterDrawer';
@@ -45,23 +46,27 @@ const ProductPage: React.FC = () => {
                 {/* Sidebar Product End */}
 
                 {/* Product List */}
-                <div className="grid w-full grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-                    {isLoading ? (
-                        Array.from({ length: 12 }).map((_, index) => <SkeletonProductCard key={index} />)
-                    ) : products.data.length > 0 ? (
-                        products.data.map((data) => <ProductCard key={data.id} data={data} />)
-                    ) : (
-                        <EmptyState
-                            icon={<ArmchairIcon size={50} />}
-                            title="No Products Found"
-                            desc="Your search did not match any Products"
-                            btnText="Go to Products"
-                            btnLink={route('products.index')}
-                            className="col-span-full"
-                        />
-                    )}
+                <div className="flex w-full flex-col justify-between gap-10">
+                    <div className="grid flex-1 grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+                        {isLoading ? (
+                            Array.from({ length: 12 }).map((_, index) => <SkeletonProductCard key={index} />)
+                        ) : products.data.length > 0 ? (
+                            products.data.map((data) => <ProductCard key={data.id} data={data} />)
+                        ) : (
+                            <EmptyState
+                                icon={<ArmchairIcon size={50} />}
+                                title="No Products Found"
+                                desc="Your search did not match any Products"
+                                btnText="Go to Products"
+                                btnLink={route('products.index')}
+                                className="col-span-full"
+                            />
+                        )}
+                    </div>
+                    {/* Product List */}
+
+                    <Paginate data={products} />
                 </div>
-                {/* Product List */}
             </section>
         </>
     );

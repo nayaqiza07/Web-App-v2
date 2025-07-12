@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\CategoryResource\RelationManagers;
 
 use App\Filament\Resources\ProductResource;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -30,10 +31,14 @@ class ProductsRelationManager extends RelationManager
         return $table
             ->columns([
                 ImageColumn::make('thumbnail')
-                    ->label('Thumbnail'),
+                    ->label('Thumbnail')
+                    ->width(50)
+                    ->height(50),
                     
                 TextColumn::make('name')
                     ->label('Name')
+                    ->description(fn (Product $record): string => 'SKU: ' . $record->sku)
+                    ->limit(25)
                     ->searchable()
                     ->sortable(),
 
@@ -42,20 +47,17 @@ class ProductsRelationManager extends RelationManager
                     ->searchable()
                     ->sortable(),
 
-                IconColumn::make('is_visible')
+                TextColumn::make('is_visible')
                     ->label('Visibility')
+                    ->badge()
+                    ->color(fn (bool $state): string => $state ? 'success' : 'danger')
+                    ->formatStateUsing(fn (bool $state): string => $state ? '• Visible •' : '• Invisible •')
                     ->sortable()
                     ->toggleable(),
 
                 TextColumn::make('price')
                     ->label('Price')
                     ->money('IDR', true)
-                    ->searchable()
-                    ->sortable()
-                    ->toggleable(),
-
-                TextColumn::make('sku')
-                    ->label('SKU')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
@@ -74,14 +76,15 @@ class ProductsRelationManager extends RelationManager
                     ->toggledHiddenByDefault(),
 
                 TextColumn::make('published_at')
-                    ->label('Published date')
+                    ->label('Published at')
+                    ->date()
                     ->searchable()
                     ->sortable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                // Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

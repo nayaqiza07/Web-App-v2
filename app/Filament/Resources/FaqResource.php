@@ -26,11 +26,11 @@ class FaqResource extends Resource
 {
     protected static ?string $model = Faq::class;
 
-     protected static ?string $slug = 'content/faqs';
+    protected static ?string $slug = 'content/faqs';
 
-     protected static ?string $recordTitleAttribute = 'question';
+    protected static ?string $recordTitleAttribute = 'question';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Content Management';
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
@@ -87,7 +87,7 @@ class FaqResource extends Resource
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('answer')
-                    ->limit(50)
+                    ->limit(30)
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('is_visible')
@@ -95,6 +95,12 @@ class FaqResource extends Resource
                     ->badge()
                     ->color(fn (bool $state): string => $state ? 'success' : 'danger')
                     ->formatStateUsing(fn (bool $state): string => $state ? '• Visible •' : '• Invisible •')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('published_at')
+                    ->date()
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
@@ -108,12 +114,15 @@ class FaqResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->modalHeading(fn ($record) => 'View Faq: ' . $record->question),
                 Tables\Actions\EditAction::make(),
 
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
             ])
+            ->recordUrl(null)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -134,6 +143,16 @@ class FaqResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return static::getModel()::count() > 0 ? 'success' : 'success';
     }
 
     public static function getPages(): array

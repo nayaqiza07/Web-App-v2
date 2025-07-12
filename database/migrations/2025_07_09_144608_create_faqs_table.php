@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('question')->unique();
             $table->text('answer')->nullable();
             $table->boolean('is_visible')->default(false);
+            $table->date('published_at')->nullable();
 
             $table->softDeletes();
             $table->timestamps();
