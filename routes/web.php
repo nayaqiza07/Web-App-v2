@@ -22,7 +22,10 @@ Route::get('/', function () {
             'total' => Product::filter()->count()
         ],
         'CATEGORIES' => $categories,
-        'BLOGS' => $blogs
+        'BLOGS' => [
+            'data' => $blogs,
+            'total' => Blog::filter()->count()
+        ]
     ]);
 })->name('home');
 

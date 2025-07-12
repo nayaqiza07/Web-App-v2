@@ -3,10 +3,8 @@ import { Card } from '@/components/ui/card';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import React from 'react';
-import SkeletonActivity from '../Skeleton/SkeletonActivity';
 
 interface ActivityProps {
-    isLoading?: boolean;
     text?: string;
     btnLink?: string;
     orderText?: string;
@@ -16,7 +14,6 @@ interface ActivityProps {
 }
 
 const Activity: React.FC<ActivityProps> = ({
-    isLoading = false,
     text = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni facilis rem similique! Maxime suscipit modi et? Assumenda, voluptas quod animi, impedit itaque eligendi dolore numquam rerum magnam architecto minus nostrum!',
     btnLink,
     orderText = 'order-last',
@@ -24,9 +21,7 @@ const Activity: React.FC<ActivityProps> = ({
     srcImage,
     altImage,
 }) => {
-    return isLoading ? (
-        <SkeletonActivity />
-    ) : (
+    return (
         <motion.div
             initial={{ opacity: 0, x: orderImage === 'md:order-first' ? 100 : -100 }}
             whileInView={{ opacity: 1, x: 0 }}

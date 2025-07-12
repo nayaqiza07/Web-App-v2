@@ -9,8 +9,6 @@ interface PaginateProps {
 }
 
 export const Paginate: React.FC<PaginateProps> = ({ data }) => {
-    console.log(data);
-
     return (
         <Pagination>
             <PaginationContent className="flex w-full items-center justify-between">

@@ -2,10 +2,8 @@ import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { useBreadcrumb } from '@/hooks/use-breadcrumbs';
 import { ReactNode } from 'react';
-import SkeletonHeroSection from '../Skeleton/SkeletonHeroSection';
 
 interface HeroSectionProps {
-    isLoading?: boolean;
     children?: ReactNode;
     variant?: 'default' | 'withBreadcrumb';
     color?: string;
@@ -14,7 +12,7 @@ interface HeroSectionProps {
     className?: string;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ isLoading = false, children, variant = 'default', color, srcImage, altImage, className = '' }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ children, variant = 'default', color, srcImage, altImage, className = '' }) => {
     const breadcrumbs = useBreadcrumb();
 
     const variants = {
@@ -22,9 +20,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isLoading = false, children, 
         withBreadcrumb: 'h-[92px] rounded-xl md:h-[120px] lg:h-[208px]',
     };
 
-    return isLoading ? (
-        <SkeletonHeroSection variant={variant} />
-    ) : (
+    return (
         <section className="flex flex-col gap-6">
             {variant === 'withBreadcrumb' && <Breadcrumbs breadcrumbs={breadcrumbs} />}
 

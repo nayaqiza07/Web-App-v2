@@ -1,8 +1,6 @@
 import { easeOut, motion } from 'framer-motion';
-import SkeletonTextContent from '../Skeleton/SkeletonTextContent';
 
 interface TextContentProps {
-    isLoading?: boolean;
     isBordered?: boolean;
     icon: React.ElementType;
     title: string;
@@ -11,7 +9,6 @@ interface TextContentProps {
 }
 
 const TextContent: React.FC<TextContentProps> = ({
-    isLoading = false,
     isBordered = false,
     icon: Icon,
     title = 'Title',
@@ -31,9 +28,7 @@ const TextContent: React.FC<TextContentProps> = ({
         }),
     };
 
-    return isLoading ? (
-        <SkeletonTextContent />
-    ) : (
+    return (
         <motion.div
             custom={index}
             variants={textContentVariants}

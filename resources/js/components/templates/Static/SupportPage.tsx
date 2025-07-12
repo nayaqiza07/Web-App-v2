@@ -6,21 +6,25 @@ import { Button } from '@/components/ui/button';
 import { useLoadingStore } from '@/stores/useLoadingStore';
 import { useSupportStore } from '@/stores/useSupportStore';
 import { Link } from '@inertiajs/react';
+import SkeletonSupportPage from '../SkeletonPage/SkeletonSupportPage';
 
 const SupportPage = () => {
     const { isLoading } = useLoadingStore();
-
     const { faqs } = useSupportStore();
+
+    if (isLoading) {
+        return <SkeletonSupportPage />;
+    }
 
     return (
         <>
             {/* Hero Section */}
-            <HeroSection isLoading={isLoading} variant="withBreadcrumb" srcImage="/images/image-18.jpg" altImage="Image Slider" className="gap-3">
+            <HeroSection variant="withBreadcrumb" srcImage="/images/image-18.jpg" altImage="Image Slider" className="gap-3">
                 <h1 className="text-2xl font-bold md:text-4xl">Support & Docs</h1>
                 <p className="text-xs md:text-base">Need help with something? Check out our most frequently asked questions</p>
             </HeroSection>
 
-            <FaqAccordion data={faqs} isLoading={isLoading} />
+            <FaqAccordion data={faqs} />
 
             <div className="mx-auto w-4/5 md:w-5/6 lg:w-full">
                 <CornerPlusBox

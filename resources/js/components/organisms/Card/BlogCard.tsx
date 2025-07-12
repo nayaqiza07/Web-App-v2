@@ -1,6 +1,6 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { truncateText } from '@/lib/utils';
-import { Blog } from '@/types';
+import { BlogData } from '@/types';
 import { Link } from '@inertiajs/react';
 import { easeOut, motion } from 'framer-motion';
 import React from 'react';
@@ -8,7 +8,7 @@ import React from 'react';
 interface BlogCardProps {
     index?: number;
     isCarousel?: boolean;
-    data: Blog;
+    data: BlogData;
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({ index, isCarousel, data }) => {
@@ -51,7 +51,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ index, isCarousel, data }) => {
                         />
                     </CardContent>
 
-                    <CardFooter className="flex flex-1 flex-col justify-between p-1 text-xs font-bold md:gap-3">
+                    <CardFooter className="flex min-h-20 flex-col justify-between p-1 text-xs font-bold md:gap-3">
                         <h1 className="w-full">{truncateText(data.title, 35)}</h1>
                         <div className="text-muted-foreground flex w-full items-center justify-between">
                             <h3 className="order-last md:order-first">by Horestco</h3>

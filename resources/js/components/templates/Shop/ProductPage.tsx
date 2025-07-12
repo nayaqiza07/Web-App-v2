@@ -4,26 +4,36 @@ import ProductCard from '@/components/organisms/Card/ProductCard';
 import FilterDrawer from '@/components/organisms/Drawer/FilterDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import Sidebar from '@/components/organisms/Sidebar/Sidebar';
-import SkeletonProductCard from '@/components/organisms/Skeleton/SkeletonProductCard';
 import { useCategoryStore } from '@/stores/useCategoryStore';
 import { useLoadingStore } from '@/stores/useLoadingStore';
 import { useProductStore } from '@/stores/useProductStore';
+import { usePage } from '@inertiajs/react';
 import { ArmchairIcon } from 'lucide-react';
+import SkeletonProductPage from '../SkeletonPage/SkeletonProductPage';
 
 const ProductPage: React.FC = () => {
     const { products, error } = useProductStore();
     const { selectedCategory } = useCategoryStore();
     const { isLoading } = useLoadingStore();
 
+    const { component } = usePage();
+
+    const thisComponentName = 'shop/ProductList';
+
     if (error) {
         return <div className="text-red-500">{error}</div>;
     }
+
+    if ((isLoading && component === thisComponentName) || !products || !products.data) {
+        return <SkeletonProductPage />;
+    }
+
+    // console.log('ProductPage render:', component, isLoading);
 
     return (
         <>
             {/* Hero Section */}
             <HeroSection
-                isLoading={isLoading}
                 variant="withBreadcrumb"
                 color="bg-[#98C8D5]"
                 srcImage={
@@ -37,20 +47,18 @@ const ProductPage: React.FC = () => {
             </HeroSection>
             {/* <SkeletonHeroSection variant="withBreadcrumb" /> */}
 
-            <FilterDrawer isLoading={isLoading} />
+            <FilterDrawer />
             {/* Hero Section */}
 
             <section className="flex gap-5">
                 {/* Sidebar Product Start */}
-                <Sidebar isLoading={isLoading} className="hidden h-[450px] w-[264px] md:flex" />
+                <Sidebar className="hidden h-[450px] w-[264px] md:flex" />
                 {/* Sidebar Product End */}
 
                 {/* Product List */}
                 <div className="flex w-full flex-col justify-between gap-10">
                     <div className="grid flex-1 grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-                        {isLoading ? (
-                            Array.from({ length: 12 }).map((_, index) => <SkeletonProductCard key={index} />)
-                        ) : products.data.length > 0 ? (
+                        {products.data.length > 0 ? (
                             products.data.map((data) => <ProductCard key={data.id} data={data} />)
                         ) : (
                             <EmptyState

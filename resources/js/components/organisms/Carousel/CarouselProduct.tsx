@@ -1,5 +1,4 @@
 import HeadLine from '@/components/molecules/HeadLine';
-import SkeletonHeadLine from '@/components/molecules/Skeleton/SkeletonHeadLine';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { useBlogStore } from '@/stores/useBlogStore';
@@ -11,25 +10,15 @@ import { useEffect, useState } from 'react';
 import BlogCard from '../Card/BlogCard';
 import CategoryCard from '../Card/CategoryCard';
 import ProductCard from '../Card/ProductCard';
-import SkeletonBlogCard from '../Skeleton/SkeletonBlogCard';
-import SkeletonCategoryCard from '../Skeleton/SkeletonCategoryCard';
-import SkeletonProductCard from '../Skeleton/SkeletonProductCard';
 
 interface CarouselProductProps {
-    isLoading?: boolean;
     headLineTitle: string;
     isFor?: 'category' | 'product' | 'blog';
     totalItemShow: string;
     isAutoPlay?: boolean;
 }
 
-const CarouselProduct: React.FC<CarouselProductProps> = ({
-    isLoading = false,
-    headLineTitle = 'Title',
-    isFor = 'product',
-    isAutoPlay,
-    totalItemShow = '',
-}) => {
+const CarouselProduct: React.FC<CarouselProductProps> = ({ headLineTitle = 'Title', isFor = 'product', isAutoPlay, totalItemShow = '' }) => {
     const PRODUCTS = useProductStore((state) => state.products);
     const CATEGORIES = useCategoryStore((state) => state.categories);
     const BLOGS = useBlogStore((state) => state.blogs);
@@ -60,100 +49,69 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({
                 setApi={setApi}
                 className="flex flex-col gap-6 overflow-hidden"
             >
-                {isLoading ? (
-                    <SkeletonHeadLine />
-                ) : (
-                    <HeadLine
-                        icon={<CircleAlert size={20} />}
-                        title={headLineTitle}
-                        button={
-                            <div>
-                                <Button
-                                    size="icon"
-                                    variant="secondary"
-                                    onClick={() => api?.scrollTo(current - 1)}
-                                    className="border-border size-7 rounded-r-none border"
-                                >
-                                    <ArrowLeft />
-                                </Button>
-                                <Button
-                                    size="icon"
-                                    variant="secondary"
-                                    onClick={() => api?.scrollTo(current + 1)}
-                                    className="border-border size-7 rounded-l-none border"
-                                >
-                                    <ArrowRight />
-                                </Button>
-                            </div>
-                        }
-                    />
+                <HeadLine
+                    icon={<CircleAlert size={20} />}
+                    title={headLineTitle}
+                    button={
+                        <div>
+                            <Button
+                                size="icon"
+                                variant="secondary"
+                                onClick={() => api?.scrollTo(current - 1)}
+                                className="border-border size-7 rounded-r-none border"
+                            >
+                                <ArrowLeft />
+                            </Button>
+                            <Button
+                                size="icon"
+                                variant="secondary"
+                                onClick={() => api?.scrollTo(current + 1)}
+                                className="border-border size-7 rounded-l-none border"
+                            >
+                                <ArrowRight />
+                            </Button>
+                        </div>
+                    }
+                />
+
+                {isFor === 'product' && (
+                    <CarouselContent>
+                        {PRODUCTS.data.length > 0 &&
+                            PRODUCTS.data.map((data, index) => (
+                                <CarouselItem key={index} className={`${totalItemShow} py-1`}>
+                                    <ProductCard data={data} isCarousel />
+                                </CarouselItem>
+                            ))}
+                    </CarouselContent>
                 )}
 
-                {isFor === 'product' &&
-                    (isLoading ? (
-                        <CarouselContent>
-                            {Array.from({ length: 5 }).map((_, index) => (
+                {isFor === 'category' && (
+                    <CarouselContent>
+                        {CATEGORIES.length > 0 &&
+                            CATEGORIES.map((category, index) => (
                                 <CarouselItem key={index} className={`${totalItemShow} py-1`}>
-                                    <SkeletonProductCard />
+                                    <CategoryCard
+                                        srcImage={category.thumbnail}
+                                        linkTo={route('products.showByCategory', { slug: category.slug })}
+                                        altImage="Foto Produk ${`9`}"
+                                        title={category.name}
+                                        isCarousel
+                                    />
                                 </CarouselItem>
                             ))}
-                        </CarouselContent>
-                    ) : (
-                        <CarouselContent>
-                            {PRODUCTS.data.length > 0 &&
-                                PRODUCTS.data.map((data, index) => (
-                                    <CarouselItem key={index} className={`${totalItemShow} py-1`}>
-                                        <ProductCard data={data} isCarousel />
-                                    </CarouselItem>
-                                ))}
-                        </CarouselContent>
-                    ))}
+                    </CarouselContent>
+                )}
 
-                {isFor === 'category' &&
-                    (isLoading ? (
-                        <CarouselContent>
-                            {Array.from({ length: 2 }).map((_, index) => (
+                {isFor === 'blog' && (
+                    <CarouselContent>
+                        {BLOGS.data.length > 0 &&
+                            BLOGS.data.map((blog, index) => (
                                 <CarouselItem key={index} className={`${totalItemShow} py-1`}>
-                                    <SkeletonCategoryCard />
+                                    <BlogCard isCarousel data={blog} />
                                 </CarouselItem>
                             ))}
-                        </CarouselContent>
-                    ) : (
-                        <CarouselContent>
-                            {CATEGORIES.length > 0 &&
-                                CATEGORIES.map((category, index) => (
-                                    <CarouselItem key={index} className={`${totalItemShow} py-1`}>
-                                        <CategoryCard
-                                            srcImage={category.thumbnail}
-                                            linkTo={route('products.showByCategory', { slug: category.slug })}
-                                            altImage="Foto Produk ${`9`}"
-                                            title={category.name}
-                                            isCarousel
-                                        />
-                                    </CarouselItem>
-                                ))}
-                        </CarouselContent>
-                    ))}
-
-                {isFor === 'blog' &&
-                    (isLoading ? (
-                        <CarouselContent>
-                            {Array.from({ length: 10 }).map((_, index) => (
-                                <CarouselItem key={index} className={`${totalItemShow} py-1`}>
-                                    <SkeletonBlogCard />
-                                </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                    ) : (
-                        <CarouselContent>
-                            {BLOGS.length > 0 &&
-                                BLOGS.map((blog, index) => (
-                                    <CarouselItem key={index} className={`${totalItemShow} py-1`}>
-                                        <BlogCard isCarousel data={blog} />
-                                    </CarouselItem>
-                                ))}
-                        </CarouselContent>
-                    ))}
+                    </CarouselContent>
+                )}
             </Carousel>
         </section>
     );
