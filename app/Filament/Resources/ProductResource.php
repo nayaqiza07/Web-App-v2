@@ -40,7 +40,7 @@ class ProductResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'Shop';
+    protected static ?string $navigationGroup = 'Shop Management';
 
     protected static ?string $navigationIcon = 'heroicon-o-cube';
 
@@ -264,11 +264,10 @@ class ProductResource extends Resource
                     ->toggledHiddenByDefault(),
 
                 TextColumn::make('published_at')
-                    ->label('Published date')
+                    ->date()
                     ->searchable()
                     ->sortable()
-                    ->toggleable()
-                    ->toggledHiddenByDefault(),
+                    ->toggleable(),
 
                 TextColumn::make('deleted_at')
                     ->dateTime()
@@ -279,12 +278,15 @@ class ProductResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->modalHeading(fn ($record) => 'View Product: ' . $record->name),
                 Tables\Actions\EditAction::make(),
 
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
             ])
+            ->recordUrl(null)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -307,6 +309,16 @@ class ProductResource extends Resource
         return [
             //
         ];
+    }
+
+        public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return static::getModel()::count() > 0 ? 'success' : 'success';
     }
 
     public static function getPages(): array

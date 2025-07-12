@@ -1,3 +1,4 @@
+import { Paginate } from '@/components/atoms/Pagination/Paginate';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import BlogCard from '@/components/organisms/Card/BlogCard';
 import HeroSection from '@/components/organisms/Section/HeroSection';
@@ -19,23 +20,27 @@ const BlogListPage = () => {
             {/* Hero Section End */}
 
             {/* Blog List Start */}
-            <div className="grid gap-3 md:grid-cols-4 lg:grid-cols-5">
-                {isLoading ? (
-                    Array.from({ length: 15 }).map((_, index) => <SkeletonBlogCard key={index} />)
-                ) : blogs.length > 0 ? (
-                    blogs.map((blog, index) => <BlogCard key={index} index={index} data={blog} />)
-                ) : (
-                    <EmptyState
-                        icon={<NewspaperIcon size={50} />}
-                        title="No Blogs Found"
-                        desc="Your search did not match any Blogs"
-                        btnText="Go to Blogs"
-                        btnLink={route('blogs.index')}
-                        className="col-span-full"
-                    />
-                )}
+            <div className="flex w-full flex-col justify-between gap-10">
+                <div className="grid gap-3 md:grid-cols-4 lg:grid-cols-5">
+                    {isLoading ? (
+                        Array.from({ length: 15 }).map((_, index) => <SkeletonBlogCard key={index} />)
+                    ) : blogs.data.length > 0 ? (
+                        blogs.data.map((blog, index) => <BlogCard key={index} index={index} data={blog} />)
+                    ) : (
+                        <EmptyState
+                            icon={<NewspaperIcon size={50} />}
+                            title="No Blogs Found"
+                            desc="Your search did not match any Blogs"
+                            btnText="Go to Blogs"
+                            btnLink={route('blogs.index')}
+                            className="col-span-full"
+                        />
+                    )}
+                </div>
+                {/* Blog List End*/}
+
+                <Paginate data={blogs} />
             </div>
-            {/* Blog List End*/}
         </>
     );
 };

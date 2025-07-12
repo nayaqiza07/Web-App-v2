@@ -15,6 +15,7 @@ class Category extends Model
         'name',
         'slug',
         'is_visible',
+        'published_at'
     ];
 
     protected $casts = [

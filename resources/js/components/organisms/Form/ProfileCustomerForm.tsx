@@ -37,6 +37,8 @@ const ProfileCustomerForm = () => {
                     name="phone"
                     type="text"
                     placeholder="Your Phone Number"
+                    value={auth && auth?.user?.phone}
+                    disabled={Boolean(auth && auth?.user?.phone)}
                     autoComplete="off"
                 />
             </div>

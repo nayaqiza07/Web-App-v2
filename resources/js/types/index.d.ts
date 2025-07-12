@@ -128,7 +128,18 @@ export type ProductData = {
 };
 
 export type ProductList = {
+    current_page: number;
     data: ProductData[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: [{ url: string; label: string; active: boolean }];
+    next_page_url: string;
+    path: string;
+    per_page: number;
+    prev_page_url: string;
+    to: number;
     total: number;
 };
 // Products End
@@ -144,13 +155,29 @@ export type Category = {
 // Category End
 
 // Blog Start
-export type Blog = {
+export type BlogData = {
     id: number;
     title: string;
     slug: string;
     thumbnail: string;
     body: string;
     published_at: string;
+};
+
+export type BlogList = {
+    current_page: number;
+    data: BlogData[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: [{ url: string; label: string; active: boolean }];
+    next_page_url: string;
+    path: string;
+    per_page: number;
+    prev_page_url: string;
+    to: number;
+    total: number;
 };
 // Blog End
 

@@ -14,7 +14,7 @@ class EditBlog extends EditRecord
     public function getSavedNotification(): ?Notification
     {
         return Notification::make()
-            ->success()
+            ->info()
             ->title('Blog Updated')
             ->Body('The blog has been updated successfully');
     }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('thumbnail')->nullable();
             $table->boolean('is_visible')->default(false);
+            $table->date('published_at')->nullable();
             
             $table->timestamps();
         });

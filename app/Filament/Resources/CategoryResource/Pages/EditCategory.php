@@ -14,7 +14,7 @@ class EditCategory extends EditRecord
     public function getSavedNotification(): ?Notification
     {
         return Notification::make()
-            ->success()
+            ->info()
             ->title('Category Updated')
             ->body('The category has been updated successfully');
     }

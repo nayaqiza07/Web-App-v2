@@ -2,6 +2,7 @@ import HeadLine from '@/components/molecules/HeadLine';
 import SkeletonHeadLine from '@/components/molecules/Skeleton/SkeletonHeadLine';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { useBlogStore } from '@/stores/useBlogStore';
 import { useCategoryStore } from '@/stores/useCategoryStore';
 import { useProductStore } from '@/stores/useProductStore';
 import Autoplay from 'embla-carousel-autoplay';
@@ -31,6 +32,7 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({
 }) => {
     const PRODUCTS = useProductStore((state) => state.products);
     const CATEGORIES = useCategoryStore((state) => state.categories);
+    const BLOGS = useBlogStore((state) => state.blogs);
 
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
@@ -133,15 +135,25 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({
                         </CarouselContent>
                     ))}
 
-                {isFor === 'blog' && (
-                    <CarouselContent>
-                        {Array.from({ length: 10 }).map((_, index) => (
-                            <CarouselItem key={index} className={`${totalItemShow} py-1`}>
-                                {isLoading ? <SkeletonBlogCard /> : <BlogCard isCarousel />}
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                )}
+                {isFor === 'blog' &&
+                    (isLoading ? (
+                        <CarouselContent>
+                            {Array.from({ length: 10 }).map((_, index) => (
+                                <CarouselItem key={index} className={`${totalItemShow} py-1`}>
+                                    <SkeletonBlogCard />
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                    ) : (
+                        <CarouselContent>
+                            {BLOGS.length > 0 &&
+                                BLOGS.map((blog, index) => (
+                                    <CarouselItem key={index} className={`${totalItemShow} py-1`}>
+                                        <BlogCard isCarousel data={blog} />
+                                    </CarouselItem>
+                                ))}
+                        </CarouselContent>
+                    ))}
             </Carousel>
         </section>
     );
