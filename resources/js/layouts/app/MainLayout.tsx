@@ -1,6 +1,7 @@
 import Footer from '@/components/organisms/footer/Footer';
 import Subscription from '@/components/organisms/Form/Subscription';
 import Navbar from '@/components/organisms/navbar/Navbar';
+import { Toaster } from '@/components/ui/sonner';
 import { useLoadingStore } from '@/stores/useLoadingStore';
 import { router } from '@inertiajs/react';
 import { ReactNode, useEffect, useRef } from 'react';
@@ -47,6 +48,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                 {/* <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5 md:px-9 md:py-8 lg:px-20 lg:py-12"> */}
                 <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5">
                     {children}
+                    <Toaster position="top-center" />
                     {!isLoading && <Subscription />}
                 </main>
             </div>

@@ -1,11 +1,14 @@
-import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import CustomBadge from '@/components/atoms/Badge/CustomBadge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import { cn, priceFormat, truncateText } from '@/lib/utils';
+import { useCartStore } from '@/stores/useCartStore';
+import { useQuantityButtonStore } from '@/stores/useQuantityButtonStore';
 import { ProductData } from '@/types';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 import { ShoppingCart, TicketPercentIcon } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface ProductCardProps {
     isCarousel?: boolean;
@@ -13,6 +16,36 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
+    const { addItem } = useCartStore();
+    const { quantity } = useQuantityButtonStore();
+
+    const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        addItem({
+            id: data?.id,
+            thumbnail: data?.thumbnail,
+            name: data?.name,
+            slug: data?.slug,
+            category: {
+                name: data?.category.name,
+                slug: data?.category.slug,
+            },
+            price: data?.price,
+            quantity: quantity,
+        });
+
+        toast.success('You just added item to your cart', {
+            description: 'Item: ' + data.name,
+            descriptionClassName: 'text-blue-600 dark:text-blue-400',
+            action: {
+                label: 'View',
+                onClick: () => {
+                    router.visit(route('cart'));
+                },
+            },
+        });
+    };
+
     const badges = [
         data.discount_percentage && { variant: 'discount', label: '- ' + data.discount_percentage + '%' },
         data.is_new && { variant: 'new', label: 'NEW' },
@@ -22,19 +55,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
         'before:animate-shine relative overflow-hidden before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-no-repeat background-position_0s_ease';
 
     return (
-        <AnimatedMotion
-            as="div"
-            duration={1}
-            variantName="slideLeft"
-            initial={!isCarousel ? 'hidden' : false}
-            whileInView="visible"
+        <motion.div
+            layout
+            initial={isCarousel ? false : { x: 100, opacity: 0 }}
+            animate={{ scale: 1, transition: { duration: 0.2 } }}
+            whileInView={{ x: 0, opacity: 1 }}
             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-            animate={{
-                scale: 1,
-                transition: {
-                    duration: 0.2,
-                },
-            }}
             className="h-fit"
             viewport={{ once: true }}
         >
@@ -75,11 +101,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                             {/* overlay button */}
                             <Button
                                 size="icon"
-                                onClick={(e) => {
-                                    e.stopPropagation(); // cegah bubbling ke parent
-                                    e.preventDefault(); // cegah default behavior (jika dalam <a>)
-                                    console.log('Button clicked');
-                                }}
+                                onClick={handleAddToCart}
                                 className="absolute right-3 bottom-3 rounded-full bg-black/60 text-xs font-bold opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-black/80"
                             >
                                 <ShoppingCart color="white" />
@@ -87,28 +109,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                         </CardContent>
 
                         <CardFooter className="flex min-h-25 flex-col items-start justify-between border-t p-3 text-xs">
-                            <AnimatedMotion
-                                as="h1"
-                                initial={!isCarousel ? 'hidden' : false}
-                                delay={0.3}
-                                duration={1}
-                                variantName="fadeIn"
-                                whileInView="visible"
-                                viewport={{ once: true }}
+                            <motion.h1
+                                layout
+                                initial={isCarousel ? false : { opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                transition={{ duration: 1, delay: 0.3 }}
                                 className="w-full"
+                                viewport={{ once: true }}
                             >
                                 <CardTitle className="text-card-foreground text-sm">{truncateText(data.name, 17)}</CardTitle>
                                 <p className="text-muted-foreground">{data?.category?.name}</p>
-                            </AnimatedMotion>
-                            <AnimatedMotion
-                                as="div"
-                                initial={!isCarousel ? 'hidden' : false}
-                                delay={0.4}
-                                duration={1}
-                                whileInView="visible"
-                                viewport={{ once: true }}
-                                variantName="fadeIn"
+                            </motion.h1>
+                            <motion.h1
+                                layout
+                                initial={isCarousel ? false : { opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                transition={{ duration: 1, delay: 0.4 }}
                                 className="flex w-full items-end justify-between text-xs font-semibold"
+                                viewport={{ once: true }}
                             >
                                 {/* {data.discount_percentage ? (
                                     <Badge variant="destructiveTransparent" className="border-destructive/10">
@@ -121,12 +139,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                                 {/* <span className="text-muted-foreground text-[9px] line-through">
                                     {data.old_price && data.old_price > 0 && priceFormat(data.old_price)}
                                 </span> */}
-                            </AnimatedMotion>
+                            </motion.h1>
                         </CardFooter>
                     </Card>
                 </div>
             </Link>
-        </AnimatedMotion>
+        </motion.div>
     );
 };
 

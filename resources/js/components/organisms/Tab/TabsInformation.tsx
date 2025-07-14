@@ -4,22 +4,18 @@ import ReviewContent from '@/components/molecules/TextContent/ReviewContent';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Product } from '@/types';
+import { ProductData } from '@/types';
 import { FileTextIcon } from 'lucide-react';
-import SkeletonTabsInformation from '../Skeleton/SkeletonTabsInformation';
 
 interface TabsInformationProps {
-    isLoading?: boolean;
-    PRODUCT: Product | null;
+    PRODUCT: ProductData | null;
 }
 
-const TabsInformation: React.FC<TabsInformationProps> = ({ isLoading = false, PRODUCT }) => {
+const TabsInformation: React.FC<TabsInformationProps> = ({ PRODUCT }) => {
     const styleTabTrigger =
         'data-[state=active]:border-border dark:data-[state=active]:bg-card data-[state=active]:bg-card data-[state=active]:text-foreground text-xs text-muted-foreground font-bold data-[state=active]:shadow-none';
 
-    return isLoading ? (
-        <SkeletonTabsInformation />
-    ) : (
+    return (
         <AnimatedMotion as="div" delay={0.3} duration={1} variantName="slideLeft" whileInView="visible" viewport={{ once: true }}>
             <Tabs defaultValue="information" className="w-full text-xs font-bold">
                 <TabsList className="bg-transparent">

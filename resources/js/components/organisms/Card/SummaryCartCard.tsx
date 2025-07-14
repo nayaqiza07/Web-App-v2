@@ -1,22 +1,15 @@
-import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { priceFormat } from '@/lib/utils';
 import { useCartStore } from '@/stores/useCartStore';
-import SkeletonSummaryCartCard from '../Skeleton/SkeletonSummaryCartCard';
+import { motion } from 'framer-motion';
 
-interface SummaryCartCardProps {
-    isLoading?: boolean;
-}
-
-const SummaryCartCard: React.FC<SummaryCartCardProps> = ({ isLoading = false }) => {
+const SummaryCartCard = () => {
     const { totalPrice } = useCartStore();
 
-    return isLoading ? (
-        <SkeletonSummaryCartCard />
-    ) : (
-        <AnimatedMotion as="div" duration={1} animate="visible" variantName="slideLeft">
+    return (
+        <motion.div initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1 }}>
             <Card className="sticky top-20 hidden h-fit p-4 text-xs md:flex">
                 <CardHeader className="p-0 text-base">Summary</CardHeader>
                 <CardContent className="text-muted-foreground h-full p-0">
@@ -37,7 +30,7 @@ const SummaryCartCard: React.FC<SummaryCartCardProps> = ({ isLoading = false }) 
                     </Button>
                 </CardFooter>
             </Card>
-        </AnimatedMotion>
+        </motion.div>
     );
 };
 

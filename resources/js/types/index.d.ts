@@ -154,6 +154,18 @@ export type Category = {
 };
 // Category End
 
+// Cart Item Start
+export interface CartItem {
+    id: number;
+    thumbnail: string;
+    name: string;
+    slug: string;
+    category: { name: string; slug: string };
+    price: number;
+    quantity: number;
+}
+// Cart Item End
+
 // Blog Start
 export type BlogData = {
     id: number;

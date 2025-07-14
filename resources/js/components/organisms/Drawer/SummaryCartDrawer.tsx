@@ -1,21 +1,14 @@
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
 import { priceFormat } from '@/lib/utils';
 import { useCartStore } from '@/stores/useCartStore';
 import { ListCheck } from 'lucide-react';
 
-interface SummaryCartDrawerProps {
-    isLoading?: boolean;
-}
-
-const SummaryCartDrawer: React.FC<SummaryCartDrawerProps> = ({ isLoading = false }) => {
+const SummaryCartDrawer = () => {
     const { totalPrice } = useCartStore();
 
-    return isLoading ? (
-        <Skeleton className="fixed right-9 bottom-9 z-10 size-9 rounded-full md:hidden" />
-    ) : (
+    return (
         <Drawer>
             <DrawerTrigger asChild>
                 <Button size="icon" className="fixed right-9 bottom-9 z-10 rounded-full md:hidden">

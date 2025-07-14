@@ -1,16 +1,12 @@
 import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
-import SkeletonCarouselImageProduct from '@/components/molecules/Skeleton/SkeletonCarouselImageProduct';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 interface CarouselImageProductProps {
-    isLoading?: boolean;
     orientation?: 'vertical' | 'horizontal';
 }
 
-const CarouselImageProduct: React.FC<CarouselImageProductProps> = ({ isLoading = false, orientation = 'vertical' }) => {
-    return isLoading ? (
-        <SkeletonCarouselImageProduct />
-    ) : (
+const CarouselImageProduct: React.FC<CarouselImageProductProps> = ({ orientation = 'vertical' }) => {
+    return (
         <AnimatedMotion
             as="div"
             delay={0.3}
