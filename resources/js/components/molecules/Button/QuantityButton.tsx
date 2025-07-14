@@ -1,16 +1,20 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useCartStore } from '@/stores/useCartStore';
 import { Minus, Plus } from 'lucide-react';
-import { useState } from 'react';
 
-const QuantityButton = () => {
-    const [qty, setQty] = useState<number>(1);
+interface QuantityButtonProps {
+    productId: number;
+}
+
+const QuantityButton: React.FC<QuantityButtonProps> = ({ productId }) => {
+    const { updateQuantity, getQuantity } = useCartStore();
+
+    const quantity = getQuantity(productId);
+
     const handleChangeQty = (type: 'dec' | 'inc') => {
-        if (type === 'dec') {
-            setQty((prevQty) => prevQty - 1);
-        } else {
-            setQty((prevQty) => prevQty + 1);
-        }
+        const newQty = type === 'dec' ? Math.max(quantity - 1, 1) : quantity + 1;
+        updateQuantity(productId, newQty);
     };
 
     return (
@@ -19,13 +23,13 @@ const QuantityButton = () => {
                 variant="secondary"
                 size="icon"
                 onClick={() => handleChangeQty('dec')}
-                disabled={qty <= 1}
-                className="size-8 rounded-none border-none"
+                disabled={quantity <= 1}
+                className="size-7 rounded-none border-none"
             >
                 <Minus />
             </Button>
-            <Input className="bg-input size-8 rounded-none p-1 text-center shadow-none" value={qty} disabled />
-            <Button variant="secondary" size="icon" onClick={() => handleChangeQty('inc')} className="size-8 rounded-none border-none">
+            <Input className="bg-input size-7 rounded-none p-1 text-center shadow-none" value={quantity} readOnly />
+            <Button variant="secondary" size="icon" onClick={() => handleChangeQty('inc')} className="size-7 rounded-none border-none">
                 <Plus />
             </Button>
         </div>

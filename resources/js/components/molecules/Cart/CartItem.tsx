@@ -2,36 +2,26 @@ import { Button } from '@/components/ui/button';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { priceFormat } from '@/lib/utils';
+import { useCartStore } from '@/stores/useCartStore';
+import { CartItem as Item } from '@/types';
+import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
-import { EllipsisVerticalIcon, Trash2Icon } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { ArrowLeftIcon, Trash2Icon } from 'lucide-react';
+import React, { useState } from 'react';
 import QuantityButton from '../Button/QuantityButton';
 
 interface CartItemProps {
-    data: {
-        id: number;
-        thumbnail: string;
-        name: string;
-        price: number;
-    };
+    data: Item;
     onDelete: (id: number) => void;
 }
 
 const CartItem: React.FC<CartItemProps> = ({ data, onDelete }) => {
     const [isActive, setIsActive] = useState<boolean>(false);
-    const [isMobile, setIsMobile] = useState<boolean>(false);
 
-    useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
+    const { totalPricePerProduct } = useCartStore();
 
     const handleToggle = () => {
-        if (isMobile) {
-            setIsActive((prev) => !prev);
-        }
+        setIsActive((prev) => !prev);
     };
 
     return (
@@ -41,8 +31,6 @@ const CartItem: React.FC<CartItemProps> = ({ data, onDelete }) => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0, marginBottom: -15 }}
             transition={{ duration: 0.5 }}
-            onMouseEnter={() => !isMobile && setIsActive(true)}
-            onMouseLeave={() => !isMobile && setIsActive(false)}
             className="group relative flex overflow-hidden"
         >
             {/* Button Hapus */}
@@ -58,7 +46,7 @@ const CartItem: React.FC<CartItemProps> = ({ data, onDelete }) => {
 
             {/* Card Utama */}
             <motion.div
-                className="relative z-10 h-fit w-full cursor-pointer text-xs"
+                className="relative z-10 h-fit w-full text-xs"
                 initial={{ x: 0 }}
                 animate={{ x: isActive ? -48 : 0 }}
                 transition={{ type: 'tween', duration: 0.3 }}
@@ -69,26 +57,26 @@ const CartItem: React.FC<CartItemProps> = ({ data, onDelete }) => {
                             <img src={data.thumbnail} alt="cart-image-product" className="h-[44px] w-[60px] rounded" />
                             <div className="flex w-full justify-between">
                                 <div className="flex flex-col">
-                                    <h2>{data.name}</h2>
-                                    <p className="text-muted-foreground hidden md:flex">{priceFormat(data.price)}</p>
+                                    <Link href={route('products.show', { slug: data.slug })}>
+                                        <h2 className="underline-offset-2 hover:underline">{data.name}</h2>
+                                    </Link>
+                                    <Link href={route('products.showByCategory', { slug: data.category.slug })}>
+                                        <p className="text-muted-foreground underline-offset-2 hover:underline">{data.category.name}</p>
+                                    </Link>
+                                    <p className="text-muted-foreground">{priceFormat(data.price)}</p>
                                 </div>
-                                <Button variant="outline" size="icon" onClick={handleToggle} className="rounded-full md:hidden">
-                                    <EllipsisVerticalIcon />
+                                <Button variant="ghost" size="icon" onClick={handleToggle} className="size-6">
+                                    <ArrowLeftIcon className={`${isActive && 'rotate-180'} transition-all duration-200`} />
                                 </Button>
                             </div>
                         </div>
-                        <div className="hidden items-center gap-5 md:flex">
-                            <QuantityButton />
-                            <span>{priceFormat(data.price)}</span>
-                        </div>
                     </CardHeader>
 
-                    <Separator className="md:hidden" />
+                    <Separator />
 
-                    <CardFooter className="flex items-center justify-between px-3 py-2 md:hidden">
-                        <span>{priceFormat(data.price)}</span>
-                        <QuantityButton />
-                        <span>{priceFormat(data.price)}</span>
+                    <CardFooter className="flex items-center justify-between px-3 py-2">
+                        <QuantityButton productId={data.id} />
+                        <span>{priceFormat(totalPricePerProduct(data.id))}</span>
                     </CardFooter>
                 </Card>
             </motion.div>
