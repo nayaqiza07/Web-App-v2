@@ -23,7 +23,8 @@ const CarouselImageProduct: React.FC<CarouselImageProductProps> = ({ orientation
                 orientation={orientation}
                 className="w-full max-w-xs"
             >
-                <CarouselContent className="-mt-1 lg:h-[300px]">
+                {/* <CarouselContent className="-mt-1 lg:h-[300px]"> */}
+                <CarouselContent className="-ml-5 lg:-ml-0 lg:h-[300px]">
                     {Array.from({ length: 5 }).map((_, index) => (
                         <CarouselItem key={index} className="basis-1/3 lg:basis-[72px]">
                             <div className="p-1">

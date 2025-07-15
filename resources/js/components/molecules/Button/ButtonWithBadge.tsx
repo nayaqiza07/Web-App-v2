@@ -36,7 +36,7 @@ const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({
     };
 
     return (
-        <motion.div custom={index} variants={buttonWithBadgeVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+        <motion.div custom={index} variants={buttonWithBadgeVariants} initial="hidden" animate="visible" viewport={{ once: true }}>
             <Link href={linkTo}>
                 <Button
                     variant="ghost"

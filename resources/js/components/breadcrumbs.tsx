@@ -1,12 +1,12 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
 import { Link } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 import { Fragment } from 'react';
-import AnimatedMotion from './atoms/Animated/AnimatedMotion';
 
 export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: BreadcrumbItemType[] }) {
     return (
-        <AnimatedMotion as="div" delay={0.3} duration={0.5} animate="visible" variantName="slideRight">
+        <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
             {breadcrumbs.length > 0 && (
                 <Breadcrumb>
                     <BreadcrumbList>
@@ -31,6 +31,6 @@ export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: BreadcrumbItemType[]
                     </BreadcrumbList>
                 </Breadcrumb>
             )}
-        </AnimatedMotion>
+        </motion.div>
     );
 }

@@ -8,29 +8,16 @@ import { ShoppingBagIcon } from 'lucide-react';
 import { useState } from 'react';
 import DeliveryAddressForm from '../Form/DeliveryAddressForm';
 import ProfileCustomerForm from '../Form/ProfileCustomerForm';
-import SkeletonAccordionCart from '../Skeleton/SkeletonAccordionCart';
 import AnimatedAccordionContent from './AnimatedAccordionContent';
 
-interface AccordionCartProps {
-    isLoading?: boolean;
-}
-
-const AccordionCart: React.FC<AccordionCartProps> = ({ isLoading = false }) => {
+const AccordionCart = () => {
     const [openItems, setOpenItems] = useState<string[]>(['bag', 'profile', 'delivery']);
 
     const { items, totalItems, totalPrice, removeItem } = useCartStore();
 
-    return isLoading ? (
-        <SkeletonAccordionCart />
-    ) : (
+    return (
         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
-            <Accordion
-                type="multiple"
-                className="h-full w-full rounded-xl"
-                // defaultValue={['bag', 'profile', 'delivery']}
-                value={openItems}
-                onValueChange={setOpenItems}
-            >
+            <Accordion type="multiple" className="h-full w-full rounded-xl" value={openItems} onValueChange={setOpenItems}>
                 <AccordionItem value="bag" className="bg-card border-border rounded-xl border">
                     <AccordionTrigger className="flex cursor-pointer items-center p-4 hover:no-underline">
                         <motion.h3
@@ -56,7 +43,6 @@ const AccordionCart: React.FC<AccordionCartProps> = ({ isLoading = false }) => {
                         </motion.div>
                     </AccordionTrigger>
 
-                    {/* <AccordionContent className="flex flex-col gap-4 px-4 text-balance"> */}
                     <AnimatedAccordionContent isOpen={openItems.includes('bag')} className="flex flex-col gap-4 px-4 text-balance">
                         {items.length === 0 ? (
                             <EmptyState
@@ -73,7 +59,6 @@ const AccordionCart: React.FC<AccordionCartProps> = ({ isLoading = false }) => {
                             </AnimatePresence>
                         )}
                     </AnimatedAccordionContent>
-                    {/* </AccordionContent> */}
                 </AccordionItem>
 
                 <AccordionItem value="profile" className="bg-card border-border my-5 rounded-xl border">
@@ -88,11 +73,9 @@ const AccordionCart: React.FC<AccordionCartProps> = ({ isLoading = false }) => {
                         </motion.h3>
                     </AccordionTrigger>
 
-                    {/* <AccordionContent className="flex flex-col gap-4 px-4 text-balance"> */}
                     <AnimatedAccordionContent isOpen={openItems.includes('profile')} className="flex flex-col gap-4 px-4 text-balance">
                         <ProfileCustomerForm />
                     </AnimatedAccordionContent>
-                    {/* </AccordionContent> */}
                 </AccordionItem>
 
                 <AccordionItem value="delivery" className="bg-card border-border rounded-xl border last:border-b-1">
@@ -107,11 +90,9 @@ const AccordionCart: React.FC<AccordionCartProps> = ({ isLoading = false }) => {
                         </motion.h3>
                     </AccordionTrigger>
 
-                    {/* <AccordionContent className="flex flex-col gap-4 px-4 text-balance"> */}
                     <AnimatedAccordionContent isOpen={openItems.includes('delivery')} className="flex flex-col gap-4 px-4 text-balance">
                         <DeliveryAddressForm />
                     </AnimatedAccordionContent>
-                    {/* </AccordionContent> */}
                 </AccordionItem>
             </Accordion>
         </motion.div>

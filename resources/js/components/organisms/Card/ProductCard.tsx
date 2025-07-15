@@ -1,14 +1,13 @@
 import CustomBadge from '@/components/atoms/Badge/CustomBadge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
+import { useAddToCart } from '@/hooks/useAddToCart';
 import { cn, priceFormat, truncateText } from '@/lib/utils';
-import { useCartStore } from '@/stores/useCartStore';
 import { useQuantityButtonStore } from '@/stores/useQuantityButtonStore';
 import { ProductData } from '@/types';
-import { Link, router } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { ShoppingCart, TicketPercentIcon } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface ProductCardProps {
     isCarousel?: boolean;
@@ -16,35 +15,9 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
-    const { addItem } = useCartStore();
     const { quantity } = useQuantityButtonStore();
 
-    const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        addItem({
-            id: data?.id,
-            thumbnail: data?.thumbnail,
-            name: data?.name,
-            slug: data?.slug,
-            category: {
-                name: data?.category.name,
-                slug: data?.category.slug,
-            },
-            price: data?.price,
-            quantity: quantity,
-        });
-
-        toast.success('You just added item to your cart', {
-            description: 'Item: ' + data.name,
-            descriptionClassName: 'text-blue-600 dark:text-blue-400',
-            action: {
-                label: 'View',
-                onClick: () => {
-                    router.visit(route('cart'));
-                },
-            },
-        });
-    };
+    const { handleAddToCart } = useAddToCart();
 
     const badges = [
         data.discount_percentage && { variant: 'discount', label: '- ' + data.discount_percentage + '%' },
@@ -61,6 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
             animate={{ scale: 1, transition: { duration: 0.2 } }}
             whileInView={{ x: 0, opacity: 1 }}
             whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+            transition={{ duration: 1 }}
             className="h-fit"
             viewport={{ once: true }}
         >
@@ -101,7 +75,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                             {/* overlay button */}
                             <Button
                                 size="icon"
-                                onClick={handleAddToCart}
+                                onClick={(e) => handleAddToCart(e, data, quantity)}
                                 className="absolute right-3 bottom-3 rounded-full bg-black/60 text-xs font-bold opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-black/80"
                             >
                                 <ShoppingCart color="white" />

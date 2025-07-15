@@ -1,15 +1,14 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useAddToCart } from '@/hooks/useAddToCart';
 import { priceFormat } from '@/lib/utils';
-import { useCartStore } from '@/stores/useCartStore';
 import { useQuantityButtonStore } from '@/stores/useQuantityButtonStore';
 import { ProductData } from '@/types';
-import { Link, router } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { easeOut, motion } from 'framer-motion';
 import { BanknoteIcon, CircleCheckIcon, Minus, Plus, ShieldHalfIcon, ShoppingBagIcon, TicketPercentIcon } from 'lucide-react';
 import React from 'react';
-import { toast } from 'sonner';
 
 interface ProductDetailContentProps {
     PRODUCT: ProductData;
@@ -31,41 +30,13 @@ const shipping = [
 ];
 
 const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ PRODUCT }) => {
-    const { addItem } = useCartStore();
     const { quantity, setQuantity } = useQuantityButtonStore();
+
+    const { handleAddToCart } = useAddToCart();
 
     const handleChangeQty = (type: 'dec' | 'inc') => {
         const newQty = type === 'dec' ? Math.max(quantity - 1, 1) : quantity + 1;
         setQuantity(newQty);
-    };
-
-    const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        addItem({
-            id: PRODUCT?.id,
-            thumbnail: PRODUCT?.thumbnail,
-            name: PRODUCT?.name,
-            slug: PRODUCT?.slug,
-            category: {
-                name: PRODUCT?.category.name,
-                slug: PRODUCT?.category.slug,
-            },
-            price: PRODUCT?.price,
-            quantity: quantity,
-        });
-
-        toast.success('You just added item to your cart', {
-            description: PRODUCT.name,
-            className: 'flex items-start justify-start',
-            action: {
-                label: 'View',
-                onClick: () => {
-                    router.visit(route('cart'));
-                },
-            },
-        });
-
-        setQuantity(1);
     };
 
     return (
@@ -73,7 +44,7 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ PRODUCT }) 
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 1, ease: easeOut }}
-            className="flex w-full flex-col justify-between gap-3 lg:w-2/3"
+            className="flex w-full flex-col justify-between gap-3 md:gap-0 lg:w-2/3"
         >
             {(PRODUCT?.discount_percentage || PRODUCT?.is_new) && (
                 <motion.div
@@ -192,7 +163,13 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ PRODUCT }) 
             </div>
 
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 1, ease: easeOut }} className="w-full">
-                <Button type="button" effect="gooeyLeft" gooeyColor="default" onClick={handleAddToCart} className="w-full">
+                <Button
+                    type="button"
+                    effect="gooeyLeft"
+                    gooeyColor="default"
+                    onClick={(e) => handleAddToCart(e, PRODUCT, quantity, setQuantity)}
+                    className="w-full"
+                >
                     <ShoppingBagIcon /> Add to Cart
                 </Button>
             </motion.div>
