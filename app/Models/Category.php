@@ -11,6 +11,11 @@ class Category extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
         'name',
         'slug',
@@ -18,6 +23,11 @@ class Category extends Model
         'published_at'
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected $casts = [
         'is_visible' => 'boolean'
     ];

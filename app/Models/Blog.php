@@ -11,6 +11,11 @@ class Blog extends Model
 {
     use HasFactory, SoftDeletes;
     
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
         /** Detail */
         'title',
@@ -24,6 +29,11 @@ class Blog extends Model
         'published_at',
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected $casts = [
         /** Status */
         'is_visible' => 'boolean'

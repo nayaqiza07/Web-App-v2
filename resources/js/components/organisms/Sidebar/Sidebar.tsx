@@ -49,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
                 </Card>
             </AnimatedMotion>
 
-            <AnimatedMotion as="div" delay={0.3} duration={1} variantName="slideRight" whileInView="visible" viewport={{ once: true }}>
+            <AnimatedMotion as="div" delay={0.3} duration={1} variantName="slideRight" animate="visible" viewport={{ once: true }}>
                 <Card className={`bg-background w-full gap-0 py-0 text-xs`}>
                     <CardHeader className="px-3 py-4">
                         <CardTitle>Price</CardTitle>

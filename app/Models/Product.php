@@ -12,6 +12,11 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
         /** Detail */
         'name',
@@ -40,6 +45,11 @@ class Product extends Model
         'category_id'
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected $casts = [
         /** Description */
         'dimensions' => 'array',
@@ -49,11 +59,21 @@ class Product extends Model
         'is_visible' => 'boolean'
     ];
 
+    /**
+     * The accessors to append to the model's array and JSON forms.
+     *
+     * @var array<int, string>
+     */
     protected $appends = [
         'discount_percentage',
         'is_new'
     ];
 
+    /**
+     * The relationships tha should always be laoded with the model.
+     * 
+     * @var array<int, string>
+     */
     protected $with = ['category'];
 
     /**

@@ -12,6 +12,11 @@ class Faq extends Model
     /** @use HasFactory<\Database\Factories\FaqFactory> */
     use HasFactory, SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
         'question',
         'answer',
@@ -19,6 +24,11 @@ class Faq extends Model
         'published_at'
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected $casts = [
         'is_visible' => 'boolean'
     ];
