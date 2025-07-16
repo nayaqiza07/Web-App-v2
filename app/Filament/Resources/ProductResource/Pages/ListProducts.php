@@ -20,7 +20,7 @@ class ListProducts extends ListRecords
         ];
     }
 
-        public function getTabs(): array
+    public function getTabs(): array
     {
         return [
             'All' => Tab::make(),

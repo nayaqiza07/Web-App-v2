@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -23,6 +24,8 @@ class UserResource extends Resource
     protected static ?string $navigationGroup = 'User Management';
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    protected static ?string $activeNavigationIcon = 'heroicon-m-user-group';
 
     protected static ?int $navigationSort = 1;
 
@@ -60,8 +63,10 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->icon('heroicon-m-envelope')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phone')
+                    Tables\Columns\TextColumn::make('phone')
+                    ->icon('heroicon-m-phone')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('roles.name')
                     ->searchable(),
@@ -76,6 +81,16 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->emptyStateIcon('heroicon-o-user-group')
+            ->emptyStateHeading('No users yet')
+            ->emptyStateDescription('Once you write your user, it will appear here.')
+            ->emptyStateActions([
+                Action::make('create')
+                    ->icon('heroicon-m-plug')
+                    ->label('Create user')
+                    ->url(route('filament.admin.resources.users.index'))
+                    ->button()
             ])
             ->filters([
                 //

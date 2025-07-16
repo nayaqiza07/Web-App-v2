@@ -14,17 +14,17 @@ class RolePermissionSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Define permissions
-        // Permission::create(['name' => 'add to cart']);
+        // Permission::create(['name' => 'view_filament']);
         // Permission::create(['name' => 'create posts']);
         // Permission::create(['name' => 'edit posts']);
         // Permission::create(['name' => 'delete posts']);
 
         // Create roles
-        $admin = Role::create(['name' => 'admin']);
-        $customer = Role::create(['name' => 'customer']);
+        $superAdmin = Role::create(['name' => 'Super Admin']);
+        $customer = Role::create(['name' => 'Customer']);
 
         // Assign permissions to roles
-        // $admin->givePermissionTo(Permission::all());
+        // $superAdmin->givePermissionTo(Permission::all());
         // $editor->givePermissionTo(['view posts', 'create posts', 'edit posts']);
         // $viewer->givePermissionTo(['view posts']);
     }

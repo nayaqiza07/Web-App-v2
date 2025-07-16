@@ -28,6 +28,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Support\RawJs;
+use Filament\Tables\Actions\Action as ActionsAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -43,6 +44,8 @@ class ProductResource extends Resource
     protected static ?string $navigationGroup = 'Shop Management';
 
     protected static ?string $navigationIcon = 'heroicon-o-cube';
+    
+    protected static ?string $activeNavigationIcon = 'heroicon-m-cube';
 
     protected static ?int $navigationSort = 1;
 
@@ -273,6 +276,16 @@ class ProductResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->emptyStateIcon('heroicon-o-cube')
+            ->emptyStateHeading('No products yet')
+            ->emptyStateDescription('Once you write your product, it will appear here.')
+            ->emptyStateActions([
+                ActionsAction::make('create')
+                    ->icon('heroicon-m-plus')
+                    ->label('Create product')
+                    ->url(route('filament.admin.resources.shop.products.create'))
+                    ->button()
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

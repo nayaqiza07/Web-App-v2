@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\FaqResource\Pages;
 use App\Filament\Resources\FaqResource\RelationManagers;
 use App\Models\Faq;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\MarkdownEditor;
@@ -17,12 +18,13 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
-class FaqResource extends Resource
+class FaqResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Faq::class;
 
@@ -33,6 +35,20 @@ class FaqResource extends Resource
     protected static ?string $navigationGroup = 'Content Management';
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
+
+    protected static ?string $activeNavigationIcon = 'heroicon-m-chat-bubble-bottom-center-text';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function form(Form $form): Form
     {
@@ -109,6 +125,16 @@ class FaqResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->emptyStateIcon('heroicon-o-chat-bubble-bottom-center-text')
+            ->emptyStateHeading('No faqs yet')
+            ->emptyStateDescription('Once you write your faq, it will appear here.')
+            ->emptyStateActions([
+                Action::make('create')
+                    ->icon('heroicon-m-plus')
+                    ->label('Create faq')
+                    ->url(route('filament.admin.resources.content.faqs.create'))
+                    ->button()
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

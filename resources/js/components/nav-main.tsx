@@ -24,16 +24,16 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                 ))}
             </SidebarMenu>
 
-            {role === 'admin' && (
+            {role === 'Super Admin' && (
                 <>
                     <SidebarGroupLabel className="mt-5">Link</SidebarGroupLabel>
                     <SidebarMenu>
                         <SidebarMenuItem>
                             <SidebarMenuButton asChild isActive={'/admin' === page.url} tooltip={{ children: 'Go to Admin Panel' }}>
-                                <Link href={'/admin'} prefetch>
+                                <a href="/admin" target='_blank'>
                                     <MonitorCogIcon />
                                     <span>Go to Admin Panel</span>
-                                </Link>
+                                </a>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     </SidebarMenu>

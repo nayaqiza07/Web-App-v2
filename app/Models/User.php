@@ -3,12 +3,17 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasRoles, HasFactory, Notifiable;
@@ -55,8 +60,27 @@ class User extends Authenticatable
         ];
     }
 
-    public function canAccessFilament(): bool
+    /**
+     * The user that can access the admin panel.
+     *
+     * @return bool
+     */
+    public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasRole('admin');
+        // if ($panel->getId() === 'admin') {
+        //     return str_ends_with($this->email, 'superadmin@example.com') && $this->hasVerifiedEmail();
+        // }
+
+        // return true;
+        $role = [
+            'Super Admin',
+            'Admin'
+        ];
+
+        if ($panel->getId() === 'admin' && $this->hasRole($role)) {
+            return true;
+        } 
+
+        return false;
     }
 }
