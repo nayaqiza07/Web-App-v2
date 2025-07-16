@@ -6,6 +6,7 @@ use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
 use App\Models\Category;
 use App\Models\Product;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -17,6 +18,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -24,7 +26,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
-class CategoryResource extends Resource
+class CategoryResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Category::class;
 
@@ -35,8 +37,22 @@ class CategoryResource extends Resource
     protected static ?string $navigationGroup = 'Shop Management';
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
+    
+    protected static ?string $activeNavigationIcon = 'heroicon-m-tag';
 
     protected static ?int $navigationSort = 2;
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function form(Form $form): Form
     {
@@ -113,6 +129,16 @@ class CategoryResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
+            ])
+            ->emptyStateIcon('heroicon-o-tag')
+            ->emptyStateHeading('No categories yet')
+            ->emptyStateDescription('Once you write your category, it will appear here.')
+            ->emptyStateActions([
+                Action::make('create')
+                    ->icon('heroicon-m-plus')
+                    ->label('Create category')
+                    ->url(route('filament.admin.resources.shop.categories.create'))
+                    ->button()
             ])
             ->filters([
                 //

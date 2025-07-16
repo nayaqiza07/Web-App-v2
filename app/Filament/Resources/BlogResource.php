@@ -17,6 +17,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -34,6 +35,8 @@ class BlogResource extends Resource
     protected static ?string $navigationGroup = 'Content Management';
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+
+    protected static ?string $activeNavigationIcon = 'heroicon-m-newspaper';
 
     public static function form(Form $form): Form
     {
@@ -152,6 +155,16 @@ class BlogResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->emptyStateIcon('heroicon-o-newspaper')
+            ->emptyStateHeading('No blogs yet')
+            ->emptyStateDescription('Once you write your blog, it will appear here.')
+            ->emptyStateActions([
+                Action::make('create')
+                    ->icon('heroicon-m-plus')
+                    ->label('Create blog')
+                    ->url(route('filament.admin.resources.content.blogs.create'))
+                    ->button()
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
