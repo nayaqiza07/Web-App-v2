@@ -47,7 +47,7 @@ class ManageUsers extends ManageRecords
                     $query->whereHas('roles', fn ($q) => $q->where('name', 'Customer')
                  ))
                 ->badge(User::whereHas('roles', fn ($q) => $q->where('name', 'Customer'))->count())
-                ->badgeColor('warning'),
+                ->badgeColor('info'),
         ];
     }
 
