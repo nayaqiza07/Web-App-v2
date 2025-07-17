@@ -85,6 +85,7 @@ export interface SelectWithLabelProps {
     id: string;
     // name: string;
     // type: string;
+    options: Country[] | State[] | City[];
     value?: string;
     onValueChange?: (value: string) => void;
     placeholder: string;
@@ -94,13 +95,50 @@ export interface SelectWithLabelProps {
 // Select Props End
 
 // Address Form Input Start
-export type AddressFormInput = {
+export type AddressType = {
     id?: string;
-    region: string;
+    country: string;
     state: string;
     city: string;
-    address: string;
+    street: string;
     zip: string;
+};
+
+export type Country = {
+    id: number;
+    name: string;
+    iso3: string;
+    iso2: string;
+    numeric_code: string;
+    phone_code: number;
+    capital: string;
+    currency: string;
+    currency_name: string;
+    currency_symol: string;
+    native: string;
+    region: string;
+    subregion: string;
+    emoji: string;
+    tld: string;
+    latitude: string;
+    longitude: string;
+    hasStates: boolean;
+};
+
+export type State = {
+    id: number;
+    name: string;
+    state_code: string;
+    latitude: string;
+    longitude: string;
+    hasCities: boolean;
+};
+
+export type City = {
+    id: number;
+    name: string;
+    latitude: string;
+    longitude: string;
 };
 // Address Form Input End
 

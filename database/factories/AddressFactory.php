@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use Database\Seeders\UserSeeder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +23,10 @@ class AddressFactory extends Factory
             'state' => fake()->state(),
             'city' => fake()->city(),
             'street' => fake()->streetAddress(),
-            'zip' => fake()->postcode()
+            'zip' => fake()->postcode(),
+
+            /** Relation */
+            'user_id' => User::inRandomOrder()->first()?->id ?? User::factory(), 
         ];
     }
 }

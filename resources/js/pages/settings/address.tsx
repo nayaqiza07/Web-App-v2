@@ -1,7 +1,7 @@
 import { Head } from '@inertiajs/react';
 
 import HeadingSmall from '@/components/heading-small';
-import { AddressFormInput, type BreadcrumbItem } from '@/types';
+import { AddressType, type BreadcrumbItem } from '@/types';
 
 import CornerPlusBadge from '@/components/atoms/Badge/CornerPlusBadge';
 import { Menu } from '@/components/atoms/Button/Menu';
@@ -13,6 +13,10 @@ import SettingsLayout from '@/layouts/settings/layout';
 import { MapIcon } from 'lucide-react';
 import { useState } from 'react';
 
+interface AddressProps {
+    ADDRESS: AddressType[];
+}
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Address settings',
@@ -20,29 +24,32 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Address() {
+export default function Address(props: AddressProps) {
+    const { ADDRESS } = props;
     const [defaultAddressIndex, setDefaultAddressIndex] = useState<number | null>(0);
 
-    const [addressData, setAddressData] = useState<AddressFormInput[]>([
-        {
-            id: '91233',
-            region: 'Indonesia',
-            state: 'Jawa Tengah',
-            city: 'Jepara',
-            address: 'Jalan Sultan Hadlirin, Desa Langon RT.12/RW.05, Kecamatan Tahunan, Kabupaten Jepara',
-            zip: '59425',
-        },
-        {
-            id: '18988',
-            region: 'Indonesia',
-            state: 'Jawa Tengah',
-            city: 'Jepara',
-            address: 'Jl. Langon, Tahunan',
-            zip: '55566',
-        },
+    console.log(ADDRESS);
+
+    const [addressData, setAddressData] = useState<AddressType[]>([
+        // {
+        //     id: '91233',
+        //     country: 'Indonesia',
+        //     state: 'Jawa Tengah',
+        //     city: 'Jepara',
+        //     street: 'Jalan Sultan Hadlirin, Desa Langon RT.12/RW.05, Kecamatan Tahunan, Kabupaten Jepara',
+        //     zip: '59425',
+        // },
+        // {
+        //     id: '18988',
+        //     country: 'Indonesia',
+        //     state: 'Jawa Tengah',
+        //     city: 'Jepara',
+        //     street: 'Jl. Langon, Tahunan',
+        //     zip: '55566',
+        // },
     ]);
 
-    const handleAddAddress = (newAddress: AddressFormInput) => {
+    const handleAddAddress = (newAddress: AddressType) => {
         setAddressData((prev) => [...prev, newAddress]);
     };
 
@@ -61,10 +68,15 @@ export default function Address() {
 
                     <div className="grid gap-3 md:grid-cols-2">
                         <AddressForm addressData={addressData} onAddAddress={handleAddAddress} />
-                        {addressData.length === 0 ? (
-                            <EmptyState title="No address yet" desc="Start by adding address" icon={<MapIcon />} className="col-span-2" />
+                        {ADDRESS.length === 0 ? (
+                            <EmptyState
+                                title="No address yet"
+                                desc="Once you write your address, it will appear here."
+                                icon={<MapIcon />}
+                                className="col-span-2"
+                            />
                         ) : (
-                            addressData.map((data, index) => {
+                            ADDRESS.map((_address, index) => {
                                 const isDefault = defaultAddressIndex === index;
 
                                 return (
@@ -78,15 +90,15 @@ export default function Address() {
                                             <Menu
                                                 onSetDefault={() => setDefaultAddressIndex(index)}
                                                 isDefault={isDefault}
-                                                onDelete={() => handleDelete(data.id ?? '')}
+                                                onDelete={() => handleDelete(_address.id ?? '')}
                                             />
                                         </CardTitle>
                                         <CardFooter className="flex h-full flex-col items-start justify-between gap-10 p-0 text-xs">
                                             <p>
-                                                {data.address}, {data.zip}
+                                                {_address.street}, {_address.zip}
                                             </p>
                                             <p>
-                                                {data.city}, {data.state}, {data.region}
+                                                {_address.city}, {_address.state}, {_address.country}
                                             </p>
                                         </CardFooter>
                                     </Card>

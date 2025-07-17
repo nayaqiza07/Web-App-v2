@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use function Laravel\Prompts\table;
+
 return new class extends Migration
 {
     /**
@@ -19,6 +21,11 @@ return new class extends Migration
             $table->string('city')->nullable;
             $table->string('street')->nullable;
             $table->string('zip')->nullable;
+
+            /** Relation */
+            $table->foreignId('user_id')->constrained(
+                table: 'users', indexName: 'addresses_user_id'
+            )->onDelete('cascade');
 
             $table->timestamps();
         });

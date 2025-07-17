@@ -107,12 +107,12 @@ class UserResource extends Resource
             ]);
     }
 
-        public static function getRelations(): array
-        {
-            return [
-                RoleRelationManager::class
-            ];
-        }
+    public static function getRelations(): array
+    {
+        return [
+            RoleRelationManager::class
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {
