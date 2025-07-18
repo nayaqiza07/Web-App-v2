@@ -41,7 +41,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onAddAddress }) => {
             <SheetTrigger asChild>
                 <Button effect="shine" className="justify-self-end md:col-span-2">
                     <PlusCircleIcon />
-                    Create address
+                    Create
                 </Button>
             </SheetTrigger>
             <SheetContent className="bg-card">

@@ -8,10 +8,21 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { AddressType } from '@/types';
+import { router } from '@inertiajs/react';
 import { EllipsisVerticalIcon, PackageCheckIcon, SquarePenIcon } from 'lucide-react';
-import { DeleteBUtton } from './DeleteButton';
+import { DeleteButton } from './DeleteButton';
 
-export function Menu({ onSetDefault, isDefault, onDelete }: { onSetDefault: () => void; isDefault: boolean; onDelete: () => void }) {
+export function Menu({ data: Item }: { data: AddressType }) {
+    const handleSetDefault = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        router.put(route('address.setDefault', { id: Item.id }), {
+            id: Item.id,
+            is_active: true,
+            preserveScroll: true,
+        });
+    };
+
     return (
         <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
@@ -23,7 +34,7 @@ export function Menu({ onSetDefault, isDefault, onDelete }: { onSetDefault: () =
                 <DropdownMenuLabel>Action</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={onSetDefault} disabled={isDefault}>
+                    <DropdownMenuItem onClick={handleSetDefault} disabled={Item.is_active}>
                         <PackageCheckIcon />
                         Set as Default
                     </DropdownMenuItem>
@@ -33,11 +44,7 @@ export function Menu({ onSetDefault, isDefault, onDelete }: { onSetDefault: () =
                         Edit
                     </DropdownMenuItem>
 
-                    <DeleteBUtton onDelete={onDelete} />
-
-                    {/* <DropdownMenuItem variant="destructive">
-                        <DeleteBUtton onDelete={onDelete} />
-                    </DropdownMenuItem> */}
+                    <DeleteButton data={Item} />
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>
