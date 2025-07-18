@@ -24,6 +24,7 @@ class AddressFactory extends Factory
             'city' => fake()->city(),
             'street' => fake()->streetAddress(),
             'zip' => fake()->postcode(),
+            'is_active' => false,
 
             /** Relation */
             'user_id' => User::inRandomOrder()->first()?->id ?? User::factory(), 

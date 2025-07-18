@@ -15,6 +15,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('settings/address')->name('address.')->controller(AddressController::class)->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::put('/{id}', 'setDefault')->name('setDefault');
+        Route::delete('/{id}', 'destroy')->name('destroy');
     });
 
     Route::get('settings/password', [PasswordController::class, 'edit'])->name('password.edit');

@@ -9,9 +9,13 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { AddressType } from '@/types';
+import { Link } from '@inertiajs/react';
 import { Trash2Icon } from 'lucide-react';
 
-export function DeleteBUtton({ onDelete }: { onDelete: () => void }) {
+export function DeleteButton({ data }: { data: AddressType }) {
     return (
         <AlertDialog>
             <AlertDialogTrigger className="w-full">
@@ -29,8 +33,10 @@ export function DeleteBUtton({ onDelete }: { onDelete: () => void }) {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={onDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                        Delete
+                    <AlertDialogAction asChild className={cn(buttonVariants({ variant: 'destructive' }))}>
+                        <Link href={route('address.destroy', { id: data.id })} method="delete" data={{ id: data.id }}>
+                            Delete
+                        </Link>
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
