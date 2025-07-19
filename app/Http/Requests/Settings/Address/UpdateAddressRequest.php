@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class DeleteAddressRequest extends FormRequest
+class UpdateAddressRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -39,17 +39,23 @@ class DeleteAddressRequest extends FormRequest
                 'integer', 
                 Rule::exists('addresses', 'id')->where(function ($query) {
                     $query->where('user_id', Auth::id());
-                }),
-            ]
+                })
+            ],
+            'country' => ['nullable', 'string', 'max:255'],
+            'state' => ['nullable', 'string', 'max:255'],
+            'city' => ['nullable', 'string', 'max:255'],
+            'street' => ['nullable', 'string', 'max:255'],
+            'zip' => ['nullable', 'string', 'max:30'],
+            'is_active' => ['nullable', 'boolean'],
         ];
     }
 
     /**
-     * Get custom validation error messages for the delete address request
+     * Get custom validation error message for the update address request
      * 
-     * @return array<string, string> Custom error messages for validation rules.
+     * @return array<string, string>
      */
-    public function messages(): array
+    public function message(): array
     {
         return [
             'id.required' => 'Address ID is required.',

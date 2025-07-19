@@ -1,3 +1,4 @@
+import AddressForm from '@/components/organisms/Form/AddressForm';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -8,20 +9,13 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useAddressActions } from '@/hooks/useAddressActions';
 import { AddressType } from '@/types';
-import { router } from '@inertiajs/react';
-import { EllipsisVerticalIcon, PackageCheckIcon, SquarePenIcon } from 'lucide-react';
+import { EllipsisVerticalIcon, PackageCheckIcon } from 'lucide-react';
 import { DeleteButton } from './DeleteButton';
 
-export function Menu({ data: Item }: { data: AddressType }) {
-    const handleSetDefault = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        router.put(route('address.setDefault', { id: Item.id }), {
-            id: Item.id,
-            is_active: true,
-            preserveScroll: true,
-        });
-    };
+export function Menu({ data }: { data: AddressType }) {
+    const { handleSetDefaultAddress } = useAddressActions({ data });
 
     return (
         <DropdownMenu modal={false}>
@@ -34,17 +28,14 @@ export function Menu({ data: Item }: { data: AddressType }) {
                 <DropdownMenuLabel>Action</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={handleSetDefault} disabled={Item.is_active}>
+                    <DropdownMenuItem onClick={handleSetDefaultAddress} disabled={data.is_active}>
                         <PackageCheckIcon />
                         Set as Default
                     </DropdownMenuItem>
 
-                    <DropdownMenuItem>
-                        <SquarePenIcon />
-                        Edit
-                    </DropdownMenuItem>
+                    <AddressForm isFor="edit" data={data} />
 
-                    <DeleteButton data={Item} />
+                    <DeleteButton data={data} />
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>

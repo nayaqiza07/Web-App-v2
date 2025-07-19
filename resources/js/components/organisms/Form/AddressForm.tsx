@@ -3,49 +3,51 @@ import SelectWithLabel from '@/components/molecules/FormField/SelectWithLabel';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { useAddress } from '@/hooks/useAddress';
+import { useAddressActions } from '@/hooks/useAddressActions';
+import { useGeographicData } from '@/hooks/useGeographicData';
 import { AddressType } from '@/types';
-import { useForm } from '@inertiajs/react';
-import { PlusCircleIcon } from 'lucide-react';
-import { FormEventHandler } from 'react';
+import { useForm, usePage } from '@inertiajs/react';
+import { LoaderCircle, PlusCircleIcon, SquarePenIcon } from 'lucide-react';
 
 interface AddressFormProps {
-    addressData: AddressType[];
-    onAddAddress: (newAddress: AddressType) => void;
+    isFor?: 'create' | 'edit';
+    data?: AddressType;
 }
 
-const AddressForm: React.FC<AddressFormProps> = ({ onAddAddress }) => {
-    const { data, setData, reset } = useForm<Required<AddressType>>({
-        id: '',
-        country: '',
-        state: '',
-        city: '',
-        street: '',
-        zip: '',
+const AddressForm: React.FC<AddressFormProps> = ({ isFor, data: _address }) => {
+    const { auth } = usePage().props;
+    const { data, setData, processing, reset } = useForm<Required<AddressType>>({
+        id: isFor === 'create' ? '' : _address?.id,
+        country: isFor === 'create' ? '' : _address?.country,
+        state: isFor === 'create' ? '' : _address?.state,
+        city: isFor === 'create' ? '' : _address?.city,
+        street: isFor === 'create' ? '' : _address?.street,
+        zip: isFor === 'create' ? '' : _address?.zip,
+        is_active: true,
+        user_id: auth.user.id,
     });
 
-    const { countriesList, stateList, cityList } = useAddress({ countryId: data.country, currentStateId: data.state });
+    const { countriesList, stateList, cityList } = useGeographicData({ countryId: data.country, currentStateId: data.state });
 
-    // console.log({ countriesList, stateList, cityList });
-
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-
-        console.log(data);
-        onAddAddress(data);
-        reset();
-    };
+    const { handleCreateAddress, handleUpdateAddress } = useAddressActions({ data, reset });
 
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button effect="shine" className="justify-self-end md:col-span-2">
-                    <PlusCircleIcon />
-                    Create
-                </Button>
+                {isFor === 'create' ? (
+                    <Button effect="shine" className="justify-self-end md:col-span-2">
+                        <PlusCircleIcon />
+                        Create
+                    </Button>
+                ) : (
+                    <span className="text-accent-foreground hover:bg-accent flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm">
+                        <SquarePenIcon className="size-4" />
+                        Edit
+                    </span>
+                )}
             </SheetTrigger>
             <SheetContent className="bg-card">
-                <form onSubmit={submit} className="flex h-full flex-col gap-0">
+                <form onSubmit={isFor === 'create' ? handleCreateAddress : handleUpdateAddress} className="flex h-full flex-col gap-0">
                     <SheetHeader className="border-b">
                         <SheetTitle>Create New Address</SheetTitle>
                         <SheetDescription>Please enter your address</SheetDescription>
@@ -60,6 +62,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onAddAddress }) => {
                             options={countriesList}
                             value={data.country}
                             onValueChange={(value) => setData('country', value)}
+                            disabled={processing}
                         />
                         <SelectWithLabel
                             label="State"
@@ -69,6 +72,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onAddAddress }) => {
                             options={stateList}
                             value={data.state}
                             onValueChange={(value) => setData('state', value)}
+                            disabled={processing}
                         />
                         <SelectWithLabel
                             label="City"
@@ -78,6 +82,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onAddAddress }) => {
                             options={cityList}
                             value={data.city}
                             onValueChange={(value) => setData('city', value)}
+                            disabled={processing}
                         />
                         <InputWithLabel
                             label="Street"
@@ -87,6 +92,7 @@ const AddressForm: React.FC<AddressFormProps> = ({ onAddAddress }) => {
                             type="text"
                             value={data.street}
                             onChange={(e) => setData('street', e.target.value)}
+                            disabled={processing}
                             placeholder="Enter Street"
                             autoComplete="off"
                         />
@@ -95,9 +101,10 @@ const AddressForm: React.FC<AddressFormProps> = ({ onAddAddress }) => {
                             labelFor="zip"
                             id="zip"
                             name="zip"
+                            type="text"
                             value={data.zip}
                             onChange={(e) => setData('zip', e.target.value)}
-                            type="text"
+                            disabled={processing}
                             placeholder="Enter Zip Code"
                             autoComplete="off"
                         />
@@ -134,8 +141,9 @@ const AddressForm: React.FC<AddressFormProps> = ({ onAddAddress }) => {
                             })()}
                         </Card>
                         <SheetClose asChild>
-                            <Button type="submit" effect="shine">
-                                Save
+                            <Button type="submit" effect="shine" disabled={processing}>
+                                {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                {isFor === 'create' ? 'Save' : 'Update'}
                             </Button>
                         </SheetClose>
                     </SheetFooter>

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class DeleteAddressRequest extends FormRequest
+class SetDefaultAddressRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +16,7 @@ class DeleteAddressRequest extends FormRequest
     {
         $addressId = $this->input('id') ?? $this->route('id');
         $userId = Auth::id();
-
+        
         if (!$addressId || !$userId) {
             return false;
         }
@@ -39,15 +39,16 @@ class DeleteAddressRequest extends FormRequest
                 'integer', 
                 Rule::exists('addresses', 'id')->where(function ($query) {
                     $query->where('user_id', Auth::id());
-                }),
-            ]
+                })
+            ],
+            'is_active' => ['nullable', 'boolean'],
         ];
     }
 
     /**
-     * Get custom validation error messages for the delete address request
+     * Get custom validation error messages for the set default address request
      * 
-     * @return array<string, string> Custom error messages for validation rules.
+     * @return array<string, string>
      */
     public function messages(): array
     {
