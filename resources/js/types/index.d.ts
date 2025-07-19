@@ -89,6 +89,7 @@ export interface SelectWithLabelProps {
     value?: string;
     onValueChange?: (value: string) => void;
     placeholder: string;
+    disabled?: boolean;
     // autoComplete: string;
     // className?: string;
 }

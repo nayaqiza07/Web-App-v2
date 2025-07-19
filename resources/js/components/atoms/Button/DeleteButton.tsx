@@ -10,12 +10,14 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { buttonVariants } from '@/components/ui/button';
+import { useAddressActions } from '@/hooks/useAddressActions';
 import { cn } from '@/lib/utils';
 import { AddressType } from '@/types';
-import { Link } from '@inertiajs/react';
 import { Trash2Icon } from 'lucide-react';
 
 export function DeleteButton({ data }: { data: AddressType }) {
+    const { handleDeleteAddress } = useAddressActions({ data });
+
     return (
         <AlertDialog>
             <AlertDialogTrigger className="w-full">
@@ -33,10 +35,8 @@ export function DeleteButton({ data }: { data: AddressType }) {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction asChild className={cn(buttonVariants({ variant: 'destructive' }))}>
-                        <Link href={route('address.destroy', { id: data.id })} method="delete" data={{ id: data.id }}>
-                            Delete
-                        </Link>
+                    <AlertDialogAction onClick={handleDeleteAddress} className={cn(buttonVariants({ variant: 'destructive' }))}>
+                        Delete
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

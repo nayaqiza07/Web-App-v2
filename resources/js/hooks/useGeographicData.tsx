@@ -2,7 +2,7 @@ import { City, Country, State } from '@/types';
 import { useEffect, useState } from 'react';
 import { GetCity, GetCountries, GetState } from 'react-country-state-city';
 
-export const useAddress = ({ countryId, currentStateId }: { countryId: string; currentStateId: string }) => {
+export const useGeographicData = ({ countryId, currentStateId }: { countryId: string; currentStateId: string }) => {
     const [countriesList, setCountriesList] = useState<Country[]>([]);
     const [stateList, setStateList] = useState<State[]>([]);
     const [cityList, setCityList] = useState<City[]>([]);

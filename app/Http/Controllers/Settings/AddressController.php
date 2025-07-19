@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Settings\Address\CreateAddressRequest;
 use App\Http\Requests\Settings\Address\DeleteAddressRequest;
-use App\Http\Requests\Settings\AddressRequest;
+use App\Http\Requests\Settings\Address\SetDefaultAddressRequest;
+use App\Http\Requests\Settings\Address\UpdateAddressRequest;
 use App\Models\Address;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,7 +18,7 @@ use Inertia\Response;
 class AddressController extends Controller
 {
     /**
-     * Display the list of visible blog posts
+     * Display the list of user address
      * 
      * @return \Inertia\Response
      */
@@ -32,12 +34,12 @@ class AddressController extends Controller
     /**
      * Store a new address fot the authenticated user.
      * 
-     * @param AddressRequest $request
+     * @param \App\Http\Requests\Settings\Address\CreateAddressRequest $request
      * @return Illuminate\Http\RedirectResponse
      * 
      * @throws \Throwable
      */
-    public function store(AddressRequest $request): RedirectResponse
+    public function store(CreateAddressRequest $request): RedirectResponse
     {
         DB::beginTransaction();
 
@@ -63,62 +65,83 @@ class AddressController extends Controller
             $address->save();
 
             DB::commit();
-            return redirect()->back()->with('success', 'Address created successfully');
+            return redirect()->back()->with('success', 'The address has been created successfully.');
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            return redirect()->back()->with('error', 'Address created Failed');
+            return redirect()->back()->with('error', $th->getMessage());
+            // return redirect()->back()->with('error', 'Failed to create the address. Please try again.');
         }
     }
     
     /**
      * Set default the user's address
      * 
-     * @param Request $request
-     * @return Illuminate\Http\RedirectResponse
+     * @param \App\Http\Requests\Settings\Address\SetDefaultAddressRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      * 
      * @throws \Throwable
      */
-    public function setDefault(AddressRequest $request): RedirectResponse
+    public function setDefault(SetDefaultAddressRequest $request): RedirectResponse
     {
-        // $request->validate([
-        //     'id' => 'required|integer|exists:addresses,id',
-        //     'is_active' => 'nullable|boolean',
-        // ]);
-
         DB::beginTransaction();
 
         try {
             $userId = $request->user()->id;
+            $addressId = $request->validated()['id'];
 
             if ($request->boolean('is_active')) {
                 Address::where('user_id', $userId)->update(['is_active' => false]);
             }
             
-            $address = Address::where('user_id', $request->user()->id)->findOrFail($request->id);
+            $address = Address::where('user_id', $userId)
+                                ->where('id', $addressId)
+                                ->firstOrFail();
 
             $address->is_active = $request->boolean('is_active');
-            $address->update();
+            $address->save();
 
             DB::commit();
 
-            return redirect()->back()->with('info', 'Address set as default');
+            return redirect()->back()->with('info', 'Address has been set as default.');
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            return redirect()->back()->with('error', 'Failed to set address as default' . $th);
+            // return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('error', 'Failed to set the address as default. Please try again.');
         }
     }
 
     /**
-     * Update a spesific address for the authenticated user
+     * Update a specific address for the authenticated user
+     * 
+     * @param \App\Http\Requests\Settings\Address\UpdateAddressRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * 
+     * @throws \Throwable
      */
+    public function update(UpdateAddressRequest $request): RedirectResponse
+    {
+        dd($request);
+        
+        DB::beginTransaction();
+        try {
+            DB::commit();
+
+            return redirect()->back()->with('info', 'Address has been updated');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('error', 'Failed to update the address. Please try again.');
+        }
+    }
 
     /**
      * Delete a specific address for the authenticated user
      * 
-     * @param DeleteAddressRequest $request
-     * @return Illuminate\Http\RedirectResponse
+     * @param \App\Http\Requests\Settings\Address\DeleteAddressRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      * 
      * @throws \Throwable
      */
@@ -127,16 +150,23 @@ class AddressController extends Controller
         DB::beginTransaction();
 
         try {
-            $address = Address::where('user_id', $request->user()->id)->findOrFail($request->id);
+            $userId = $request->user()->id;
+            $addressId = $request->validated()['id'];
+
+            $address = Address::where('user_id', $userId)
+                                ->where('id', $addressId)
+                                ->firstOrFail();
+
             $address->delete();
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'Address deleted successfully');
+            return redirect()->back()->with('success', 'The address has been deleted successfully.');
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            return redirect()->back()->with('error', 'Address deleted failed');
+            // return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('error', 'Failed to delete the address. Please try again.');
         }
     }
 }
