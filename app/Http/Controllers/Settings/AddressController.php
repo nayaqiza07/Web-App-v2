@@ -9,9 +9,7 @@ use App\Http\Requests\Settings\Address\SetDefaultAddressRequest;
 use App\Http\Requests\Settings\Address\UpdateAddressRequest;
 use App\Models\Address;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -65,6 +63,7 @@ class AddressController extends Controller
             $address->save();
 
             DB::commit();
+
             return redirect()->back()->with('success', 'The address has been created successfully.');
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -122,17 +121,31 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request): RedirectResponse
     {
-        dd($request);
-        
         DB::beginTransaction();
+
         try {
+            $userId = $request->user()->id;
+            $addressId = $request->validated()['id'];
+
+            $address = Address::where('id', $addressId)
+                                ->where('user_id', $userId)
+                                ->firstOrFail();
+
+            $address->country = $request->country;
+            $address->state = $request->state;
+            $address->city = $request->city;
+            $address->street = $request->street;
+            $address->zip = $request->zip;
+
+            $address->save();
+
             DB::commit();
 
-            return redirect()->back()->with('info', 'Address has been updated');
+            return redirect()->back()->with('info', 'The address has been updated successfully');
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            return redirect()->back()->with('error', $th->getMessage());
+            // return redirect()->back()->with('error', $th->getMessage());
             return redirect()->back()->with('error', 'Failed to update the address. Please try again.');
         }
     }

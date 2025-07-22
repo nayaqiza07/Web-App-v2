@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('settings/address')->name('address.')->controller(AddressController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/', 'store')->name('store');
-        Route::put('/{id}', 'setDefault')->name('setDefault');
+        Route::put('/{id}/default', 'setDefault')->name('setDefault');
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'destroy')->name('destroy');
     });

@@ -11,7 +11,7 @@ interface ToastSonnerProps {
 
 const ToastSonner: React.FC<ToastSonnerProps> = ({ toastId, variant, title, description }) => {
     return (
-        <div className="bg-popover max-w-[400px] min-w-[350px] rounded-md border p-4 shadow-lg">
+        <div className="bg-popover max-w-[400px] min-w-[355px] rounded-md border p-4 shadow-lg">
             <div className="flex gap-2">
                 <div className="flex grow gap-3">
                     {variant === 'process' && <LoaderCircle className="mt-0.5 h-4 w-4 shrink-0 animate-spin" />}
