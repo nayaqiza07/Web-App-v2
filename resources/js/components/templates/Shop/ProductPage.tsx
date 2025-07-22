@@ -1,9 +1,9 @@
 import { Paginate } from '@/components/atoms/Pagination/Paginate';
-import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import ProductCard from '@/components/organisms/Card/ProductCard';
 import FilterDrawer from '@/components/organisms/Drawer/FilterDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import Sidebar from '@/components/organisms/Sidebar/Sidebar';
+import { EachUtils } from '@/lib/EachUtils';
 import { useCategoryStore } from '@/stores/useCategoryStore';
 import { useLoadingStore } from '@/stores/useLoadingStore';
 import { useProductStore } from '@/stores/useProductStore';
@@ -58,18 +58,14 @@ const ProductPage: React.FC = () => {
                 {/* Product List */}
                 <div className="flex w-full flex-col justify-between gap-10">
                     <div className="grid flex-1 grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-                        {products.data.length > 0 ? (
-                            products.data.map((data) => <ProductCard key={data.id} data={data} />)
-                        ) : (
-                            <EmptyState
-                                icon={<ArmchairIcon size={50} />}
-                                title="No Products Found"
-                                desc="Your search did not match any Products"
-                                btnText="Go to Products"
-                                btnLink={route('products.index')}
-                                className="col-span-full"
-                            />
-                        )}
+                        <EachUtils
+                            emptyIcon={ArmchairIcon}
+                            emptyTitle="No Products Found"
+                            emptyDesc="Your search did not match any Products"
+                            className="col-span-full"
+                            of={products.data}
+                            render={(_product) => <ProductCard key={_product.id} data={_product} />}
+                        />
                     </div>
                     {/* Product List */}
 

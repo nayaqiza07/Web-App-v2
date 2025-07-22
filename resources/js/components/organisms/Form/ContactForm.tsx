@@ -28,7 +28,7 @@ const ContactForm = () => {
     };
 
     return (
-        <div className="h-fit md:p-4">
+        <div className="h-fit min-w-0 md:p-4">
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1, ease: easeOut }}>
                     <InputWithLabel
@@ -82,6 +82,7 @@ const ContactForm = () => {
                         autoComplete="off"
                         value={data.message}
                         onChange={(e) => setData('message', e.target.value)}
+                        className="h-20 overflow-y-auto"
                     />
                 </motion.div>
 

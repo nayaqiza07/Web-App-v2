@@ -30,12 +30,7 @@ const CartSheet = () => {
                 </SheetHeader>
 
                 {items.length === 0 ? (
-                    <EmptyState
-                        icon={<ShoppingBag size={50} />}
-                        title="Your Cart Is Empty"
-                        btnText="Continue Shopping"
-                        btnLink={route('products.index')}
-                    />
+                    <EmptyState icon={ShoppingBag} title="Your Cart Is Empty" btnText="Continue Shopping" btnLink={route('products.index')} />
                 ) : (
                     <>
                         <div className="flex items-center justify-between px-4 pt-2 text-xs">

@@ -1,13 +1,13 @@
 import InputWithLabel from '@/components/molecules/FormField/InputWithLabel';
 import SelectWithLabel from '@/components/molecules/FormField/SelectWithLabel';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Textarea } from '@/components/ui/textarea';
 import { useAddressActions } from '@/hooks/useAddressActions';
 import { useGeographicData } from '@/hooks/useGeographicData';
-import { AddressType } from '@/types';
+import { AddressType, SharedData } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
-import { LoaderCircle, PlusCircleIcon, SquarePenIcon } from 'lucide-react';
+import { EditIcon, LoaderCircle, PlusCircleIcon, PlusIcon, SquarePenIcon } from 'lucide-react';
 
 interface AddressFormProps {
     isFor?: 'create' | 'edit';
@@ -15,21 +15,30 @@ interface AddressFormProps {
 }
 
 const AddressForm: React.FC<AddressFormProps> = ({ isFor, data: _address }) => {
-    const { auth } = usePage().props;
+    const { auth } = usePage<SharedData>().props;
+
     const { data, setData, processing, reset } = useForm<Required<AddressType>>({
-        id: isFor === 'create' ? '' : _address?.id,
-        country: isFor === 'create' ? '' : _address?.country,
-        state: isFor === 'create' ? '' : _address?.state,
-        city: isFor === 'create' ? '' : _address?.city,
-        street: isFor === 'create' ? '' : _address?.street,
-        zip: isFor === 'create' ? '' : _address?.zip,
+        id: isFor === 'create' ? 0 : (_address?.id ?? 0),
+        country: isFor === 'create' ? '' : (_address?.country ?? ''),
+        // country: isFor === 'create' ? '' : (_address?.country ?? ''),
+        state: isFor === 'create' ? '' : (_address?.state ?? ''),
+        city: isFor === 'create' ? '' : (_address?.city ?? ''),
+        street: isFor === 'create' ? '' : (_address?.street ?? ''),
+        zip: isFor === 'create' ? '' : (_address?.zip ?? ''),
         is_active: true,
         user_id: auth.user.id,
     });
 
-    const { countriesList, stateList, cityList } = useGeographicData({ countryId: data.country, currentStateId: data.state });
+    const { countriesList, stateList, cityList, getNameById } = useGeographicData({
+        countryId: data.country,
+        currentStateId: data.state,
+    });
 
     const { handleCreateAddress, handleUpdateAddress } = useAddressActions({ data, reset });
+
+    const country_name = getNameById(countriesList, data.country);
+    const state_name = getNameById(stateList, data.state);
+    const city_name = getNameById(cityList, data.city);
 
     return (
         <Sheet>
@@ -111,39 +120,26 @@ const AddressForm: React.FC<AddressFormProps> = ({ isFor, data: _address }) => {
                     </div>
 
                     <SheetFooter className="border-t">
-                        <Card className="h-35 gap-2 border p-4 text-xs">
-                            <h3>Preview:</h3>
-                            {(() => {
-                                // const orderedKeys = ['street', 'city', 'state', 'country', 'zip'];
-                                // const values = orderedKeys
-                                //     .map((key) => data[key as keyof typeof data]) // ambil berdasarkan urutan
-                                //     .filter((val) => val.trim() !== '');
+                        <h6 className="text-xs">Preview:</h6>
+                        <Textarea
+                            placeholder="Your address preview will appear here"
+                            readOnly
+                            className="border-border focus-visible:border-border h-30 resize-none overflow-y-auto focus-visible:ring-transparent"
+                            value={[data.street, city_name, state_name, country_name, data.zip].filter(Boolean).join(', ')}
+                        />
 
-                                // return values.length > 0 && values.join(', ');
-
-                                const getNameById = (id: string, list: { id: number; name: string }[]) => {
-                                    return list.find((item) => item.id.toString() === id)?.name || '';
-                                };
-
-                                const orderedKeys = ['street', 'city', 'state', 'country', 'zip'];
-                                const values = orderedKeys
-                                    .map((key) => {
-                                        const val = data[key as keyof typeof data];
-
-                                        if (key === 'country') return getNameById(val, countriesList);
-                                        if (key === 'state') return getNameById(val, stateList);
-                                        if (key === 'city') return getNameById(val, cityList);
-                                        return val;
-                                    })
-                                    .filter((val) => val.trim() !== '')
-                                    .join(', ');
-                                return values;
-                            })()}
-                        </Card>
                         <SheetClose asChild>
                             <Button type="submit" effect="shine" disabled={processing}>
                                 {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                                {isFor === 'create' ? 'Save' : 'Update'}
+                                {isFor === 'create' ? (
+                                    <>
+                                        <PlusIcon /> Save
+                                    </>
+                                ) : (
+                                    <>
+                                        <EditIcon /> Update
+                                    </>
+                                )}
                             </Button>
                         </SheetClose>
                     </SheetFooter>

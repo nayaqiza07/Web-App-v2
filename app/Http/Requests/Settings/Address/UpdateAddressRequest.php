@@ -46,7 +46,6 @@ class UpdateAddressRequest extends FormRequest
             'city' => ['nullable', 'string', 'max:255'],
             'street' => ['nullable', 'string', 'max:255'],
             'zip' => ['nullable', 'string', 'max:30'],
-            'is_active' => ['nullable', 'boolean'],
         ];
     }
 

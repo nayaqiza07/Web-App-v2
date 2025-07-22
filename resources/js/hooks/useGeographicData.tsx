@@ -7,9 +7,17 @@ export const useGeographicData = ({ countryId, currentStateId }: { countryId: st
     const [stateList, setStateList] = useState<State[]>([]);
     const [cityList, setCityList] = useState<City[]>([]);
 
+    const getNameById = (list: (Country | State | City)[], id: string) => {
+        return list.find((item) => String(item.id) === String(id))?.name || '';
+    };
+
+    const getIdByName = (list: (Country | State | City)[], name: string) => {
+        return list.find((item) => String(item.name) === String(name))?.id.toString() ?? '';
+    };
+
     useEffect(() => {
         GetCountries().then((result) => {
-            setCountriesList(result);
+            setCountriesList(result as Country[]);
         });
     }, []);
 
@@ -29,5 +37,5 @@ export const useGeographicData = ({ countryId, currentStateId }: { countryId: st
         }
     }, [countryId, currentStateId]);
 
-    return { countriesList, stateList, cityList };
+    return { countriesList, stateList, cityList, getNameById, getIdByName };
 };
