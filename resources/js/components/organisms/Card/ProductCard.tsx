@@ -68,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                             <img
                                 src={data.thumbnail}
                                 alt={`Foto Produk ${data.name}`}
-                                // loading="lazy"
+                                loading="lazy"
                                 className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"
                             />
 
@@ -102,17 +102,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                                 className="flex w-full items-end justify-between text-xs font-semibold"
                                 viewport={{ once: true }}
                             >
-                                {/* {data.discount_percentage ? (
-                                    <Badge variant="destructiveTransparent" className="border-destructive/10">
-                                        <TicketPercentIcon /> {priceFormat(data.price)}
-                                    </Badge>
-                                ) : (
-                                    <span>{priceFormat(data.price)}</span>
-                                    )} */}
                                 {!data.discount_percentage && <span>{priceFormat(data.price)}</span>}
-                                {/* <span className="text-muted-foreground text-[9px] line-through">
-                                    {data.old_price && data.old_price > 0 && priceFormat(data.old_price)}
-                                </span> */}
                             </motion.h1>
                         </CardFooter>
                     </Card>

@@ -3,24 +3,10 @@ import BlogCard from '@/components/organisms/Card/BlogCard';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { EachUtils } from '@/lib/EachUtils';
 import { useBlogStore } from '@/stores/useBlogStore';
-import { useLoadingStore } from '@/stores/useLoadingStore';
-import { usePage } from '@inertiajs/react';
 import { NewspaperIcon } from 'lucide-react';
-import SkeletonBlogPage from '../SkeletonPage/SkeletonBlogPage';
 
 const BlogListPage = () => {
-    const { isLoading } = useLoadingStore();
     const { blogs } = useBlogStore();
-
-    const { component } = usePage();
-
-    const thisComponentName = 'blog/BlogList';
-
-    if (isLoading && component === thisComponentName) {
-        return <SkeletonBlogPage />;
-    }
-
-    // console.log('Blog Page render:', component, isLoading);
 
     return (
         <>

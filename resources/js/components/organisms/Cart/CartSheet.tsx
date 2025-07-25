@@ -7,10 +7,12 @@ import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetT
 import { cn, priceFormat } from '@/lib/utils';
 import { useCartStore } from '@/stores/useCartStore';
 import { Link } from '@inertiajs/react';
-import { ShoppingBag, ShoppingCart, ShoppingCartIcon } from 'lucide-react';
+import { ShoppingBagIcon, ShoppingCart, ShoppingCartIcon } from 'lucide-react';
+import { useState } from 'react';
 
 const CartSheet = () => {
     const { items, totalItems, totalPrice, removeItem, clearCart } = useCartStore();
+    const [openItemId, setOpenItemId] = useState<number | null>(null);
 
     return (
         <Sheet>
@@ -30,7 +32,13 @@ const CartSheet = () => {
                 </SheetHeader>
 
                 {items.length === 0 ? (
-                    <EmptyState icon={ShoppingBag} title="Your Cart Is Empty" btnText="Continue Shopping" btnLink={route('products.index')} />
+                    <EmptyState
+                        icon={ShoppingBagIcon}
+                        iconSize={50}
+                        title="Your Cart Is Empty"
+                        btnText="Continue Shopping"
+                        btnLink={route('products.index')}
+                    />
                 ) : (
                     <>
                         <div className="flex items-center justify-between px-4 pt-2 text-xs">
@@ -44,7 +52,13 @@ const CartSheet = () => {
                             <ScrollArea className="h-full px-4 py-2">
                                 <div className="flex flex-col gap-2">
                                     {items.map((data) => (
-                                        <CartItem key={data.id} data={data} onDelete={removeItem} />
+                                        <CartItem
+                                            key={data.id}
+                                            data={data}
+                                            onDelete={removeItem}
+                                            openItemId={openItemId}
+                                            setOpenItemId={setOpenItemId}
+                                        />
                                     ))}
                                 </div>
                             </ScrollArea>

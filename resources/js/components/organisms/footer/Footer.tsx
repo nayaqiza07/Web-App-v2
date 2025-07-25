@@ -15,8 +15,8 @@ const Footer = () => {
                 </div>
 
                 <div className="flex flex-col gap-5 md:flex-row md:justify-between">
-                    <Link href={route('home')}>
-                        <h1 className="hidden text-base font-bold lg:block">Horestco</h1>
+                    <Link href={route('home')} className="hidden text-base font-bold lg:block">
+                        Horestco
                     </Link>
                     <div className="flex justify-between gap-3">
                         <div className="flex flex-col gap-3">

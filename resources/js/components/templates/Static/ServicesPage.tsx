@@ -1,18 +1,10 @@
 import TextContent from '@/components/molecules/TextContent/TextContent';
 import Activity from '@/components/organisms/Activity/Activity';
 import HeroSection from '@/components/organisms/Section/HeroSection';
-import { useLoadingStore } from '@/stores/useLoadingStore';
 import { ArrowRightLeftIcon, ShoppingBagIcon, TruckIcon } from 'lucide-react';
-import SkeletonServicesPage from '../SkeletonPage/SkeletonServicesPage';
 
 const ServicesPage = () => {
-    const { isLoading } = useLoadingStore();
-
-    if (isLoading) {
-        return <SkeletonServicesPage />;
-    }
-
-    const dataContent = [
+    const cardContentData = [
         {
             icon: TruckIcon,
             title: 'Fast Shipping',
@@ -52,8 +44,8 @@ const ServicesPage = () => {
             </HeroSection>
 
             <section className="my-20 grid gap-15 md:grid-cols-2 lg:grid-cols-3">
-                {dataContent.map((data, index) => (
-                    <TextContent key={index} icon={data.icon} title={data.title} description={data.description} index={index} />
+                {cardContentData.map((_content, index) => (
+                    <TextContent key={index} icon={_content.icon} title={_content.title} description={_content.description} index={index} />
                 ))}
             </section>
 

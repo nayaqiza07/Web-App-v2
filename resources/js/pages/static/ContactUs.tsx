@@ -1,8 +1,9 @@
+import SkeletonContactUsPage from '@/components/templates/SkeletonPage/SkeletonContactUsPage';
 import ContactUsPage from '@/components/templates/Static/ContactUsPage';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useSupportStore } from '@/stores/useSupportStore';
 import { Faq } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Deferred, Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface ContactUsProps {
@@ -14,10 +15,8 @@ const ContactUs: React.FC<ContactUsProps> = (props) => {
     const { setFaqs } = useSupportStore();
 
     useEffect(() => {
-        try {
+        if (FAQS) {
             setFaqs(FAQS);
-        } catch (error) {
-            console.log(error);
         }
     }, [FAQS, setFaqs]);
 
@@ -26,7 +25,9 @@ const ContactUs: React.FC<ContactUsProps> = (props) => {
             <Head title="Contact Us" />
 
             <MainLayout>
-                <ContactUsPage />
+                <Deferred data={'FAQS'} fallback={<SkeletonContactUsPage />}>
+                    <ContactUsPage />
+                </Deferred>
             </MainLayout>
         </>
     );

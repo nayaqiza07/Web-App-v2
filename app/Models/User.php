@@ -15,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasRoles, HasFactory, Notifiable;
+    use HasFactory, HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -31,7 +31,7 @@ class User extends Authenticatable implements FilamentUser
 
     /**
      * The relationships tha should always be laoded with the model.
-     * 
+     *
      * @var array<int, string>
      */
     protected $with = ['roles'];
@@ -61,19 +61,17 @@ class User extends Authenticatable implements FilamentUser
 
     /**
      * The user that can access the admin panel.
-     *
-     * @return bool
      */
     public function canAccessPanel(Panel $panel): bool
     {
         $role = [
             'Super Admin',
-            'Admin'
+            'Admin',
         ];
 
         if ($panel->getId() === 'admin' && $this->hasRole($role)) {
             return true;
-        } 
+        }
 
         return false;
     }
@@ -81,8 +79,6 @@ class User extends Authenticatable implements FilamentUser
     /**
      * Relation with Address
      * 1 User hasMany Address
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function addresses(): HasMany
     {

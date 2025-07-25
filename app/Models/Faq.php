@@ -21,7 +21,7 @@ class Faq extends Model
         'question',
         'answer',
         'is_visible',
-        'published_at'
+        'published_at',
     ];
 
     /**
@@ -30,14 +30,11 @@ class Faq extends Model
      * @return array<string, string>
      */
     protected $casts = [
-        'is_visible' => 'boolean'
+        'is_visible' => 'boolean',
     ];
 
-    /** 
-     * Scope to show visible faq 
-     * 
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+    /**
+     * Scope to show visible faq
      */
     public function scopeFilter(Builder $query): Builder
     {

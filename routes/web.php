@@ -18,12 +18,12 @@ Route::get('/', function () {
     
     return Inertia::render('home/Home', [
         'PRODUCTS' => [
-            'data' => $products,
+            'data' => Inertia::defer(fn () => $products),
             'total' => Product::filter()->count()
         ],
-        'CATEGORIES' => $categories,
+        'CATEGORIES' => Inertia::defer(fn () => $categories),
         'BLOGS' => [
-            'data' => $blogs,
+            'data' => Inertia::defer(fn () => $blogs),
             'total' => Blog::filter()->count()
         ]
     ]);

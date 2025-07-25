@@ -3,18 +3,16 @@ import CornerPlusBox from '@/components/atoms/Box/CornerPlusBox';
 import FaqAccordion from '@/components/organisms/Accordion/FaqAccordion';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Button } from '@/components/ui/button';
-import { useLoadingStore } from '@/stores/useLoadingStore';
 import { useSupportStore } from '@/stores/useSupportStore';
 import { Link } from '@inertiajs/react';
-import SkeletonSupportPage from '../SkeletonPage/SkeletonSupportPage';
 
 const SupportPage = () => {
-    const { isLoading } = useLoadingStore();
+    // const { isLoading } = useLoadingStore();
     const { faqs } = useSupportStore();
 
-    if (isLoading) {
-        return <SkeletonSupportPage />;
-    }
+    // if (isLoading) {
+    //     return <SkeletonSupportPage />;
+    // }
 
     return (
         <>

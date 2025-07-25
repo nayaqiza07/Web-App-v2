@@ -1,12 +1,13 @@
 import BlogListPage from '@/components/templates/Blog/BlogListPage';
+import SkeletonBlogPage from '@/components/templates/SkeletonPage/SkeletonBlogPage';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useBlogStore } from '@/stores/useBlogStore';
-import { Blog } from '@/types';
+import { BlogList as BlogListType } from '@/types';
 import { Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface BlogListProps {
-    BLOGS: Blog[];
+    BLOGS: BlogListType;
 }
 
 const BlogList: React.FC<BlogListProps> = (props) => {
@@ -15,10 +16,8 @@ const BlogList: React.FC<BlogListProps> = (props) => {
     const { setBlogs } = useBlogStore();
 
     useEffect(() => {
-        try {
+        if (BLOGS) {
             setBlogs(BLOGS);
-        } catch (error) {
-            console.log(error);
         }
     }, [BLOGS, setBlogs]);
 
@@ -26,9 +25,7 @@ const BlogList: React.FC<BlogListProps> = (props) => {
         <>
             <Head title="Blogs" />
 
-            <MainLayout>
-                <BlogListPage />
-            </MainLayout>
+            <MainLayout>{!BLOGS ? <SkeletonBlogPage /> : <BlogListPage />}</MainLayout>
         </>
     );
 };

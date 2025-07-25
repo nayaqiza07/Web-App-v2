@@ -5,30 +5,12 @@ import HeroSection from '@/components/organisms/Section/HeroSection';
 import Sidebar from '@/components/organisms/Sidebar/Sidebar';
 import { EachUtils } from '@/lib/EachUtils';
 import { useCategoryStore } from '@/stores/useCategoryStore';
-import { useLoadingStore } from '@/stores/useLoadingStore';
 import { useProductStore } from '@/stores/useProductStore';
-import { usePage } from '@inertiajs/react';
 import { ArmchairIcon } from 'lucide-react';
-import SkeletonProductPage from '../SkeletonPage/SkeletonProductPage';
 
 const ProductPage: React.FC = () => {
-    const { products, error } = useProductStore();
+    const { products } = useProductStore();
     const { selectedCategory } = useCategoryStore();
-    const { isLoading } = useLoadingStore();
-
-    const { component } = usePage();
-
-    const thisComponentName = 'shop/ProductList';
-
-    if (error) {
-        return <div className="text-red-500">{error}</div>;
-    }
-
-    if ((isLoading && component === thisComponentName) || !products || !products.data) {
-        return <SkeletonProductPage />;
-    }
-
-    // console.log('ProductPage render:', component, isLoading);
 
     return (
         <>
@@ -45,7 +27,6 @@ const ProductPage: React.FC = () => {
             >
                 <h1 className="text-4xl font-bold">{!selectedCategory ? 'Shop' : selectedCategory.name}</h1>
             </HeroSection>
-            {/* <SkeletonHeroSection variant="withBreadcrumb" /> */}
 
             <FilterDrawer />
             {/* Hero Section */}
@@ -60,6 +41,7 @@ const ProductPage: React.FC = () => {
                     <div className="grid flex-1 grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
                         <EachUtils
                             emptyIcon={ArmchairIcon}
+                            emptyIconSize={50}
                             emptyTitle="No Products Found"
                             emptyDesc="Your search did not match any Products"
                             className="col-span-full"

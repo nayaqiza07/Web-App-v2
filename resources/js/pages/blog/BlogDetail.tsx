@@ -1,12 +1,13 @@
 import BlogDetailPage from '@/components/templates/Blog/BlogDetailPage';
+import SkeletonDetailBlog from '@/components/templates/SkeletonPage/SkeletonDetailBlog';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useBlogStore } from '@/stores/useBlogStore';
-import { Blog } from '@/types';
-import { Head } from '@inertiajs/react';
+import { BlogData } from '@/types';
+import { Deferred, Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface BlogDetailProps {
-    BLOG: Blog;
+    BLOG: BlogData;
 }
 
 const BlogDetail: React.FC<BlogDetailProps> = (props) => {
@@ -15,11 +16,7 @@ const BlogDetail: React.FC<BlogDetailProps> = (props) => {
     const { setSelectedBlog } = useBlogStore();
 
     useEffect(() => {
-        try {
-            setSelectedBlog(BLOG);
-        } catch (error) {
-            console.log(error);
-        }
+        if (BLOG) setSelectedBlog(BLOG);
     }, [BLOG, setSelectedBlog]);
 
     return (
@@ -27,7 +24,9 @@ const BlogDetail: React.FC<BlogDetailProps> = (props) => {
             <Head title="Blog Detail" />
 
             <MainLayout>
-                <BlogDetailPage />
+                <Deferred data={'BLOG'} fallback={<SkeletonDetailBlog />}>
+                    <BlogDetailPage />
+                </Deferred>
             </MainLayout>
         </>
     );

@@ -3,17 +3,15 @@ import FaqAccordion from '@/components/organisms/Accordion/FaqAccordion';
 import ContactForm from '@/components/organisms/Form/ContactForm';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Separator } from '@/components/ui/separator';
-import { useLoadingStore } from '@/stores/useLoadingStore';
 import { useSupportStore } from '@/stores/useSupportStore';
-import SkeletonContactUsPage from '../SkeletonPage/SkeletonContactUsPage';
 
 const ContactUsPage = () => {
-    const { isLoading } = useLoadingStore();
+    // const { isLoading } = useLoadingStore();
     const { faqs } = useSupportStore();
 
-    if (isLoading) {
-        return <SkeletonContactUsPage />;
-    }
+    // if (isLoading) {
+    //     return <SkeletonContactUsPage />;
+    // }
 
     return (
         <>

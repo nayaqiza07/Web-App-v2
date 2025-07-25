@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
-use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -11,9 +10,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class RoleRelationManager extends RelationManager
+class AddressRelationManager extends RelationManager
 {
-    protected static string $relationship = 'roles';
+    protected static string $relationship = 'addresses';
 
     // public function form(Form $form): Form
     // {
@@ -30,13 +29,16 @@ class RoleRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Role')
-                    ->badge( )
-                    ->color(fn ($state) => match ($state) {
-                        'Customer' => 'info',
-                        'Super Admin', 'Admin' => '',
-                    }),
+                Tables\Columns\TextColumn::make('country'),
+                Tables\Columns\TextColumn::make('state'),
+                Tables\Columns\TextColumn::make('city'),
+                Tables\Columns\TextColumn::make('is_active')
+                    ->label('Active')
+                    ->badge()
+                    ->color(fn (bool $state): string => $state ? 'success' : 'danger')
+                    ->formatStateUsing(fn (bool $state): string => $state ? '• Active •' : '• Inactive •')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //
