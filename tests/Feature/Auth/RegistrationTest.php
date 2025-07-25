@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Role;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 test('registration screen can be rendered', function () {
     $response = $this->get('/register');
