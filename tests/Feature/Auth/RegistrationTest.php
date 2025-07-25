@@ -14,6 +14,8 @@ test('new users can register', function () {
         'password' => 'password',
         'password_confirmation' => 'password',
     ]);
+    
+    $this->assignRole('Customer');
 
     $this->assertAuthenticated();
     $response->assertRedirect(route('dashboard', absolute: false));
