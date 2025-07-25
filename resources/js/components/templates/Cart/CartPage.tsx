@@ -3,15 +3,13 @@ import SummaryCartCard from '@/components/organisms/Card/SummaryCartCard';
 import SummaryCartDrawer from '@/components/organisms/Drawer/SummaryCartDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Separator } from '@/components/ui/separator';
-import { useLoadingStore } from '@/stores/useLoadingStore';
-import SkeletonCartPage from '../SkeletonPage/SkeletonCartPage';
 
 const CartPage = () => {
-    const { isLoading } = useLoadingStore();
+    // const { isLoading } = useLoadingStore();
 
-    if (isLoading) {
-        return <SkeletonCartPage />;
-    }
+    // if (isLoading) {
+    //     return <SkeletonCartPage />;
+    // }
 
     return (
         <>

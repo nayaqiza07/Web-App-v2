@@ -7,21 +7,23 @@ import { CartItem as Item } from '@/types';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { ArrowLeftIcon, Trash2Icon } from 'lucide-react';
-import React, { useState } from 'react';
+import React from 'react';
 import QuantityButton from '../Button/QuantityButton';
 
 interface CartItemProps {
     data: Item;
     onDelete: (id: number) => void;
+    openItemId: number | null;
+    setOpenItemId: (id: number | null) => void;
 }
 
-const CartItem: React.FC<CartItemProps> = ({ data, onDelete }) => {
-    const [isActive, setIsActive] = useState<boolean>(false);
-
+const CartItem: React.FC<CartItemProps> = ({ data, onDelete, openItemId, setOpenItemId }) => {
     const { totalPricePerProduct } = useCartStore();
 
+    const isOpen = openItemId === data.id;
+
     const handleToggle = () => {
-        setIsActive((prev) => !prev);
+        setOpenItemId(isOpen ? null : data.id);
     };
 
     return (
@@ -46,9 +48,10 @@ const CartItem: React.FC<CartItemProps> = ({ data, onDelete }) => {
 
             {/* Card Utama */}
             <motion.div
+                layout
                 className="relative z-10 h-fit w-full text-xs"
                 initial={{ x: 0 }}
-                animate={{ x: isActive ? -48 : 0 }}
+                animate={{ x: !isOpen ? 0 : -48 }}
                 transition={{ type: 'tween', duration: 0.3 }}
             >
                 <Card className="gap-0 rounded-md p-0 shadow-none">
@@ -57,16 +60,19 @@ const CartItem: React.FC<CartItemProps> = ({ data, onDelete }) => {
                             <img src={data.thumbnail} alt="cart-image-product" className="h-[44px] w-[60px] rounded" />
                             <div className="flex w-full justify-between">
                                 <div className="flex flex-col">
-                                    <Link href={route('products.show', { slug: data.slug })}>
-                                        <h2 className="underline-offset-2 hover:underline">{data.name}</h2>
+                                    <Link href={route('products.show', { slug: data.slug })} className="underline-offset-2 hover:underline">
+                                        {data.name}
                                     </Link>
-                                    <Link href={route('products.showByCategory', { slug: data.category.slug })}>
-                                        <p className="text-muted-foreground underline-offset-2 hover:underline">{data.category.name}</p>
+                                    <Link
+                                        href={route('products.showByCategory', { slug: data.category.slug })}
+                                        className="text-muted-foreground underline-offset-2 hover:underline"
+                                    >
+                                        {data.category.name}
                                     </Link>
                                     <p className="text-muted-foreground">{priceFormat(data.price)}</p>
                                 </div>
                                 <Button variant="ghost" size="icon" onClick={handleToggle} className="size-6">
-                                    <ArrowLeftIcon className={`${isActive && 'rotate-180'} transition-all duration-200`} />
+                                    <ArrowLeftIcon className={`${isOpen && 'rotate-180'} transition-all duration-200`} />
                                 </Button>
                             </div>
                         </div>

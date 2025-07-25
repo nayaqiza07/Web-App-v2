@@ -17,24 +17,21 @@ class AddressController extends Controller
 {
     /**
      * Display the list of user address
-     * 
-     * @return \Inertia\Response
      */
     public function index(): Response
     {
         $address = Address::filter()->get();
 
         return Inertia::render('settings/address', [
-            'ADDRESS' => $address
+            'ADDRESS' => $address,
         ]);
     }
 
     /**
      * Store a new address fot the authenticated user.
-     * 
-     * @param \App\Http\Requests\Settings\Address\CreateAddressRequest $request
+     *
      * @return Illuminate\Http\RedirectResponse
-     * 
+     *
      * @throws \Throwable
      */
     public function store(CreateAddressRequest $request): RedirectResponse
@@ -48,7 +45,7 @@ class AddressController extends Controller
         }
 
         try {
-            $address = new Address();
+            $address = new Address;
 
             $address->country = $request->country;
             $address->state = $request->state;
@@ -72,13 +69,11 @@ class AddressController extends Controller
             // return redirect()->back()->with('error', 'Failed to create the address. Please try again.');
         }
     }
-    
+
     /**
      * Set default the user's address
-     * 
-     * @param \App\Http\Requests\Settings\Address\SetDefaultAddressRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * 
+     *
+     *
      * @throws \Throwable
      */
     public function setDefault(SetDefaultAddressRequest $request): RedirectResponse
@@ -92,10 +87,10 @@ class AddressController extends Controller
             if ($request->boolean('is_active')) {
                 Address::where('user_id', $userId)->update(['is_active' => false]);
             }
-            
+
             $address = Address::where('user_id', $userId)
-                                ->where('id', $addressId)
-                                ->firstOrFail();
+                ->where('id', $addressId)
+                ->firstOrFail();
 
             $address->is_active = $request->boolean('is_active');
             $address->save();
@@ -113,10 +108,8 @@ class AddressController extends Controller
 
     /**
      * Update a specific address for the authenticated user
-     * 
-     * @param \App\Http\Requests\Settings\Address\UpdateAddressRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * 
+     *
+     *
      * @throws \Throwable
      */
     public function update(UpdateAddressRequest $request): RedirectResponse
@@ -128,8 +121,8 @@ class AddressController extends Controller
             $addressId = $request->validated()['id'];
 
             $address = Address::where('id', $addressId)
-                                ->where('user_id', $userId)
-                                ->firstOrFail();
+                ->where('user_id', $userId)
+                ->firstOrFail();
 
             $address->country = $request->country;
             $address->state = $request->state;
@@ -152,10 +145,8 @@ class AddressController extends Controller
 
     /**
      * Delete a specific address for the authenticated user
-     * 
-     * @param \App\Http\Requests\Settings\Address\DeleteAddressRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     * 
+     *
+     *
      * @throws \Throwable
      */
     public function destroy(DeleteAddressRequest $request): RedirectResponse
@@ -167,8 +158,8 @@ class AddressController extends Controller
             $addressId = $request->validated()['id'];
 
             $address = Address::where('user_id', $userId)
-                                ->where('id', $addressId)
-                                ->firstOrFail();
+                ->where('id', $addressId)
+                ->firstOrFail();
 
             $address->delete();
 

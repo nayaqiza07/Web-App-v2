@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Blog extends Model
 {
     use HasFactory, SoftDeletes;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,26 +36,19 @@ class Blog extends Model
      */
     protected $casts = [
         /** Status */
-        'is_visible' => 'boolean'
+        'is_visible' => 'boolean',
     ];
 
     /**
      * Scope to show visible blog
-     * 
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFilter (Builder $query): Builder
+    public function scopeFilter(Builder $query): Builder
     {
         return $query->where('is_visible', true);
     }
 
     /**
      * Scope to show visible blog by slug
-     * 
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $slug
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSlug(Builder $query, string $slug): Builder
     {

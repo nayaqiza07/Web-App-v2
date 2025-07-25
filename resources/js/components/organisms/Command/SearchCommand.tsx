@@ -61,7 +61,7 @@ const SearchCommand = () => {
                 <CommandList>
                     <CommandEmpty>
                         <EmptyState
-                            icon={<SearchXIcon size={50} />}
+                            icon={SearchXIcon}
                             title="No result found"
                             btnText="Clear your search and try again"
                             btnProps={{

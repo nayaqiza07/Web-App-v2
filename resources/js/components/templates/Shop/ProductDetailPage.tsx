@@ -5,23 +5,12 @@ import CarouselImageProduct from '@/components/organisms/Carousel/CarouselImageP
 import CarouselProduct from '@/components/organisms/Carousel/CarouselProduct';
 import TabsInformation from '@/components/organisms/Tab/TabsInformation';
 import { useBreadcrumb } from '@/hooks/use-breadcrumbs';
-import { useLoadingStore } from '@/stores/useLoadingStore';
 import { useProductStore } from '@/stores/useProductStore';
-import SkeletonDetailProductPage from '../SkeletonPage/SkeletonDetailProductPage';
 
 const ProductDetailPage = () => {
     const breadcrumbs = useBreadcrumb();
 
-    const { selectedProduct, error } = useProductStore();
-    const { isLoading } = useLoadingStore();
-
-    if (isLoading) {
-        return <SkeletonDetailProductPage />;
-    }
-
-    if (error) {
-        return <div className="text-red-500">{error}</div>;
-    }
+    const { selectedProduct } = useProductStore();
 
     const isClient = typeof window !== 'undefined';
     const isLargeScreen = isClient && window.innerWidth >= 1024;
@@ -53,7 +42,7 @@ const ProductDetailPage = () => {
                 </div>
 
                 {/* Left Content */}
-                <ProductDetailContent PRODUCT={selectedProduct} />
+                <ProductDetailContent PRODUCT={selectedProduct!} />
             </section>
 
             {/* Information */}

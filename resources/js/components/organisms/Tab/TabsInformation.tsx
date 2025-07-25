@@ -56,7 +56,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ PRODUCT }) => {
                                     </ul>
                                 </div>
                             ) : (
-                                <EmptyState title="No dimensions data available" icon={<FileTextIcon />} />
+                                <EmptyState title="No dimensions data available" icon={FileTextIcon} />
                             )}
                         </ScrollArea>
                     </Card>
@@ -78,7 +78,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ PRODUCT }) => {
                                     </ul>
                                 </div>
                             ) : (
-                                <EmptyState title="No materials data available" icon={<FileTextIcon />} />
+                                <EmptyState title="No materials data available" icon={FileTextIcon} />
                             )}
                         </ScrollArea>
                     </Card>

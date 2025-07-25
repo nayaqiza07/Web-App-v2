@@ -5,10 +5,10 @@ const DeliveryAddressForm = () => {
     return (
         <>
             <div className="grid gap-3">
-                <SelectWithLabel label="Country / Region" labelFor="region" id="region" placeholder="Select Country or Region" />
+                <SelectWithLabel label="Country / Region" labelFor="region" id="region" placeholder="Select Country or Region" options={[]} />
                 <div className="grid gap-3 md:grid-cols-2">
-                    <SelectWithLabel label="State" labelFor="state" id="state" placeholder="Select State" />
-                    <SelectWithLabel label="City" labelFor="city" id="city" placeholder="Select City" />
+                    <SelectWithLabel label="State" labelFor="state" id="state" placeholder="Select State" options={[]} />
+                    <SelectWithLabel label="City" labelFor="city" id="city" placeholder="Select City" options={[]} />
                 </div>
             </div>
             <div className="grid gap-3 md:grid-cols-[2fr_1fr]">

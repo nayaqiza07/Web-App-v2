@@ -1,6 +1,6 @@
-import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { useBreadcrumb } from '@/hooks/use-breadcrumbs';
+import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 
 interface HeroSectionProps {
@@ -24,11 +24,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ children, variant = 'default'
         <section className="flex flex-col gap-6">
             {variant === 'withBreadcrumb' && <Breadcrumbs breadcrumbs={breadcrumbs} />}
 
-            <AnimatedMotion
-                as="div"
-                duration={1}
-                variantName="slideDown"
-                animate="visible"
+            <motion.div
+                layout
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 1 }}
                 className={`${variants[variant]} ${color} relative overflow-hidden`}
             >
                 {/* image */}
@@ -38,17 +38,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ children, variant = 'default'
                 <div className="absolute inset-0 h-full w-full bg-black/50"></div>
 
                 {/* text */}
-                <AnimatedMotion
-                    as="div"
-                    delay={0.3}
-                    duration={1}
-                    variantName="fadeIn"
-                    animate="visible"
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 1 }}
                     className={`${className} absolute inset-0 z-10 flex flex-col items-center justify-center p-4 text-center text-white md:p-10`}
                 >
                     {children}
-                </AnimatedMotion>
-            </AnimatedMotion>
+                </motion.div>
+            </motion.div>
         </section>
     );
 };

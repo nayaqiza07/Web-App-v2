@@ -1,3 +1,4 @@
+import SkeletonFaq from '@/components/organisms/Skeleton/SkeletonFaq';
 import SupportPage from '@/components/templates/Static/SupportPage';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useSupportStore } from '@/stores/useSupportStore';
@@ -15,10 +16,8 @@ const Support: React.FC<SupportProps> = (props) => {
     const { setFaqs } = useSupportStore();
 
     useEffect(() => {
-        try {
+        if (FAQS) {
             setFaqs(FAQS);
-        } catch (error) {
-            console.log(error);
         }
     }, [FAQS, setFaqs]);
 
@@ -26,9 +25,7 @@ const Support: React.FC<SupportProps> = (props) => {
         <>
             <Head title="Support" />
 
-            <MainLayout>
-                <SupportPage />
-            </MainLayout>
+            <MainLayout>{!FAQS ? <SkeletonFaq /> : <SupportPage />}</MainLayout>
         </>
     );
 };

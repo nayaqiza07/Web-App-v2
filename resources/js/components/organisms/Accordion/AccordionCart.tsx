@@ -1,6 +1,6 @@
 import CartItem from '@/components/molecules/Cart/CartItem';
-import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { EachUtils } from '@/lib/EachUtils';
 import { priceFormat } from '@/lib/utils';
 import { useCartStore } from '@/stores/useCartStore';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -14,6 +14,7 @@ const AccordionCart = () => {
     const [openItems, setOpenItems] = useState<string[]>(['bag', 'profile', 'delivery']);
 
     const { items, totalItems, totalPrice, removeItem } = useCartStore();
+    const [openCartItemId, setOpenCartItemId] = useState<number | null>(null);
 
     return (
         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
@@ -44,20 +45,25 @@ const AccordionCart = () => {
                     </AccordionTrigger>
 
                     <AnimatedAccordionContent isOpen={openItems.includes('bag')} className="flex flex-col gap-4 px-4 text-balance">
-                        {items.length === 0 ? (
-                            <EmptyState
-                                icon={<ShoppingBagIcon size={50} />}
-                                title="Your Cart Is Empty"
-                                btnText="Continue Shopping"
-                                btnLink={route('products.index')}
+                        <AnimatePresence mode="popLayout">
+                            <EachUtils
+                                emptyIcon={ShoppingBagIcon}
+                                emptyTitle="Your Cart Is Empty"
+                                emptyDesc=""
+                                emptyButtonTxt="Continue Shopping"
+                                emptyButtonLink={route('products.index')}
+                                of={items}
+                                render={(_item) => (
+                                    <CartItem
+                                        key={_item.id}
+                                        data={_item}
+                                        onDelete={removeItem}
+                                        openItemId={openCartItemId}
+                                        setOpenItemId={setOpenCartItemId}
+                                    />
+                                )}
                             />
-                        ) : (
-                            <AnimatePresence mode="popLayout">
-                                {items.map((data) => (
-                                    <CartItem key={data.id} data={data} onDelete={removeItem} />
-                                ))}
-                            </AnimatePresence>
-                        )}
+                        </AnimatePresence>
                     </AnimatedAccordionContent>
                 </AccordionItem>
 

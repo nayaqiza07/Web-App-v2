@@ -22,7 +22,9 @@ class ProductController extends Controller
         $categories = Category::filter()->get();
 
         return Inertia::render('shop/ProductList', [
-            'PRODUCTS' => $products,
+            'PRODUCTS' => Inertia::defer(function () use ($products) {
+                return $products;
+            }),
             'CATEGORIES' => $categories
         ]);
     }
@@ -40,10 +42,10 @@ class ProductController extends Controller
 
         return Inertia::render('shop/ProductDetail', [
             'PRODUCTS' => [
-                'data' => $products,
+                'data'  => $products,
                 'total' => Product::filter()->count()
             ],
-            'PRODUCT' => $product
+            'PRODUCT' => Inertia::defer(fn () => $product)
         ]);
     }
 
@@ -61,11 +63,9 @@ class ProductController extends Controller
 
         return Inertia::render('shop/ProductList', [
             'CATEGORY' => $category,
-            'PRODUCTS' => $products,
-            // 'PRODUCTS' => [
-            //     'data' => $products,
-            //     'total' => Product::filter()->count()
-            // ],
+            'PRODUCTS' => Inertia::defer(function () use ($products) {
+                return $products;
+            }),
             'CATEGORIES' => $categories,
         ]);
     }

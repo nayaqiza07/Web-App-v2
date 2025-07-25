@@ -3,17 +3,9 @@ import Activity from '@/components/organisms/Activity/Activity';
 import CarouselProduct from '@/components/organisms/Carousel/CarouselProduct';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Button } from '@/components/ui/button';
-import { useLoadingStore } from '@/stores/useLoadingStore';
 import { Link } from '@inertiajs/react';
-import SkeletonHomepage from '../SkeletonPage/SkeletonHomepage';
 
 const Homepage = () => {
-    const { isLoading } = useLoadingStore();
-
-    if (isLoading) {
-        return <SkeletonHomepage />;
-    }
-
     return (
         <>
             {/* Hero Section */}

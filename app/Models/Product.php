@@ -42,7 +42,7 @@ class Product extends Model
         'published_at',
 
         /** Relation */
-        'category_id'
+        'category_id',
     ];
 
     /**
@@ -56,7 +56,7 @@ class Product extends Model
         'materials' => 'array',
 
         /** Status */
-        'is_visible' => 'boolean'
+        'is_visible' => 'boolean',
     ];
 
     /**
@@ -66,24 +66,24 @@ class Product extends Model
      */
     protected $appends = [
         'discount_percentage',
-        'is_new'
+        'is_new',
     ];
 
     /**
      * The relationships tha should always be laoded with the model.
-     * 
+     *
      * @var array<int, string>
      */
     protected $with = ['category'];
 
     /**
      * Accessor to counting discount percentage
-     * 
+     *
      * @return int|null
      */
     public function getDiscountPercentageAttribute()
     {
-        if(!$this->old_price || $this->old_price <= $this->price){
+        if (! $this->old_price || $this->old_price <= $this->price) {
             return null;
         }
 
@@ -92,7 +92,7 @@ class Product extends Model
 
     /**
      * Accessor to determine if the product is new (e.g. withing last 7 days)
-     * 
+     *
      * @return bool
      */
     public function getIsNewAttribute()
@@ -102,9 +102,6 @@ class Product extends Model
 
     /**
      * Scope to show visible product that have visible category
-     * 
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFilter(Builder $query): Builder
     {
@@ -114,9 +111,6 @@ class Product extends Model
 
     /**
      * Scope to show product by slug
-     * 
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSlug(Builder $query, string $slug): Builder
     {
@@ -126,8 +120,6 @@ class Product extends Model
     /**
      * Relation with Category
      * Many Products belongsTo 1 Category
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function category(): BelongsTo
     {
