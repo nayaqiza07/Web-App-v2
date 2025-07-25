@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Spatie\Permission\Models\Role;
+
+uses(RefreshDatabaseState::class);
 
 test('registration screen can be rendered', function () {
     $response = $this->get('/register');
