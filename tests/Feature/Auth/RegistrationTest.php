@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 test('registration screen can be rendered', function () {
     $response = $this->get('/register');
 
@@ -14,8 +16,9 @@ test('new users can register', function () {
         'password' => 'password',
         'password_confirmation' => 'password',
     ]);
-    
-    $this->assignRole('Customer');
+
+     $user = User::where('email', 'test@example.com')->first();
+     $user->assignRole('Customer');
 
     $this->assertAuthenticated();
     $response->assertRedirect(route('dashboard', absolute: false));
