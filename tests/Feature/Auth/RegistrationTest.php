@@ -18,7 +18,7 @@ test('new users can register', function () {
     ]);
 
      $user = User::where('email', 'test@example.com')->first();
-     $user->assignRole('Customer');
+     $this->assertTrue($user->hasRole('Customer'));
 
     $this->assertAuthenticated();
     $response->assertRedirect(route('dashboard', absolute: false));
