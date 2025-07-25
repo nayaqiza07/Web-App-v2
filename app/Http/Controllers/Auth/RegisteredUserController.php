@@ -44,6 +44,9 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $role = User::count() === 0 ? 'Super Admin' : 'Customer';
+        $user->assignRole($role);
+
         event(new Registered($user));
 
         Auth::login($user);

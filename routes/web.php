@@ -29,10 +29,6 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/cart', function () {
-    return Inertia::render('cart/Cart');
-})->name('cart');
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
@@ -46,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
 
-require __DIR__.'/modules/product.php';
 require __DIR__.'/modules/blog.php';
+require __DIR__.'/modules/cart.php';
+require __DIR__.'/modules/product.php';
 require __DIR__.'/modules/static.php';
