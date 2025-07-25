@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ProductSeeder::class,
             BlogSeeder::class,
-            FaqSeeder::class
+            FaqSeeder::class,
+            ContactSeeder::class,
         ]);
     }
 }

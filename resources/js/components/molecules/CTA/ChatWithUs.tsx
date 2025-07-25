@@ -1,29 +1,33 @@
 import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
+import { useContactStore } from '@/stores/useContactStore';
 import { MailIcon, MapIcon, MapPinIcon, PhoneCallIcon, SendIcon } from 'lucide-react';
 
 const ChatWithUs = () => {
+    const { contacts } = useContactStore();
+    const contact = contacts[0];
+
     const data = [
         {
             title: 'Chat With Us',
             desc: 'Speak to our friendly team via chat.',
             contacts: [
-                { icon: MailIcon, text: 'info@horestco.com' },
-                { icon: SendIcon, text: '+62-8551069988' },
+                { icon: MailIcon, text: contact.email_us },
+                { icon: SendIcon, text: contact.chat_us },
             ],
         },
         {
             title: 'Call Us',
             desc: 'Call our team on Monday - Saturday from 8am to 4pm.',
-            contacts: [{ icon: PhoneCallIcon, text: '+62-8551069988' }],
+            contacts: [{ icon: PhoneCallIcon, text: contact.call_us }],
         },
         {
             title: 'Visit Us',
             desc: 'Visit to us in person at our Jepara HQ.',
             contacts: [
-                { icon: MapPinIcon, text: 'Jalan Sultan Hadlirin, Desa Langon RT.12/RW.05, Kecamatan Tahunan, Kabupaten Jepara, 59425' },
+                { icon: MapPinIcon, text: contact.visit_us },
                 {
                     icon: MapIcon,
-                    text: 'N -6° 622528 E 110° 718058',
+                    text: contact.our_coordinate,
                     is_link:
                         'https://www.google.com/maps/place/PT.+HORESTCO/@-6.629841,110.738444,14z/data=!4m5!3m4!1s0x0:0x77cc4003e6ac057f!8m2!3d-6.6298414!4d110.7384441?hl=en',
                 },

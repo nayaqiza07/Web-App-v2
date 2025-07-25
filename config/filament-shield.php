@@ -6,7 +6,7 @@ return [
         'slug' => 'shield/roles',
         'navigation_sort' => -1,
         'navigation_badge' => true,
-        'navigation_group' => false,
+        'navigation_group' => true,
         'sub_navigation_position' => null,
         'is_globally_searchable' => false,
         'show_model_path' => true,
@@ -25,13 +25,6 @@ return [
         'name' => 'Super Admin',
         'define_via_gate' => false,
         'intercept_gate' => 'before', // after
-    ],
-
-    'panel' => [
-        'filament' => [
-            'enabled' => true,
-            'permission_prefix' => 'view',
-        ],
     ],
 
     'panel_user' => [

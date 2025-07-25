@@ -70,7 +70,7 @@ const CartSheet = () => {
                                 <p className="text-foreground">{priceFormat(totalPrice())}</p>
                             </div>
                             <Link
-                                href={route('cart')}
+                                href={route('cart.index')}
                                 as="button"
                                 className={cn(buttonVariants({ variant: 'default', effect: 'gooeyLeft', gooeyColor: 'default' }))}
                             >

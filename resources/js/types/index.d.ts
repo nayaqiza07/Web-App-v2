@@ -242,4 +242,14 @@ export type Faq = {
     question: string;
     answer: string;
 };
+
+// Contact
+export type Contact = {
+    id: number;
+    email_us: string;
+    chat_us: string;
+    call_us: string;
+    visit_us: string;
+    our_coordinate: string;
+};
 // Static End
