@@ -10,6 +10,8 @@ class BlogController extends Controller
 {
     /**
      * Display the list of visible blog posts
+     * 
+     * @return \Inertia\Response
      */
     public function index(): Response
     {
@@ -22,6 +24,9 @@ class BlogController extends Controller
 
     /**
      * Display the specified blog by slug
+     * 
+     * @param string $slug
+     * @return \Inertia\Response 
      */
     public function show(string $slug): Response
     {

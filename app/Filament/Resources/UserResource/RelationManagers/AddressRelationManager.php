@@ -33,12 +33,14 @@ class AddressRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('state'),
                 Tables\Columns\TextColumn::make('city'),
                 Tables\Columns\TextColumn::make('is_active')
-                    ->label('Active')
-                    ->badge()
-                    ->color(fn (bool $state): string => $state ? 'success' : 'danger')
+                ->label('Active')
+                ->badge()
+                ->color(fn (bool $state): string => $state ? 'success' : 'danger')
                     ->formatStateUsing(fn (bool $state): string => $state ? '• Active •' : '• Inactive •')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('street'),
+                Tables\Columns\TextColumn::make('zip'),
             ])
             ->filters([
                 //

@@ -169,6 +169,27 @@ class BlogSeeder extends Seeder
                 'is_visible' => true,
                 'published_at' => date(now())
             ],
+            [
+                /** Detail */
+                'title' => 'How to Create Full Stack E-Commerce App Using Next.js | Next JS Full Stack Ecommerce Project',
+                'slug' => Str::slug('How to Create Full Stack E-Commerce App Using Next.js | Next JS Full Stack Ecommerce Project'),
+                'thumbnail' => 'https://img.youtube.com/vi/nxK_TCt2pKw/maxresdefault.jpg',
+
+                /** Body */
+                'body' => '👉 Youtube URI:  https://www.youtube.com/watch?v=nxK_TCt2pKw 
+
+                    👉 Clerk Auth: https://go.clerk.com/ZP1K3pL
+                    👉 Inngest: https://innge.st/yt-gs-1
+
+                    👉 Source Code: https://greatstack.dev/go/quickcart
+                    👉 Starter Files: https://github.com/GreatStackDev/QuickCart
+                    👉 Live Preview: https://quickcart.greatstack.in/
+                    👉 Download the assets: https://greatstack.dev/assets/e-commerce-next-js',
+                
+                /** Status */
+                'is_visible' => true,
+                'published_at' => date(now())
+            ],
         ]);
     }
 }

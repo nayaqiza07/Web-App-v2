@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -124,5 +125,17 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class)->where('is_visible', true);
+    }
+
+    /**
+     * Relation with Cart Items
+     * 1 Product can show in many Cart Items
+     * Product (id = 3)
+        └── CartItem #1 → user_id = 1
+        └── CartItem #3 → user_id = 5
+     */
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
     }
 }

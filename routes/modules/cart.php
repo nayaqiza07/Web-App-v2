@@ -1,11 +1,8 @@
 <?php
 
-use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CartItemController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/cart', function () {
-        return Inertia::render('cart/Cart');
-    })->name('cart');
-});
+Route::prefix('cart')->name('cart.')->controller(CartItemController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+})->middleware(['auth', 'verified']);

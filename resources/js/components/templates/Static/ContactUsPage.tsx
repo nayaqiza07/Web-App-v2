@@ -6,12 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { useSupportStore } from '@/stores/useSupportStore';
 
 const ContactUsPage = () => {
-    // const { isLoading } = useLoadingStore();
     const { faqs } = useSupportStore();
-
-    // if (isLoading) {
-    //     return <SkeletonContactUsPage />;
-    // }
 
     return (
         <>

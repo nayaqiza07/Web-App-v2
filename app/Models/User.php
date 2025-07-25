@@ -84,4 +84,16 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(Address::class);
     }
+
+    /**
+     * Relation with Cart Items
+     * 1 User hasMany Cart Items
+     * User (id = 1)
+        └── CartItem #1 → product_id = 3
+        └── CartItem #2 → product_id = 7
+     */
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }
