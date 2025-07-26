@@ -1,12 +1,16 @@
+import BadgeTag from '@/components/atoms/Badge/BadgeTag';
 import { Paginate } from '@/components/atoms/Pagination/Paginate';
+import PopoverFilter from '@/components/atoms/Popover/PopoverFilter';
 import ProductCard from '@/components/organisms/Card/ProductCard';
 import FilterDrawer from '@/components/organisms/Drawer/FilterDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
 import Sidebar from '@/components/organisms/Sidebar/Sidebar';
+import { buttonVariants } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { EachUtils } from '@/lib/EachUtils';
 import { useCategoryStore } from '@/stores/useCategoryStore';
 import { useProductStore } from '@/stores/useProductStore';
-import { ArmchairIcon } from 'lucide-react';
+import { ArmchairIcon, BlocksIcon, Grid2X2Icon } from 'lucide-react';
 
 const ProductPage: React.FC = () => {
     const { products } = useProductStore();
@@ -30,6 +34,22 @@ const ProductPage: React.FC = () => {
 
             <FilterDrawer />
             {/* Hero Section */}
+            <div className="flex gap-5">
+                <div className="flex w-[264px] items-center gap-2">
+                    <span className={`${buttonVariants({ variant: 'outline' })} size-8`}>{selectedCategory ? <BlocksIcon /> : <Grid2X2Icon />}</span>
+                    <span className="text-sm">{selectedCategory ? `${selectedCategory.name} Products` : 'All Furniture Products'}</span>
+                </div>
+
+                <div className="flex w-full items-center justify-between">
+                    <div className="space-x-1">
+                        <BadgeTag title="Newest" />
+                        <BadgeTag title="Sales" />
+                    </div>
+                    <PopoverFilter className="hidden md:flex" />
+                </div>
+            </div>
+
+            <Separator />
 
             <section className="flex gap-5">
                 {/* Sidebar Product Start */}

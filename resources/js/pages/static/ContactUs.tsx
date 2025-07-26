@@ -11,6 +11,7 @@ interface ContactUsProps {
     FAQS: Faq[];
     CONTACTS: Contact[];
 }
+
 const ContactUs: React.FC<ContactUsProps> = (props) => {
     const { FAQS, CONTACTS } = props;
 

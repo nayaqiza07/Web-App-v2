@@ -1,7 +1,7 @@
 // import { PageProps } from '@/types'; // pastikan ini sesuai project kamu
-import { Button } from '@/components/ui/button';
+import { truncateText } from '@/lib/utils';
 import { usePage } from '@inertiajs/react';
-import { House } from 'lucide-react';
+import { HomeIcon } from 'lucide-react';
 import { ReactNode } from 'react';
 
 export type BreadcrumbItemType = {
@@ -23,9 +23,10 @@ export function useBreadcrumb(): BreadcrumbItemType[] {
 
     breadcrumbs.push({
         title: (
-            <Button size="icon" className="size-7">
-                <House />
-            </Button>
+            <>
+                <HomeIcon size={16} aria-hidden="true" />
+                <span className="sr-only">Home</span>
+            </>
         ),
         href: '/',
     });
@@ -39,7 +40,10 @@ export function useBreadcrumb(): BreadcrumbItemType[] {
         const isLast = i === segments.length - 1;
         const isClickable = !nonClickableSegments.includes(segment) && !isLast;
 
-        const title = segments[i].replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+        const title = truncateText(
+            segments[i].replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
+            15,
+        );
 
         breadcrumbs.push({
             title,

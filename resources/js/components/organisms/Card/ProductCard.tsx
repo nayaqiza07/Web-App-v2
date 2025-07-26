@@ -1,7 +1,8 @@
 import CustomBadge from '@/components/atoms/Badge/CustomBadge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
-import { useAddToCart } from '@/hooks/useAddToCart';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { useCartActions } from '@/hooks/useCartActions';
 import { cn, priceFormat, truncateText } from '@/lib/utils';
 import { useQuantityButtonStore } from '@/stores/useQuantityButtonStore';
 import { ProductData } from '@/types';
@@ -17,7 +18,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
     const { quantity } = useQuantityButtonStore();
 
-    const { handleAddToCart } = useAddToCart();
+    const { handleAddToCart } = useCartActions();
 
     const badges = [
         data.discount_percentage && { variant: 'discount', label: '- ' + data.discount_percentage + '%' },
@@ -73,13 +74,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                             />
 
                             {/* overlay button */}
-                            <Button
-                                size="icon"
-                                onClick={(e) => handleAddToCart(e, data, quantity)}
-                                className="absolute right-3 bottom-3 rounded-full bg-black/60 text-xs font-bold opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-black/80"
-                            >
-                                <ShoppingCart color="white" />
-                            </Button>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button
+                                        size="icon"
+                                        onClick={(e) => handleAddToCart(e, data, quantity)}
+                                        className="absolute right-3 bottom-3 rounded-full bg-black/60 text-xs font-bold opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-black/80"
+                                    >
+                                        <ShoppingCart color="white" />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>Add to cart</TooltipContent>
+                            </Tooltip>
                         </CardContent>
 
                         <CardFooter className="flex min-h-25 flex-col items-start justify-between border-t p-3 text-xs">

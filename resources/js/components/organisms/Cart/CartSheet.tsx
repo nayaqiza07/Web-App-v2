@@ -4,25 +4,31 @@ import { Badge } from '@/components/ui/badge';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { useCartActions } from '@/hooks/useCartActions';
 import { cn, priceFormat } from '@/lib/utils';
 import { useCartStore } from '@/stores/useCartStore';
 import { Link } from '@inertiajs/react';
-import { ShoppingBagIcon, ShoppingCart, ShoppingCartIcon } from 'lucide-react';
+import { ShoppingBagIcon, ShoppingCartIcon } from 'lucide-react';
 import { useState } from 'react';
 
 const CartSheet = () => {
-    const { items, totalItems, totalPrice, removeItem, clearCart } = useCartStore();
+    const { items, totalUniqueItems, totalPrice } = useCartStore();
     const [openItemId, setOpenItemId] = useState<number | null>(null);
+    const { handleClearAllCartItems } = useCartActions();
 
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button size="icon" variant="ghost" className="relative cursor-pointer">
-                    <ShoppingCart size={20} />
-
-                    <Badge variant="destructive" className="absolute top-0 right-0 size-5 overflow-hidden rounded-full px-1.5 tabular-nums">
-                        {totalItems()}
-                    </Badge>
+                <Button size="icon" variant="outline" className="relative" aria-label="Open notifications">
+                    <ShoppingCartIcon size={16} aria-hidden="true" />
+                    {totalUniqueItems() > 0 && (
+                        <Badge
+                            variant="destructive"
+                            className={`absolute -top-2 left-full min-w-5 -translate-x-1/2 overflow-hidden rounded-full tabular-nums ${totalUniqueItems() > 9 ? 'px-0.5' : 'px-1.5'}`}
+                        >
+                            {totalUniqueItems() > 99 ? '99+' : totalUniqueItems()}
+                        </Badge>
+                    )}
                 </Button>
             </SheetTrigger>
             <SheetContent className="bg-card flex h-full flex-col gap-0">
@@ -41,9 +47,10 @@ const CartSheet = () => {
                     />
                 ) : (
                     <>
+                        {/* Total Item and Clear All from cart */}
                         <div className="flex items-center justify-between px-4 pt-2 text-xs">
-                            <span>{totalItems()} Items</span>
-                            <Button type="button" variant="ghost" size="sm" effect="hoverUnderline" onClick={clearCart}>
+                            <span>{totalUniqueItems()} Items</span>
+                            <Button type="button" variant="ghost" size="sm" effect="hoverUnderline" onClick={handleClearAllCartItems}>
                                 Clear All
                             </Button>
                         </div>
@@ -52,13 +59,7 @@ const CartSheet = () => {
                             <ScrollArea className="h-full px-4 py-2">
                                 <div className="flex flex-col gap-2">
                                     {items.map((data) => (
-                                        <CartItem
-                                            key={data.id}
-                                            data={data}
-                                            onDelete={removeItem}
-                                            openItemId={openItemId}
-                                            setOpenItemId={setOpenItemId}
-                                        />
+                                        <CartItem key={data.id} data={data} openItemId={openItemId} setOpenItemId={setOpenItemId} />
                                     ))}
                                 </div>
                             </ScrollArea>
