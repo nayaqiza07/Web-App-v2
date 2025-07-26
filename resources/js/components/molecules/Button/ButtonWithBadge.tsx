@@ -41,14 +41,14 @@ const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({
                 <Button
                     variant="ghost"
                     className={cn(
-                        'hover:bg-accent hover:border-border flex w-full justify-between border border-transparent p-2 text-xs font-bold',
-                        active && 'border-border bg-accent',
+                        'hover:bg-card hover:border-border text-muted-foreground flex w-full justify-between rounded-lg border border-transparent p-2 text-xs font-bold transition-colors duration-200',
+                        active && 'border-border bg-card text-foreground shadow',
                         className,
                     )}
                 >
                     <span>{title}</span>
                     {badgeNumber > 0 && (
-                        <Badge variant="outline" className="bg-card border">
+                        <Badge variant="outline" className="bg-card border shadow">
                             {badgeNumber}
                         </Badge>
                     )}

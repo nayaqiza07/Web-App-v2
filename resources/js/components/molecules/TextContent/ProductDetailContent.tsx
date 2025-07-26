@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useAddToCart } from '@/hooks/useAddToCart';
+import { useCartActions } from '@/hooks/useCartActions';
 import { priceFormat } from '@/lib/utils';
 import { useQuantityButtonStore } from '@/stores/useQuantityButtonStore';
 import { ProductData } from '@/types';
@@ -14,7 +14,7 @@ interface ProductDetailContentProps {
     PRODUCT: ProductData;
 }
 
-const shipping = [
+const warranty = [
     {
         icon: CircleCheckIcon,
         text: 'In-Stock and Ready to Ship',
@@ -32,7 +32,7 @@ const shipping = [
 const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ PRODUCT }) => {
     const { quantity, setQuantity } = useQuantityButtonStore();
 
-    const { handleAddToCart } = useAddToCart();
+    const { handleAddToCart } = useCartActions();
 
     const handleChangeQty = (type: 'dec' | 'inc') => {
         const newQty = type === 'dec' ? Math.max(quantity - 1, 1) : quantity + 1;
@@ -153,7 +153,7 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ PRODUCT }) 
                     transition={{ delay: 0.9, duration: 1, ease: easeOut }}
                     className="text-muted-foreground flex flex-col gap-1"
                 >
-                    {shipping.map((data, index) => (
+                    {warranty.map((data, index) => (
                         <div key={index} className="flex items-center gap-2">
                             <span>{<data.icon size={16} />}</span>
                             <span>{data.text}</span>

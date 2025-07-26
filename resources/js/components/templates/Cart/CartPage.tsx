@@ -5,12 +5,6 @@ import HeroSection from '@/components/organisms/Section/HeroSection';
 import { Separator } from '@/components/ui/separator';
 
 const CartPage = () => {
-    // const { isLoading } = useLoadingStore();
-
-    // if (isLoading) {
-    //     return <SkeletonCartPage />;
-    // }
-
     return (
         <>
             {/* Hero Section */}

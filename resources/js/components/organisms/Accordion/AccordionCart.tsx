@@ -13,7 +13,7 @@ import AnimatedAccordionContent from './AnimatedAccordionContent';
 const AccordionCart = () => {
     const [openItems, setOpenItems] = useState<string[]>(['bag', 'profile', 'delivery']);
 
-    const { items, totalItems, totalPrice, removeItem } = useCartStore();
+    const { items, totalItems, totalPrice } = useCartStore();
     const [openCartItemId, setOpenCartItemId] = useState<number | null>(null);
 
     return (
@@ -54,13 +54,7 @@ const AccordionCart = () => {
                                 emptyButtonLink={route('products.index')}
                                 of={items}
                                 render={(_item) => (
-                                    <CartItem
-                                        key={_item.id}
-                                        data={_item}
-                                        onDelete={removeItem}
-                                        openItemId={openCartItemId}
-                                        setOpenItemId={setOpenCartItemId}
-                                    />
+                                    <CartItem key={_item.id} data={_item} openItemId={openCartItemId} setOpenItemId={setOpenCartItemId} />
                                 )}
                             />
                         </AnimatePresence>
@@ -75,7 +69,7 @@ const AccordionCart = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, ease: 'easeOut' }}
                         >
-                            Profile Customer
+                            Contact Details
                         </motion.h3>
                     </AccordionTrigger>
 

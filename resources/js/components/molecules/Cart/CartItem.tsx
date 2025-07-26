@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { useCartActions } from '@/hooks/useCartActions';
 import { priceFormat } from '@/lib/utils';
 import { useCartStore } from '@/stores/useCartStore';
 import { CartItem as Item } from '@/types';
@@ -12,13 +13,14 @@ import QuantityButton from '../Button/QuantityButton';
 
 interface CartItemProps {
     data: Item;
-    onDelete: (id: number) => void;
+    // onDelete: (id: number) => void;
     openItemId: number | null;
     setOpenItemId: (id: number | null) => void;
 }
 
-const CartItem: React.FC<CartItemProps> = ({ data, onDelete, openItemId, setOpenItemId }) => {
+const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) => {
     const { totalPricePerProduct } = useCartStore();
+    const { handleRemoveCartItem } = useCartActions();
 
     const isOpen = openItemId === data.id;
 
@@ -40,7 +42,7 @@ const CartItem: React.FC<CartItemProps> = ({ data, onDelete, openItemId, setOpen
                 variant="destructive"
                 effect="gooeyRight"
                 gooeyColor="destructive"
-                onClick={() => onDelete(data.id)}
+                onClick={() => handleRemoveCartItem(data)}
                 className="border-border absolute inset-0 z-0 flex h-full cursor-pointer items-center justify-end rounded-md border pr-4"
             >
                 <Trash2Icon size={20} className="text-destructive-foreground" />
