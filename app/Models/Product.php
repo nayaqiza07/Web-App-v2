@@ -75,7 +75,7 @@ class Product extends Model
      *
      * @var array<int, string>
      */
-    protected $with = ['category'];
+    protected $with = ['category', 'productImages'];
 
     /**
      * Accessor to counting discount percentage
@@ -137,5 +137,32 @@ class Product extends Model
     public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class);
+    }
+
+    /**
+     * Relation with Order Items
+     * 1 Product hasMany Order Items
+     */
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * Relation with Reviews
+     * 1 Product hasMany Reviews
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Relation with Product Images
+     * 1 Product hasMany Product Images
+     */
+    public function productImages(): HasMany
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }

@@ -146,7 +146,7 @@ class AddressController extends Controller
     /**
      * Delete a specific address for the authenticated user
      *
-     *
+     * @param DeleteAddressRequest $request
      * @throws \Throwable
      */
     public function destroy(DeleteAddressRequest $request): RedirectResponse
