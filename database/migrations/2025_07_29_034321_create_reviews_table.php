@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use function Laravel\Prompts\table;
+
 return new class extends Migration
 {
     /**
@@ -11,23 +13,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cart_items', function (Blueprint $table) {
-           $table->id();
+        Schema::create('reviews', function (Blueprint $table) {
+            $table->id();
 
             /** Relation */
             $table->foreignId('user_id')->constrained(
-                table: 'users', indexName: 'carts_user_id'
+                table: 'users', indexName: 'reviews_user_id'
             )->onDelete('cascade');
-            
+
             $table->foreignId('product_id')->constrained(
-                table: 'products', indexName: 'carts_product_id'
+                table: 'products', indexName: 'reviews_product_id'
             )->onDelete('cascade');
 
-            $table->integer('quantity')->default(1);
-
-            // $table->unique(['user_id', 'product_id']);
+            $table->tinyInteger('rating');
+            $table->longText('comment');
+            $table->json('images');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -36,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cart_items');
+        Schema::dropIfExists('reviews');
     }
 };
