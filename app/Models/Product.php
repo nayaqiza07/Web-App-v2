@@ -120,7 +120,7 @@ class Product extends Model
 
     /**
      * Relation with Category
-     * Many Products belongsTo 1 Category
+     * Many Products is owned by 1 Category
      */
     public function category(): BelongsTo
     {

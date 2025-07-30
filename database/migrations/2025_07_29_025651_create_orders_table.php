@@ -24,9 +24,11 @@ return new class extends Migration
             )->onDelete('cascade');
 
             $table->string('code')->unique();
+
             $table->enum('status', [
                     'pending', 'processing', 'shipped', 'delivered', 'canceled', 'refund'
                 ])->default('pending');
+                
             $table->string('payment_method');
 
             $table->decimal('subtotal', total: 15, places: 2);

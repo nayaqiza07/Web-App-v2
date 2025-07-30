@@ -26,8 +26,8 @@ return new class extends Migration
             )->onDelete('cascade');
 
             $table->tinyInteger('rating');
-            $table->longText('comment');
-            $table->json('images');
+            $table->longText('comment')->nullable();
+            $table->json('images')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

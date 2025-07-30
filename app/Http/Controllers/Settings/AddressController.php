@@ -29,9 +29,9 @@ class AddressController extends Controller
 
     /**
      * Store a new address fot the authenticated user.
-     *
+     * 
+     * @param \App\Http\Requests\Settings\Address\CreateAddressRequest $request
      * @return Illuminate\Http\RedirectResponse
-     *
      * @throws \Throwable
      */
     public function store(CreateAddressRequest $request): RedirectResponse
@@ -109,7 +109,7 @@ class AddressController extends Controller
     /**
      * Update a specific address for the authenticated user
      *
-     *
+     * @param \App\Http\Requests\Settings\Address\UpdateAddressRequest $request
      * @throws \Throwable
      */
     public function update(UpdateAddressRequest $request): RedirectResponse
@@ -146,7 +146,7 @@ class AddressController extends Controller
     /**
      * Delete a specific address for the authenticated user
      *
-     * @param DeleteAddressRequest $request
+     * @param \App\Http\Requests\Settings\Address\DeleteAddressRequest $request
      * @throws \Throwable
      */
     public function destroy(DeleteAddressRequest $request): RedirectResponse

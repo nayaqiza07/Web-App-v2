@@ -41,7 +41,7 @@ return new class extends Migration
             /** Relation */
             $table->foreignId('category_id')->constrained(
                 table: 'categories', indexName: 'products_category_id'
-            );
+            )->nullOnDelete();
 
             $table->timestamps();
             $table->softDeletes();

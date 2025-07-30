@@ -27,9 +27,13 @@ class StoreReviewRequest extends FormRequest
         return [
             'product_id' => ['required', 'integer', Rule::exists('products', 'id'), new HasPurchasedProduct],
             'rating' => ['required', 'integer', 'min:1', 'max:5'],
-            'comment' => ['nullable', 'string'],
-            'images' => ['nullable', 'array'],
-            'images.*' => ['string'], // atau ['url'] jika berbentuk link
+            'comment' => ['nullable', 'string', 'max:2000'],
+            'images' => ['nullable', 'array', 'max:5'],
+            'images.*' => ['url', 'max:255'],
+
+            // Another Option if we receive an image file
+            // 'images' => ['nullable', 'array', 'max:5'],
+            // 'images.*' => ['image', 'mimes:png,jpg,jpeg', 'max:2048'],
         ];
     }
 }
