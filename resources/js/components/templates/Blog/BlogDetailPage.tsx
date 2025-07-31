@@ -1,24 +1,49 @@
 import HeroSection from '@/components/organisms/Section/HeroSection';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
+import { EachUtils } from '@/lib/EachUtils';
+import { truncateText } from '@/lib/utils';
 import { useBlogStore } from '@/stores/useBlogStore';
-import { useLoadingStore } from '@/stores/useLoadingStore';
+import { Link } from '@inertiajs/react';
+import { NewspaperIcon } from 'lucide-react';
 
 const BlogDetailPage = () => {
-    const { isLoading } = useLoadingStore();
-
-    const { selectedBlog } = useBlogStore();
-
-    console.log(selectedBlog);
+    const { blogs, selectedBlog } = useBlogStore();
 
     return (
         <>
             {/* Hero Section Start */}
-            <HeroSection isLoading={isLoading} variant="withBreadcrumb" color="bg-[#EACFAE]" srcImage={selectedBlog?.thumbnail} altImage="Foto Blog">
+            <HeroSection variant="withBreadcrumb" color="bg-[#EACFAE]" srcImage={selectedBlog?.thumbnail} altImage="Foto Blog">
                 <h1 className="text-2xl font-bold">{selectedBlog?.title}</h1>
             </HeroSection>
             {/* Hero Section End */}
 
             {/* Blog Content Start */}
-            <article className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: selectedBlog?.body ?? '' }} />
+            <div className="block md:grid md:grid-cols-[3fr_auto_1fr] md:gap-5">
+                <article className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: selectedBlog?.body ?? '' }} />
+                <Separator orientation="vertical" className="via-border bg-gradient-to-b from-transparent to-transparent" />
+                <div className="h-1/4 space-y-5">
+                    <h3>Related Posts</h3>
+                    <ScrollArea className="text-muted-foreground h-full text-xs">
+                        <EachUtils
+                            emptyIcon={NewspaperIcon}
+                            emptyTitle="No Related Blogs Found"
+                            emptyDesc=""
+                            of={blogs.data}
+                            render={(_blog) => (
+                                <Link
+                                    href={route('blogs.show', { slug: _blog.slug })}
+                                    key={_blog.id}
+                                    className="hover:text-foreground mb-3 flex gap-3"
+                                >
+                                    <img src={_blog.thumbnail} alt={`${_blog.title}`} loading="lazy" className="size-15 object-cover" />
+                                    <p>{truncateText(_blog.title, 35)}</p>
+                                </Link>
+                            )}
+                        />
+                    </ScrollArea>
+                </div>
+            </div>
             {/* Blog Content End */}
         </>
     );

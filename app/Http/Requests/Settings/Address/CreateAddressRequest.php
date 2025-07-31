@@ -23,11 +23,11 @@ class CreateAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country' => ['nullable', 'string', 'max:255'],
-            'state' => ['nullable', 'string', 'max:255'],
-            'city' => ['nullable', 'string', 'max:255'],
-            'street' => ['nullable', 'string', 'max:255'],
-            'zip' => ['nullable', 'string', 'max:30'],
+            'country'   => ['nullable', 'string', 'max:255'],
+            'state'     => ['nullable', 'string', 'max:255'],
+            'city'      => ['nullable', 'string', 'max:255'],
+            'street'    => ['nullable', 'string', 'max:255'],
+            'zip'       => ['nullable', 'string', 'max:30'],
             'is_active' => ['nullable', 'boolean'],
         ];
     }

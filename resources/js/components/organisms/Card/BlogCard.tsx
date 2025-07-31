@@ -46,7 +46,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ index, isCarousel, data }) => {
                         <img
                             src={data.thumbnail}
                             alt={`Foto Produk ${data.title}`}
-                            // loading="lazy"
+                            loading="lazy"
                             className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"
                         />
                     </CardContent>

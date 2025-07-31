@@ -36,12 +36,12 @@ class StoreProductImageRequest extends FormRequest
     {
         return [
             'product_id' => ['required', 'integer', Rule::exists('products', 'id')],
-            'path' => ['required', 'string', 'url', 'max:255'],
-            'alt' => ['nullable', 'string', 'max:255'],
+            'path'       => ['required', 'string', 'url', 'max:255'],
+            'alt'        => ['nullable', 'string', 'max:255'],
 
             // // Another option if we receive an image file
-            // 'path' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            // 'alt' => ['nullable', 'string', 'max:255'],
+            // 'path'    => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            // 'alt'     => ['nullable', 'string', 'max:255'],
         ];
     }
 }

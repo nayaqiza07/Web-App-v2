@@ -24,6 +24,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class CategoryResource extends Resource implements HasShieldPermissions
@@ -78,10 +79,33 @@ class CategoryResource extends Resource implements HasShieldPermissions
                     ]),
 
                     FileUpload::make('thumbnail')
+                        ->image()
+                        ->required()
+                        ->directory('images/categories/thumbnails')
+                        ->hint(new HtmlString('
+                            <strong><a target="_blank" href="https://tinypng.com/">Have you compressed the image?</a></strong>
+                        '))
+                        ->hintColor('primary')
+                        ->helperText(new HtmlString('
+                            <p>
+                                Max image size <strong>2 MB</strong>
+                            </p>
+                            <p>
+                                Compress the image here first 
+                                <strong><a target="_blank" href="https://tinypng.com/">TinyPng</a></strong> 
+                            </p>
+                        '))
                         ->columnSpanFull(),
 
                     Toggle::make('is_visible')
                         ->label('Visible to customers.')
+                        ->helperText(function (bool $state) {
+                            if ($state === false) {
+                                return 'This product will be hidden';
+                            }
+
+                            return 'This product will be visible';
+                        })
                         ->default(true)
                 ])
                 ->columnSpan(['lg' => fn (?Category $record) => $record === null ? 3 : 2]),

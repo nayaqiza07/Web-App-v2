@@ -9,10 +9,6 @@ interface ProductState {
     // Detail Product
     selectedProduct: ProductData | null;
     setSelectedProduct: (product: ProductData | null) => void;
-
-    // Error
-    error: string | null;
-    setError: (error: string | null) => void;
 }
 
 export const useProductStore = create<ProductState>((set) => ({
@@ -37,8 +33,4 @@ export const useProductStore = create<ProductState>((set) => ({
     // Detail Product
     selectedProduct: null,
     setSelectedProduct: (product: ProductData | null) => set({ selectedProduct: product }),
-
-    // Error
-    error: null,
-    setError: (error) => set({ error }),
 }));

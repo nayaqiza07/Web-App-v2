@@ -29,13 +29,13 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'address_id' => ['required', 'integer', Rule::exists('addresses', 'id')],
-            'code' => ['required', 'string', 'unique:orders,code'],
-            'status' => ['required', Rule::id(['pending', 'paid', 'shipped', 'completed'])],
+            'address_id'     => ['required', 'integer', Rule::exists('addresses', 'id')],
+            'code'           => ['required', 'string', 'unique:orders,code'],
+            'status'         => ['required', Rule::id(['pending', 'paid', 'shipped', 'completed'])],
             'payment_method' => ['required', Rule::id(['manual_transfer', 'midtrans', 'stripe', 'xendit'])],
-            'subtotal' => ['required', 'decimal:15,2'],
-            'shipping_cost' => ['required', 'decimal:15,2'],
-            'total' => ['required', 'decimal:15,2'],
+            'subtotal'       => ['required', 'decimal:15,2'],
+            'shipping_cost'  => ['required', 'decimal:15,2'],
+            'total'          => ['required', 'decimal:15,2'],
         ];
     }
 }

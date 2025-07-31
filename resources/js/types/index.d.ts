@@ -148,6 +148,13 @@ export type City = {
 // Products Start
 type IconKey = 'check' | 'money' | 'shield';
 
+export type ProductImage = {
+    id: string | number;
+    product_id: number;
+    path: string;
+    alt: string;
+};
+
 export type ProductData = {
     id: number;
     name: string;
@@ -163,10 +170,12 @@ export type ProductData = {
     stock: number;
     is_visible: boolean;
     category: { name: string; slug: string };
+    product_images: ProductImage[];
 
     // Accessor
     discount_percentage?: number;
     is_new?: boolean;
+    thumbnail_url: string;
 };
 
 export type ProductList = {

@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -22,6 +23,9 @@ class Product extends Model
         /** Detail */
         'name',
         'slug',
+
+        /** Images */
+        'thumbnail',
 
         /** Pricing */
         'price',
@@ -58,6 +62,7 @@ class Product extends Model
 
         /** Status */
         'is_visible' => 'boolean',
+        'published_at' => 'date',
     ];
 
     /**
@@ -68,6 +73,7 @@ class Product extends Model
     protected $appends = [
         'discount_percentage',
         'is_new',
+        'thumbnail_url',
     ];
 
     /**
@@ -99,6 +105,16 @@ class Product extends Model
     public function getIsNewAttribute()
     {
         return $this->created_at && $this->created_at->gt(now()->subDays(7));
+    }
+
+    /**
+     * Accessor to determine if the thumbnail doesn't have /storage prefix
+     *
+     * @return bool
+     */
+    public function getThumbnailUrlAttribute(): ?string
+    {
+        return $this->thumbnail ? Storage::url($this->thumbnail) : null;
     }
 
     /**

@@ -30,10 +30,12 @@ class BlogController extends Controller
      */
     public function show(string $slug): Response
     {
+        $blogs = Blog::filter()->paginate(5);
         $blog = Blog::filter()->slug($slug)->firstOrFail();
 
         return Inertia::render('blog/BlogDetail', [
             'BLOG' => Inertia::defer(fn () => $blog),
+            'BLOGS' => Inertia::defer(fn () => $blogs),
         ]);
     }
 }

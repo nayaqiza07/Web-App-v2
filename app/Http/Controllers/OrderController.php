@@ -8,6 +8,7 @@ use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class OrderController extends Controller
 {
@@ -30,6 +31,13 @@ class OrderController extends Controller
      * 
      * @return \Inertia\Response
      */
+    public function index () {
+        $orders = Order::all();
+
+        return Inertia::render('order/Order', [
+            'ORDERS' => $orders,
+        ]);
+    }
 
     /**
      * Store a new order for the authenticated user as Customer.

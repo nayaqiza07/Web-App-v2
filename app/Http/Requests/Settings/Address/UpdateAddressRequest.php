@@ -42,10 +42,10 @@ class UpdateAddressRequest extends FormRequest
                 })
             ],
             'country' => ['nullable', 'string', 'max:255'],
-            'state' => ['nullable', 'string', 'max:255'],
-            'city' => ['nullable', 'string', 'max:255'],
-            'street' => ['nullable', 'string', 'max:255'],
-            'zip' => ['nullable', 'string', 'max:30'],
+            'state'   => ['nullable', 'string', 'max:255'],
+            'city'    => ['nullable', 'string', 'max:255'],
+            'street'  => ['nullable', 'string', 'max:255'],
+            'zip'     => ['nullable', 'string', 'max:30'],
         ];
     }
 

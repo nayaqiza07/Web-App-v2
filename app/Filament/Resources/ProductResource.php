@@ -25,13 +25,15 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Support\RawJs;
 use Filament\Tables\Actions\Action as ActionsAction;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\HtmlString;
+use PhpParser\Node\Stmt\Label;
 
 class ProductResource extends Resource
 {
@@ -75,11 +77,75 @@ class ProductResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->unique(Product::class, 'slug', ignoreRecord: true),
-
-                        FileUpload::make('thumbnail')
-                            ->columnSpanFull(),
                     ])
                     ->columns(2),
+
+                    Section::make('Images')
+                    ->schema([
+                        FileUpload::make('thumbnail')
+                            ->image()
+                            ->directory('images/products/thumbnails')
+                            ->hint(new HtmlString('
+                                <a target="_blank" href="https://tinypng.com/">Have you compressed the image?</a>
+                            '))
+                            ->hintColor('primary')
+                            ->helperText(new HtmlString('
+                                <p>
+                                    Max image size <strong>2 MB</strong>
+                                </p>
+                                <p>
+                                    Compress the image here first 
+                                    <strong><a href="https://tinypng.com/">TinyPng</a></strong> 
+                                </p>
+                            '))
+                            ->required()
+                            ->columnSpanFull(),
+
+                        Repeater::make('Images')
+                            ->relationship('productImages')
+                            ->label('Additional Images')
+                            ->schema([
+                                FileUpload::make('path')
+                                    ->image()
+                                    ->directory('images/products/gallery')
+                                    ->label('Image File')
+                                    ->required()
+                                    ->hint(new HtmlString('
+                                        <strong><a target="_blank" href="https://tinypng.com/">TinyPng</a></strong>
+                                    '))
+                                    ->hintColor('primary')
+                                    ->helperText(new HtmlString('
+                                        <p>
+                                            Max image size <strong>2 MB</strong>
+                                        </p>
+                                        <p>
+                                           Compress the image here first 
+                                            <strong><a target="_blank" href="https://tinypng.com/">TinyPng</a></strong> 
+                                        </p>
+                                    ')),
+                                    
+                                TextInput::make('alt')
+                                    ->maxLength(255)
+                                    ->label('Alt Text')
+                                    ->nullable()
+                                    ->helperText(new HtmlString('
+                                        <p>
+                                            <strong>Avoid the words</strong>: "image" or "picture"
+                                        </p>
+                                        <p>
+                                            <strong>Example</strong>: "Map of the location of the headquarters in Jakarta."
+                                        </p>
+                                    ')),
+                            ])
+                            ->grid(2)
+                            ->minItems(0)
+                            ->maxItems(5)
+                            ->defaultItems(0)
+                            ->collapsible()
+                            ->reorderable()
+                            ->addActionLabel('Add more images')
+                            ->itemLabel(fn (array $state): ?string => $state['alt'] ?? null),
+                    ]),
 
                     /** Pricing Section */
                     Section::make('Pricing')
@@ -100,7 +166,7 @@ class ProductResource extends Resource
                     ])
                     ->columns(2),
 
-                    /** Description Section */
+                    /* Description Section */
                     Section::make('Description')
                     ->schema([
                         MarkdownEditor::make('information')
@@ -138,7 +204,7 @@ class ProductResource extends Resource
                     ->collapsible()
                     ->columns(2),
 
-                    /** Inventory Section */
+                    /* Inventory Section */
                     Section::make('Inventory')
                     ->schema([
                         TextInput::make('sku')
@@ -164,12 +230,19 @@ class ProductResource extends Resource
 
                Group::make()
                 ->schema([
-                    /** Status Section */
+                    /* Status Section */
                    Section::make('Status')
                     ->schema([
                         Toggle::make('is_visible')
                             ->label('Visible to customers')
                             ->helperText('This product will be hidden')
+                            ->helperText(function (bool $state) {
+                                if ($state === false) {
+                                    return 'This product will be hidden';
+                                }
+
+                                return 'This product will be visible';
+                            })
                             ->default(true),
 
                         DatePicker::make('published_at')
@@ -181,7 +254,7 @@ class ProductResource extends Resource
                             ->closeOnDateSelection(),
                     ]),
                         
-                    /** Relation Section */
+                    /* Relation Section */
                     Section::make('Relation')
                     ->schema([
                         Select::make('category_id')
@@ -192,7 +265,7 @@ class ProductResource extends Resource
                             ->native(false),
                     ]),
 
-                    /** Timestamp Section */
+                    /* Timestamp Section */
                     Section::make()
                     ->schema([
                         Placeholder::make('created_at')
@@ -215,9 +288,8 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('thumbnail')
-                    ->label('Thumbnail')
-                    ->width(50)
-                    ->height(50),
+                    ->square()
+                    ->label('Thumbnail'),
                     
                 TextColumn::make('name')
                     ->label('Name')

@@ -33,7 +33,7 @@ class StoreCartItemRequest extends FormRequest
                 Rule::exists('products', 'id'),
                 new ProductStockCheck($requestedQuantity),
             ],
-            'quantity' => ['required', 'integer', 'min:1'],
+            'quantity'  => ['required', 'integer', 'min:1'],
         ];
     }
 }
