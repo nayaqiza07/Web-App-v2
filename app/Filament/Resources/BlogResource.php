@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BlogResource\Pages;
-use App\Filament\Resources\BlogResource\RelationManagers;
 use App\Models\Blog;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -22,6 +21,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class BlogResource extends Resource
@@ -66,6 +66,22 @@ class BlogResource extends Resource
                             ->unique(Blog::class, 'slug', ignoreRecord: true),
                             
                         FileUpload::make('thumbnail')
+                            ->image()
+                            ->required()
+                            ->directory('images/blogs/thumbnails')
+                            ->hint(new HtmlString('
+                                <strong><a target="_blank" href="https://tinypng.com/">Have you compressed the image?</a></strong>
+                            '))
+                            ->hintColor('primary')
+                            ->helperText(new HtmlString('
+                                <p>
+                                    Max image size <strong>2 MB</strong>
+                                </p>
+                                <p>
+                                    Compress the image here first 
+                                    <strong><a target="_blank" href="https://tinypng.com/">TinyPng</a></strong> 
+                                </p>
+                            '))
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
@@ -86,7 +102,11 @@ class BlogResource extends Resource
                     ->schema([
                         Toggle::make('is_visible')
                             ->label('Visible to customers')
-                            ->helperText('This content will be hidden')
+                            ->helperText(function (bool $state) {
+                                if ($state === false) return 'This content will be hidden';
+
+                                return  'This content will be visible';
+                            })
                             ->default(true),
 
                         DatePicker::make('published_at')
