@@ -8,6 +8,7 @@ import { useCartActions } from '@/hooks/useCartActions';
 import { cn, priceFormat } from '@/lib/utils';
 import { useCartStore } from '@/stores/useCartStore';
 import { Link } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 import { ShoppingBagIcon, ShoppingCartIcon } from 'lucide-react';
 import { useState } from 'react';
 
@@ -22,12 +23,19 @@ const CartSheet = () => {
                 <Button size="icon" variant="outline" className="relative" aria-label="Open notifications">
                     <ShoppingCartIcon size={16} aria-hidden="true" />
                     {totalUniqueItems() > 0 && (
-                        <Badge
-                            variant="destructive"
-                            className={`absolute -top-2 left-full min-w-5 -translate-x-1/2 overflow-hidden rounded-full tabular-nums ${totalUniqueItems() > 9 ? 'px-0.5' : 'px-1.5'}`}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{
+                                duration: 0.4,
+                                scale: { type: 'spring', visualDuration: 0.4, bounce: 0.5 },
+                            }}
+                            className="absolute -top-2 left-full min-w-5 -translate-x-1/2 overflow-hidden rounded-full"
                         >
-                            {totalUniqueItems() > 99 ? '99+' : totalUniqueItems()}
-                        </Badge>
+                            <Badge variant="destructive" className={`tabular-nums ${totalUniqueItems() > 9 ? 'px-0.5' : 'px-1.5'}`}>
+                                {totalUniqueItems() > 99 ? '99+' : totalUniqueItems()}
+                            </Badge>
+                        </motion.div>
                     )}
                 </Button>
             </SheetTrigger>

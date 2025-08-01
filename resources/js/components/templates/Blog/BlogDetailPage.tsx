@@ -20,9 +20,14 @@ const BlogDetailPage = () => {
 
             {/* Blog Content Start */}
             <div className="block md:grid md:grid-cols-[3fr_auto_1fr] md:gap-5">
-                <article className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: selectedBlog?.body ?? '' }} />
+                <article
+                    className="prose dark:prose-invert h-full min-h-screen max-w-none"
+                    dangerouslySetInnerHTML={{ __html: selectedBlog?.body ?? '' }}
+                />
+
                 <Separator orientation="vertical" className="via-border bg-gradient-to-b from-transparent to-transparent" />
-                <div className="h-1/4 space-y-5">
+
+                <div className="h-full space-y-5">
                     <h3>Related Posts</h3>
                     <ScrollArea className="text-muted-foreground h-full text-xs">
                         <EachUtils
