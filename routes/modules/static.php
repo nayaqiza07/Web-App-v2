@@ -26,3 +26,13 @@ Route::prefix('contact-us')->name('contact-us.')->controller(FaqController::clas
      */
     Route::get('/', 'indexOnContactUs')->name('indexOnContactUs');
 });
+
+Route::get('/check-cache', function () {
+    $cacheKey = 'blogs.list';
+
+    if (\Illuminate\Support\Facades\Cache::has($cacheKey)) {
+        return 'Cache ditemukan! Data akan diambil dari cache.';
+    } else {
+        return 'Cache tidak ditemukan. Data akan diambil dari database.';
+    }
+});

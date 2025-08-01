@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\Faq;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -16,7 +17,10 @@ class FaqController extends Controller
      */
     public function index(): Response
     {
-        $faqs = Faq::filter()->get();
+        $cacheKey = 'faqs.list';
+        $faqs = Cache::remember($cacheKey, 3600, function () {
+            return Faq::filter()->get();
+        });
 
         return Inertia::render('static/Support', [
             'FAQS' => Inertia::defer(fn () => $faqs),
@@ -30,8 +34,13 @@ class FaqController extends Controller
      */
     public function indexOnContactUs(): Response
     {
-        $faqs = Faq::filter()->get();
-        $contacts = Contact::all();
+        $faqs = Cache::remember('faqs.list', 3600, function () {
+            return Faq::filter()->get();
+        });
+
+        $contacts = Cache::remember('contacts.list', 3600, function () {
+            return Contact::all();
+        });
 
         return Inertia::render('static/ContactUs', [
             'FAQS' => Inertia::defer(fn () => $faqs),

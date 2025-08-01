@@ -14,5 +14,4 @@ Route::prefix('blogs')->name('blogs.')->controller(BlogController::class)->group
      * 2. Blog Detail (show) 
      */
     Route::get('/{slug}', 'show')->name('show');
-    
 });

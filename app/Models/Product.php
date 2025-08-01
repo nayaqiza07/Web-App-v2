@@ -73,7 +73,6 @@ class Product extends Model
     protected $appends = [
         'discount_percentage',
         'is_new',
-        'thumbnail_url',
     ];
 
     /**
@@ -105,16 +104,6 @@ class Product extends Model
     public function getIsNewAttribute()
     {
         return $this->created_at && $this->created_at->gt(now()->subDays(7));
-    }
-
-    /**
-     * Accessor to determine if the thumbnail doesn't have /storage prefix
-     *
-     * @return bool
-     */
-    public function getThumbnailUrlAttribute(): ?string
-    {
-        return $this->thumbnail ? Storage::url($this->thumbnail) : null;
     }
 
     /**
