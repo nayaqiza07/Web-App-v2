@@ -29,7 +29,7 @@ const Navbar = () => {
     }, []);
 
     return (
-        <nav
+        <header
             className={cn(
                 `transation-all sticky top-0 z-40 border-b duration-300`,
                 'backdrop-blur-xl',
@@ -37,7 +37,7 @@ const Navbar = () => {
             )}
         >
             <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-5 font-bold">
-                <div className="flex items-center gap-2">
+                <nav className="flex items-center gap-2">
                     <NavbarMobile />
                     <Link href={route('home')}>Horestco</Link>
 
@@ -53,7 +53,7 @@ const Navbar = () => {
                             />
                         ))}
                     </div>
-                </div>
+                </nav>
 
                 <div className="flex items-center gap-4">
                     <SearchCommand />
@@ -80,7 +80,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-        </nav>
+        </header>
     );
 };
 

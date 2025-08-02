@@ -14,15 +14,14 @@ class UpdateCartItemRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $userId = Auth::id();
-        $cartItemId = $this->input('id') ?? $this->route('id');
-
-        if (!$userId || !$cartItemId) {
+        if (!Auth::check()) {
             return false;
         }
 
-        return CartItem::where('id', $cartItemId)
-                        ->where('user_id', $userId)
+        $cartItem = $this->route('cart');
+
+        return CartItem::where('id', $cartItem)
+                        ->where('user_id', Auth::id())
                         ->exists();
     }
 
@@ -33,8 +32,7 @@ class UpdateCartItemRequest extends FormRequest
      */
     public function rules(): array
     {
-        $cartItemId = $this->input('id') ?? $this->route('id');
-        $cartItem = CartItem::find($cartItemId);
+        $cartItem = $this->route('cartItem');
 
         if (!$cartItem || !$cartItem->product) {
             return[];

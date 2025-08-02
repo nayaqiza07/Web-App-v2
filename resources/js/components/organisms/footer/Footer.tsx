@@ -7,14 +7,14 @@ const Footer = () => {
     return (
         <footer className="border-t">
             <div className="mx-auto flex max-w-5xl flex-col gap-5 p-5 text-xs font-bold md:gap-10 md:p-10">
-                <div className="flex items-center justify-between lg:hidden">
+                <nav className="flex items-center justify-between lg:hidden">
                     <h1 className="text-base font-bold">Horestco</h1>
                     <Button variant="outline" size="icon" className="rounded-full">
                         <ArrowUp />
                     </Button>
-                </div>
+                </nav>
 
-                <div className="flex flex-col gap-5 md:flex-row md:justify-between">
+                <nav className="flex flex-col gap-5 md:flex-row md:justify-between">
                     <Link href={route('home')} className="hidden text-base font-bold lg:block">
                         Horestco
                     </Link>
@@ -51,9 +51,9 @@ const Footer = () => {
                     </div>
 
                     <ScrollToTopButton />
-                </div>
+                </nav>
 
-                <div className="flex flex-col gap-5 md:flex-row md:items-center">
+                <nav className="flex flex-col gap-5 md:flex-row md:items-center">
                     <div className="flex items-center gap-3">
                         <Globe size={20} />
                         <h5>Indonesia</h5>
@@ -69,7 +69,7 @@ const Footer = () => {
                         <h5>Email</h5>
                         <ArrowRight size={20} className="sm:hidden lg:block" />
                     </div>
-                </div>
+                </nav>
             </div>
         </footer>
     );

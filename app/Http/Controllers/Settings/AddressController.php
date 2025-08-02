@@ -62,10 +62,10 @@ class AddressController extends Controller
             DB::commit();
 
             return redirect()->back()->with('success', 'The address has been created successfully.');
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('error', $e->getMessage());
             // return redirect()->back()->with('error', 'Failed to create the address. Please try again.');
         }
     }

@@ -1,20 +1,20 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useCartStore } from '@/stores/useCartStore';
+import { useCartActions } from '@/hooks/useCartActions';
 import { Minus, Plus } from 'lucide-react';
 
 interface QuantityButtonProps {
-    productId: number;
+    cartId: number;
+    quantity: number;
 }
 
-const QuantityButton: React.FC<QuantityButtonProps> = ({ productId }) => {
-    const { updateQuantity, getQuantity } = useCartStore();
-
-    const quantity = getQuantity(productId);
+const QuantityButton: React.FC<QuantityButtonProps> = ({ cartId, quantity }) => {
+    const { handleUpdateCart } = useCartActions();
 
     const handleChangeQty = (type: 'dec' | 'inc') => {
         const newQty = type === 'dec' ? Math.max(quantity - 1, 1) : quantity + 1;
-        updateQuantity(productId, newQty);
+
+        handleUpdateCart(cartId, newQty);
     };
 
     return (

@@ -17,7 +17,7 @@ const BlogListPage = () => {
             {/* Hero Section End */}
 
             {/* Blog List Start */}
-            <div className="flex w-full flex-col justify-between gap-10">
+            <section className="flex w-full flex-col justify-between gap-10">
                 <div className="grid gap-3 md:grid-cols-4 lg:grid-cols-5">
                     <EachUtils
                         emptyIcon={NewspaperIcon}
@@ -31,7 +31,7 @@ const BlogListPage = () => {
                 {/* Blog List End*/}
 
                 <Paginate data={blogs} />
-            </div>
+            </section>
         </>
     );
 };

@@ -10,7 +10,7 @@ interface HeadLineProps {
 
 const HeadLine: React.FC<HeadLineProps> = ({ icon = <ALargeSmall size={20} />, title = 'Head Line', button }) => {
     return (
-        <div className="flex items-center justify-between text-xs font-bold">
+        <section className="flex items-center justify-between text-xs font-bold">
             <div className="flex items-center gap-4">
                 {icon}
                 <h3>{title}</h3>
@@ -22,7 +22,7 @@ const HeadLine: React.FC<HeadLineProps> = ({ icon = <ALargeSmall size={20} />, t
             ) : (
                 button
             )}
-        </div>
+        </section>
     );
 };
 

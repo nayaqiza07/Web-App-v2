@@ -208,11 +208,9 @@ export type Category = {
 // Cart Item Start
 export interface CartItem {
     id: number;
-    thumbnail: string;
-    name: string;
-    slug: string;
-    category: { name: string; slug: string };
-    price: number;
+    user_id: number;
+    product_id: number;
+    product: ProductData;
     quantity: number;
 }
 // Cart Item End
