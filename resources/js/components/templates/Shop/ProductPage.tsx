@@ -34,7 +34,8 @@ const ProductPage: React.FC = () => {
 
             <FilterDrawer />
             {/* Hero Section */}
-            <div className="flex gap-5">
+
+            <section className="flex gap-5">
                 <div className="flex w-[264px] items-center gap-2">
                     <span className={`${buttonVariants({ variant: 'outline' })} size-8`}>{selectedCategory ? <BlocksIcon /> : <Grid2X2Icon />}</span>
                     <span className="text-sm">{selectedCategory ? `${selectedCategory.name} Products` : 'All Furniture Products'}</span>
@@ -47,7 +48,7 @@ const ProductPage: React.FC = () => {
                     </div>
                     <PopoverFilter className="hidden md:flex" />
                 </div>
-            </div>
+            </section>
 
             <Separator />
 

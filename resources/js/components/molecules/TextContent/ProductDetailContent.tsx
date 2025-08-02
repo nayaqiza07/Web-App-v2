@@ -40,7 +40,7 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ PRODUCT }) 
     };
 
     return (
-        <motion.div
+        <motion.article
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 1, ease: easeOut }}
@@ -173,7 +173,7 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ PRODUCT }) 
                     <ShoppingBagIcon /> Add to Cart
                 </Button>
             </motion.div>
-        </motion.div>
+        </motion.article>
     );
 };
 

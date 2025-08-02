@@ -20,7 +20,7 @@ const CarouselImageProduct: React.FC<CarouselImageProductProps> = ({ orientation
     return (
         <>
             {/* Carousel Image Start*/}
-            <motion.div
+            <motion.figure
                 layout
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -59,10 +59,10 @@ const CarouselImageProduct: React.FC<CarouselImageProductProps> = ({ orientation
                     <CarouselPrevious className="bg-card" />
                     <CarouselNext className="bg-card" />
                 </Carousel>
-            </motion.div>
+            </motion.figure>
             {/* Carousel Image End */}
 
-            <motion.div
+            <motion.figure
                 layout
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -70,7 +70,7 @@ const CarouselImageProduct: React.FC<CarouselImageProductProps> = ({ orientation
                 className="order-first h-[416px] w-full items-center overflow-hidden rounded-2xl lg:order-last"
             >
                 <ImageViewer currentImageIndex={currentImageIndex} allImages={allImages} />
-            </motion.div>
+            </motion.figure>
         </>
     );
 };

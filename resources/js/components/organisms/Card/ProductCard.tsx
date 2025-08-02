@@ -29,7 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
         'before:animate-shine relative overflow-hidden before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-no-repeat background-position_0s_ease';
 
     return (
-        <motion.div
+        <motion.article
             layout
             initial={isCarousel ? false : { x: 100, opacity: 0 }}
             animate={{ scale: 1, transition: { duration: 0.2 } }}
@@ -114,7 +114,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                     </Card>
                 </div>
             </Link>
-        </motion.div>
+        </motion.article>
     );
 };
 

@@ -1,14 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { useCartActions } from '@/hooks/useCartActions';
 import { priceFormat } from '@/lib/utils';
-import { useCartStore } from '@/stores/useCartStore';
 import { CartItem as Item } from '@/types';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { ArrowLeftIcon, Trash2Icon } from 'lucide-react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import QuantityButton from '../Button/QuantityButton';
 
 interface CartItemProps {
@@ -19,14 +17,17 @@ interface CartItemProps {
 }
 
 const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) => {
-    const { totalPricePerProduct } = useCartStore();
-    const { handleRemoveCartItem } = useCartActions();
+    // const { handleRemoveCartItem } = useCartActions();
 
     const isOpen = openItemId === data.id;
 
     const handleToggle = () => {
         setOpenItemId(isOpen ? null : data.id);
     };
+
+    const totalPricePerProduct = useMemo(() => {
+        return data.product.price * data.quantity;
+    }, [data]);
 
     return (
         <motion.div
@@ -42,7 +43,7 @@ const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) 
                 variant="destructive"
                 effect="gooeyRight"
                 gooeyColor="destructive"
-                onClick={() => handleRemoveCartItem(data)}
+                // onClick={() => handleRemoveCartItem(data)}
                 className="border-border absolute inset-0 z-0 flex h-full cursor-pointer items-center justify-end rounded-md border pr-4"
             >
                 <Trash2Icon size={20} className="text-destructive-foreground" />
@@ -59,19 +60,22 @@ const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) 
                 <Card className="gap-0 rounded-md p-0 shadow-none">
                     <CardHeader className="flex flex-row items-center justify-between gap-5 px-3 py-2">
                         <div className="flex w-full items-center gap-5">
-                            <img src={data.thumbnail} alt="cart-image-product" className="h-[44px] w-[60px] rounded" />
+                            <img src={`/storage/${data.product.thumbnail}`} alt="cart-image-product" className="h-[44px] w-[60px] rounded" />
                             <div className="flex w-full justify-between">
                                 <div className="flex flex-col">
-                                    <Link href={route('products.show', { slug: data.slug })} className="underline-offset-2 hover:underline">
-                                        {data.name}
+                                    <Link
+                                        href={route('products.show', { slug: data.product.slug })}
+                                        className="w-fit underline-offset-2 hover:underline"
+                                    >
+                                        {data.product.name}
                                     </Link>
                                     <Link
-                                        href={route('products.showByCategory', { slug: data.category.slug })}
-                                        className="text-muted-foreground underline-offset-2 hover:underline"
+                                        href={route('products.showByCategory', { slug: data.product.category.slug })}
+                                        className="text-muted-foreground w-fit underline-offset-2 hover:underline"
                                     >
-                                        {data.category.name}
+                                        {data.product.category.name}
                                     </Link>
-                                    <p className="text-muted-foreground">{priceFormat(data.price)}</p>
+                                    <p className="text-muted-foreground">{priceFormat(data.product.price)}</p>
                                 </div>
                                 <Button variant="ghost" size="icon" onClick={handleToggle} className="size-6">
                                     <ArrowLeftIcon className={`${isOpen && 'rotate-180'} transition-all duration-200`} />
@@ -83,8 +87,8 @@ const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) 
                     <Separator />
 
                     <CardFooter className="flex items-center justify-between px-3 py-2">
-                        <QuantityButton productId={data.id} />
-                        <span>{priceFormat(totalPricePerProduct(data.id))}</span>
+                        <QuantityButton cartId={data.id} quantity={data.quantity} />
+                        <span>{priceFormat(totalPricePerProduct)}</span>
                     </CardFooter>
                 </Card>
             </motion.div>

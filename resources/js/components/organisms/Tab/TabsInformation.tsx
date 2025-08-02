@@ -16,7 +16,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ PRODUCT }) => {
         'data-[state=active]:border-border dark:data-[state=active]:bg-card data-[state=active]:bg-card data-[state=active]:text-foreground text-xs text-muted-foreground font-bold data-[state=active]:shadow-none';
 
     return (
-        <AnimatedMotion as="div" delay={0.3} duration={1} variantName="slideLeft" whileInView="visible" viewport={{ once: true }}>
+        <AnimatedMotion as="section" delay={0.3} duration={1} variantName="slideLeft" whileInView="visible" viewport={{ once: true }}>
             <Tabs defaultValue="information" className="w-full text-xs font-bold">
                 <TabsList className="bg-transparent">
                     <TabsTrigger value="information" className={`${styleTabTrigger}`}>

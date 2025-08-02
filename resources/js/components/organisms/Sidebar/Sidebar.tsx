@@ -20,7 +20,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
     const { products } = useProductStore();
 
     return (
-        <div className={`${className} sticky top-20 flex h-full flex-col gap-3`}>
+        <aside className={`${className} sticky top-20 flex h-full flex-col gap-3`}>
             <AnimatedMotion as="div" duration={1} variantName="slideRight" animate="visible">
                 <Card className={`bg-background w-full gap-0 py-0 text-xs shadow-none`}>
                     <CardHeader className="flex px-3 py-4">
@@ -70,7 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
                     </CardContent>
                 </Card>
             </AnimatedMotion>
-        </div>
+        </aside>
     );
 };
 

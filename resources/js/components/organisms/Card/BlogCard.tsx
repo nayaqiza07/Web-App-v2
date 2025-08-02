@@ -26,7 +26,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ index, isCarousel, data }) => {
     };
 
     return (
-        <motion.div
+        <motion.article
             custom={index}
             variants={blogCardVariants}
             initial={!isCarousel ? 'hidden' : false}
@@ -60,7 +60,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ index, isCarousel, data }) => {
                     </CardFooter>
                 </Card>
             </Link>
-        </motion.div>
+        </motion.article>
     );
 };
 
