@@ -59,30 +59,20 @@ class HandleInertiaRequests extends Middleware
                 'info' => session('info'),
                 'error' => session('error'),
             ],
-            'cart' => [
-                'items' => function () {
-                    $cacheKey = Auth::id();
-                    if (Auth::check()) {
-                        // Ambil item keranjang untuk pengguna yang sedang login
-                        // return Cache::remember("cart.user.{$cacheKey}", 3600, function () {
-                            return CartItem::where('user_id', Auth::id())
-                                ->with('product:id,name,slug,category_id,thumbnail,price') // Ambil data produk yang relevan saja
-                                ->get()
-                                ->toArray();
-                        // });
-                    }
+            'cart' => function () {
+                if (!Auth::check()) {
                     return null;
-                },
-                'total_items' => function () {
-                    if (Auth::check()) {
-                        // Ambil item keranjang untuk pengguna yang sedang login
-                        return CartItem::where('user_id', Auth::id())
-                            ->with('product:id,name,slug,category_id,thumbnail,price') // Ambil data produk yang relevan saja
-                            ->count();
-                    }
-                    return null;
-                },
-            ],
+                }
+
+                $cartItems = CartItem::where('user_id', Auth::id())
+                    ->with('product:id,name,slug,category_id,thumbnail,price')
+                    ->get();
+                
+                return [
+                    'items' => $cartItems->toArray(),
+                    'total_items' => $cartItems->count(),
+                ];
+            },
         ];
     }
 }

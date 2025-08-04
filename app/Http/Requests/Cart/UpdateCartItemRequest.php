@@ -18,11 +18,9 @@ class UpdateCartItemRequest extends FormRequest
             return false;
         }
 
-        $cartItem = $this->route('cart');
+        $cartItem = $this->route('cartItem');
 
-        return CartItem::where('id', $cartItem)
-                        ->where('user_id', Auth::id())
-                        ->exists();
+        return $cartItem && $cartItem->user_id === Auth::id();
     }
 
     /**

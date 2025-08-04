@@ -1,91 +1,34 @@
-import { Button, buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { useCartStore } from '@/stores/useCartStore';
-import { ProductData } from '@/types';
-import { Link, router, usePage } from '@inertiajs/react';
-import { CircleCheckIcon, XIcon } from 'lucide-react';
+import { ToastCart } from '@/components/atoms/Toast/ToastCart';
+import ToastSonner from '@/components/atoms/Toast/ToastSonner';
+import { useQuantityButtonStore } from '@/stores/useQuantityButtonStore';
+import { CartItemsType, NullableCartItemsType, ProductData } from '@/types';
+import { router, usePage } from '@inertiajs/react';
+import { useMemo } from 'react';
 import { toast } from 'sonner';
 
 export const useCartActions = () => {
-    const { removeItem, clearCart } = useCartStore();
+    const { setQuantity } = useQuantityButtonStore();
 
-    const { props } = usePage();
-    const cart = props.cart || [];
+    const { cart } = usePage().props;
+    const typedCart: NullableCartItemsType = cart as NullableCartItemsType;
 
-    // const handleAddToCart = (
-    //     e: React.MouseEvent<HTMLButtonElement>,
-    //     data: ProductData,
-    //     quantity: number,
-    //     setQuantity?: (quantity: number) => void,
-    // ) => {
-    //     e.preventDefault();
+    const cartItems = useMemo(() => {
+        return typedCart || ({ items: [], total_items: 0 } as CartItemsType);
+    }, [typedCart]);
 
-    //     addItem({
-    //         id: data?.id,
-    //         thumbnail: data?.thumbnail,
-    //         name: data?.name,
-    //         slug: data?.slug,
-    //         category: {
-    //             name: data?.category.name,
-    //             slug: data?.category.slug,
-    //         },
-    //         price: data?.price,
-    //         quantity: quantity,
-    //     });
+    const subTotalPrice = useMemo(() => {
+        if (!cartItems || !cartItems.items) {
+            return 0;
+        }
 
-    //     toast.custom((t) => (
-    //         <div className="bg-popover z-50 max-w-[400px] rounded-md border p-4 shadow-lg md:w-[400px]">
-    //             <div className="flex gap-2">
-    //                 <div className="flex grow gap-3">
-    //                     <CircleCheckIcon className="mt-0.5 shrink-0 text-emerald-500" size={16} aria-hidden="true" />
-    //                     <div className="flex grow flex-col gap-3">
-    //                         <div className="space-y-1">
-    //                             <p className="text-sm font-medium">You just added item to your cart</p>
-    //                             <table className="text-muted-foreground text-xs">
-    //                                 <tbody>
-    //                                     <tr>
-    //                                         <td>Item</td>
-    //                                         <td className="px-2">:</td>
-    //                                         <td>{data.name}</td>
-    //                                     </tr>
-    //                                     <tr>
-    //                                         <td>Quantity</td>
-    //                                         <td className="px-2">:</td>
-    //                                         <td>{quantity}</td>
-    //                                     </tr>
-    //                                 </tbody>
-    //                             </table>
-    //                         </div>
-    //                         <div className="flex gap-2">
-    //                             <Link
-    //                                 href={route('cart.index')}
-    //                                 as="button"
-    //                                 className={cn(buttonVariants({ variant: 'default' }), 'h-fit w-fit rounded px-2 py-1 text-xs')}
-    //                             >
-    //                                 View Cart
-    //                             </Link>
-    //                         </div>
-    //                     </div>
-    //                     <Button
-    //                         variant="ghost"
-    //                         className="group -my-1.5 -me-2 size-8 shrink-0 p-0 hover:bg-transparent"
-    //                         aria-label="Close notification"
-    //                         onClick={() => toast.dismiss(t)}
-    //                     >
-    //                         <XIcon size={16} className="opacity-60 transition-opacity group-hover:opacity-100" aria-hidden="true" />
-    //                     </Button>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     ));
+        return cartItems.items.reduce((acc, _item) => acc + _item.product.price * _item.quantity, 0);
+    }, [cartItems]);
 
-    //     if (setQuantity) {
-    //         setQuantity(1);
-    //     }
-    // };
     const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>, data: ProductData, quantity: number) => {
         e.preventDefault();
         e.stopPropagation();
+
+        const toastId = 'add-to-cart';
 
         router.post(
             route('cart.store'),
@@ -95,53 +38,13 @@ export const useCartActions = () => {
             },
             {
                 preserveScroll: true,
-                onSuccess: () => {
-                    toast.custom((t) => (
-                        <div className="bg-popover z-50 max-w-[400px] rounded-md border p-4 shadow-lg md:w-[400px]">
-                            <div className="flex gap-2">
-                                <div className="flex grow gap-3">
-                                    <CircleCheckIcon className="mt-0.5 shrink-0 text-emerald-500" size={16} aria-hidden="true" />
-                                    <div className="flex grow flex-col gap-3">
-                                        <div className="space-y-1">
-                                            <p className="text-sm font-medium">You just added item to your cart</p>
-                                            <table className="text-muted-foreground text-xs">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Item</td>
-                                                        <td className="px-2">:</td>
-                                                        <td>{data.name}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Quantity</td>
-                                                        <td className="px-2">:</td>
-                                                        <td>{quantity}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <Link
-                                                href={route('cart.index')}
-                                                as="button"
-                                                className={cn(buttonVariants({ variant: 'default' }), 'h-fit w-fit rounded px-2 py-1 text-xs')}
-                                            >
-                                                View Cart
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <Button
-                                        variant="ghost"
-                                        className="group -my-1.5 -me-2 size-8 shrink-0 p-0 hover:bg-transparent"
-                                        aria-label="Close notification"
-                                        onClick={() => toast.dismiss(t)}
-                                    >
-                                        <XIcon size={16} className="opacity-60 transition-opacity group-hover:opacity-100" aria-hidden="true" />
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    ));
-                },
+                only: ['cart'],
+                onStart: () => toast.custom((t) => <ToastSonner toastId={t} variant="process" title="Saving..." />, { id: toastId }),
+                onSuccess: () =>
+                    toast.custom(
+                        (t) => <ToastCart toastId={t} message="You just added item to your cart" itemName={data.name} itemQuantity={quantity} />,
+                        { id: toastId },
+                    ),
                 onError: (errors) => {
                     const firstError = Object.values(errors)[0];
                     toast.error(firstError);
@@ -149,9 +52,9 @@ export const useCartActions = () => {
             },
         );
 
-        // if (setQuantity) {
-        //     setQuantity(1);
-        // }
+        if (setQuantity) {
+            setQuantity(1);
+        }
     };
 
     const handleUpdateCart = (cartId: number, newQuantity: number) => {
@@ -159,61 +62,21 @@ export const useCartActions = () => {
             return;
         }
 
+        const toastId = 'update-quantity-cart';
+
         router.put(
-            route('cart.update', { cart: cartId }),
+            route('cart.update', { cartItem: cartId }),
             {
                 quantity: newQuantity,
             },
             {
                 preserveScroll: true,
-                onSuccess: () => {
-                    toast.custom((t) => (
-                        <div className="bg-popover z-50 max-w-[400px] rounded-md border p-4 shadow-lg md:w-[400px]">
-                            <div className="flex gap-2">
-                                <div className="flex grow gap-3">
-                                    <CircleCheckIcon className="mt-0.5 shrink-0 text-emerald-500" size={16} aria-hidden="true" />
-                                    <div className="flex grow flex-col gap-3">
-                                        <div className="space-y-1">
-                                            <p className="text-sm font-medium">You just added item to your cart</p>
-                                            <table className="text-muted-foreground text-xs">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Item</td>
-                                                        <td className="px-2">:</td>
-                                                        <td>asd</td>
-                                                        {/* <td>{data.name}</td> */}
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Quantity</td>
-                                                        <td className="px-2">:</td>
-                                                        <td>{newQuantity}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div className="flex gap-2">
-                                            <Link
-                                                href={route('cart.index')}
-                                                as="button"
-                                                className={cn(buttonVariants({ variant: 'default' }), 'h-fit w-fit rounded px-2 py-1 text-xs')}
-                                            >
-                                                View Cart
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <Button
-                                        variant="ghost"
-                                        className="group -my-1.5 -me-2 size-8 shrink-0 p-0 hover:bg-transparent"
-                                        aria-label="Close notification"
-                                        onClick={() => toast.dismiss(t)}
-                                    >
-                                        <XIcon size={16} className="opacity-60 transition-opacity group-hover:opacity-100" aria-hidden="true" />
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    ));
-                },
+                only: ['cart'],
+                onStart: () => toast.custom((t) => <ToastSonner toastId={t} variant="process" title="Updating..." />, { id: toastId }),
+                onSuccess: () =>
+                    toast.custom((t) => <ToastCart toastId={t} message="You just updated item on your cart" itemQuantity={newQuantity} />, {
+                        id: toastId,
+                    }),
                 onError: (errors) => {
                     const firstError = Object.values(errors)[0];
                     toast.error(firstError);
@@ -222,81 +85,44 @@ export const useCartActions = () => {
         );
     };
 
-    type removeDataType = {
-        id: number;
-        thumbnail: string;
-        name: string;
-        slug: string;
-        category: {
-            name: string;
-            slug: string;
-        };
-        price: number;
-        quantity: number;
-    };
+    const handleRemoveCartItem = (cartId: number, productName: string) => {
+        const toastId = 'delete-from-cart';
 
-    const handleRemoveCartItem = (data: removeDataType) => {
-        removeItem(data.id);
-
-        toast.custom((t) => (
-            <div className="bg-popover z-50 max-w-[400px] rounded-md border p-4 shadow-lg md:w-[400px]">
-                <div className="flex gap-2">
-                    <div className="flex grow gap-3">
-                        <CircleCheckIcon className="mt-0.5 shrink-0 text-emerald-500" size={16} aria-hidden="true" />
-                        <div className="flex grow flex-col gap-3">
-                            <div className="space-y-1">
-                                <p className="text-sm font-medium">You just removed item from your cart</p>
-                                <table className="text-muted-foreground text-xs">
-                                    <tbody>
-                                        <tr>
-                                            <td>Item</td>
-                                            <td className="px-2">:</td>
-                                            <td>{data.name}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <Button
-                            variant="ghost"
-                            className="group -my-1.5 -me-2 size-8 shrink-0 p-0 hover:bg-transparent"
-                            aria-label="Close notification"
-                            onClick={() => toast.dismiss(t)}
-                        >
-                            <XIcon size={16} className="opacity-60 transition-opacity group-hover:opacity-100" aria-hidden="true" />
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        ));
+        router.delete(route('cart.destroy', { cartItem: cartId }), {
+            preserveScroll: true,
+            only: ['cart'],
+            onStart: () => toast.custom((t) => <ToastSonner toastId={t} variant="process" title="Deleting..." />, { id: toastId }),
+            onSuccess: () =>
+                toast.custom(
+                    (t) => <ToastCart toastId={t} message="You just deleted item on your cart" itemName={productName} isViewLink={false} />,
+                    {
+                        id: toastId,
+                    },
+                ),
+            onError: (errors) => {
+                const firstError = Object.values(errors)[0];
+                toast.error(firstError);
+            },
+        });
     };
 
     const handleClearAllCartItems = () => {
-        clearCart();
+        const toastId = 'clear-all-item';
 
-        toast.custom((t) => (
-            <div className="bg-popover z-50 max-w-[400px] rounded-md border p-4 shadow-lg md:w-[400px]">
-                <div className="flex gap-2">
-                    <div className="flex grow gap-3">
-                        <CircleCheckIcon className="mt-0.5 shrink-0 text-emerald-500" size={16} aria-hidden="true" />
-                        <div className="flex grow flex-col gap-3">
-                            <div className="space-y-1">
-                                <p className="text-sm font-medium">All cart items has been cleared</p>
-                            </div>
-                        </div>
-                        <Button
-                            variant="ghost"
-                            className="group -my-1.5 -me-2 size-8 shrink-0 p-0 hover:bg-transparent"
-                            aria-label="Close notification"
-                            onClick={() => toast.dismiss(t)}
-                        >
-                            <XIcon size={16} className="opacity-60 transition-opacity group-hover:opacity-100" aria-hidden="true" />
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        ));
+        router.delete(route('cart.clear'), {
+            preserveScroll: true,
+            only: ['cart'],
+            onStart: () => toast.custom((t) => <ToastSonner toastId={t} variant="process" title="Clearing..." />, { id: toastId }),
+            onSuccess: () =>
+                toast.custom((t) => <ToastCart toastId={t} message="All cart items has been cleared" isViewLink={false} />, {
+                    id: toastId,
+                }),
+            onError: (errors) => {
+                const firstError = Object.values(errors)[0];
+                toast.error(firstError);
+            },
+        });
     };
 
-    return { handleAddToCart, handleUpdateCart, handleRemoveCartItem, handleClearAllCartItems, cart };
+    return { handleAddToCart, handleUpdateCart, handleRemoveCartItem, handleClearAllCartItems, cartItems, subTotalPrice };
 };

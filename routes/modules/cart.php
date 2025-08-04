@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('cart')->name('cart.')->controller(CartItemController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::post('/', 'store')->name('store');
-    Route::put('/{cart}', 'update')->name('update');
-    Route::delete('/{cart}', 'delete')->name('delete');
+    Route::put('/{cartItem}', 'update')->name('update');
+    Route::delete('/{cartItem}', 'destroy')->name('destroy');
+    Route::delete('/', 'clear')->name('clear');
 })->middleware(['auth', 'verified']);

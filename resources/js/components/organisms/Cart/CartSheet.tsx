@@ -9,22 +9,22 @@ import { cn, priceFormat } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { ShoppingBagIcon, ShoppingCartIcon } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 const CartSheet = () => {
     const [openItemId, setOpenItemId] = useState<number | null>(null);
-    const { handleClearAllCartItems, cart } = useCartActions();
+    const { handleClearAllCartItems, cartItems, subTotalPrice } = useCartActions();
 
-    const totalPrice = useMemo(() => {
-        return cart.items.reduce((acc, _item) => acc + _item.product.price * _item.quantity, 0);
-    }, [cart]);
+    if (!cartItems || !cartItems.items || !cartItems.total_items) {
+        return null;
+    }
 
     return (
         <Sheet>
             <SheetTrigger asChild>
                 <Button size="icon" variant="outline" className="relative" aria-label="Open notifications">
                     <ShoppingCartIcon size={16} aria-hidden="true" />
-                    {cart.total_items > 0 && (
+                    {cartItems.total_items > 0 && (
                         <motion.div
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -34,8 +34,8 @@ const CartSheet = () => {
                             }}
                             className="absolute -top-2 left-full min-w-5 -translate-x-1/2 overflow-hidden rounded-full"
                         >
-                            <Badge variant="destructive" className={`tabular-nums ${cart.total_items > 9 ? 'px-0.5' : 'px-1.5'}`}>
-                                {cart.total_items > 99 ? '99+' : cart.total_items}
+                            <Badge variant="destructive" className={`tabular-nums ${cartItems.total_items > 9 ? 'px-0.5' : 'px-1.5'}`}>
+                                {cartItems.total_items > 99 ? '99+' : cartItems.total_items}
                             </Badge>
                         </motion.div>
                     )}
@@ -47,7 +47,7 @@ const CartSheet = () => {
                     <SheetDescription></SheetDescription>
                 </SheetHeader>
 
-                {cart.items.length === 0 ? (
+                {cartItems.items.length === 0 ? (
                     <EmptyState
                         icon={ShoppingBagIcon}
                         iconSize={50}
@@ -59,7 +59,7 @@ const CartSheet = () => {
                     <>
                         {/* Total Item and Clear All from cart */}
                         <section className="flex items-center justify-between px-4 pt-2 text-xs">
-                            <span>{cart.total_items} Items</span>
+                            <span>{cartItems.total_items} Items</span>
                             <Button type="button" variant="ghost" size="sm" effect="hoverUnderline" onClick={handleClearAllCartItems}>
                                 Clear All
                             </Button>
@@ -68,7 +68,7 @@ const CartSheet = () => {
                         <section className="flex-1 overflow-hidden">
                             <ScrollArea className="h-full px-4 py-2">
                                 <div className="flex flex-col gap-2">
-                                    {cart.items.map((_data) => (
+                                    {cartItems.items.map((_data) => (
                                         <CartItem key={_data.id} data={_data} openItemId={openItemId} setOpenItemId={setOpenItemId} />
                                     ))}
                                 </div>
@@ -78,7 +78,7 @@ const CartSheet = () => {
                         <SheetFooter className="border-t">
                             <div className="text-muted-foreground mb-5 flex justify-between text-sm font-bold">
                                 <p>Sub Total</p>
-                                <p className="text-foreground">{priceFormat(totalPrice)}</p>
+                                <p className="text-foreground">{priceFormat(subTotalPrice)}</p>
                             </div>
                             <Link
                                 href={route('cart.index')}

@@ -58,7 +58,7 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({ headLineTitle = 'Titl
                                 size="icon"
                                 variant="secondary"
                                 onClick={() => api?.scrollTo(current - 1)}
-                                className="border-border size-7 rounded-r-none border"
+                                className="border-border size-7 rounded-r-none border border-r-[0.75px]"
                             >
                                 <ArrowLeft />
                             </Button>
@@ -66,7 +66,7 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({ headLineTitle = 'Titl
                                 size="icon"
                                 variant="secondary"
                                 onClick={() => api?.scrollTo(current + 1)}
-                                className="border-border size-7 rounded-l-none border"
+                                className="border-border size-7 rounded-l-none border border-l-[0.75px]"
                             >
                                 <ArrowRight />
                             </Button>

@@ -1,10 +1,10 @@
-import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import ReviewContent from '@/components/molecules/TextContent/ReviewContent';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProductData } from '@/types';
+import { easeOut, motion } from 'framer-motion';
 import { FileTextIcon } from 'lucide-react';
 
 interface TabsInformationProps {
@@ -15,22 +15,27 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ PRODUCT }) => {
     const styleTabTrigger =
         'data-[state=active]:border-border dark:data-[state=active]:bg-card data-[state=active]:bg-card data-[state=active]:text-foreground text-xs text-muted-foreground font-bold data-[state=active]:shadow-none';
 
+    const tabsTriggerData = [
+        { id: 'information', value: 'information', title: 'Product Information' },
+        { id: 'materials', value: 'materials', title: 'Materials' },
+        { id: 'shipping', value: 'shipping', title: 'Shipping' },
+        { id: 'reviews', value: 'reviews', title: 'Reviews' },
+    ];
+
     return (
-        <AnimatedMotion as="section" delay={0.3} duration={1} variantName="slideLeft" whileInView="visible" viewport={{ once: true }}>
-            <Tabs defaultValue="information" className="w-full text-xs font-bold">
+        <motion.section
+            initial={{ x: 100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 1, ease: easeOut }}
+            viewport={{ once: true }}
+        >
+            <Tabs defaultValue={tabsTriggerData[0].value} className="w-full text-xs font-bold">
                 <TabsList className="bg-transparent">
-                    <TabsTrigger value="information" className={`${styleTabTrigger}`}>
-                        Product Information
-                    </TabsTrigger>
-                    <TabsTrigger value="materials" className={`${styleTabTrigger}`}>
-                        Materials
-                    </TabsTrigger>
-                    <TabsTrigger value="shipping" className={`${styleTabTrigger}`}>
-                        Shipping
-                    </TabsTrigger>
-                    <TabsTrigger value="reviews" className={`${styleTabTrigger}`}>
-                        Reviews
-                    </TabsTrigger>
+                    {tabsTriggerData.map((_tab) => (
+                        <TabsTrigger key={_tab.id} value={_tab.value} className={`${styleTabTrigger}`}>
+                            {_tab.title}
+                        </TabsTrigger>
+                    ))}
                 </TabsList>
 
                 <TabsContent value="information" className="flex flex-col gap-3 text-xs font-bold lg:flex-row">
@@ -47,7 +52,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ PRODUCT }) => {
 
                             {PRODUCT && PRODUCT.dimensions ? (
                                 <div className="grid gap-2 md:grid-cols-2">
-                                    <ul className="flex flex-col gap-2">
+                                    <ul className="space-y-2">
                                         {Object.entries(PRODUCT.dimensions).map(([key, value]) => (
                                             <li key={key} className="list-disc">
                                                 {key}: {value} cm
@@ -69,7 +74,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ PRODUCT }) => {
 
                             {PRODUCT && PRODUCT.materials ? (
                                 <div className="grid gap-2 md:grid-cols-2">
-                                    <ul className="flex flex-col gap-2">
+                                    <ul className="space-y-2">
                                         {Object.entries(PRODUCT.materials).map(([key, value]) => (
                                             <li key={key} className="list-disc">
                                                 {key}: {value}
@@ -104,7 +109,7 @@ const TabsInformation: React.FC<TabsInformationProps> = ({ PRODUCT }) => {
                     </Card>
                 </TabsContent>
             </Tabs>
-        </AnimatedMotion>
+        </motion.section>
     );
 };
 
