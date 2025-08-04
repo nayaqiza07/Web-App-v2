@@ -1,4 +1,3 @@
-import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import CornerPlusBadge from '@/components/atoms/Badge/CornerPlusBadge';
 import ButtonWithBadge from '@/components/molecules/Button/ButtonWithBadge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,6 +8,7 @@ import { EachUtils } from '@/lib/EachUtils';
 import { useCategoryStore } from '@/stores/useCategoryStore';
 import { useProductStore } from '@/stores/useProductStore';
 import { Link } from '@inertiajs/react';
+import { easeOut, motion } from 'framer-motion';
 import { TagsIcon } from 'lucide-react';
 
 interface SidebarProps {
@@ -21,7 +21,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
 
     return (
         <aside className={`${className} sticky top-20 flex h-full flex-col gap-3`}>
-            <AnimatedMotion as="div" duration={1} variantName="slideRight" animate="visible">
+            <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1, ease: easeOut }}>
                 <Card className={`bg-background w-full gap-0 py-0 text-xs shadow-none`}>
                     <CardHeader className="flex px-3 py-4">
                         <CardTitle className="flex items-center justify-between">
@@ -54,9 +54,9 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
                         </ScrollArea>
                     </CardContent>
                 </Card>
-            </AnimatedMotion>
+            </motion.div>
 
-            <AnimatedMotion as="div" delay={0.3} duration={1} variantName="slideRight" animate="visible" viewport={{ once: true }}>
+            <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1, ease: easeOut }}>
                 <Card className={`bg-background w-full gap-0 py-0 text-xs shadow-none`}>
                     <CardHeader className="px-3 py-4">
                         <CardTitle>Price</CardTitle>
@@ -69,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
                         </div>
                     </CardContent>
                 </Card>
-            </AnimatedMotion>
+            </motion.div>
         </aside>
     );
 };

@@ -206,13 +206,19 @@ export type Category = {
 // Category End
 
 // Cart Item Start
-export interface CartItem {
+export interface CartItemType {
     id: number;
     user_id: number;
     product_id: number;
     product: ProductData;
     quantity: number;
 }
+export interface CartItemsType {
+    items: CartItemType[];
+    total_items: number;
+}
+
+export type NullableCartItemsType = CartItemsType | null;
 // Cart Item End
 
 // Blog Start

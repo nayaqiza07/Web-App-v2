@@ -1,8 +1,8 @@
 import CartItem from '@/components/molecules/Cart/CartItem';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { useCartActions } from '@/hooks/useCartActions';
 import { EachUtils } from '@/lib/EachUtils';
 import { priceFormat } from '@/lib/utils';
-import { useCartStore } from '@/stores/useCartStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ShoppingBagIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -12,9 +12,13 @@ import AnimatedAccordionContent from './AnimatedAccordionContent';
 
 const AccordionCart = () => {
     const [openItems, setOpenItems] = useState<string[]>(['bag', 'profile', 'delivery']);
-
-    const { items, totalItems, totalPrice } = useCartStore();
     const [openCartItemId, setOpenCartItemId] = useState<number | null>(null);
+
+    const { cartItems, subTotalPrice } = useCartActions();
+
+    if (!cartItems || !cartItems.items || !cartItems.total_items) {
+        return null;
+    }
 
     return (
         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
@@ -36,10 +40,10 @@ const AccordionCart = () => {
                             transition={{ delay: 0.2, duration: 0.4, ease: 'easeOut' }}
                         >
                             <h5>
-                                Products: <span className="text-foreground">{totalItems() ?? 0}</span>
+                                Products: <span className="text-foreground">{cartItems.total_items ?? 0}</span>
                             </h5>
                             <h5>
-                                Amount: <span className="text-foreground">{priceFormat(totalPrice())}</span>
+                                Amount: <span className="text-foreground">{priceFormat(subTotalPrice)}</span>
                             </h5>
                         </motion.div>
                     </AccordionTrigger>
@@ -52,7 +56,7 @@ const AccordionCart = () => {
                                 emptyDesc=""
                                 emptyButtonTxt="Continue Shopping"
                                 emptyButtonLink={route('products.index')}
-                                of={items}
+                                of={cartItems.items}
                                 render={(_item) => (
                                     <CartItem key={_item.id} data={_item} openItemId={openCartItemId} setOpenItemId={setOpenCartItemId} />
                                 )}

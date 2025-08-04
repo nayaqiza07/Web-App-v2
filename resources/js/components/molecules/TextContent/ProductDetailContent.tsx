@@ -167,7 +167,7 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ PRODUCT }) 
                     type="button"
                     effect="gooeyLeft"
                     gooeyColor="default"
-                    onClick={(e) => handleAddToCart(e, PRODUCT, quantity, setQuantity)}
+                    onClick={(e) => handleAddToCart(e, PRODUCT, quantity)}
                     className="w-full"
                 >
                     <ShoppingBagIcon /> Add to Cart

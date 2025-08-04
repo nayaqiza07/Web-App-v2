@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { useCartActions } from '@/hooks/useCartActions';
 import { priceFormat } from '@/lib/utils';
 import { CartItem as Item } from '@/types';
 import { Link } from '@inertiajs/react';
@@ -17,7 +18,7 @@ interface CartItemProps {
 }
 
 const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) => {
-    // const { handleRemoveCartItem } = useCartActions();
+    const { handleRemoveCartItem } = useCartActions();
 
     const isOpen = openItemId === data.id;
 
@@ -43,7 +44,7 @@ const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) 
                 variant="destructive"
                 effect="gooeyRight"
                 gooeyColor="destructive"
-                // onClick={() => handleRemoveCartItem(data)}
+                onClick={() => handleRemoveCartItem(data.id, data.product.name)}
                 className="border-border absolute inset-0 z-0 flex h-full cursor-pointer items-center justify-end rounded-md border pr-4"
             >
                 <Trash2Icon size={20} className="text-destructive-foreground" />

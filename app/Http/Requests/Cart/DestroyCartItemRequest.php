@@ -14,16 +14,13 @@ class DestroyCartItemRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $userId = Auth::id();
-        $cartItemId = $this->input('id') ?? $this->route('id');
-
-        if (!$userId || !$cartItemId) {
+        if (!Auth::check()) {
             return false;
         }
 
-        return CartItem::where('id', $cartItemId)
-                            ->where('user_id', $userId)
-                            ->exists();
+        $cartItem = $this->route('cartItem');
+        
+        return $cartItem && $cartItem->user_id === Auth::id();
     }
 
     /**
@@ -34,13 +31,13 @@ class DestroyCartItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => [
-                'required',
-                'integer',
-                Rule::exists('cart_items', 'id')->where(function ($query) {
-                    $query->where('user_id', Auth::id());
-                })
-            ],
+            // 'id' => [
+            //     'required',
+            //     'integer',
+            //     Rule::exists('cart_items', 'id')->where(function ($query) {
+            //         $query->where('user_id', Auth::id());
+            //     })
+            // ],
         ];
     }
 }

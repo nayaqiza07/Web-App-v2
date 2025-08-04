@@ -6,6 +6,7 @@ use App\Http\Requests\Cart\DestroyCartItemRequest;
 use App\Http\Requests\Cart\StoreCartItemRequest;
 use App\Http\Requests\Cart\UpdateCartItemRequest;
 use App\Models\CartItem;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -34,20 +35,23 @@ class CartItemController extends Controller
     {
         DB::beginTransaction();
 
-        $userId = Auth::id();
-        $productId = $request->input('product_id');
-        $quantity = $request->input('quantity');
-
         try {
-            CartItem::updateOrCreate(
-                [
-                    'user_id' => $userId,
-                    'product_id' => $productId,
-                ], 
-                [
-                    'quantity' => DB::raw("`quantity` + $quantity"),
-                ]
-            );
+            $userId = Auth::id();
+            $productId = $request->input('product_id');
+            $quantity = $request->input('quantity');
+
+            $cartItem = CartItem::firstOrNew([
+                'user_id' => $userId,
+                'product_id' => $productId,
+            ]);
+
+            if ($cartItem->exists) {
+                $cartItem->quantity += $quantity;
+            } else {
+                $cartItem->quantity = $quantity;
+            };
+
+            $cartItem->save();
 
             DB::commit();
 
@@ -86,11 +90,29 @@ class CartItemController extends Controller
      * Remove the specified resource from storage.
      * 
      * @param \App\Http\Requests\Cart\DestroyCartItemRequest $request
-     * @param string $id
-     * @throws \Throwable
+     * @param \App\Models\CartItem $cartItem
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(DestroyCartItemRequest $request, string $id)
+    public function destroy(DestroyCartItemRequest $request, CartItem $cartItem): RedirectResponse
     {
-        //
+        $cartItem->delete();
+        
+        return back()->with('success', 'Product successfully removed from cart.');
+    }
+
+    /**
+     * Remove all resource from storage.
+     * 
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function clear(): RedirectResponse
+    {
+        if (!Auth::check()) {
+            return back()->with('error', 'You must be logged in to delete your cart.');
+        }
+
+        CartItem::where('user_id', Auth::id())->delete();
+
+        return back()->with('success', 'All product successfully removed from cart.');
     }
 }
