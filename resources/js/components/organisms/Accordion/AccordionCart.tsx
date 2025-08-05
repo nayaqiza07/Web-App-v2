@@ -16,9 +16,9 @@ const AccordionCart = () => {
 
     const { cartItems, subTotalPrice } = useCartActions();
 
-    if (!cartItems || !cartItems.items || !cartItems.total_items) {
-        return null;
-    }
+    // if (!cartItems || !cartItems.items || !cartItems.total_items) {
+    //     return null;
+    // }
 
     return (
         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>

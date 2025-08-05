@@ -30,14 +30,6 @@ class DestroyCartItemRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            // 'id' => [
-            //     'required',
-            //     'integer',
-            //     Rule::exists('cart_items', 'id')->where(function ($query) {
-            //         $query->where('user_id', Auth::id());
-            //     })
-            // ],
-        ];
+        return [];
     }
 }

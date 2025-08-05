@@ -14,16 +14,13 @@ class UpdateAddressRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $addressId = $this->input('id') ?? $this->route('id');
-        $userId = Auth::id();
-
-        if (!$addressId || !$userId) {
+        if (!Auth::check()) {
             return false;
         }
 
-        return Address::where('id', $addressId)
-                        ->where('user_id', $userId)
-                        ->exists();
+        $address = $this->route('address');
+
+        return $address && $address->user_id === Auth::id();
     }
 
     /**
@@ -34,31 +31,14 @@ class UpdateAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => [
-                'required', 
-                'integer', 
-                Rule::exists('addresses', 'id')->where(function ($query) {
-                    $query->where('user_id', Auth::id());
-                })
-            ],
-            'country' => ['nullable', 'string', 'max:255'],
-            'state'   => ['nullable', 'string', 'max:255'],
-            'city'    => ['nullable', 'string', 'max:255'],
-            'street'  => ['nullable', 'string', 'max:255'],
-            'zip'     => ['nullable', 'string', 'max:30'],
-        ];
-    }
-
-    /**
-     * Get custom validation error message for the update address request
-     * 
-     * @return array<string, string>
-     */
-    public function message(): array
-    {
-        return [
-            'id.required' => 'Address ID is required.',
-            'id.exists' => 'The selected address does not exist or does not belong to you.'
+            'label'         => ['nullable', 'string', 'max:255'],
+            'recipient_name'=> ['nullable', 'string', 'max:255'],
+            'phone_number'  => ['nullable', 'string', 'max:255'],
+            'country'       => ['nullable', 'string', 'max:255'],
+            'state'         => ['nullable', 'string', 'max:255'],
+            'city'          => ['nullable', 'string', 'max:255'],
+            'street'        => ['nullable', 'string', 'max:255'],
+            'postal_code'   => ['nullable', 'string', 'max:30'],
         ];
     }
 }

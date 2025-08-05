@@ -22,6 +22,9 @@ return new class extends Migration
             
             $table->timestamps();
             $table->softDeletes();
+
+            /** Indexing */
+            $table->index('is_visible');
         });
     }
 

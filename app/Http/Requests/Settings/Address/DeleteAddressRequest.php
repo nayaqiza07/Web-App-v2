@@ -14,16 +14,13 @@ class DeleteAddressRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $addressId = $this->input('id') ?? $this->route('id');
-        $userId = Auth::id();
-
-        if (!$addressId || !$userId) {
+        if (!Auth::check()) {
             return false;
         }
 
-        return Address::where('id', $addressId)
-                        ->where('user_id', $userId)
-                        ->exists();
+        $address = $this->route('address');
+
+        return $address && $address->user_id === Auth::id();
     }
 
     /**
@@ -33,27 +30,19 @@ class DeleteAddressRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'id' => [
-                'required', 
-                'integer', 
-                Rule::exists('addresses', 'id')->where(function ($query) {
-                    $query->where('user_id', Auth::id());
-                }),
-            ]
-        ];
+        return [];
     }
 
-    /**
-     * Get custom validation error messages for the delete address request
-     * 
-     * @return array<string, string> Custom error messages for validation rules.
-     */
-    public function messages(): array
-    {
-        return [
-            'id.required' => 'Address ID is required.',
-            'id.exists' => 'The selected address does not exist or does not belong to you.'
-        ];
-    }
+    // /**
+    //  * Get custom validation error messages for the delete address request
+    //  * 
+    //  * @return array<string, string> Custom error messages for validation rules.
+    //  */
+    // public function messages(): array
+    // {
+    //     return [
+    //         'id.required' => 'Address ID is required.',
+    //         'id.exists' => 'The selected address does not exist or does not belong to you.'
+    //     ];
+    // }
 }

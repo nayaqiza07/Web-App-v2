@@ -16,13 +16,21 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
 
+            /** Label */
+            $table->string('label')->nullable();
+
+            /** Recipient */
+            $table->string('recipient_name')->nullable();
+            $table->string('phone_number')->nullable();
+
             $table->string('country')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
             $table->string('street')->nullable();
-            $table->string('zip')->nullable();
+            $table->string('postal_code')->nullable();
             
-            $table->boolean('is_active')->default(false);
+            /** Status */
+            $table->boolean('is_default')->default(false);
 
             /** Relation */
             $table->foreignId('user_id')->constrained(

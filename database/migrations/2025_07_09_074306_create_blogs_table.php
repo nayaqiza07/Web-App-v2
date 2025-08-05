@@ -28,6 +28,9 @@ return new class extends Migration
 
             $table->softDeletes();
             $table->timestamps();
+
+            /** Indexing */
+            $table->index('is_visible');
         });
     }
 

@@ -25,9 +25,13 @@ return new class extends Migration
                 table: 'products', indexName: 'reviews_product_id'
             )->onDelete('cascade');
 
+            /** Detail */
             $table->tinyInteger('rating');
             $table->longText('comment')->nullable();
             $table->json('images')->nullable();
+
+            /** Limitation Key */
+            $table->unique(['user_id', 'product_id']);
 
             $table->timestamps();
             $table->softDeletes();

@@ -19,12 +19,15 @@ class AddressFactory extends Factory
     public function definition(): array
     {
         return [
+            'label'=> 'Home',
+            'recipient_name'=> User::inRandomOrder()->first()?->name ?? User::factory(),
+            'phone_number'=> User::inRandomOrder()->first()?->phone ?? User::factory(),
             'country' => fake()->country(),
             'state' => fake()->state(),
             'city' => fake()->city(),
             'street' => fake()->streetAddress(),
-            'zip' => fake()->postcode(),
-            'is_active' => false,
+            'postal_code' => fake()->postcode(),
+            'is_default' => false,
 
             /** Relation */
             'user_id' => User::inRandomOrder()->first()?->id ?? User::factory(), 

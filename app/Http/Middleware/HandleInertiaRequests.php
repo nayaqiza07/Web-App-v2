@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Address;
 use App\Models\CartItem;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
@@ -48,6 +49,7 @@ class HandleInertiaRequests extends Middleware
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
                 'user' => $request->user(),
+                // 'userAddress' => Address::where('user_id', Auth::id())->where('is_default', true)->get(),
             ],
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),

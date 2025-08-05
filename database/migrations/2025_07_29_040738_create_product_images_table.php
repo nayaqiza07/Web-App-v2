@@ -17,7 +17,7 @@ return new class extends Migration
             /** Relation */
             $table->foreignId('product_id')->constrained(
                 table: 'products', indexName: 'product_images_product_id'
-            );
+            )->onDelete('cascade');
 
             $table->string('path');
             $table->string('alt')->nullable();
