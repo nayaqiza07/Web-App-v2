@@ -2,6 +2,7 @@ import InputWithLabel from '@/components/molecules/FormField/InputWithLabel';
 import SelectWithLabel from '@/components/molecules/FormField/SelectWithLabel';
 
 const DeliveryAddressForm = () => {
+    // const { auth } = usePage<SharedData>().props;
     return (
         <>
             <div className="grid gap-3">

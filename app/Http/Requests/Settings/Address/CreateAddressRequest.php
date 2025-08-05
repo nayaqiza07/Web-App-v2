@@ -12,7 +12,7 @@ class CreateAddressRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -23,12 +23,15 @@ class CreateAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country'   => ['nullable', 'string', 'max:255'],
-            'state'     => ['nullable', 'string', 'max:255'],
-            'city'      => ['nullable', 'string', 'max:255'],
-            'street'    => ['nullable', 'string', 'max:255'],
-            'zip'       => ['nullable', 'string', 'max:30'],
-            'is_active' => ['nullable', 'boolean'],
+            'label'          => ['nullable', 'string', 'max:255'],
+            'recipient_name' => ['nullable', 'string', 'max:255'],
+            'phone_number'   => ['nullable', 'string', 'max:255'],
+            'country'        => ['nullable', 'string', 'max:255'],
+            'state'          => ['nullable', 'string', 'max:255'],
+            'city'           => ['nullable', 'string', 'max:255'],
+            'street'         => ['nullable', 'string', 'max:255'],
+            'postal_code'    => ['nullable', 'string', 'max:30'],
+            'is_default'     => ['nullable', 'boolean'],
         ];
     }
 }

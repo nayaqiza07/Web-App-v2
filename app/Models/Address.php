@@ -15,11 +15,53 @@ class Address extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        /** Label */
+        'label',
+
+        /** Recipient */
+        'recipient_name',
+        'phone_number',
+
+        'country',
+        'state',
+        'city',
+        'street',
+        'postal_code',
+
+        /** Status */
+        'is_default',
+
+        /** Relation */
+        'user_id'
+    ];
+
+    /**
      * The relationships tha should always be laoded with the model.
      *
      * @var array<int, string>
      */
     protected $with = ['user'];
+
+    /**
+     * The "booted" method of the model
+     * 
+     * This Logic ensures only one default address per user
+     */
+    protected static function booted()
+    {
+        static::saving(function ($address) {
+            if ($address->is_default) {
+                static::where('user_id', $address->user_id)
+                        ->where('id', '!=', $address->id)
+                        ->update(['is_default' => false]);
+            }
+        });
+    }
 
     /**
      * Scope to show address that sync with user

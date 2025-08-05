@@ -3,14 +3,27 @@ import { AddressType } from '@/types';
 import { router } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 import { toast } from 'sonner';
+import { useGeographicData } from './useGeographicData';
 
 export const useAddressActions = ({ data, reset }: { data: AddressType; reset?: () => void }) => {
+    const { countriesList, stateList, cityList, getNameById } = useGeographicData({
+        countryId: data.country,
+        currentStateId: data.state,
+    });
+
     // Function for create specific user's address
     const handleCreateAddress: FormEventHandler = (e) => {
         e.preventDefault();
-        const toastId = 'create-address;';
+        const toastId = 'create-address';
 
-        router.post(route('address.store'), data, {
+        const submitData = {
+            ...data,
+            country: getNameById(countriesList, data.country),
+            state: getNameById(stateList, data.state),
+            city: getNameById(cityList, data.city),
+        };
+
+        router.post(route('address.store'), submitData, {
             preserveScroll: true,
             onStart: () => toast.custom((t) => <ToastSonner toastId={t} variant="process" title="Saving..." />, { id: toastId }),
             onSuccess: () => {
@@ -26,11 +39,11 @@ export const useAddressActions = ({ data, reset }: { data: AddressType; reset?: 
     // Function for set default the user's address
     const handleSetDefaultAddress = () => {
         const toastId = 'set-default-address';
-        router.put(
-            route('address.setDefault', { id: data.id }),
+
+        router.patch(
+            route('address.setDefault', { address: data.id }),
             {
-                id: data.id,
-                is_active: true,
+                is_default: true,
             },
             {
                 preserveScroll: true,
@@ -50,7 +63,14 @@ export const useAddressActions = ({ data, reset }: { data: AddressType; reset?: 
         e.preventDefault();
         const toastId = 'update-address';
 
-        router.put(route('address.update', { id: data.id }), data, {
+        const submitData = {
+            ...data,
+            country: getNameById(countriesList, data.country),
+            state: getNameById(stateList, data.state),
+            city: getNameById(cityList, data.city),
+        };
+
+        router.put(route('address.update', { address: data.id }), submitData, {
             preserveScroll: true,
             onStart: () => toast.custom((t) => <ToastSonner toastId={t} variant="process" title="Updating..." />, { id: toastId }),
             onSuccess: () => {
@@ -67,8 +87,7 @@ export const useAddressActions = ({ data, reset }: { data: AddressType; reset?: 
     const handleDeleteAddress = () => {
         const toastId = 'delete-address';
 
-        router.delete(route('address.destroy', { id: data.id }), {
-            data: { id: data.id },
+        router.delete(route('address.destroy', { address: data.id }), {
             preserveScroll: true,
             onStart: () => toast.custom((t) => <ToastSonner toastId={t} variant="process" title="Deleting..." />, { id: toastId }),
             onSuccess: () => {

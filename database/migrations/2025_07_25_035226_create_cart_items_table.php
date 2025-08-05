@@ -19,13 +19,12 @@ return new class extends Migration
                 table: 'users', indexName: 'carts_user_id'
             )->onDelete('cascade');
             
-            $table->foreignId('product_id')->constrained(
+            $table->foreignId('product_id')->nullable()->constrained(
                 table: 'products', indexName: 'carts_product_id'
-            )->onDelete('cascade');
+            )->nullOnDelete();
 
             $table->integer('quantity')->default(1);
-
-            // $table->unique(['user_id', 'product_id']);
+            $table->unique(['user_id', 'product_id']);
 
             $table->timestamps();
         });

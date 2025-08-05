@@ -98,12 +98,15 @@ export interface SelectWithLabelProps {
 // Address Form Input Start
 export type AddressType = {
     id: number;
+    label: string;
+    recipient_name: string;
+    phone_number: string;
     country: string;
     state: string;
     city: string;
     street: string;
-    zip: string;
-    is_active: boolean;
+    postal_code: string;
+    is_default: boolean;
     user_id: number;
 };
 

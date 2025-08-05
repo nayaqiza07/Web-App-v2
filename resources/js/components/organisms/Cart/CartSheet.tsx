@@ -15,10 +15,6 @@ const CartSheet = () => {
     const [openItemId, setOpenItemId] = useState<number | null>(null);
     const { handleClearAllCartItems, cartItems, subTotalPrice } = useCartActions();
 
-    if (!cartItems || !cartItems.items || !cartItems.total_items) {
-        return null;
-    }
-
     return (
         <Sheet>
             <SheetTrigger asChild>

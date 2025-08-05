@@ -31,7 +31,7 @@ return new class extends Migration
 
             /** Inventory */
             $table->string('sku')->unique();
-            $table->integer('stock')->default(0);
+            $table->integer('stock');
             $table->integer('security_stock')->default(0);
 
             /** Status */
@@ -39,12 +39,17 @@ return new class extends Migration
             $table->date('published_at')->nullable();
 
             /** Relation */
-            $table->foreignId('category_id')->constrained(
+            $table->foreignId('category_id')->nullable()->constrained(
                 table: 'categories', indexName: 'products_category_id'
-            );
+            )->nullOnDelete();
 
             $table->timestamps();
             $table->softDeletes();
+
+            /** Indexing */
+            $table->index('price');
+            $table->index('is_visible');
+            $table->index(['is_visible', 'stock']);
         });
     }
 

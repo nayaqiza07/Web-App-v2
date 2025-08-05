@@ -19,24 +19,35 @@ return new class extends Migration
                 table: 'users', indexName: 'orders_user_id'
             )->onDelete('cascade');
             
-            $table->foreignId('address_id')->constrained(
+            $table->foreignId('address_id')->nullable()->constrained(
                 table: 'addresses', indexName: 'orders_address_id'
-            )->onDelete('cascade');
+            )->nullOnDelete();
 
+            /** Invoice */
             $table->string('code')->unique();
 
-            $table->enum('status', [
-                    'pending', 'processing', 'shipped', 'delivered', 'canceled', 'refund'
+            /** Status */
+            $table->enum('order_status', [
+                    'pending', 'processing', 'shipped', 'delivered', 'canceled'
                 ])->default('pending');
                 
-            $table->string('payment_method');
+            $table->enum('payment_status', [
+                'unpaid', 'paid', 'refunded', 'failed'
+            ])->default('unpaid');
 
+            $table->string('payment_method')->nullable();
+
+            /** Amount */
             $table->decimal('subtotal', total: 15, places: 2);
             $table->decimal('shipping_cost', total: 15, places: 2)->default(0);
-            $table->decimal('total', total: 15, places: 2)->default(0);
+            $table->decimal('total', total: 15, places: 2);
 
             $table->timestamps();
             $table->softDeletes();
+
+            /** Indexing */
+            $table->index(['user_id', 'order_status']);
+            $table->index(['user_id', 'payment_status']);
         });
     }
 

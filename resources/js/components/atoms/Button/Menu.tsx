@@ -28,7 +28,7 @@ export function Menu({ data }: { data: AddressType }) {
                 <DropdownMenuLabel>Action</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={handleSetDefaultAddress} disabled={data.is_active}>
+                    <DropdownMenuItem onClick={handleSetDefaultAddress} disabled={data.is_default}>
                         <PackageCheckIcon />
                         Set as Default
                     </DropdownMenuItem>

@@ -19,13 +19,17 @@ return new class extends Migration
                 table: 'orders', indexName: 'order_items_order_id'
             )->onDelete('cascade');
             
-            $table->foreignId('product_id')->constrained(
+            $table->foreignId('product_id')->nullable()->constrained(
                 table: 'products', indexName: 'order_items_product_id'
-            )->onDelete('cascade');
+            )->nullOnDelete();
 
+            /** Detail */
             $table->string('product_name');
             $table->integer('quantity');
             $table->decimal('price_snapshot', total: 15, places: 2);
+
+            /** Limitation Key */
+            $table->unique(['order_id', 'product_id']);
 
             $table->timestamps();
         });
