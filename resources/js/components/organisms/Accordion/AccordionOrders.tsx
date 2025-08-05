@@ -28,7 +28,7 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
 
     return data.length === 0 ? (
         <div className="flex h-full border">
-            <EmptyState icon={<ShoppingBag size={50} />} title="You don't have any orders" btnText="Continue Shopping" />
+            <EmptyState icon={ShoppingBag} title="You don't have any orders" btnText="Continue Shopping" />
         </div>
     ) : (
         <Accordion

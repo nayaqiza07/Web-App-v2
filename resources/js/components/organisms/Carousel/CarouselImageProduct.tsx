@@ -41,7 +41,7 @@ const CarouselImageProduct: React.FC<CarouselImageProductProps> = ({ orientation
                                 <div className="p-1">
                                     <div className="size-[72px]">
                                         <div
-                                            className={`flex h-full items-center justify-center overflow-hidden rounded-xl border ${currentImageIndex === index && 'ring-offset-background ring-2 ring-[#2563EB] ring-offset-2'}`}
+                                            className={`flex h-full items-center justify-center overflow-hidden rounded-xl border ${currentImageIndex === index && 'ring-offset-background ring-primary ring-2 ring-offset-2'}`}
                                         >
                                             <img
                                                 src={`/storage/${_image.path}`}

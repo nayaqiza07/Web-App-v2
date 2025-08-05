@@ -7,12 +7,7 @@ import { useSupportStore } from '@/stores/useSupportStore';
 import { Link } from '@inertiajs/react';
 
 const SupportPage = () => {
-    // const { isLoading } = useLoadingStore();
     const { faqs } = useSupportStore();
-
-    // if (isLoading) {
-    //     return <SkeletonSupportPage />;
-    // }
 
     return (
         <>
@@ -40,7 +35,7 @@ const SupportPage = () => {
                         </p>
                     </div>
                     <Link href={route('contact-us.indexOnContactUs')}>
-                        <Button effect="ringHover" variant="blue" size="sm">
+                        <Button effect="ringHover" variant="default" size="sm">
                             Get in touch
                         </Button>
                     </Link>

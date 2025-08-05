@@ -33,7 +33,6 @@ use Filament\Tables\Actions\Action as ActionsAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Support\HtmlString;
-use PhpParser\Node\Stmt\Label;
 
 class ProductResource extends Resource
 {
@@ -318,12 +317,6 @@ class ProductResource extends Resource
                     ->sortable()
                     ->toggleable(),
 
-                // TextColumn::make('sku')
-                //     ->label('SKU')
-                //     ->searchable()
-                //     ->sortable()
-                //     ->toggleable()
-                //     ->toggledHiddenByDefault(),
 
                 TextColumn::make('stock')
                     ->label("Stock")

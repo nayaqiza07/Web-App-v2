@@ -1,9 +1,10 @@
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useCartActions } from '@/hooks/useCartActions';
-import { priceFormat } from '@/lib/utils';
-import { CartItem as Item } from '@/types';
+import { priceFormat, truncateText } from '@/lib/utils';
+import { CartItemType as Item } from '@/types';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { ArrowLeftIcon, Trash2Icon } from 'lucide-react';
@@ -30,6 +31,8 @@ const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) 
         return data.product.price * data.quantity;
     }, [data]);
 
+    console.log(data);
+
     return (
         <motion.div
             layout
@@ -53,12 +56,12 @@ const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) 
             {/* Card Utama */}
             <motion.div
                 layout
-                className="relative z-10 h-fit w-full text-xs"
                 initial={{ x: 0 }}
                 animate={{ x: !isOpen ? 0 : -48 }}
                 transition={{ type: 'tween', duration: 0.3 }}
+                className="relative z-10 h-fit w-full text-xs"
             >
-                <Card className="gap-0 rounded-md p-0 shadow-none">
+                <Card className="bg-background gap-0 rounded-md p-0 shadow-none">
                     <CardHeader className="flex flex-row items-center justify-between gap-5 px-3 py-2">
                         <div className="flex w-full items-center gap-5">
                             <img src={`/storage/${data.product.thumbnail}`} alt="cart-image-product" className="h-[44px] w-[60px] rounded" />
@@ -68,7 +71,7 @@ const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) 
                                         href={route('products.show', { slug: data.product.slug })}
                                         className="w-fit underline-offset-2 hover:underline"
                                     >
-                                        {data.product.name}
+                                        {truncateText(data.product.name, 30)}
                                     </Link>
                                     <Link
                                         href={route('products.showByCategory', { slug: data.product.category.slug })}
@@ -76,7 +79,14 @@ const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) 
                                     >
                                         {data.product.category.name}
                                     </Link>
-                                    <p className="text-muted-foreground">{priceFormat(data.product.price)}</p>
+                                    <p className="text-muted-foreground space-x-3">
+                                        <span className={`${data.product.discount_percentage && 'text-destructive'}`}>
+                                            {priceFormat(data.product.price)}
+                                        </span>
+                                        {data.product.discount_percentage && (
+                                            <Badge variant="destructive">{data.product.discount_percentage}% Off</Badge>
+                                        )}
+                                    </p>
                                 </div>
                                 <Button variant="ghost" size="icon" onClick={handleToggle} className="size-6">
                                     <ArrowLeftIcon className={`${isOpen && 'rotate-180'} transition-all duration-200`} />

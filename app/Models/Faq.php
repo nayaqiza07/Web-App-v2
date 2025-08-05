@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class Faq extends Model
 {
@@ -32,6 +33,21 @@ class Faq extends Model
     protected $casts = [
         'is_visible' => 'boolean',
     ];
+
+    /**
+     * The "booted" method of the model
+     * 
+     */
+    protected static function booted()
+    {
+        static::saved(function () {
+            Cache::forget('faqs.list');
+        });
+
+        static::deleted(function () {
+            Cache::forget('faqs.list');
+        });
+    }
 
     /**
      * Scope to show visible faq
