@@ -61,11 +61,11 @@ const ProductDetailContent: React.FC<ProductDetailContentProps> = ({ PRODUCT }) 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, duration: 1, ease: easeOut }}
-                className="text-2xl font-semibold"
+                className="text-lg font-semibold"
             >
                 {PRODUCT?.name}
             </motion.h1>
-            <p className="flex items-center gap-4 text-2xl font-bold">
+            <p className="flex items-center gap-4 text-xl font-bold">
                 <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4, duration: 1, ease: easeOut }}>
                     <span
                         className={`${PRODUCT?.discount_percentage && 'border-destructive/10 bg-destructive/10 text-destructive dark:bg-destructive rounded-md border px-2 py-0.5 dark:text-white'} flex items-center gap-2`}

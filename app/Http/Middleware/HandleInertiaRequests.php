@@ -67,7 +67,7 @@ class HandleInertiaRequests extends Middleware
                 }
 
                 $cartItems = CartItem::where('user_id', Auth::id())
-                    ->with('product:id,name,slug,category_id,thumbnail,price')
+                    ->with('product:id,name,slug,category_id,thumbnail,price,old_price')
                     ->get();
                 
                 return [

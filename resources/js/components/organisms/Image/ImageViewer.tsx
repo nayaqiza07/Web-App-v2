@@ -33,7 +33,7 @@ export const ImageViewer = ({ allImages, currentImageIndex }: ImageViewerProps) 
                 alt={allImages[currentImageIndex]?.alt}
                 loading="lazy"
                 onClick={() => setOpen(true)}
-                className="h-full w-full cursor-pointer object-cover hover:bg-black/10"
+                className="border-border h-full w-full cursor-pointer rounded-2xl border object-cover hover:bg-black/10"
             />
 
             <Lightbox plugins={[Zoom]} open={open} close={() => setOpen(false)} slides={slideImages} index={currentImageIndex} />

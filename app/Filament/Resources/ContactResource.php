@@ -17,7 +17,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ContactResource extends Resource implements HasShieldPermissions
+class ContactResource extends Resource
 {
     protected static ?string $model = Contact::class;
     
@@ -30,18 +30,6 @@ class ContactResource extends Resource implements HasShieldPermissions
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
     protected static ?string $activeNavigationIcon = 'heroicon-m-chat-bubble-left-right';
-
-    public static function getPermissionPrefixes(): array
-    {
-        return [
-            'view',
-            'view_any',
-            'create',
-            'update',
-            'delete',
-            'delete_any',
-        ];
-    }
 
     public static function form(Form $form): Form
     {
