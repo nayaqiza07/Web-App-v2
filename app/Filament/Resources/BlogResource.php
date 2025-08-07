@@ -142,8 +142,7 @@ class BlogResource extends Resource
             ->columns([
                 ImageColumn::make('thumbnail')
                     ->label('Thumbnail')
-                    ->width(50)
-                    ->height(50),
+                    ->square(),
 
                 Tables\Columns\TextColumn::make('title')
                     ->limit(25)
@@ -152,7 +151,7 @@ class BlogResource extends Resource
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('slug')
-                    ->limit(20)
+                    ->limit(15)
                     ->searchable()
                     ->toggleable(),
 
@@ -184,7 +183,7 @@ class BlogResource extends Resource
                     ->icon('heroicon-m-plus')
                     ->label('Create blog')
                     ->url(route('filament.admin.resources.content.blogs.create'))
-                    ->button()
+                    ->button(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -202,6 +201,8 @@ class BlogResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }

@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
 use App\Models\Category;
-use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -17,6 +16,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
-class CategoryResource extends Resource implements HasShieldPermissions
+class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
@@ -39,18 +39,6 @@ class CategoryResource extends Resource implements HasShieldPermissions
     protected static ?string $activeNavigationIcon = 'heroicon-m-tag';
 
     protected static ?int $navigationSort = 2;
-
-    public static function getPermissionPrefixes(): array
-    {
-        return [
-            'view',
-            'view_any',
-            'create',
-            'update',
-            'delete',
-            'delete_any',
-        ];
-    }
 
     public static function form(Form $form): Form
     {
@@ -128,6 +116,10 @@ class CategoryResource extends Resource implements HasShieldPermissions
     {
         return $table
             ->columns([
+                ImageColumn::make('thumbnail')
+                    ->label('Thumbnail')
+                    ->square(),
+
                 TextColumn::make('name')
                     ->label('Name')
                     ->searchable()
@@ -150,6 +142,12 @@ class CategoryResource extends Resource implements HasShieldPermissions
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
+
+                TextColumn::make('deleted_at')
+                    ->date()
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->emptyStateIcon('heroicon-o-tag')
             ->emptyStateHeading('No categories yet')
@@ -159,7 +157,7 @@ class CategoryResource extends Resource implements HasShieldPermissions
                     ->icon('heroicon-m-plus')
                     ->label('Create category')
                     ->url(route('filament.admin.resources.shop.categories.create'))
-                    ->button()
+                    ->button(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -167,7 +165,6 @@ class CategoryResource extends Resource implements HasShieldPermissions
             ->actions([
                 Tables\Actions\ViewAction::make()
                     ->modalHeading(fn ($record) => 'View Product: ' . $record->name),
-
                 Tables\Actions\EditAction::make(),
 
                 Tables\Actions\DeleteAction::make(),

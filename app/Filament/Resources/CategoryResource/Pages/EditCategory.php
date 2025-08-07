@@ -29,6 +29,8 @@ class EditCategory extends EditRecord
             ->formId('form'),
 
             Actions\DeleteAction::make(),
+            Actions\ForceDeleteAction::make(),
+            Actions\RestoreAction::make(),
         ];
     }
 }

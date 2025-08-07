@@ -83,7 +83,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->icon('heroicon-m-envelope')
                     ->searchable(),
-                    Tables\Columns\TextColumn::make('phone')
+                Tables\Columns\TextColumn::make('phone')
                     ->icon('heroicon-m-phone')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('roles.name')
