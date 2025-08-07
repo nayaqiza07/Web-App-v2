@@ -89,23 +89,25 @@ class Product extends Model
      */
     protected static function booted()
     {
+        // $page = request('page', 1);
+
         static::saved(function ($product) {
-            Cache::forget('products.list');
+            Cache::forget("products.list");
             Cache::forget('products.related');
             Cache::forget("products?.slug={$product->slug}");
             
             if ($product->category) {
-                Cache::forget("products.category?.slug.{$product->category->slug}");
+                Cache::forget("products.category?.slug={$product->category->slug}");
             }
         });
         
         static::deleted(function ($product) {
-            Cache::forget('products.list');
+            Cache::forget("products.list");
             Cache::forget('products.related');
             Cache::forget("products.slug?={$product->slug}");
             
             if ($product->category) {
-                Cache::forget("products.category?.slug.{$product->category->slug}");
+                Cache::forget("products.category?.slug={$product->category->slug}");
             }
         });
     }

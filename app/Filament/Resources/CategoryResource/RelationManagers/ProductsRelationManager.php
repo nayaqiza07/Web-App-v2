@@ -8,6 +8,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -85,6 +86,16 @@ class ProductsRelationManager extends RelationManager
             ])
             ->headerActions([
                 // Tables\Actions\CreateAction::make(),
+            ])
+            ->emptyStateIcon('heroicon-o-cube')
+            ->emptyStateHeading('No products yet')
+            ->emptyStateDescription('Once you write your product, it will appear here.')
+            ->emptyStateActions([
+                Action::make('create')
+                    ->icon('heroicon-m-plus')
+                    ->label('Create product')
+                    ->url(route('filament.admin.resources.shop.products.create'))
+                    ->button()
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -17,8 +17,11 @@ class ProductController extends Controller
      */
     public function index(): Response
     {
-        $products = Cache::remember('products.list', 3600, function () {
-            return Product::filter()->latest()->paginate(16);
+        // $page = request('page', 1);
+        // $filters = request()->except('page'); // semua filter kecuali page
+        // $cacheKey = 'products.list.page.' . $page . '.' . md5(json_encode($filters));
+        $products = Cache::remember("products.list", 3600, function () {
+            return Product::filter()->latest()->paginate(3);
         });
 
         $categories = Cache::remember('categories.list', 3600, function () {
