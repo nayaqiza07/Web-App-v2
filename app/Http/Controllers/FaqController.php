@@ -17,8 +17,7 @@ class FaqController extends Controller
      */
     public function index(): Response
     {
-        $cacheKey = 'faqs.list';
-        $faqs = Cache::remember($cacheKey, 3600, function () {
+        $faqs = Cache::remember('faqs.support.list', 3600, function () {
             return Faq::filter()->get();
         });
 
@@ -34,7 +33,7 @@ class FaqController extends Controller
      */
     public function indexOnContactUs(): Response
     {
-        $faqs = Cache::remember('faqs.list', 3600, function () {
+        $faqs = Cache::remember('faqs.contact.list', 3600, function () {
             return Faq::filter()->get();
         });
 
