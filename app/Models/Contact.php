@@ -11,7 +11,7 @@ class Contact extends Model
     /** @use HasFactory<\Database\Factories\ContactFactory> */
     use HasFactory;
 
-        /**
+    /**
      * The "booted" method of the model
      * 
      */
@@ -19,10 +19,12 @@ class Contact extends Model
     {
         static::saved(function () {
             Cache::forget('contacts.list');
+            Cache::forget('faqs.contact.list');
         });
-
+        
         static::deleted(function () {
             Cache::forget('contacts.list');
+            Cache::forget('faqs.contact.list');
         });
     }
 

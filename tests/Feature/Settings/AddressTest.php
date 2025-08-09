@@ -126,3 +126,15 @@ test('authenticated user can delete address', function () {
         'user_id' => $user->id,
     ]);
 });
+
+test('authenticated user cannot update/delete address of another user', function () {
+    $userA = User::factory()->create();
+    $userB = User::factory()->create();
+    $address = Address::factory()->create(['user_id' => $userB->id]);
+
+    $this->actingAs($userA)->put("settings/address/{$address->id}")
+        ->assertForbidden();
+
+    $this->actingAs($userA)->delete("settings/address/{$address->id}")
+        ->assertForbidden();
+});

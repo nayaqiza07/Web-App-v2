@@ -41,11 +41,11 @@ class Faq extends Model
     protected static function booted()
     {
         static::saved(function () {
-            Cache::forget('faqs.list');
+            Cache::forget('faqs.support.list');
         });
 
         static::deleted(function () {
-            Cache::forget('faqs.list');
+            Cache::forget('faqs.support.list');
         });
     }
 
