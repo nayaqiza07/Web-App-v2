@@ -1,23 +1,21 @@
 <?php
 
-use App\Models\Contact;
-use App\Models\Faq;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('guest can visit the contact us page', function () {
-    $response = $this->get('/contact-us');
-
-    $response->assertOk();
-});
-
-test('authenticated users can visit the contact us page', function () {
-    $user = User::factory()->create();
-    $response = $this->actingAs($user)->get('/contact-us');
-
-    $response->assertOk();
+describe('Visit The Contact Us Page Test', function() {
+    test('guest can visit the contact us page', function () {
+        $response = $this->get(route('contact-us.indexOnContactUs'));
+        $response->assertOk();
+    });
+    
+    test('authenticated users can visit the contact us page', function () {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get(route('contact-us.indexOnContactUs'));
+        $response->assertOk();
+    });
 });
 
 // test('users can view dynamic contact entries page', function () {
