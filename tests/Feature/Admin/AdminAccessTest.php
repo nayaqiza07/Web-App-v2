@@ -1,14 +1,16 @@
 <?php
 
 use App\Models\User;
-use Filament\Panel;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(RefreshDatabase::class);
 
 beforeEach(function () {
-    Role::create(['name' => 'Super Admin']);
-    Role::create(['name' => 'Admin']);
-    Role::create(['name' => 'Customer']);
+    Role::firstOrCreate(['name' => 'Super Admin']);
+    Role::firstOrCreate(['name' => 'Admin']);
+    Role::firstOrCreate(['name' => 'Customer']);
 });
 
 describe('Admin Access', function () {
@@ -35,9 +37,12 @@ describe('Admin Access', function () {
 
 // Function for all resource
 function userWithPermission(string $permission):User {
-    $role = Role::create(['name' => 'Super Admin']);
-    Permission::firstOrCreate(['name' => $permission]);
-    $role->givePermissionTo($permission);
+    $role = Role::firstOrCreate(['name' => 'Super Admin']);
+    $perm = Permission::firstOrCreate(['name' => $permission]);
+    
+    if (!$role->hasPermissionTo($permission)) {
+        $role->givePermissionTo($perm);
+    }
 
     $user = User::factory()->create();
     $user->assignRole($role);

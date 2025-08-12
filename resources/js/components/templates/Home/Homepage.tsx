@@ -2,21 +2,27 @@ import CallToAction from '@/components/molecules/CTA/CallToAction';
 import Activity from '@/components/organisms/Activity/Activity';
 import CarouselProduct from '@/components/organisms/Carousel/CarouselProduct';
 import HeroSection from '@/components/organisms/Section/HeroSection';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 
 const Homepage = () => {
     return (
         <>
             {/* Hero Section */}
-            <HeroSection srcImage="/images/image-18.jpg" altImage="Image Slider" className="gap-10">
-                <h1 className="text-2xl font-bold md:text-4xl">New Styles Are Here</h1>
-                <p className="text-xs md:text-base">Discover The Lasts Premium FurnitureFeatured In Our Collection</p>
-                <Link href={route('products.index')}>
-                    <Button variant="secondary" className="rounded-full text-xs font-bold">
+            <HeroSection srcImage="/images/image-18.jpg" altImage="Image Slider">
+                <div className="w-3/4 space-y-5">
+                    <h1 className="text-2xl font-bold md:text-4xl">
+                        Premium Furniture <br /> for Every Home
+                    </h1>
+                    <p className="text-xs md:text-base">
+                        Discover our carefully curated collection of high-quality furniture pieces designed to transform your living and working
+                        spaces.
+                    </p>
+                    <Link href={route('products.index')} className={cn(buttonVariants({ variant: 'default' }), 'rounded-full text-xs font-bold')}>
                         Go Shopping
-                    </Button>
-                </Link>
+                    </Link>
+                </div>
             </HeroSection>
 
             {/* 2 */}

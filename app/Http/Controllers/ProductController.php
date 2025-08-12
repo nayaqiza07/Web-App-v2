@@ -21,7 +21,7 @@ class ProductController extends Controller
         // $filters = request()->except('page'); // semua filter kecuali page
         // $cacheKey = 'products.list.page.' . $page . '.' . md5(json_encode($filters));
         $products = Cache::remember("products.list", 3600, function () {
-            return Product::filter()->latest()->paginate(3);
+            return Product::filter()->latest()->paginate(16);
         });
 
         $categories = Cache::remember('categories.list', 3600, function () {
