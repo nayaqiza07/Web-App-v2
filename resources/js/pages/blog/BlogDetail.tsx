@@ -14,6 +14,8 @@ interface BlogDetailProps {
 const BlogDetail: React.FC<BlogDetailProps> = (props) => {
     const { BLOGS, BLOG } = props;
 
+    console.log(BLOGS);
+
     const { setBlogs, setSelectedBlog } = useBlogStore();
 
     useEffect(() => {

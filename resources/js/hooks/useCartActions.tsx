@@ -37,7 +37,7 @@ export const useCartActions = () => {
                 quantity: quantity,
             },
             {
-                preserveScroll: true,
+                preserveScroll: 'errors',
                 only: ['cart'],
                 onStart: () => toast.custom((t) => <ToastSonner toastId={t} variant="process" title="Saving..." />, { id: toastId }),
                 onSuccess: () =>

@@ -61,6 +61,10 @@ class HandleInertiaRequests extends Middleware
                 'info' => session('info'),
                 'error' => session('error'),
             ],
+            // 'flash' => fn () => [
+            //     'type' => session('flash.type'),
+            //     'message' => session('flash.message'),
+            // ],
             'cart' => function () {
                 if (!Auth::check()) {
                     return null;

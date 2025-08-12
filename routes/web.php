@@ -4,7 +4,6 @@ use App\Models\Blog;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 Route::get('/welcome', function () {
@@ -37,6 +36,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/order', function () {
         return Inertia::render('order/Order');
     })->name('order');
+});
+
+Route::fallback(function () {
+    abort(404);
 });
 
 require __DIR__.'/settings.php';

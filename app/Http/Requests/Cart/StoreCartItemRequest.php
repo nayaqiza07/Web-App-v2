@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Cart;
 
 use App\Rules\ProductStockCheck;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
