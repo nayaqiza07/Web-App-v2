@@ -12,23 +12,6 @@ class Contact extends Model
     use HasFactory;
 
     /**
-     * The "booted" method of the model
-     * 
-     */
-    protected static function booted()
-    {
-        static::saved(function () {
-            Cache::forget('contacts.list');
-            Cache::forget('faqs.contact.list');
-        });
-        
-        static::deleted(function () {
-            Cache::forget('contacts.list');
-            Cache::forget('faqs.contact.list');
-        });
-    }
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>

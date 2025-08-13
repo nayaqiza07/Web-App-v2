@@ -16,9 +16,12 @@ class BlogController extends Controller
      */
     public function index(): Response
     {
-        $cacheKey = 'blogs.list';
-        $blogs = Cache::remember($cacheKey, 3600, function () {
-            return Blog::filter()->paginate(15);
+        $page = request('page', 1);
+        $perPage = 3;
+        $cacheKey = "blogs.page:{$page}";
+
+        $blogs = Cache::remember($cacheKey, 3600, function () use ($perPage) {
+            return Blog::filter()->paginate($perPage);
         });
 
         return Inertia::render('blog/BlogList', [
@@ -38,7 +41,7 @@ class BlogController extends Controller
             return Blog::filter()->paginate(5);
         });
         
-        $blog = Cache::remember("blogs?.slug={$slug}", 3600, function () use ($slug) {
+        $blog = Cache::remember("blogs:{$slug}", 3600, function () use ($slug) {
             return Blog::filter()->slug($slug)->firstOrFail();
         });
 

@@ -36,31 +36,6 @@ class Category extends Model
     ];
 
     /**
-     * The "booted" method of the model
-     * 
-     */
-    protected static function booted()
-    {
-        static::saved(function ($category) {
-            // Hapus cache yang terkait dengan kategori ini
-            Cache::forget('categories.list');
-            Cache::forget("categories?.slug={$category->slug}");
-            
-            // Hapus cache daftar produk karena perubahan kategori bisa memengaruhi produk
-            Cache::forget('products.list');
-            Cache::forget('products.related');
-        });
-
-        static::deleted(function ($category) {
-            // Hapus cache yang sama saat kategori dihapus
-            Cache::forget('categories.list');
-            Cache::forget("categories?.slug={$category->slug}");
-            Cache::forget('products.list');
-            Cache::forget('products.related');
-        });
-    }
-
-    /**
      * Scope to show visible category with count of products & order by ascending (a-z)
      */
     public function scopeFilter(Builder $query): Builder

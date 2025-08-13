@@ -17,6 +17,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
     const { quantity } = useQuantityButtonStore();
+    console.log(data);
 
     const { handleAddToCart } = useCartActions();
 
@@ -66,8 +67,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                     <Card className="gap-0 overflow-hidden py-0">
                         <CardContent className="group relative h-[150px] overflow-hidden p-0">
                             {/* image */}
+
                             <img
-                                src={data.thumbnail}
+                                src={`/storage/${data.thumbnail}`}
                                 alt={`Foto Produk ${data.name}`}
                                 loading="lazy"
                                 className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"
