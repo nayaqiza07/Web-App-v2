@@ -84,35 +84,6 @@ class Product extends Model
     protected $with = ['category', 'productImages'];
 
     /**
-     * The "booted" method of the model
-     * 
-     */
-    protected static function booted()
-    {
-        // $page = request('page', 1);
-
-        static::saved(function ($product) {
-            Cache::forget("products.list");
-            Cache::forget('products.related');
-            Cache::forget("products?.slug={$product->slug}");
-            
-            if ($product->category) {
-                Cache::forget("products.category?.slug={$product->category->slug}");
-            }
-        });
-        
-        static::deleted(function ($product) {
-            Cache::forget("products.list");
-            Cache::forget('products.related');
-            Cache::forget("products.slug?={$product->slug}");
-            
-            if ($product->category) {
-                Cache::forget("products.category?.slug={$product->category->slug}");
-            }
-        });
-    }
-
-    /**
      * Accessor to counting discount percentage
      *
      * @return int|null
@@ -142,8 +113,23 @@ class Product extends Model
     public function scopeFilter(Builder $query): Builder
     {
         return $query->where('is_visible', true)
-            ->where('deleted_at', null)
             ->whereHas('category', fn ($query) => $query->where('is_visible', true));
+    }
+
+    /**
+     * Scope to show related product that have same category & similiar price
+     */
+    public function scopeRelated(Builder $query, Product $product): Builder
+    {
+        return $query
+                // ->where('category_id', $product->category_id)
+                ->where('id', '!=', $product->id)
+                ->whereBetween('price', [
+                    $product->price * 0.8,
+                    $product->price * 1.2
+                ])
+                ->latest()
+                ->take(10);
     }
 
     /**

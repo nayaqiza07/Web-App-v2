@@ -17,11 +17,14 @@ class ProductController extends Controller
      */
     public function index(): Response
     {
-        // $page = request('page', 1);
-        // $filters = request()->except('page'); // semua filter kecuali page
-        // $cacheKey = 'products.list.page.' . $page . '.' . md5(json_encode($filters));
-        $products = Cache::remember("products.list", 3600, function () {
-            return Product::filter()->latest()->paginate(16);
+        // $sort = request('sort', 'latest');
+        $page = request('page', 1);
+        $perPage = 3;
+        $cacheKey = "products.page:{$page}";
+        // $cacheKey = "products.page:{$page}.sort:{$sort}";
+        
+        $products = Cache::remember($cacheKey, 3600, function () use ($perPage) {
+            return Product::filter()->latest()->paginate($perPage);
         });
 
         $categories = Cache::remember('categories.list', 3600, function () {
@@ -29,10 +32,8 @@ class ProductController extends Controller
         });
 
         return Inertia::render('shop/ProductList', [
-            'PRODUCTS' => Inertia::defer(function () use ($products) {
-                return $products;
-            }),
-            'CATEGORIES' => $categories
+            'PRODUCTS' => Inertia::defer(fn () => $products),
+            'CATEGORIES' => $categories,
         ]);
     }
 
@@ -44,20 +45,21 @@ class ProductController extends Controller
      */
     public function show(string $slug): Response
     {
-        $product = Cache::remember("products?.slug={$slug}", 3600, function () use ($slug) {
+        $product = Cache::remember("products:{$slug}", 3600, function () use ($slug) {
             return Product::filter()->slug($slug)->firstOrFail();
         });
 
-        $products = Cache::remember('products.related', 3600, function () {
-            return Product::filter()->get();
+        $relatedProductsKey = "products.related:{$slug}";
+        $relatedProducts = Cache::remember($relatedProductsKey, 3600, function () use ($product) {
+            return Product::filter()->related($product)->get();
         });
 
         return Inertia::render('shop/ProductDetail', [
             'PRODUCTS' => [
-                'data'  => $products,
-                'total' => Product::filter()->count()
+                'data'  => $relatedProducts,
+                'total' => Product::filter()->count(),
             ],
-            'PRODUCT' => Inertia::defer(fn () => $product)
+            'PRODUCT' => Inertia::defer(fn () => $product),
         ]);
     }
 
@@ -69,12 +71,16 @@ class ProductController extends Controller
      */
     public function showByCategory(string $slug): Response
     {
-        $category = Cache::remember("categories?.slug={$slug}", 3600, function () use ($slug) {
+        $page = request('page', 1);
+        $perPage = 1;
+        $cacheProductsByCategoryKey = "products.category:{$slug}.page:{$page}";
+
+        $category = Cache::remember("categories:{$slug}", 3600, function () use ($slug) {
             return Category::filter()->slug($slug)->firstOrFail();
         });
 
-        $products = Cache::remember("products.category?.slug={$slug}", 3600, function () use ($category) {
-            return $category->products()->latest()->paginate(16);
+        $products = Cache::remember($cacheProductsByCategoryKey, 3600, function () use ($category, $perPage) {
+            return $category->products()->latest()->paginate($perPage);
         });
 
         $categories = Cache::remember('categories.list', 3600, function () {
@@ -83,9 +89,7 @@ class ProductController extends Controller
 
         return Inertia::render('shop/ProductList', [
             'CATEGORY' => $category,
-            'PRODUCTS' => Inertia::defer(function () use ($products) {
-                return $products;
-            }),
+            'PRODUCTS' => Inertia::defer(fn () => $products),
             'CATEGORIES' => $categories,
         ]);
     }
