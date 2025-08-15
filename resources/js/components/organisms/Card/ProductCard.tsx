@@ -17,7 +17,6 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
     const { quantity } = useQuantityButtonStore();
-    console.log(data);
 
     const { handleAddToCart } = useCartActions();
 

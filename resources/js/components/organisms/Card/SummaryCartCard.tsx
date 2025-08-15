@@ -4,6 +4,7 @@ import { Separator } from '@/components/ui/separator';
 import { useCartActions } from '@/hooks/useCartActions';
 import { priceFormat } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { ShoppingBagIcon } from 'lucide-react';
 
 const SummaryCartCard = () => {
     const { subTotalPrice } = useCartActions();
@@ -26,7 +27,7 @@ const SummaryCartCard = () => {
                 </CardContent>
                 <CardFooter className="mt-auto p-0">
                     <Button effect="shine" className="w-full">
-                        Place Order
+                        <ShoppingBagIcon /> Place Order
                     </Button>
                 </CardFooter>
             </Card>

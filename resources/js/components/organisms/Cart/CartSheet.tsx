@@ -18,7 +18,7 @@ const CartSheet = () => {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button size="icon" variant="outline" className="relative" aria-label="Open notifications">
+                <Button size="icon" variant="outline" className="relative" aria-label="Open cart">
                     <ShoppingCartIcon size={16} aria-hidden="true" />
                     {cartItems.total_items > 0 && (
                         <motion.div
@@ -37,6 +37,7 @@ const CartSheet = () => {
                     )}
                 </Button>
             </SheetTrigger>
+
             <SheetContent className="bg-card flex h-full flex-col gap-0">
                 <SheetHeader className="border-b">
                     <SheetTitle className="flex items-center gap-3">Shopping Cart</SheetTitle>
