@@ -65,9 +65,12 @@ class HandleInertiaRequests extends Middleware
             //     'type' => session('flash.type'),
             //     'message' => session('flash.message'),
             // ],
-            'cart' => function () {
+            'cart' => function (): array {
                 if (!Auth::check()) {
-                    return null;
+                    return [
+                        'items' => collect(),
+                        'total_items' => 0
+                    ];
                 }
 
                 $cartItems = CartItem::where('user_id', Auth::id())
@@ -75,7 +78,7 @@ class HandleInertiaRequests extends Middleware
                     ->get();
                 
                 return [
-                    'items' => $cartItems->toArray(),
+                    'items' => $cartItems,
                     'total_items' => $cartItems->count(),
                 ];
             },

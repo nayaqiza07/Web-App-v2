@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3919890a3643708f5d1f98e0ed3af734",
+    "content-hash": "4b01dc2b5a09e808d635ff0ffd880296",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -7943,6 +7943,73 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "yaza/laravel-repository-service",
+            "version": "V6.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yaza-putu/laravel-repository-with-service.git",
+                "reference": "5d67fd6205a5b70670fc98692719ebb84abf69d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yaza-putu/laravel-repository-with-service/zipball/5d67fd6205a5b70670fc98692719ebb84abf69d4",
+                "reference": "5d67fd6205a5b70670fc98692719ebb84abf69d4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0||^11.0||^12.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.9||^3.0",
+                "laravel/pint": "^1.14",
+                "nunomaduro/collision": "^8.1.1||^7.10.0",
+                "orchestra/testbench": "^10.0.0||^9.0.0||^8.22.0",
+                "pestphp/pest": "^3.0",
+                "pestphp/pest-plugin-arch": "^3.0",
+                "pestphp/pest-plugin-laravel": "^3.0",
+                "phpstan/extension-installer": "^1.3||^2.0",
+                "phpstan/phpstan-deprecation-rules": "^1.1||^2.0",
+                "phpstan/phpstan-phpunit": "^1.3||^2.0",
+                "spatie/laravel-ray": "^1.35"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "LaravelEasyRepository": "LaravelEasyRepository\\LaravelEasyRepositoryFacade"
+                    },
+                    "providers": [
+                        "LaravelEasyRepository\\LaravelEasyRepositoryServiceProvider",
+                        "LaravelEasyRepository\\RepositoryServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelEasyRepository\\": "src",
+                    "LaravelEasyRepository\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Simple repository, service pattern for laravel",
+            "homepage": "https://github.com/yaza-putu/laravel-repository-with-service.git",
+            "keywords": [
+                "laravel",
+                "laravel-repository",
+                "laravel-repository-service"
+            ],
+            "support": {
+                "issues": "https://github.com/yaza-putu/laravel-repository-with-service/issues",
+                "source": "https://github.com/yaza-putu/laravel-repository-with-service/tree/V6.0.1"
+            },
+            "time": "2025-03-16T23:39:48+00:00"
         }
     ],
     "packages-dev": [

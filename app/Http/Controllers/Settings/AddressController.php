@@ -8,93 +8,62 @@ use App\Http\Requests\Settings\Address\DeleteAddressRequest;
 use App\Http\Requests\Settings\Address\SetDefaultAddressRequest;
 use App\Http\Requests\Settings\Address\UpdateAddressRequest;
 use App\Models\Address;
+use App\Repositories\Address\AddressRepository;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class AddressController extends Controller
 {
-    /**
-     * Display the list of user address
-     */
+    protected AddressRepository $addressRepository;
+
+    public function __construct(AddressRepository $addressRepository)
+    {
+        $this->addressRepository = $addressRepository;
+    }
+
     public function index(): Response
     {
-        $address = Address::filter()->get();
-
+        $address = $this->addressRepository->getAddress();
         return Inertia::render('settings/address', [
             'ADDRESS' => $address,
         ]);
     }
 
-    /**
-     * Store a new address fot the authenticated user.
-     * 
-     * @param \App\Http\Requests\Settings\Address\CreateAddressRequest $request
-     * @return Illuminate\Http\RedirectResponse
-     * @throws \Exception $e
-     */
     public function store(CreateAddressRequest $request): RedirectResponse
     {
         try {
-            Address::create([
-                ...$request->validated(),
-                'user_id' => $request->user()->id,
-            ]);
+            $this->addressRepository->createAddress($request);
             return back()->with('success', 'The address has been created successfully.');
         } catch (\Exception $e) {
             return back()->with('error', 'Failed to create the address. Please try again. ' . $e->getMessage());
         }
     }
 
-    /**
-     * Set default the user's address
-     *
-     * @param \App\Http\Requests\Settings\Address\SetDefaultAddressRequest $request
-     * @param \App\Models\Address $address
-     * @return Illuminate\Http\RedirectResponse
-     * @throws \Exception $e
-     */
     public function setDefault(SetDefaultAddressRequest $request, Address $address): RedirectResponse
     {
         try {
-            $address->update($request->validated());
+            $this->addressRepository->setDefaultAddress($request, $address);
             return back()->with('info', 'Address has been set as default.');
         } catch (\Exception $e) {
             return back()->with('error', 'Failed to set the address as default. Please try again. ' . $e->getMessage());
         }
     }
 
-    /**
-     * Update a specific address for the authenticated user
-     *
-     * @param \App\Http\Requests\Settings\Address\UpdateAddressRequest $request
-     * @param \App\Models\Address $address
-     * @return Illuminate\Http\RedirectResponse
-     * @throws \Exception $e
-     */
     public function update(UpdateAddressRequest $request, Address $address): RedirectResponse
     {
         try {
-            $address->update($request->validated());
+            $this->addressRepository->updateAddress($request, $address);
             return back()->with('info', 'The address has been updated successfully');
         } catch (\Exception $e) {
-            return back()->with('error', 'Failed to update the address. Please try again. ' . $e->getMessage());
+            return back()->with('error', 'Failed to update the address. Please try again.');
         }
     }
 
-    /**
-     * Delete a specific address for the authenticated user
-     *
-     * @param \App\Http\Requests\Settings\Address\DeleteAddressRequest $request
-     * @param \App\Models\Address $address
-     * @return Illuminate\Http\RedirectResponse
-     * @throws \Exception $e
-     */
     public function destroy(DeleteAddressRequest $request, Address $address): RedirectResponse
     {
         try {
-            $address->delete();
+            $this->addressRepository->deleteAddress($address);
             return back()->with('success', 'The address has been deleted successfully.');
         } catch (\Exception $e) {
             return back()->with('error', 'Failed to delete the address. Please try again. ' . $e->getMessage());

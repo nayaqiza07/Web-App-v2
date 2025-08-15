@@ -2,7 +2,10 @@ import AccordionCart from '@/components/organisms/Accordion/AccordionCart';
 import SummaryCartCard from '@/components/organisms/Card/SummaryCartCard';
 import SummaryCartDrawer from '@/components/organisms/Drawer/SummaryCartDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
+import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { cn } from '@/lib/utils';
+import { Link } from '@inertiajs/react';
 
 const CartPage = () => {
     return (
@@ -14,6 +17,9 @@ const CartPage = () => {
                 altImage="Image Cart"
             >
                 <h1 className="text-2xl font-bold md:text-4xl">Your Cart</h1>
+                <Link href="/products" className={cn(buttonVariants({ variant: 'default' }), 'rounded-full')}>
+                    Continue Shopping
+                </Link>
             </HeroSection>
 
             <div className="grid gap-5 md:grid-cols-[2fr_auto_1fr]">

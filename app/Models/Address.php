@@ -11,47 +11,23 @@ use Illuminate\Support\Facades\Auth;
 
 class Address extends Model
 {
-    /** @use HasFactory<\Database\Factories\AddressFactory> */
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-        /** Label */
         'label',
-
-        /** Recipient */
         'recipient_name',
         'phone_number',
-
         'country',
         'state',
         'city',
         'street',
         'postal_code',
-
-        /** Status */
         'is_default',
-
-        /** Relation */
         'user_id'
     ];
 
-    /**
-     * The relationships tha should always be laoded with the model.
-     *
-     * @var array<int, string>
-     */
     protected $with = ['user'];
 
-    /**
-     * The "booted" method of the model
-     * 
-     * This Logic ensures only one default address per user
-     */
     protected static function booted()
     {
         static::saving(function ($address) {
@@ -63,27 +39,17 @@ class Address extends Model
         });
     }
 
-    /**
-     * Scope to show address that sync with user
-     */
     public function scopeFilter(Builder $query): Builder
     {
         return $query->where('user_id', Auth::id());
     }
 
-    /**
-     * Relation with User
-     * Many Address belongsTo 1 User
-     */
+    /** Relation */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Relation with Order
-     * 1 Address has 1 Order
-     */
     public function order(): HasOne
     {
         return $this->hasOne(Order::class);

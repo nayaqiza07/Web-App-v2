@@ -1,8 +1,10 @@
 import CartItem from '@/components/molecules/Cart/CartItem';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { buttonVariants } from '@/components/ui/button';
 import { useCartActions } from '@/hooks/useCartActions';
 import { EachUtils } from '@/lib/EachUtils';
-import { priceFormat } from '@/lib/utils';
+import { cn, priceFormat } from '@/lib/utils';
+import { Link } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ShoppingBagIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -15,10 +17,6 @@ const AccordionCart = () => {
     const [openCartItemId, setOpenCartItemId] = useState<number | null>(null);
 
     const { cartItems, subTotalPrice } = useCartActions();
-
-    // if (!cartItems || !cartItems.items || !cartItems.total_items) {
-    //     return null;
-    // }
 
     return (
         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
@@ -95,6 +93,9 @@ const AccordionCart = () => {
                     </AccordionTrigger>
 
                     <AnimatedAccordionContent isOpen={openItems.includes('delivery')} className="flex flex-col gap-4 px-4 text-balance">
+                        <Link href={route('address.index')} className={cn(buttonVariants({ variant: 'secondary' }), 'border text-xs')}>
+                            • Want to change address? •
+                        </Link>
                         <DeliveryAddressForm />
                     </AnimatedAccordionContent>
                 </AccordionItem>
