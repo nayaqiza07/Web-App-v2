@@ -6,18 +6,19 @@ use App\Http\Requests\Cart\DestroyCartItemRequest;
 use App\Http\Requests\Cart\StoreCartItemRequest;
 use App\Http\Requests\Cart\UpdateCartItemRequest;
 use App\Models\CartItem;
-use App\Repositories\CartItem\CartItemRepository;
+use App\Services\CartItem\CartItemService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class CartItemController extends Controller
 {
-    protected CartItemRepository $cartItemRepository;
+    protected CartItemService $cartItemService;
 
-    public function __construct(CartItemRepository $cartItemRepository)
+    public function __construct(CartItemService $cartItemService)
     {
-        $this->cartItemRepository = $cartItemRepository;
+        $this->cartItemService = $cartItemService;
     }
 
     public function index()
@@ -29,11 +30,16 @@ class CartItemController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->cartItemRepository->createCartItem($request);
+            $this->cartItemService->createCartItem($request);
             DB::commit();
             return back()->with('success', 'Product successfully added to cart!');
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error("Cart item failed to create", [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
             return back()->with('error', 'Product failed added to cart!');
         }
     }
@@ -41,9 +47,15 @@ class CartItemController extends Controller
     public function update(UpdateCartItemRequest $request, CartItem $cartItem)
     {
         try {
-            $this->cartItemRepository->updateCartItem($request, $cartItem);
+            $this->cartItemService->updateCartItem($request, $cartItem);
             return back()->with('info', 'Cart item updated successfully');
         } catch (\Exception $e) {
+            Log::error("Cart item failed to update", [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+
             return back()->with('error', 'Cart item updated failed');
         }
     }
@@ -51,9 +63,15 @@ class CartItemController extends Controller
     public function destroy(DestroyCartItemRequest $request, CartItem $cartItem): RedirectResponse
     {
         try {
-            $this->cartItemRepository->deleteCartItem($cartItem);
+            $this->cartItemService->deleteCartItem($cartItem);
             return back()->with('success', 'Product successfully removed from cart.');
         } catch (\Exception $e) {
+            Log::error("Cart item failed to delete", [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+
             return back()->with('error', 'Failed to remove product from cart.');
         }
     }
@@ -61,12 +79,18 @@ class CartItemController extends Controller
     public function clear(): RedirectResponse
     {
         try {
-            $deleted = $this->cartItemRepository->clearCartItem();
+            $deleted = $this->cartItemService->clearCartItem();
             if ($deleted === 0) {
                 return back()->with('error', 'You must be logged in to clear your cart.');
             }
             return back()->with('success', 'All products successfully removed from cart.');
         } catch (\Exception $e) {
+            Log::error("Cart item failed to clear", [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+
             return back()->with('error', 'Failed to clear cart.');
         }
     }

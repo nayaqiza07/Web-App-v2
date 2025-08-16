@@ -8,9 +8,9 @@ use App\Models\CartItem;
 use LaravelEasyRepository\Repository;
 
 interface CartItemRepository extends Repository{
-    public function getCartItem(): array;
-    public function createCartItem(StoreCartItemRequest $data): CartItem;
-    public function updateCartItem(UpdateCartItemRequest $data, CartItem $cartItem): CartItem;
-    public function deleteCartItem(CartItem $cartItem): ?bool;
-    public function clearCartItem(): int;
+    public function getAllData(): array;
+    public function createData(StoreCartItemRequest $data): CartItem;
+    public function updateData(UpdateCartItemRequest $data, CartItem $cartItem): CartItem;
+    public function deleteData(CartItem $cartItem): ?bool;
+    public function clearData(): int;
 }

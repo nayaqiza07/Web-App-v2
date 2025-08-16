@@ -2,7 +2,11 @@
 
 namespace App\Services\CartItem;
 
+use App\Http\Requests\Cart\StoreCartItemRequest;
+use App\Http\Requests\Cart\UpdateCartItemRequest;
+use App\Models\CartItem;
 use App\Repositories\CartItem\CartItemRepository;
+use Illuminate\Support\Facades\Auth;
 use LaravelEasyRepository\Service;
 
 class CartItemServiceImplement extends Service implements CartItemService {
@@ -28,5 +32,49 @@ class CartItemServiceImplement extends Service implements CartItemService {
     public function __construct(CartItemRepository $mainRepository)
     {
         $this->mainRepository = $mainRepository;
+    }
+
+    public function getAllCartItems(): array
+    {
+        if (!Auth::check()) {
+            return [
+                'items' => collect(),
+                'total_items' => 0
+            ];
+        }
+        
+        return $this->mainRepository->getAllData();
+    }
+
+    public function createCartItem(StoreCartItemRequest $data): CartItem
+    {
+        return $this->mainRepository->createData($data);
+    }
+
+    public function updateCartItem(UpdateCartItemRequest $data, CartItem $cartItem): CartItem
+    {
+        if ($cartItem->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+        
+        return $this->mainRepository->updateData($data, $cartItem);
+    }
+
+    public function deleteCartItem(CartItem $cartItem): ?bool
+    {
+        if ($cartItem->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return $this->mainRepository->deleteData($cartItem);
+    }
+
+    public function clearCartItem(): int
+    {
+        if (!Auth::check()) {
+            return 0;
+        }
+        
+        return $this->mainRepository->clearData();
     }
 }

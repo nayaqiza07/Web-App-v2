@@ -93,7 +93,7 @@ const AccordionCart = () => {
                     </AccordionTrigger>
 
                     <AnimatedAccordionContent isOpen={openItems.includes('delivery')} className="flex flex-col gap-4 px-4 text-balance">
-                        <Link href={route('address.index')} className={cn(buttonVariants({ variant: 'secondary' }), 'border text-xs')}>
+                        <Link href={route('address.index')} className={cn(buttonVariants({ variant: 'outline' }), 'bg-secondary text-xs')}>
                             • Want to change address? •
                         </Link>
                         <DeliveryAddressForm />

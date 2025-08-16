@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Collection;
 use LaravelEasyRepository\Repository;
 
 interface AddressRepository extends Repository {
-    public function getAddress(): Collection;
-    public function createAddress(CreateAddressRequest $data): Address;
-    public function setDefaultAddress(SetDefaultAddressRequest $data, Address $address): Address;
-    public function updateAddress(UpdateAddressRequest $data, Address $address): Address;
-    public function deleteAddress(Address $address): ?bool;
+    public function getAllData(): Collection;
+    public function createData(CreateAddressRequest $data): Address;
+    public function setDefaultData(SetDefaultAddressRequest $data, Address $address): Address;
+    public function updateData(UpdateAddressRequest $data, Address $address): Address;
+    public function deleteData(Address $address): ?bool;
 }

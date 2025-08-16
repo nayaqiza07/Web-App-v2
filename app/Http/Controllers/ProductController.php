@@ -2,90 +2,59 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Support\Facades\Cache;
+use App\Services\Category\CategoryService;
+use App\Services\Product\ProductService;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ProductController extends Controller
 {
-    /**
-     * Display the list of visible products and categories for the shop
-     * 
-     * @return \Inertia\Response
-     */
+    protected ProductService $productService;
+    protected CategoryService $categoryService;
+
+    public function __construct(ProductService $productService, CategoryService $categoryService)
+    {
+        $this->productService = $productService;
+        $this->categoryService = $categoryService;
+    }
+
     public function index(): Response
     {
         // $sort = request('sort', 'latest');
         $page = request('page', 1);
         $perPage = 3;
-        $cacheKey = "products.page:{$page}";
         // $cacheKey = "products.page:{$page}.sort:{$sort}";
-        
-        $products = Cache::remember($cacheKey, 3600, function () use ($perPage) {
-            return Product::filter()->latest()->paginate($perPage);
-        });
 
-        $categories = Cache::remember('categories.list', 3600, function () {
-            return Category::filter()->get();
-        });
-
+        $products = $this->productService->getPaginatedProducts($page, $perPage);
+        $categories = $this->categoryService->getAllCategory();
         return Inertia::render('shop/ProductList', [
             'PRODUCTS' => Inertia::defer(fn () => $products),
             'CATEGORIES' => $categories,
         ]);
     }
 
-    /**
-     * Display the specified product by slug
-     * 
-     * @param string $slug
-     * @return \Inertia\Response
-     */
     public function show(string $slug): Response
     {
-        $product = Cache::remember("products:{$slug}", 3600, function () use ($slug) {
-            return Product::filter()->slug($slug)->firstOrFail();
-        });
-
-        $relatedProductsKey = "products.related:{$slug}";
-        $relatedProducts = Cache::remember($relatedProductsKey, 3600, function () use ($product) {
-            return Product::filter()->related($product)->get();
-        });
-
+        $product = $this->productService->getProductBySlug($slug);
+        $relatedProducts = $this->productService->getRelatedProducts($slug);
         return Inertia::render('shop/ProductDetail', [
+            'PRODUCT' => Inertia::defer(fn () => $product),
             'PRODUCTS' => [
                 'data'  => $relatedProducts,
                 'total' => Product::filter()->count(),
             ],
-            'PRODUCT' => Inertia::defer(fn () => $product),
         ]);
     }
 
-    /**
-     * Display the specified product by category
-     * 
-     * @param string $slug
-     * @return \Inertia\Response
-     */
     public function showByCategory(string $slug): Response
     {
         $page = request('page', 1);
         $perPage = 1;
-        $cacheProductsByCategoryKey = "products.category:{$slug}.page:{$page}";
 
-        $category = Cache::remember("categories:{$slug}", 3600, function () use ($slug) {
-            return Category::filter()->slug($slug)->firstOrFail();
-        });
-
-        $products = Cache::remember($cacheProductsByCategoryKey, 3600, function () use ($category, $perPage) {
-            return $category->products()->latest()->paginate($perPage);
-        });
-
-        $categories = Cache::remember('categories.list', 3600, function () {
-            return Category::filter()->get();
-        });
+        $category = $this->categoryService->getCategoryBySlug($slug);
+        $products = $this->productService->getProductByCategory($slug, $page, $perPage);
+        $categories = $this->categoryService->getAllCategory();
 
         return Inertia::render('shop/ProductList', [
             'CATEGORY' => $category,

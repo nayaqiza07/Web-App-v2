@@ -2,49 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Blog;
-use Illuminate\Support\Facades\Cache;
+use App\Services\Blog\BlogService;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class BlogController extends Controller
 {
-    /**
-     * Display the list of visible blog posts
-     * 
-     * @return \Inertia\Response
-     */
+    protected BlogService $blogService;
+
+    public function __construct(BlogService $blogService)
+    {
+        $this->blogService = $blogService;
+    }
+
     public function index(): Response
     {
         $page = request('page', 1);
         $perPage = 3;
-        $cacheKey = "blogs.page:{$page}";
-
-        $blogs = Cache::remember($cacheKey, 3600, function () use ($perPage) {
-            return Blog::filter()->paginate($perPage);
-        });
-
+        // $cacheKey = "blogs.page:{$page}";
+        $blogs = $this->blogService->getPaginatedBlogs($page, $perPage);
         return Inertia::render('blog/BlogList', [
             'BLOGS' => Inertia::defer(fn () => $blogs),
         ]);
     }
 
-    /**
-     * Display the specified blog by slug
-     * 
-     * @param string $slug
-     * @return \Inertia\Response 
-     */
     public function show(string $slug): Response
     {
-        $blogs = Cache::remember('blogs.related', 3600, function () {
-            return Blog::filter()->paginate(5);
-        });
-        
-        $blog = Cache::remember("blogs:{$slug}", 3600, function () use ($slug) {
-            return Blog::filter()->slug($slug)->firstOrFail();
-        });
-
+        $blog = $this->blogService->getBlogBySlug($slug);
+        $blogs = $this->blogService->getRelatedBlogs();
         return Inertia::render('blog/BlogDetail', [
             'BLOG' => Inertia::defer(fn () => $blog),
             'BLOGS' => Inertia::defer(fn () => $blogs),
