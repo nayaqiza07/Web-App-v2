@@ -31,8 +31,6 @@ const CartItem: React.FC<CartItemProps> = ({ data, openItemId, setOpenItemId }) 
         return data.product.price * data.quantity;
     }, [data]);
 
-    console.log(data);
-
     return (
         <motion.div
             layout

@@ -26,6 +26,15 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    user_address: {
+        address: {
+            country: string;
+            state: string;
+            city: string;
+            street: string;
+            postal_code: string;
+        };
+    };
     ziggy: Config & { location: string };
     sidebarOpen: boolean;
     [key: string]: unknown;

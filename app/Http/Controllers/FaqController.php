@@ -4,43 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\Faq;
+use App\Services\Contact\ContactService;
+use App\Services\Faq\FaqService;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class FaqController extends Controller
 {
-    /**
-     * Display the list of visible faq
-     * 
-     * @return \Inertia\Response
-     */
+    protected FaqService $faqService;
+    protected ContactService $contactService;
+
+    public function __construct(FaqService $faqService, ContactService $contactService)
+    {
+        $this->faqService = $faqService;
+        $this->contactService = $contactService;
+    }
+
     public function index(): Response
     {
-        $faqs = Cache::remember('faqs.list', 3600, function () {
-            return Faq::filter()->get();
-        });
-
+        $faqs = $this->faqService->getAllFaq();
         return Inertia::render('static/Support', [
             'FAQS' => Inertia::defer(fn () => $faqs),
         ]);
     }
 
-    /**
-     * Display the list of visible faq on Contact Us Page
-     * 
-     * @return \Inertia\Response
-     */
     public function indexOnContactUs(): Response
     {
-        $faqs = Cache::remember('faqs.list', 3600, function () {
-            return Faq::filter()->get();
-        });
-
-        $contacts = Cache::remember('contacts.list', 3600, function () {
-            return Contact::all();
-        });
-
+        $faqs = $this->faqService->getAllFaq();
+        $contacts = $this->contactService->getAllContacts();
         return Inertia::render('static/ContactUs', [
             'FAQS' => Inertia::defer(fn () => $faqs),
             'CONTACTS' => Inertia::defer(fn () => $contacts),

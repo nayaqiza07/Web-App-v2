@@ -49,7 +49,9 @@ class HandleInertiaRequests extends Middleware
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
                 'user' => $request->user(),
-                // 'userAddress' => Address::where('user_id', Auth::id())->where('is_default', true)->get(),
+            ],
+            'user_address' => [
+                'address' => Address::where('user_id', Auth::id())->where('is_default', true)->firstOrFail(),
             ],
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),
@@ -61,10 +63,6 @@ class HandleInertiaRequests extends Middleware
                 'info' => session('info'),
                 'error' => session('error'),
             ],
-            // 'flash' => fn () => [
-            //     'type' => session('flash.type'),
-            //     'message' => session('flash.message'),
-            // ],
             'cart' => function (): array {
                 if (!Auth::check()) {
                     return [

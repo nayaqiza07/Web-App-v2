@@ -17,9 +17,6 @@ const CartPage = () => {
                 altImage="Image Cart"
             >
                 <h1 className="text-2xl font-bold md:text-4xl">Your Cart</h1>
-                <Link href="/products" className={cn(buttonVariants({ variant: 'default' }), 'rounded-full')}>
-                    Continue Shopping
-                </Link>
             </HeroSection>
 
             <div className="grid gap-5 md:grid-cols-[2fr_auto_1fr]">
@@ -27,6 +24,9 @@ const CartPage = () => {
                 <Separator orientation="vertical" className="via-border hidden bg-gradient-to-b from-transparent to-transparent md:block" />
                 <SummaryCartCard />
                 <SummaryCartDrawer />
+                <Link href="/products" className={cn(buttonVariants({ variant: 'outline' }), 'bg-secondary')}>
+                    • Continue Shopping? •
+                </Link>
             </div>
         </>
     );

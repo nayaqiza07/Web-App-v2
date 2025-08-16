@@ -17,13 +17,13 @@ class AddressRepositoryImplement extends Eloquent implements AddressRepository{
         $this->model = $model;
     }
 
-    public function getAddress(): Collection
+    public function getAllData(): Collection
     {
         $address = $this->model->filter()->get();
         return $address;
     }
 
-    public function createAddress(CreateAddressRequest $data): Address
+    public function createData(CreateAddressRequest $data): Address
     {
         $address = $this->model->create([
                         ...$data->validated(),
@@ -32,19 +32,19 @@ class AddressRepositoryImplement extends Eloquent implements AddressRepository{
         return $address;
     }
 
-    public function setDefaultAddress(SetDefaultAddressRequest $data, Address $address): Address
+    public function setDefaultData(SetDefaultAddressRequest $data, Address $address): Address
     {
         $address->update($data->validated());
         return $address;
     }
 
-    public function updateAddress(UpdateAddressRequest $data, Address $address): Address
+    public function updateData(UpdateAddressRequest $data, Address $address): Address
     {
         $address->update($data->validated());
         return $address;
     }
 
-    public function deleteAddress(Address $address): ?bool
+    public function deleteData(Address $address): ?bool
     {
         return $address->delete();
     }

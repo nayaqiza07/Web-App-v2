@@ -16,15 +16,8 @@ class CartItemRepositoryImplement extends Eloquent implements CartItemRepository
         $this->model = $model;
     }
 
-    public function getCartItem(): array
+    public function getAllData(): array
     {
-        if (!Auth::check()) {
-            return [
-                'items' => collect(),
-                'total_items' => 0
-            ];
-        }
-
         $cartItems = $this->model
                     ->where('user_id', Auth::id())
                     ->with('product:id,name,slug,category_id,thumbnail,price,old_price')
@@ -36,7 +29,7 @@ class CartItemRepositoryImplement extends Eloquent implements CartItemRepository
         ];
     }
 
-    public function createCartItem(StoreCartItemRequest $data): CartItem
+    public function createData(StoreCartItemRequest $data): CartItem
     {
         $userId = Auth::id();
         $productId = $data->input('product_id');
@@ -57,28 +50,20 @@ class CartItemRepositoryImplement extends Eloquent implements CartItemRepository
         return $cartItem;
     }
 
-    public function updateCartItem(UpdateCartItemRequest $data, CartItem $cartItem): CartItem
+    public function updateData(UpdateCartItemRequest $data, CartItem $cartItem): CartItem
     {
-        if ($cartItem->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $cartItem->quantity = $data->validated('quantity');
+        $cartItem->quantity = $data->validated()['quantity'];
         $cartItem->save();
         return $cartItem;
     }
 
-    public function deleteCartItem(CartItem $cartItem): ?bool
+    public function deleteData(CartItem $cartItem): ?bool
     {
         return $cartItem->delete();
     }
 
-    public function clearCartItem(): int
+    public function clearData(): int
     {
-        if (!Auth::check()) {
-            return 0;
-        }
-
         return $this->model->where('user_id', Auth::id())->delete();
     }
 }
