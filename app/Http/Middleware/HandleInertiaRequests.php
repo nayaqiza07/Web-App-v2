@@ -51,7 +51,9 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'user_address' => [
-                'address' => Address::where('user_id', Auth::id())->where('is_default', true)->firstOrFail(),
+                'address' => Auth::check() 
+                    ? Address::where('user_id', Auth::id())->where('is_default', true)->first() 
+                    : null,
             ],
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),

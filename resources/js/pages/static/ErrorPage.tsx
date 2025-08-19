@@ -6,7 +6,6 @@ import { Head, Link } from '@inertiajs/react';
 import { ArrowLeftIcon, SquareArrowOutUpRightIcon } from 'lucide-react';
 
 function ErrorPage({ status, message }: { status: number; message?: string }) {
-    console.log(status);
     const defaultTitles: Record<number, string> = {
         503: '503 | Service Unavailable',
         500: '500 | Server Error',
@@ -93,8 +92,7 @@ function ErrorPage({ status, message }: { status: number; message?: string }) {
                     <AnimatedGridPattern
                         numSquares={30}
                         maxOpacity={0.1}
-                        duration={1}
-                        repeatDelay={1}
+                        duration={0.75}
                         className={cn(
                             '[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]',
                             'inset-x-0 inset-y-[-30%] h-[150%] skew-y-12',
