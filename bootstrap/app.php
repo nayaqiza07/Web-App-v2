@@ -47,8 +47,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 503 => 'Sorry, we are doing some maintenance. Please check back soon.',
             ];
 
-            // if (!app()->environment(['local', 'testing']) && in_array($code, [500, 503, 404, 403])) {
-            if (in_array($code, [500, 503, 404, 403])) {
+            // if (in_array($code, [500, 503, 404, 403])) {
+            if (!app()->environment(['local', 'testing']) && in_array($code, [500, 503, 404, 403])) {
                 return Inertia::render('static/ErrorPage', [
                     'status' => $code,
                     'message' => $customMessages[$code] ?? null,
