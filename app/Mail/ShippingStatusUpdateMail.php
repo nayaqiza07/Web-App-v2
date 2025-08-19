@@ -37,7 +37,7 @@ class ShippingStatusUpdateMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.shipping-status-update-mail',
+            markdown: 'mails.orders.shipping-status',
         );
     }
 

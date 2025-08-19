@@ -37,7 +37,7 @@ class PaymentSuccessMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.payment-success-mail',
+            markdown: 'mails.orders.payment-success',
         );
     }
 

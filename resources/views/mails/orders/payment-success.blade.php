@@ -1,10 +1,11 @@
 <x-mail::message>
-# Introduction
-
-The body of your message.
+  # Payment Successful!
+  
+  Thank you for the payment!
+  Your payment for (ID Order) has been received!
 
 <x-mail::button :url="''">
-Button Text
+View
 </x-mail::button>
 
 Thanks,<br>

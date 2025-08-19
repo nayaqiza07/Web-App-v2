@@ -3,11 +3,12 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class PromotionalNewsletterMail extends Mailable
 {
@@ -16,7 +17,9 @@ class PromotionalNewsletterMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(
+        public $url
+    )
     {
         //
     }
@@ -27,7 +30,7 @@ class PromotionalNewsletterMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Promotional Newsletter Mail',
+            subject: 'Newsletter',
         );
     }
 
@@ -37,7 +40,7 @@ class PromotionalNewsletterMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.promotion-newletter-mail',
+            markdown: 'mails.subscription.newsletter',
         );
     }
 

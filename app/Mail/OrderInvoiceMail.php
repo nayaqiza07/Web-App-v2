@@ -37,7 +37,7 @@ class OrderInvoiceMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.order-invoice-mail',
+            markdown: 'mails.orders.invoice',
         );
     }
 
