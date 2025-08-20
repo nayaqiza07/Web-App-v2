@@ -37,7 +37,7 @@ class OrderCancelledMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.orders.cancelled',
+            markdown: 'mail.orders.cancelled',
         );
     }
 

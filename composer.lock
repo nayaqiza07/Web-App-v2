@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b01dc2b5a09e808d635ff0ffd880296",
+    "content-hash": "b11873796912bd2f11431603101f003d",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -8302,6 +8302,88 @@
             "time": "2025-03-15T12:00:00+00:00"
         },
         {
+            "name": "grazulex/laravel-devtoolbox",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Grazulex/laravel-devtoolbox.git",
+                "reference": "6310cd8a00703d610ed46bc1ba4ce864e6451033"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Grazulex/laravel-devtoolbox/zipball/6310cd8a00703d610ed46bc1ba4ce864e6451033",
+                "reference": "6310cd8a00703d610ed46bc1ba4ce864e6451033",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^11.0|^12.0",
+                "nesbot/carbon": "^3.10",
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "doctrine/dbal": "^4.2",
+                "larastan/larastan": "^3.4",
+                "laravel/pint": "^1.22",
+                "orchestra/testbench": "^9.0|^10.0",
+                "pestphp/pest": "^3.8",
+                "pestphp/pest-plugin-laravel": "^3.2",
+                "rector/rector": "^2.0"
+            },
+            "suggest": {
+                "doctrine/dbal": "Required for command `php artisan dev:generate-migration` to generate migrations from models"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Grazulex\\LaravelDevtoolbox\\LaravelDevtoolboxServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Grazulex\\LaravelDevtoolbox\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-Marc Strauven",
+                    "email": "jms@grazulex.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Swiss-army artisan CLI for Laravel — Scan, inspect, debug, and explore every aspect of your Laravel application from the command line.",
+            "homepage": "https://github.com/grazulex/laravel-devtoolbox",
+            "keywords": [
+                "Devtools",
+                "artisan",
+                "cli",
+                "debug",
+                "inspector",
+                "laravel",
+                "pest",
+                "php8",
+                "scanner"
+            ],
+            "support": {
+                "forum": "https://github.com/Grazulex/laravel-devtoolbox/discussions",
+                "issues": "https://github.com/Grazulex/laravel-devtoolbox/issues",
+                "source": "https://github.com/Grazulex/laravel-devtoolbox",
+                "wiki": "https://github.com/Grazulex/laravel-devtoolbox/wiki"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/strauven",
+                    "type": "custom"
+                }
+            ],
+            "time": "2025-07-30T08:48:34+00:00"
+        },
+        {
             "name": "hamcrest/hamcrest-php",
             "version": "v2.1.1",
             "source": {
@@ -11155,6 +11237,87 @@
                 }
             ],
             "time": "2024-03-03T12:36:25+00:00"
+        },
+        {
+            "name": "xammie/mailbook",
+            "version": "1.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Xammie/mailbook.git",
+                "reference": "7eba0a9326a305b5297967e1b1505d1584b0a6d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Xammie/mailbook/zipball/7eba0a9326a305b5297967e1b1505d1584b0a6d8",
+                "reference": "7eba0a9326a305b5297967e1b1505d1584b0a6d8",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.0 || ^10.0 || ^11.0 || ^12.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9.2"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.0",
+                "laravel/pint": "^v1.4.1",
+                "nunomaduro/collision": "^6.0 || ^7.0 || ^8.0",
+                "nunomaduro/phpinsights": "^2.6",
+                "orchestra/testbench": "^8.0 || ^9.0 || ^10.0",
+                "pestphp/pest": "^1.22 || ^2.0 || ^3.7",
+                "pestphp/pest-plugin-laravel": "^1.1 || ^2.0 || ^3.0",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "rector/rector": "^2.0",
+                "spatie/invade": "^1.1 || ^2.1",
+                "tomasvotruba/bladestan": "^0.10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Mailbook": "Xammie\\Mailbook\\Facades\\Mailbook"
+                    },
+                    "providers": [
+                        "Xammie\\Mailbook\\MailbookServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Xammie\\Mailbook\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Max Hoogenbosch",
+                    "email": "max@hoogenbos.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Mail Explorer",
+            "homepage": "https://github.com/xammie/mailbook",
+            "keywords": [
+                "Xammie",
+                "laravel",
+                "mailbook"
+            ],
+            "support": {
+                "issues": "https://github.com/Xammie/mailbook/issues",
+                "source": "https://github.com/Xammie/mailbook/tree/1.9.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/xammie",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-02-17T21:55:12+00:00"
         }
     ],
     "aliases": [],
