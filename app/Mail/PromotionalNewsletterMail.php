@@ -30,6 +30,10 @@ class PromotionalNewsletterMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address('horestco@example.com', 'Horestco'),
+            to: [
+                new Address('customer@example.com', 'Customer'),
+            ],
             subject: 'Newsletter',
         );
     }
@@ -40,7 +44,7 @@ class PromotionalNewsletterMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.subscription.newsletter',
+            markdown: 'mail.subscription.newsletter',
         );
     }
 

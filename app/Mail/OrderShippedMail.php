@@ -5,18 +5,21 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ResetPasswordMail extends Mailable
+class OrderShippedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(
+        public $data
+    )
     {
         //
     }
@@ -27,7 +30,11 @@ class ResetPasswordMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reset Password Mail',
+            from: new Address('horestco@example.com', 'Horestco'),
+            to: [
+                new Address('customer@example.com', 'Customer'),
+            ],
+            subject: 'Your Order Has Been Shipped!',
         );
     }
 
@@ -37,7 +44,7 @@ class ResetPasswordMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.auth.reset-password',
+            markdown: 'mail.orders.shipped',
         );
     }
 

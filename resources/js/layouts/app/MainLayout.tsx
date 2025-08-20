@@ -1,4 +1,3 @@
-import { Banner } from '@/components/molecules/Banner/Banner';
 import Footer from '@/components/organisms/footer/Footer';
 import Subscription from '@/components/organisms/Form/Subscription';
 import Navbar from '@/components/organisms/navbar/Navbar';
@@ -12,7 +11,6 @@ interface MainLayoutProps {
 const MainLayout = ({ children }: MainLayoutProps) => {
     return (
         <>
-            <Banner />
             <Navbar />
             <div className="min-h-screen">
                 {/* <main className="mx-auto flex max-w-5xl flex-col gap-6 p-5 md:px-9 md:py-8 lg:px-20 lg:py-12"> */}

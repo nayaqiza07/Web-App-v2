@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -27,6 +28,10 @@ class OrderInvoiceMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address('horestco@example.com', 'Horestco'),
+            to: [
+                new Address('customer@example.com', 'Customer'),
+            ],
             subject: 'Order Invoice Mail',
         );
     }
@@ -37,7 +42,7 @@ class OrderInvoiceMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.orders.invoice',
+            markdown: 'mail.orders.invoice',
         );
     }
 
