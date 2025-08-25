@@ -87,7 +87,7 @@ class AddressController extends Controller
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
             ]);
-            return back()->with('error', 'Failed to delete the address. Please try again. ' . $e->getMessage());
+            return back()->with('error', 'Failed to delete the address. Please try again.');
         }
     }
 }

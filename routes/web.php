@@ -53,5 +53,6 @@ require __DIR__.'/auth.php';
 
 require __DIR__.'/modules/blog.php';
 require __DIR__.'/modules/cart.php';
+require __DIR__.'/modules/order.php';
 require __DIR__.'/modules/product.php';
 require __DIR__.'/modules/static.php';
