@@ -1,0 +1,44 @@
+<div class="my-6 overflow-hidden rounded-md border border-gray-300">
+    <table class="w-full border-collapse text-left" cellpadding="0" cellspacing="0" role="presentation">
+        <thead>
+            <tr class="bg-gray-100">
+                <th class="border-b border-gray-300 px-4 py-3 text-sm font-semibold text-gray-900">Information</th>
+                <th class="border-b border-gray-300 px-4 py-3 text-sm font-semibold text-gray-900">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white">
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">Order Number</td>
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">@{{ $order_number }}</td>
+            </tr>
+            <tr class="bg-gray-50">
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">Payment Method</td>
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">@{{ $payment_method}}</td>
+            </tr>
+            <tr class="bg-white">
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">Shipment ID</td>
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">@{{ $shipment_id }}</td>
+            </tr>
+            <tr class="bg-gray-50">
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">Shipped Via</td>
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">@{{ $shipped_via }}</td>
+            </tr>
+            <tr class="bg-white">
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">Shipped At</td>
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">@{{ $shipped_at }}</td>
+            </tr>
+            <tr class="bg-gray-50">
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">Shipping Fee</td>
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">@{{ $shipping_fee }}</td>
+            </tr>
+            <tr class="bg-white">
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">Payment Fee</td>
+                <td class="border-b border-gray-200 px-4 py-2 text-gray-800">@{{ $payment_fee }}</td>
+            </tr>
+            <tr class="bg-gray-50">
+                <td class="px-4 py-2 font-semibold text-gray-900">Amount Paid</td>
+                <td class="px-4 py-2 font-semibold text-gray-900">@{{ $amount_paid }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

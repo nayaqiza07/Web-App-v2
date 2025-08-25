@@ -17,9 +17,7 @@ class PromotionalNewsletterMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(
-        public $url
-    )
+    public function __construct()
     {
         //
     }
@@ -44,7 +42,7 @@ class PromotionalNewsletterMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.subscription.newsletter',
+            view: 'mail.newsletter',
         );
     }
 

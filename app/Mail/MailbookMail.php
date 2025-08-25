@@ -20,7 +20,7 @@ class MailbookMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.mailbook',
+            markdown: 'mailbook.mailbook',
         );
     }
 }
