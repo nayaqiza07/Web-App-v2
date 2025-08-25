@@ -8,9 +8,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Number;
 
-class OrderCancelledMail extends Mailable
+class WelcomeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,7 +27,7 @@ class OrderCancelledMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order Cancelled Mail',
+            subject: 'Welcome Mail',
         );
     }
 
@@ -38,18 +37,7 @@ class OrderCancelledMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.order-cancelled',
-            with: [
-                'order_number' => '#00001',
-                'payment_method' => 'Midtrans',
-                'shipment_id' => '#232157378',
-                'shipped_via' => 'Horestco Container',
-                'shipped_date_time' => '21 July 2025, 21:00 (GMT+7)',
-                'shipping_fee' => Number::currency(300000, in: 'IDR'),
-                'payment_fee' => Number::currency(1000000, in: 'IDR'),
-                'amount_paid' => Number::currency(1300000, in: 'IDR'),
-                'address' => 'Jalan Mantingan, RT.12/RW.05, Langon, Tahunan, Jepara Regency, Central Java 59425',
-            ]
+            view: 'mail.welcome',
         );
     }
 

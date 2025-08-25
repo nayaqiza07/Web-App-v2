@@ -1,4 +1,5 @@
 ---
+title: Order Invoice Email
 bodyClass: bg-slate-50
 preheader: Order invoice email template
 ---
@@ -26,10 +27,29 @@ preheader: Order invoice email template
                                                             </a>
                                                         </div>
                                                         <div role="separator" class="leading-6">&zwj;</div>
-                                                        <p class="m-0 text-center text-base/6 font-medium text-gray-950">
-                                                            Medium, rare, but mostly well-done<br />
-                                                            HTML email components.
-                                                        </p>
+                                                        <div class="text-center text-gray-950">
+                                                            <h1>Your Order Was Shipped!</h1>
+                                                            <p class="m-0 text-base/6 font-medium">Dear Customer,</p>
+                                                            <p class="m-0 text-base/6 font-medium">
+                                                                Thank you for shopping with us. Your order number #00001 has shipped.<br />
+                                                                You can review the order details below:
+                                                            </p>
+                                                        </div>
+                                                        <x-table />
+                                                        <x-button href="/order" align="center"> View Order </x-button>
+
+                                                        <div class="my-6 rounded-md border border-gray-200 bg-gray-50 p-4 text-gray-900">
+                                                            <h3 class="mb-2 text-base font-semibold">Delivery Address</h3>
+                                                            <p class="text-sm leading-relaxed">
+                                                                Jalan Mantingan, RT.12/RW.05, Langon, Tahunan,<br />
+                                                                Jepara Regency, Central Java 59425
+                                                            </p>
+                                                        </div>
+
+                                                        <div class="mt-8 text-gray-900">
+                                                            <p class="mb-1 text-sm">Thanks,</p>
+                                                            <p class="text-base font-semibold">Horestco</p>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </table>

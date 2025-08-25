@@ -1,10 +1,16 @@
 <?php
 
+use App\Mail\SubscriptionConfirmationMail;
 use App\Models\Blog;
 use Inertia\Inertia;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-email', function () {
+    Mail::to('customer@example.com')->send(new SubscriptionConfirmationMail);
+});
 
 Route::get('/welcome', function () {
     return Inertia::render('welcome');

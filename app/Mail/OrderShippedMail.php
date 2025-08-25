@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Number;
 
 class OrderShippedMail extends Mailable
 {
@@ -17,9 +18,7 @@ class OrderShippedMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(
-        public $data
-    )
+    public function __construct()
     {
         //
     }
@@ -30,10 +29,10 @@ class OrderShippedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('horestco@example.com', 'Horestco'),
-            to: [
-                new Address('customer@example.com', 'Customer'),
-            ],
+            // from: new Address('horestco@example.com', 'Horestco'),
+            // to: [
+            //     new Address('customer@example.com', 'Customer'),
+            // ],
             subject: 'Your Order Has Been Shipped!',
         );
     }
@@ -44,7 +43,18 @@ class OrderShippedMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.orders.shipped',
+            view: 'mail.order-shipped',
+            with: [
+                'order_number' => '#00001',
+                'payment_method' => 'Midtrans',
+                'shipment_id' => '#232157378',
+                'shipped_via' => 'Horestco Container',
+                'shipped_date_time' => '21 July 2025, 21:00 (GMT+7)',
+                'shipping_fee' => Number::currency(300000, in: 'IDR'),
+                'payment_fee' => Number::currency(1000000, in: 'IDR'),
+                'amount_paid' => Number::currency(1300000, in: 'IDR'),
+                'address' => 'Jalan Mantingan, RT.12/RW.05, Langon, Tahunan, Jepara Regency, Central Java 59425',
+            ]
         );
     }
 
