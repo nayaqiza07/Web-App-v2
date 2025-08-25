@@ -30,7 +30,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                     <SidebarMenu>
                         <SidebarMenuItem>
                             <SidebarMenuButton asChild isActive={'/admin' === page.url} tooltip={{ children: 'Go to Admin Panel' }}>
-                                <a href="/admin" target='_blank'>
+                                <a href="/admin" target="_blank">
                                     <MonitorCogIcon />
                                     <span>Go to Admin Panel</span>
                                 </a>

@@ -31,8 +31,10 @@ class StoreOrderRequest extends FormRequest
         return [
             'address_id'     => ['required', 'integer', Rule::exists('addresses', 'id')],
             'code'           => ['required', 'string', 'unique:orders,code'],
-            'status'         => ['required', Rule::id(['pending', 'paid', 'shipped', 'completed'])],
-            'payment_method' => ['required', Rule::id(['manual_transfer', 'midtrans', 'stripe', 'xendit'])],
+            'order_status'   => ['required', Rule::enum(['pending', 'processing', 'shipped', 'delivered',         'cancelled'])],
+            'payment_status' => ['required', Rule::enum(['unpaid', 'paid', 'refunded', 'failed'])],
+            // 'payment_method' => ['required', Rule::id(['manual_transfer', 'midtrans', 'stripe', 'xendit'])],
+            'payment_method' => ['required', 'string', 'max:255'],
             'subtotal'       => ['required', 'decimal:15,2'],
             'shipping_cost'  => ['required', 'decimal:15,2'],
             'total'          => ['required', 'decimal:15,2'],

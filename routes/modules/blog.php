@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::prefix('blogs')->name('blogs.')->controller(BlogController::class)->group(function () {
     /**  
