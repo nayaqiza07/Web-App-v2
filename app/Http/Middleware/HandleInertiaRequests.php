@@ -69,7 +69,8 @@ class HandleInertiaRequests extends Middleware
                 if (!Auth::check()) {
                     return [
                         'items' => collect(),
-                        'total_items' => 0
+                        'total_items' => 0,
+                        'total_price_items' => 0
                     ];
                 }
 
@@ -77,9 +78,14 @@ class HandleInertiaRequests extends Middleware
                     ->with('product:id,name,slug,category_id,thumbnail,price,old_price')
                     ->get();
                 
+                $totalPriceItems = $cartItems->sum(function ($item) {
+                    return ($item->product->price ?? 0) * ($item->quantity ?? 1);
+                });
+                
                 return [
                     'items' => $cartItems,
                     'total_items' => $cartItems->count(),
+                    'total_price_items' => $totalPriceItems
                 ];
             },
         ];

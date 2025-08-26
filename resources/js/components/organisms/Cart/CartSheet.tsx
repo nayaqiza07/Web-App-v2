@@ -6,21 +6,24 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useCartActions } from '@/hooks/useCartActions';
 import { cn, priceFormat } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
+import { SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import { ShoppingBagIcon, ShoppingCartIcon } from 'lucide-react';
 import { useState } from 'react';
 
 const CartSheet = () => {
     const [openItemId, setOpenItemId] = useState<number | null>(null);
-    const { handleClearAllCartItems, cartItems, subTotalPrice } = useCartActions();
+    const { handleClearAllCartItems } = useCartActions();
+
+    const { cart } = usePage<SharedData>().props;
 
     return (
         <Sheet>
             <SheetTrigger asChild>
                 <Button size="icon" variant="outline" className="relative" aria-label="Open cart">
                     <ShoppingCartIcon size={16} aria-hidden="true" />
-                    {cartItems.total_items > 0 && (
+                    {cart.total_items > 0 && (
                         <motion.div
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -30,8 +33,8 @@ const CartSheet = () => {
                             }}
                             className="absolute -top-2 left-full min-w-5 -translate-x-1/2 overflow-hidden rounded-full"
                         >
-                            <Badge variant="destructive" className={`tabular-nums ${cartItems.total_items > 9 ? 'px-0.5' : 'px-1.5'}`}>
-                                {cartItems.total_items > 99 ? '99+' : cartItems.total_items}
+                            <Badge variant="destructive" className={`tabular-nums ${cart.total_items > 9 ? 'px-0.5' : 'px-1.5'}`}>
+                                {cart.total_items > 99 ? '99+' : cart.total_items}
                             </Badge>
                         </motion.div>
                     )}
@@ -44,7 +47,7 @@ const CartSheet = () => {
                     <SheetDescription></SheetDescription>
                 </SheetHeader>
 
-                {cartItems.items.length === 0 ? (
+                {cart.items.length === 0 ? (
                     <EmptyState
                         icon={ShoppingBagIcon}
                         iconSize={50}
@@ -56,7 +59,7 @@ const CartSheet = () => {
                     <>
                         {/* Total Item and Clear All from cart */}
                         <section className="flex items-center justify-between px-4 pt-2 text-xs">
-                            <span>{cartItems.total_items} Items</span>
+                            <span>{cart.total_items} Items</span>
                             <Button type="button" variant="ghost" size="sm" effect="hoverUnderline" onClick={handleClearAllCartItems}>
                                 Clear All
                             </Button>
@@ -65,7 +68,7 @@ const CartSheet = () => {
                         <section className="flex-1 overflow-hidden">
                             <ScrollArea className="h-full px-4 py-2">
                                 <div className="flex flex-col gap-2">
-                                    {cartItems.items.map((_data) => (
+                                    {cart.items.map((_data) => (
                                         <CartItem key={_data.id} data={_data} openItemId={openItemId} setOpenItemId={setOpenItemId} />
                                     ))}
                                 </div>
@@ -75,7 +78,7 @@ const CartSheet = () => {
                         <SheetFooter className="border-t">
                             <div className="text-muted-foreground mb-5 flex justify-between text-sm font-bold">
                                 <p>Sub Total</p>
-                                <p className="text-foreground">{priceFormat(subTotalPrice)}</p>
+                                <p className="text-foreground">{priceFormat(cart.total_price_items)}</p>
                             </div>
                             <Link
                                 href={route('cart.index')}

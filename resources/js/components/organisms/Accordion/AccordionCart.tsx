@@ -1,10 +1,11 @@
 import CartItem from '@/components/molecules/Cart/CartItem';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { buttonVariants } from '@/components/ui/button';
-import { useCartActions } from '@/hooks/useCartActions';
+import { Card, CardContent } from '@/components/ui/card';
 import { EachUtils } from '@/lib/EachUtils';
 import { cn, priceFormat } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
+import { SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ShoppingBagIcon } from 'lucide-react';
 import { useState } from 'react';
@@ -16,7 +17,7 @@ const AccordionCart = () => {
     const [openItems, setOpenItems] = useState<string[]>(['bag', 'profile', 'delivery']);
     const [openCartItemId, setOpenCartItemId] = useState<number | null>(null);
 
-    const { cartItems, subTotalPrice } = useCartActions();
+    const { cart } = usePage<SharedData>().props;
 
     return (
         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
@@ -38,10 +39,10 @@ const AccordionCart = () => {
                             transition={{ delay: 0.2, duration: 0.4, ease: 'easeOut' }}
                         >
                             <h5>
-                                Products: <span className="text-foreground">{cartItems.total_items ?? 0}</span>
+                                Products: <span className="text-foreground">{cart.total_items ?? 0}</span>
                             </h5>
                             <h5>
-                                Amount: <span className="text-foreground">{priceFormat(subTotalPrice)}</span>
+                                Amount: <span className="text-foreground">{priceFormat(cart.total_price_items)}</span>
                             </h5>
                         </motion.div>
                     </AccordionTrigger>
@@ -54,7 +55,7 @@ const AccordionCart = () => {
                                 emptyDesc=""
                                 emptyButtonTxt="Continue Shopping"
                                 emptyButtonLink={route('products.index')}
-                                of={cartItems.items}
+                                of={cart.items}
                                 render={(_item) => (
                                     <CartItem key={_item.id} data={_item} openItemId={openCartItemId} setOpenItemId={setOpenCartItemId} />
                                 )}
@@ -93,9 +94,14 @@ const AccordionCart = () => {
                     </AccordionTrigger>
 
                     <AnimatedAccordionContent isOpen={openItems.includes('delivery')} className="flex flex-col gap-4 px-4 text-balance">
-                        <Link href={route('address.index')} className={cn(buttonVariants({ variant: 'outline' }), 'bg-secondary text-xs')}>
-                            • Want to change address? •
-                        </Link>
+                        <Card className="bg-accent border-none p-4 shadow-none">
+                            <CardContent className="flex items-center justify-between p-0">
+                                This is where your order will be delivered.
+                                <Link href={route('address.index')} className={cn(buttonVariants({ variant: 'secondary' }), 'text-xs')}>
+                                    Change Delivery Address
+                                </Link>
+                            </CardContent>
+                        </Card>
                         <DeliveryAddressForm />
                     </AnimatedAccordionContent>
                 </AccordionItem>

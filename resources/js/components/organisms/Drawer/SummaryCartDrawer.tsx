@@ -1,28 +1,29 @@
 import { Button } from '@/components/ui/button';
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { Separator } from '@/components/ui/separator';
-import { useCartActions } from '@/hooks/useCartActions';
 import { priceFormat } from '@/lib/utils';
-import { ListCheck } from 'lucide-react';
+import { SharedData } from '@/types';
+import { usePage } from '@inertiajs/react';
+import { ListCheck, ShoppingBagIcon } from 'lucide-react';
 
 const SummaryCartDrawer = () => {
-    const { subTotalPrice } = useCartActions();
+    const { cart } = usePage<SharedData>().props;
 
     return (
         <Drawer>
             <DrawerTrigger asChild>
-                <Button size="icon" className="fixed right-9 bottom-9 z-10 rounded-full md:hidden">
+                <Button size="icon" className="border-border fixed right-9 bottom-9 z-10 rounded-full border md:hidden">
                     <ListCheck />
                 </Button>
             </DrawerTrigger>
-            <DrawerContent className="bg-card">
+            <DrawerContent>
                 <DrawerHeader>
                     <DrawerTitle>Summary</DrawerTitle>
                     <DrawerDescription></DrawerDescription>
                 </DrawerHeader>
                 <div className="text-muted-foreground p-0 px-4">
                     <p className="flex justify-between">
-                        Sub Total <span className="text-end">{priceFormat(subTotalPrice)}</span>
+                        Sub Total <span className="text-end">{priceFormat(cart.total_price_items)}</span>
                     </p>
                     <p className="flex justify-between">
                         Shipping <span className="text-end">{priceFormat()}</span>
@@ -30,11 +31,13 @@ const SummaryCartDrawer = () => {
                     <Separator className="my-5" />
 
                     <p className="text-foreground flex justify-between">
-                        Total <span className="text-end">{priceFormat(subTotalPrice)}</span>
+                        Total <span className="text-end">{priceFormat(cart.total_price_items)}</span>
                     </p>
                 </div>
                 <DrawerFooter>
-                    <Button className="w-full">Place Order</Button>
+                    <Button className="w-full">
+                        <ShoppingBagIcon /> Place Order
+                    </Button>
                 </DrawerFooter>
             </DrawerContent>
         </Drawer>

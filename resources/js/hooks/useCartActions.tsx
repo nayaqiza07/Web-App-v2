@@ -1,28 +1,12 @@
 import { ToastCart } from '@/components/atoms/Toast/ToastCart';
 import ToastSonner from '@/components/atoms/Toast/ToastSonner';
 import { useQuantityButtonStore } from '@/stores/useQuantityButtonStore';
-import { CartItemsType, NullableCartItemsType, ProductData } from '@/types';
-import { router, usePage } from '@inertiajs/react';
-import { useMemo } from 'react';
+import { ProductData } from '@/types';
+import { router } from '@inertiajs/react';
 import { toast } from 'sonner';
 
 export const useCartActions = () => {
     const { setQuantity } = useQuantityButtonStore();
-
-    const { cart } = usePage().props;
-    const typedCart: NullableCartItemsType = cart as NullableCartItemsType;
-
-    const cartItems = useMemo(() => {
-        return typedCart || ({ items: [], total_items: 0 } as CartItemsType);
-    }, [typedCart]);
-
-    const subTotalPrice = useMemo(() => {
-        if (!cartItems || !cartItems.items) {
-            return 0;
-        }
-
-        return cartItems.items.reduce((acc, _item) => acc + _item.product.price * _item.quantity, 0);
-    }, [cartItems]);
 
     const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>, data: ProductData, quantity: number) => {
         e.preventDefault();
@@ -124,5 +108,5 @@ export const useCartActions = () => {
         });
     };
 
-    return { handleAddToCart, handleUpdateCart, handleRemoveCartItem, handleClearAllCartItems, cartItems, subTotalPrice };
+    return { handleAddToCart, handleUpdateCart, handleRemoveCartItem, handleClearAllCartItems };
 };
