@@ -26,18 +26,11 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
-    user_address: {
-        address: {
-            country: string;
-            state: string;
-            city: string;
-            street: string;
-            postal_code: string;
-        };
-    };
+    user_address: { address: UserAddressType };
     ziggy: Config & { location: string };
     sidebarOpen: boolean;
     [key: string]: unknown;
+    cart: CartItemsType;
 }
 
 export interface User {
@@ -68,6 +61,7 @@ export interface InputWithLabelProps {
     placeholder: string;
     value?: string | number;
     onChange?: (e) => void;
+    readOnly?: boolean;
     autoComplete: string;
     disabled?: boolean;
     className?: string;
@@ -228,10 +222,19 @@ export interface CartItemType {
 export interface CartItemsType {
     items: CartItemType[];
     total_items: number;
+    total_price_items: number;
 }
-
-export type NullableCartItemsType = CartItemsType | null;
 // Cart Item End
+
+// User Adrress Start
+export interface UserAddressType {
+    country: string;
+    state: string;
+    city: string;
+    street: string;
+    postal_code: string;
+}
+// User Adrress End
 
 // Blog Start
 export type BlogData = {

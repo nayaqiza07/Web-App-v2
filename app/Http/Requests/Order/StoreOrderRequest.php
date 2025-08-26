@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\Order;
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
+use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -13,12 +16,7 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $userId = Auth::id();
-
-        return $userId ? true : false;
-
-        // More Short
-        // return Auth::check();
+        return Auth::check();
     }
 
     /**
@@ -30,14 +28,13 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'address_id'     => ['required', 'integer', Rule::exists('addresses', 'id')],
-            'code'           => ['required', 'string', 'unique:orders,code'],
-            'order_status'   => ['required', Rule::enum(['pending', 'processing', 'shipped', 'delivered',         'cancelled'])],
-            'payment_status' => ['required', Rule::enum(['unpaid', 'paid', 'refunded', 'failed'])],
-            // 'payment_method' => ['required', Rule::id(['manual_transfer', 'midtrans', 'stripe', 'xendit'])],
+            // 'order_status'   => ['required', Rule::enum(OrderStatus::class)],
+            // 'payment_status' => ['required', Rule::enum(PaymentStatus::class)],
+            // // 'payment_method' => ['required', Rule::id(['manual_transfer', 'midtrans', 'stripe', 'xendit'])],
             'payment_method' => ['required', 'string', 'max:255'],
-            'subtotal'       => ['required', 'decimal:15,2'],
-            'shipping_cost'  => ['required', 'decimal:15,2'],
-            'total'          => ['required', 'decimal:15,2'],
+            // 'subtotal'       => ['required', 'decimal:15,2'],
+            // 'shipping_cost'  => ['required', 'decimal:15,2'],
+            // 'total'          => ['required', 'decimal:15,2'],
         ];
     }
 }

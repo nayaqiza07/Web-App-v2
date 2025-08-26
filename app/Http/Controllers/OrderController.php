@@ -7,10 +7,7 @@ use App\Http\Requests\Order\StoreOrderRequest;
 use App\Models\Order;
 use App\Services\Order\OrderService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -37,7 +34,6 @@ class OrderController extends Controller
         // 1. Pengguna menambahkan product ke dalam keranjang (membuat entri baru pada cart_items)
         // 2. Saat pengguna checkout, akan membuat entri baru di tabel orders
         // 3. Lalu yang awalnya ada pada cart_items akan ditambahkan entri baru di order_items (dan yang ada pada cart_items dihapus)
-
         try {
             $this->orderService->createOrder($request);
             return redirect()->back()->with('success', 'Order created successfully');

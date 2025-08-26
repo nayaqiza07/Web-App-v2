@@ -1,11 +1,9 @@
 import AccordionCart from '@/components/organisms/Accordion/AccordionCart';
+import CtaCard from '@/components/organisms/Card/CtaCard';
 import SummaryCartCard from '@/components/organisms/Card/SummaryCartCard';
 import SummaryCartDrawer from '@/components/organisms/Drawer/SummaryCartDrawer';
 import HeroSection from '@/components/organisms/Section/HeroSection';
-import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
-import { Link } from '@inertiajs/react';
 
 const CartPage = () => {
     return (
@@ -24,9 +22,8 @@ const CartPage = () => {
                 <Separator orientation="vertical" className="via-border hidden bg-gradient-to-b from-transparent to-transparent md:block" />
                 <SummaryCartCard />
                 <SummaryCartDrawer />
-                <Link href="/products" className={cn(buttonVariants({ variant: 'outline' }), 'bg-secondary')}>
-                    • Continue Shopping? •
-                </Link>
+
+                <CtaCard />
             </div>
         </>
     );

@@ -35,36 +35,6 @@ class Order extends Model
         'payment_status' => PaymentStatus::class
     ];
 
-    public static function generateCode()
-    {
-        $dateCode = '#' . date('Y') . '/' . date('m') . '/' . date('d') . '/';
-
-        $lastOrder = self::selecct([DB::raw('MAX(orders.code) AS last_code')])
-            ->where('code', 'like', $dateCode . '%')
-            ->first();
-
-        $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
-
-        $orderCode = $dateCode . '00001';
-        if ($lastOrderCode) {
-            $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
-            $nextOrderNumber = sprintf('%05d', (int)$lastOrderNumber + 1);
-
-            $orderCode = $dateCode . $nextOrderNumber;
-        }
-
-        if (self::isCodeExists($orderCode)) {
-            return self::generateCode();
-        }
-
-        return $orderCode;
-    }
-
-    private static function isCodeExists($orderCode)
-    {
-        return Order::where('code', '=', $orderCode)->exists();
-    }
-
     public function scopeFilter(Builder $query): Builder
     {
         return $query->where('user_id', Auth::id());

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Cart\DestroyCartItemRequest;
 use App\Http\Requests\Cart\StoreCartItemRequest;
 use App\Http\Requests\Cart\UpdateCartItemRequest;
+use App\Models\Address;
 use App\Models\CartItem;
 use App\Services\CartItem\CartItemService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -23,6 +25,8 @@ class CartItemController extends Controller
 
     public function index()
     {
+        // $items = CartItem::where('user_id', Auth::id())->get();
+        // $userAddress = Auth::check() ? Address::where('user_id', Auth::id())->where('is_default', true)->first() : null;
         return Inertia::render('cart/Cart');
     }
 

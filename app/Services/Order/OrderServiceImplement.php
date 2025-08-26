@@ -5,6 +5,7 @@ namespace App\Services\Order;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Http\Requests\Order\StoreOrderRequest;
+use App\Models\CartItem;
 use App\Models\Order;
 use App\Repositories\Order\OrderRepository;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,15 +38,15 @@ class OrderServiceImplement extends Service implements OrderService {
       $this->mainRepository = $mainRepository;
     }
 
-    // protected function generateUniqueOrderCode(): string
-    // {
-    //     $code = 'ORD-' . now()->format('Ymd-His') . '-' . Str::upper(Str::random(4));
-    //     // Loop hingga menemukan kode yang unik di database
-    //     while (Order::where('code', $code)->exists()) {
-    //         $code = 'ORD-' . now()->format('Ymd-His') . '-' . Str::upper(Str::random(4));
-    //     }
-    //     return $code;
-    // }
+    protected function generateUniqueOrderCode(): string
+    {
+        $code = '#' . now()->format('Ymd') . Str::upper(Str::random(4));
+        // Loop hingga menemukan kode yang unik di database
+        while (Order::where('code', $code)->exists()) {
+            $code = '#' . now()->format('Ymd') . Str::upper(Str::random(4));
+        }
+        return $code;
+    }
 
     public function getAllOrders(): Collection
     {
@@ -55,20 +56,21 @@ class OrderServiceImplement extends Service implements OrderService {
     public function createOrder(StoreOrderRequest $data): Order
     {
       $user = Auth::user();
-      $cartItems = $user->id->cartItems()->with('product')->get();
+      $cartItems = CartItem::where('user_id', $user->id)->get();
 
       if ($cartItems->isEmpty()){
           throw new \Exception('Your Cart is Empty');
       }
 
-      $subtotal = $cartItems->sum(fn ($item) => $item->quantity * ($item->product->price ?? 0));
+      $subtotal = $cartItems->sum(fn ($item) => ($item->quantity ?? 1) * ($item->product->price ?? 0));
       $shippingCost = 100000;
       $total = $subtotal + $shippingCost;
 
       $orderData = [
           'user_id'           => $user->id,
           'address_id'        => $data->validated('address_id'),
-          'code'              => Order::generateCode(),
+          'items'             => $cartItems,
+          'code'              => $this->generateUniqueOrderCode(),
           'order_status'      => OrderStatus::PENDING,
           'payment_status'    => PaymentStatus::UNPAID,
           'payment_method'    => $data->validated('payment_method'),

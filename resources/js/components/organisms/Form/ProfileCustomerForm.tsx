@@ -15,8 +15,8 @@ const ProfileCustomerForm = () => {
                 type="text"
                 placeholder="Enter Your Name"
                 value={auth && auth?.user?.name}
-                disabled={Boolean(auth && auth?.user?.name)}
                 autoComplete="off"
+                readOnly
             />
             <div className="grid gap-3 md:grid-cols-2">
                 <InputWithLabel
@@ -27,8 +27,8 @@ const ProfileCustomerForm = () => {
                     type="email"
                     placeholder="Enter Your Email"
                     value={auth && auth?.user?.email}
-                    disabled={Boolean(auth && auth?.user?.email)}
                     autoComplete="off"
+                    readOnly
                 />
                 <InputWithLabel
                     label="Phone"
@@ -38,8 +38,8 @@ const ProfileCustomerForm = () => {
                     type="text"
                     placeholder="Your Phone Number"
                     value={auth && auth?.user?.phone}
-                    disabled={Boolean(auth && auth?.user?.phone)}
                     autoComplete="off"
+                    readOnly
                 />
             </div>
         </>

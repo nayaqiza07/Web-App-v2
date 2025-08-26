@@ -16,8 +16,8 @@ const DeliveryAddressForm = () => {
                     type="text"
                     placeholder="Enter Country / Region"
                     autoComplete="off"
+                    readOnly
                     value={user_address && user_address?.address?.country}
-                    disabled={Boolean(user_address && user_address?.address?.country)}
                 />
 
                 <div className="grid gap-3 md:grid-cols-2">
@@ -29,8 +29,8 @@ const DeliveryAddressForm = () => {
                         type="text"
                         placeholder="Enter State"
                         autoComplete="off"
+                        readOnly
                         value={user_address && user_address?.address?.state}
-                        disabled={Boolean(user_address && user_address?.address?.state)}
                     />
                     <InputWithLabel
                         label="City"
@@ -40,8 +40,8 @@ const DeliveryAddressForm = () => {
                         type="text"
                         placeholder="Enter City"
                         autoComplete="off"
+                        readOnly
                         value={user_address && user_address?.address?.city}
-                        disabled={Boolean(user_address && user_address?.address?.city)}
                     />
                 </div>
             </div>
@@ -54,8 +54,8 @@ const DeliveryAddressForm = () => {
                     type="text"
                     placeholder="Enter Address"
                     autoComplete="off"
+                    readOnly
                     value={user_address && user_address?.address?.street}
-                    disabled={Boolean(user_address && user_address?.address?.street)}
                 />
                 <InputWithLabel
                     label="Zip Code"
@@ -65,8 +65,8 @@ const DeliveryAddressForm = () => {
                     type="text"
                     placeholder="Enter Zip Code"
                     autoComplete="off"
+                    readOnly
                     value={user_address && user_address?.address?.postal_code}
-                    disabled={Boolean(user_address && user_address?.address?.postal_code)}
                 />
             </div>
         </>
