@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Collection;
 use LaravelEasyRepository\Repository;
 
 interface OrderRepository extends Repository{
-    public function getAllData(): Collection;
-    public function createData(Collection $cartItems, array $orderData): Order;
-    public function deleteData(Order $order): ?bool;
+    public function getAllDataOrder(): Collection;
+    public function createDataOrder(array $orderData, array $orderItems): Order;
+    public function deleteDataOrder(Order $order): ?bool;
+    public function deleteCartItemsByUserId(int $userId): ?bool;
 }

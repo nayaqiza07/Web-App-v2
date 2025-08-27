@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Order;
 
+use App\Models\CartItem;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Collection;
@@ -22,44 +23,33 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository {
         $this->model = $model;
     }
 
-    public function getAllData(): Collection
+    public function getAllDataOrder(): Collection
     {
         $order = $this->model->filter()->get();
         return $order;
     }
 
-    public function createData(Collection $cartItems, array $orderData): Order
+    public function createDataOrder(array $orderData, array $orderItems): Order
     {
         // dd($orderData);
-        return DB::transaction(function () use ($cartItems, $orderData) {
+        return DB::transaction(function () use ($orderData, $orderItems) {
             $order = Order::create($orderData);
 
-            foreach ($cartItems as $cartItem) {
-                $product = $cartItem->product;
-
-                if (!$product || $product->stock < $cartItem->quantity) {
-                    throw new \Exception('Product Stock ' . ($product->name ?? 'Not Found') . ' insufficient. Available stock: ' . ($product->stock ?? 0));
-                }
-
-                $order->orderItems->create = ([
-                    'order_id'          => $order->id,
-                    'product_id'        => $product->id,
-                    'product_name'      => $product->name,
-                    'quantity'          => $cartItem->quantity,
-                    'price_snapshot'    => $product->price,
-                ]);
-
-                $product->decrement('stock', $cartItem->quantity);
+            foreach ($orderItems as $item){
+                $order->orderItems()->create($item);
             }
-
-            Auth::user()->$cartItems()->delete();
 
             return $order;
         });
     }
 
-    public function deleteData(Order $order): ?bool
+    public function deleteDataOrder(Order $order): ?bool
     {
         return $order->delete();
+    }
+
+    public function deleteCartItemsByUserId(int $userId): ?bool
+    {
+        return CartItem::where('user_id', $userId)->delete();
     }
 }

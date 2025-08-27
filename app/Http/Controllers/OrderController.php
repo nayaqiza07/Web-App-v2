@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\EmptyCartException;
 use App\Http\Requests\Order\DestroyOrderRequest;
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Models\Order;
@@ -36,14 +37,16 @@ class OrderController extends Controller
         // 3. Lalu yang awalnya ada pada cart_items akan ditambahkan entri baru di order_items (dan yang ada pada cart_items dihapus)
         try {
             $this->orderService->createOrder($request);
-            return redirect()->back()->with('success', 'Order created successfully');
+            return redirect('/products')->with('success', 'Order created successfully');
+        } catch(EmptyCartException $e) {
+            throw $e;
         } catch (\Exception $e) {
             Log::error("Order failed to create", [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
             ]);
-            return redirect()->back()->with('error', 'Failed to palce order');
+            return redirect()->back()->with('error', 'Failed to place order');
         }
     }
     

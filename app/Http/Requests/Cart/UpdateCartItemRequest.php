@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests\Cart;
 
-use App\Models\CartItem;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class UpdateCartItemRequest extends FormRequest
 {
@@ -43,7 +41,7 @@ class UpdateCartItemRequest extends FormRequest
                 'min:1',
                 function ($attribute, $value, $fail) use ($cartItem) {
                     if ($cartItem->product->stock < $value) {
-                        $fail('Insufficient stock for this Product. Available Stock: ' . $cartItem->product->stock);
+                        $fail('Insufficient stock for this Product.');
                     }
                 }
             ]

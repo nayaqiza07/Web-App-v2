@@ -228,6 +228,7 @@ export interface CartItemsType {
 
 // User Adrress Start
 export interface UserAddressType {
+    id: number;
     country: string;
     state: string;
     city: string;
