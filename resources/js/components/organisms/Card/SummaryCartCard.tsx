@@ -8,13 +8,13 @@ import { motion } from 'framer-motion';
 import { ShoppingBagIcon } from 'lucide-react';
 
 const SummaryCartCard = () => {
-    const { cart } = usePage<SharedData>().props;
+    const { cart, user_address } = usePage<SharedData>().props;
 
     const createOrder = () => {
         router.post(
             route('order.store'),
             {
-                address_id: 7,
+                address_id: user_address.address.id,
                 // order_status: 'pending',
                 // payment_status: 'unpaid',
                 payment_method: 'manual_transfer',

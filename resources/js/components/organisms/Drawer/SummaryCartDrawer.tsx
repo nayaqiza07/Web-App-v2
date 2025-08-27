@@ -3,11 +3,27 @@ import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, D
 import { Separator } from '@/components/ui/separator';
 import { priceFormat } from '@/lib/utils';
 import { SharedData } from '@/types';
-import { usePage } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { ListCheck, ShoppingBagIcon } from 'lucide-react';
 
 const SummaryCartDrawer = () => {
-    const { cart } = usePage<SharedData>().props;
+    const { cart, user_address } = usePage<SharedData>().props;
+
+    const createOrder = () => {
+        router.post(
+            route('order.store'),
+            {
+                address_id: user_address.address.id,
+                // order_status: 'pending',
+                // payment_status: 'unpaid',
+                payment_method: 'manual_transfer',
+                // subtotal: 100000,
+                // shipping_cost: 0,
+                // total: 100000,
+            },
+            { preserveScroll: true },
+        );
+    };
 
     return (
         <Drawer>
@@ -35,7 +51,7 @@ const SummaryCartDrawer = () => {
                     </p>
                 </div>
                 <DrawerFooter>
-                    <Button className="w-full">
+                    <Button onClick={createOrder} className="w-full">
                         <ShoppingBagIcon /> Place Order
                     </Button>
                 </DrawerFooter>

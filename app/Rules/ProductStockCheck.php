@@ -2,9 +2,11 @@
 
 namespace App\Rules;
 
+use App\Models\CartItem;
 use App\Models\Product;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Support\Facades\Auth;
 
 class ProductStockCheck implements ValidationRule
 {
@@ -25,12 +27,24 @@ class ProductStockCheck implements ValidationRule
         $product = Product::find($value);
 
         if (!$product) {
-            $fail('Product not found');
+            $fail('Product not found.');
             return;
         }
 
-        if ($product->stock < $this->requestedQuantity) {
-            $fail('Insufficient stock for this Product. Available Stock: ' . $product->stock);
+        $userId = Auth::id();
+
+        $existingCartItem = CartItem::where('user_id', $userId)
+            ->where('product_id', $product->id)
+            ->first();
+
+        $totalRequested = $this->requestedQuantity;
+
+        if ($existingCartItem) {
+            $totalRequested += $existingCartItem->quantity;
+        }
+
+        if ($totalRequested > $product->stock) {
+            $fail('Insufficient stock for this product.');
         }
     }
 }

@@ -25,16 +25,18 @@ class StoreCartItemRequest extends FormRequest
      */
     public function rules(): array
     {
-        $requestedQuantity = $this->input('quantity');
-
         return [
             'product_id' => [
                 'required',
                 'integer',
                 Rule::exists('products', 'id'),
-                new ProductStockCheck($requestedQuantity),
+                new ProductStockCheck($this->input('quantity')),
             ],
-            'quantity'  => ['required', 'integer', 'min:1'],
+            'quantity'  => [
+                'required',
+                'integer',
+                'min:1',
+            ],
         ];
     }
 }

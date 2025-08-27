@@ -4,6 +4,7 @@ namespace App\Services\Order;
 
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
+use App\Exceptions\EmptyCartException;
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Models\CartItem;
 use App\Models\Order;
@@ -50,7 +51,7 @@ class OrderServiceImplement extends Service implements OrderService {
 
     public function getAllOrders(): Collection
     {
-      return $this->mainRepository->getAllData();
+      return $this->mainRepository->getAllDataOrder();
     }
 
     public function createOrder(StoreOrderRequest $data): Order
@@ -59,17 +60,15 @@ class OrderServiceImplement extends Service implements OrderService {
       $cartItems = CartItem::where('user_id', $user->id)->get();
 
       if ($cartItems->isEmpty()){
-          throw new \Exception('Your Cart is Empty');
+          throw new EmptyCartException();
       }
 
       $subtotal = $cartItems->sum(fn ($item) => ($item->quantity ?? 1) * ($item->product->price ?? 0));
       $shippingCost = 100000;
       $total = $subtotal + $shippingCost;
-
       $orderData = [
           'user_id'           => $user->id,
           'address_id'        => $data->validated('address_id'),
-          'items'             => $cartItems,
           'code'              => $this->generateUniqueOrderCode(),
           'order_status'      => OrderStatus::PENDING,
           'payment_status'    => PaymentStatus::UNPAID,
@@ -79,7 +78,29 @@ class OrderServiceImplement extends Service implements OrderService {
           'total'             => $total,
       ];
 
-      return $this->mainRepository->createData($cartItems, $orderData);
+      $orderItems = [];
+      foreach ($cartItems as $cartItem) {
+        $product = $cartItem->product;
+
+        if (!$product || $product->stock < $cartItem->quantity) {
+          throw new \Exception('Product Stock ' . ($product->name ?? 'Not Found') . ' insufficient. Available stock: ' . ($product->stock ?? 0));
+        }
+
+        $orderItems[] = [
+          'product_id'        => $product->id,
+          'product_name'      => $product->name,
+          'quantity'          => $cartItem->quantity,
+          'price_snapshot'    => $product->price,
+        ];
+
+        $product->decrement('stock', $cartItem->quantity);
+      }
+
+      $order =  $this->mainRepository->createDataOrder($orderData, $orderItems);
+
+      $this->mainRepository->deleteCartItemsByUserId($user->id);
+
+      return $order;
     }
 
     public function deleteOrder(Order $order): ?bool
@@ -88,6 +109,6 @@ class OrderServiceImplement extends Service implements OrderService {
         abort(403, 'Unauthorize action.');
       }
       
-      return $this->mainRepository->deleteData($order);
+      return $this->mainRepository->deleteDataOrder($order);
     }
 }
