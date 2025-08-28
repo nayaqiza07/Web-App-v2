@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Blog\BlogDetailResource;
+use App\Http\Resources\Blog\BlogListCollection;
+use App\Http\Resources\Blog\BlogRelatedCollection;
 use App\Services\Blog\BlogService;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -22,17 +25,17 @@ class BlogController extends Controller
         // $cacheKey = "blogs.page:{$page}";
         $blogs = $this->blogService->getPaginatedBlogs($page, $perPage);
         return Inertia::render('blog/BlogList', [
-            'BLOGS' => Inertia::defer(fn () => $blogs),
+            'BLOGS' => Inertia::defer(fn () => new BlogListCollection($blogs)),
         ]);
     }
 
     public function show(string $slug): Response
     {
         $blog = $this->blogService->getBlogBySlug($slug);
-        $blogs = $this->blogService->getRelatedBlogs();
+        $relatedBlogs = $this->blogService->getRelatedBlogs();
         return Inertia::render('blog/BlogDetail', [
-            'BLOG' => Inertia::defer(fn () => $blog),
-            'BLOGS' => Inertia::defer(fn () => $blogs),
+            'BLOG' => Inertia::defer(fn () => new BlogDetailResource($blog)),
+            'BLOGS' => Inertia::defer(fn () => new BlogRelatedCollection($relatedBlogs)),
         ]);
     }
 }

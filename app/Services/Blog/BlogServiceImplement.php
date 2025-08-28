@@ -34,35 +34,16 @@ class BlogServiceImplement extends Service implements BlogService{
 
     public function getPaginatedBlogs(int $page, int $perPage): LengthAwarePaginator
     {
-      $blogs = $this->mainRepository->getPaginatedBlogs($page, $perPage);
-      return $blogs->through(fn ($blog) => [
-        'id'           => $blog->id,
-        'title'        => $blog->title,
-        'slug'         => $blog->slug,
-        'thumbnail'    => $blog->thumbnail,
-        'published_at' => $blog->published_at,
-      ]);
+      return $this->mainRepository->getPaginatedBlogs($page, $perPage);
     }
 
-    public function getBlogBySlug(string $slug): array
+    public function getBlogBySlug(string $slug): Blog
     {
-      $blog = $this->mainRepository->getBlogBySlug($slug);
-      return [
-        'id'           => $blog->id,
-        'title'        => $blog->title,
-        'body'        => $blog->body,
-        'thumbnail'    => $blog->thumbnail,
-      ];
+      return $this->mainRepository->getBlogBySlug($slug);
     }
 
     public function getRelatedBlogs(): LengthAwarePaginator
     {
-      $relatedBlogs = $this->mainRepository->getRelatedBlogs();
-      return $relatedBlogs->through(fn ($blog) => [
-        'id'           => $blog->id,
-        'title'        => $blog->title,
-        'slug'         => $blog->slug,
-        'thumbnail'    => $blog->thumbnail,
-      ]);
+      return $this->mainRepository->getRelatedBlogs();
     }
 }
