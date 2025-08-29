@@ -5,6 +5,7 @@ namespace App\Repositories\Blog;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Blog;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 
 class BlogRepositoryImplement extends Eloquent implements BlogRepository{
@@ -24,21 +25,21 @@ class BlogRepositoryImplement extends Eloquent implements BlogRepository{
     public function getPaginatedBlogs(int $page, int $perPage): LengthAwarePaginator
     {
         return Cache::remember("blogs.page:{$page}", 3600, function () use ($perPage) {
-            return Blog::filter()->paginate($perPage);
+            return $this->model->filter()->paginate($perPage);
         });
     }
 
     public function getBlogBySlug(string $slug): Blog
     {
         return Cache::remember("blogs:{$slug}", 3600, function () use ($slug) {
-            return Blog::filter()->slug($slug)->firstOrFail();
+            return $this->model->filter()->slug($slug)->firstOrFail();
         });
     }
 
-    public function getRelatedBlogs(): LengthAwarePaginator
+    public function getRelatedBlogs(): Collection
     {
         return Cache::remember('blogs.related', 3600, function () {
-            return Blog::filter()->paginate(5);
+            return $this->model->filter()->take(5)->get();
         });
     }
 }

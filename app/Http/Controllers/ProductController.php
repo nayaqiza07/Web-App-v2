@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Product\ProductDetailResource;
+use App\Http\Resources\Product\ProductListResource;
+use App\Http\Resources\Product\ProductRelatedResource;
 use App\Models\Product;
 use App\Services\Category\CategoryService;
 use App\Services\Product\ProductService;
@@ -29,7 +32,7 @@ class ProductController extends Controller
         $products = $this->productService->getPaginatedProducts($page, $perPage);
         $categories = $this->categoryService->getAllCategory();
         return Inertia::render('shop/ProductList', [
-            'PRODUCTS' => Inertia::defer(fn () => $products),
+            'PRODUCTS' => Inertia::defer(fn () => ProductListResource::collection($products)),
             'CATEGORIES' => $categories,
         ]);
     }
@@ -39,11 +42,8 @@ class ProductController extends Controller
         $product = $this->productService->getProductBySlug($slug);
         $relatedProducts = $this->productService->getRelatedProducts($slug);
         return Inertia::render('shop/ProductDetail', [
-            'PRODUCT' => Inertia::defer(fn () => $product),
-            'PRODUCTS' => [
-                'data'  => $relatedProducts,
-                'total' => Product::filter()->count(),
-            ],
+            'PRODUCT' => Inertia::defer(fn () => new ProductDetailResource($product)->resolve()),
+            'RELATED_PRODUCTS' => Inertia::defer(fn () => ProductRelatedResource::collection($relatedProducts)->resolve())
         ]);
     }
 

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contact;
-use App\Models\Faq;
+use App\Http\Resources\Contact\ContactListResource;
+use App\Http\Resources\Faq\FaqListResource;
 use App\Services\Contact\ContactService;
 use App\Services\Faq\FaqService;
-use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -25,7 +24,7 @@ class FaqController extends Controller
     {
         $faqs = $this->faqService->getAllFaq();
         return Inertia::render('static/Support', [
-            'FAQS' => Inertia::defer(fn () => $faqs),
+            'FAQS' => Inertia::defer(fn () => FaqListResource::collection($faqs)->resolve()),
         ]);
     }
 
@@ -34,8 +33,8 @@ class FaqController extends Controller
         $faqs = $this->faqService->getAllFaq();
         $contacts = $this->contactService->getAllContacts();
         return Inertia::render('static/ContactUs', [
-            'FAQS' => Inertia::defer(fn () => $faqs),
-            'CONTACTS' => Inertia::defer(fn () => $contacts),
+            'FAQS' => Inertia::defer(fn () => FaqListResource::collection($faqs)->resolve()),
+            'CONTACTS' => Inertia::defer(fn () => ContactListResource::collection($contacts)->resolve()),
         ]);
     }
 }

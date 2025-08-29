@@ -2,15 +2,16 @@
 
 namespace App\Http\Resources\Product;
 
+use App\Http\Resources\Category\CategoryCartItemResource;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductRelatedCollection extends ResourceCollection
+class ProductCartItemResource extends JsonResource
 {
     /**
-     * Transform the resource collection into an array.
+     * Transform the resource into an array.
      *
-     * @return array<int|string, mixed>
+     * @return array<string, mixed>
      */
     public function toArray(Request $request): array
     {
@@ -21,6 +22,8 @@ class ProductRelatedCollection extends ResourceCollection
             'thumbnail' => $this->thumbnail,
             'price'     => $this->price,
             'old_price' => $this->old_price,
+            'discount_percentage' => $this->discount_percentage,
+            'category'  => new CategoryCartItemResource($this->whenLoaded('category'))->resolve()
         ];
     }
 }

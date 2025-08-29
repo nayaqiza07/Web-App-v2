@@ -6,7 +6,7 @@ use App\Http\Resources\Category\CategoryListResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductDetailResource extends JsonResource
+class ProductListResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,13 +24,7 @@ class ProductDetailResource extends JsonResource
             'old_price'             => $this->old_price,
             'is_new'                => $this->is_new,
             'discount_percentage'   => $this->discount_percentage,
-            'information'           => $this->information,
-            'dimensions'            => $this->dimensions,
-            'materials'             => $this->materials,
-            'shipping'              => $this->shipping,
-            'sku'                   => $this->sku,
-            'stock'                 => $this->stock,
-            'category'              => new CategoryListResource($this->whenLoaded('category'))->resolve()
+            'category'              => new CategoryListResource($this->whenLoaded('category'))
         ];
     }
 }

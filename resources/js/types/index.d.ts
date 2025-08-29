@@ -26,7 +26,7 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
-    user_address: { address: UserAddressType };
+    user_address: UserAddressType;
     ziggy: Config & { location: string };
     sidebarOpen: boolean;
     [key: string]: unknown;
@@ -185,19 +185,23 @@ export type ProductData = {
 };
 
 export type ProductList = {
-    current_page: number;
     data: ProductData[];
-    first_page_url: string;
-    from: number;
-    last_page: number;
-    last_page_url: string;
-    links: [{ url: string; label: string; active: boolean }];
-    next_page_url: string;
-    path: string;
-    per_page: number;
-    prev_page_url: string;
-    to: number;
-    total: number;
+    links: {
+        first: string;
+        last: string;
+        next: string;
+        prev: string;
+    };
+    meta: {
+        current_page: number;
+        from: number;
+        last_page: number;
+        links: { url: string; label: string; active: boolean }[];
+        path: string;
+        per_page: number;
+        to: number;
+        total: number;
+    };
 };
 // Products End
 
@@ -248,19 +252,23 @@ export type BlogData = {
 };
 
 export type BlogList = {
-    current_page: number;
     data: BlogData[];
-    first_page_url: string;
-    from: number;
-    last_page: number;
-    last_page_url: string;
-    links: [{ url: string; label: string; active: boolean }];
-    next_page_url: string;
-    path: string;
-    per_page: number;
-    prev_page_url: string;
-    to: number;
-    total: number;
+    links: {
+        first: string;
+        last: string;
+        next: string;
+        prev: string;
+    };
+    meta: {
+        current_page: number;
+        from: number;
+        last_page: number;
+        links: { url: string; label: string; active: boolean }[];
+        path: string;
+        per_page: number;
+        to: number;
+        total: number;
+    };
 };
 // Blog End
 

@@ -5,6 +5,7 @@ namespace App\Services\Blog;
 use App\Models\Blog;
 use App\Repositories\Blog\BlogRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use LaravelEasyRepository\Service;
 
 class BlogServiceImplement extends Service implements BlogService{
@@ -42,7 +43,7 @@ class BlogServiceImplement extends Service implements BlogService{
       return $this->mainRepository->getBlogBySlug($slug);
     }
 
-    public function getRelatedBlogs(): LengthAwarePaginator
+    public function getRelatedBlogs(): Collection
     {
       return $this->mainRepository->getRelatedBlogs();
     }

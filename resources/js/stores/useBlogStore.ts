@@ -9,28 +9,38 @@ interface BlogState {
     // Blog Detail
     selectedBlog: BlogData | null;
     setSelectedBlog: (blog: BlogData | null) => void;
+
+    relatedBlogs: BlogData[];
+    setRelatedBlogs: (blog: BlogData[]) => void;
 }
 
 export const useBlogStore = create<BlogState>((set) => ({
     // Blog List
     blogs: {
-        current_page: 0,
         data: [],
-        first_page_url: '',
-        from: 0,
-        last_page: 0,
-        last_page_url: '',
-        links: [{ url: '', label: '', active: false }],
-        next_page_url: '',
-        path: '',
-        per_page: 0,
-        prev_page_url: '',
-        to: 0,
-        total: 0,
+        links: {
+            first: '',
+            last: '',
+            next: '',
+            prev: '',
+        },
+        meta: {
+            current_page: 0,
+            from: 0,
+            last_page: 0,
+            links: [{ url: '', label: '', active: false }],
+            path: '',
+            per_page: 0,
+            to: 0,
+            total: 0,
+        },
     },
     setBlogs: (blogs: BlogList) => set({ blogs }),
 
     // Blog Detail
     selectedBlog: null,
     setSelectedBlog: (blog: BlogData | null) => set({ selectedBlog: blog }),
+
+    relatedBlogs: [],
+    setRelatedBlogs: (relatedBlogs: BlogData[]) => set({ relatedBlogs }),
 }));
