@@ -17,23 +17,25 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
     * @property Model|mixed $model;
     */
     protected Product $model;
+    protected Category $category;
 
-    public function __construct(Product $model)
+    public function __construct(Product $model, Category $category)
     {
         $this->model = $model;
+        $this->category = $category;
     }
 
     public function getPaginatedProducts(int $page, int $perPage): LengthAwarePaginator
     {
         return Cache::remember("products.page:{$page}", 3600, function () use ($perPage) {
-            return Product::filter()->latest()->paginate($perPage);
+            return $this->model->filter()->latest()->paginate($perPage);
         });
     }
 
     public function getProductBySlug(string $slug): Product
     {
         return Cache::remember("products:{$slug}", 3600, function () use ($slug) {
-            return Product::filter()->slug($slug)->firstOrFail();
+            return $this->model->filter()->slug($slug)->firstOrFail();
         });
     }
 
@@ -41,7 +43,7 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
     {
         return Cache::remember("products.category:{$slug}.page{$page}", 3600, function () use ($slug, $perPage) {
             $category = Cache::remember("categories:{$slug}", 3600, function () use ($slug) {
-                return Category::filter()->slug($slug)->firstOrFail();
+                return $this->category->filter()->slug($slug)->firstOrFail();
             });
             return $category->products()->latest()->paginate($perPage);
         });
@@ -52,7 +54,7 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
         return Cache::remember("products.related:{$slug}", 3600, function () use ($slug) {
             $product = $this->getProductBySlug($slug);
 
-            return Product::filter()->related($product)->get();
+            return $this->model->filter()->related($product)->get();
         });
     }
 }

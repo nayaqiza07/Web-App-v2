@@ -11,11 +11,12 @@ interface ProductListProps {
     PRODUCTS: ProductListType;
     CATEGORIES: Category[];
     CATEGORY: Category;
-    isLoading: boolean;
 }
 
 const ProductList: React.FC<ProductListProps> = (props) => {
     const { PRODUCTS, CATEGORIES, CATEGORY } = props;
+
+    console.log(PRODUCTS);
 
     const { setProducts } = useProductStore();
     const { setCategories, setSelectedCategory } = useCategoryStore();

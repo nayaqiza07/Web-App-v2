@@ -8,14 +8,14 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { PaginationLink } from '@/components/ui/pagination';
-import { ProductList } from '@/types';
+import { BlogList, ProductList } from '@/types';
 import { EllipsisIcon } from 'lucide-react';
 
 interface DropdownPageLinkProps {
-    links: ProductList['links'];
+    otherLink: ProductList['meta']['links'] | BlogList['meta']['links'];
 }
 
-const DropdownPageLink: React.FC<DropdownPageLinkProps> = ({ links }) => {
+const DropdownPageLink: React.FC<DropdownPageLinkProps> = ({ otherLink }) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -27,9 +27,9 @@ const DropdownPageLink: React.FC<DropdownPageLinkProps> = ({ links }) => {
                 <DropdownMenuLabel>Pages</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup className="grid grid-cols-3 gap-1">
-                    {links.slice(1, -1).map((link, index) => (
-                        <PaginationLink key={index} href={link.url || '#'} isActive={link.active}>
-                            {link.label}
+                    {otherLink.slice(1, -1).map((_link, index) => (
+                        <PaginationLink key={index} href={_link.url || '#'} isActive={_link.active}>
+                            {_link.label}
                         </PaginationLink>
                     ))}
                 </DropdownMenuGroup>

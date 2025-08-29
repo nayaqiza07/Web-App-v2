@@ -19,7 +19,7 @@ interface CarouselProductProps {
 }
 
 const CarouselProduct: React.FC<CarouselProductProps> = ({ headLineTitle = 'Title', isFor = 'product', isAutoPlay, totalItemShow = '' }) => {
-    const PRODUCTS = useProductStore((state) => state.products);
+    const RELATED_PRODUCTS = useProductStore((state) => state.relatedProducts);
     const CATEGORIES = useCategoryStore((state) => state.categories);
     const BLOGS = useBlogStore((state) => state.blogs);
 
@@ -76,8 +76,8 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({ headLineTitle = 'Titl
 
                 {isFor === 'product' && (
                     <CarouselContent>
-                        {PRODUCTS.data.length > 0 &&
-                            PRODUCTS.data.map((data, index) => (
+                        {RELATED_PRODUCTS.length > 0 &&
+                            RELATED_PRODUCTS.map((data, index) => (
                                 <CarouselItem key={index} className={`${totalItemShow} py-1`}>
                                     <ProductCard data={data} isCarousel />
                                 </CarouselItem>

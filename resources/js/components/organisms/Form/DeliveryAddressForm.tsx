@@ -5,6 +5,8 @@ import { usePage } from '@inertiajs/react';
 const DeliveryAddressForm = () => {
     const { user_address } = usePage<SharedData>().props;
 
+    console.log(user_address);
+
     return (
         <>
             <div className="grid gap-3">
@@ -17,7 +19,7 @@ const DeliveryAddressForm = () => {
                     placeholder="Enter Country / Region"
                     autoComplete="off"
                     readOnly
-                    value={user_address && user_address?.address?.country}
+                    value={user_address && user_address?.country}
                 />
 
                 <div className="grid gap-3 md:grid-cols-2">
@@ -30,7 +32,7 @@ const DeliveryAddressForm = () => {
                         placeholder="Enter State"
                         autoComplete="off"
                         readOnly
-                        value={user_address && user_address?.address?.state}
+                        value={user_address && user_address?.state}
                     />
                     <InputWithLabel
                         label="City"
@@ -41,7 +43,7 @@ const DeliveryAddressForm = () => {
                         placeholder="Enter City"
                         autoComplete="off"
                         readOnly
-                        value={user_address && user_address?.address?.city}
+                        value={user_address && user_address?.city}
                     />
                 </div>
             </div>
@@ -55,7 +57,7 @@ const DeliveryAddressForm = () => {
                     placeholder="Enter Address"
                     autoComplete="off"
                     readOnly
-                    value={user_address && user_address?.address?.street}
+                    value={user_address && user_address?.street}
                 />
                 <InputWithLabel
                     label="Zip Code"
@@ -66,7 +68,7 @@ const DeliveryAddressForm = () => {
                     placeholder="Enter Zip Code"
                     autoComplete="off"
                     readOnly
-                    value={user_address && user_address?.address?.postal_code}
+                    value={user_address && user_address?.postal_code}
                 />
             </div>
         </>

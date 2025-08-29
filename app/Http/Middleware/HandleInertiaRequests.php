@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\Address\AddressListResource;
+use App\Http\Resources\Cart\CartListResource;
 use App\Models\Address;
 use App\Models\CartItem;
 use Illuminate\Foundation\Inspiring;
@@ -50,11 +52,18 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'user_address' => [
-                'address' => Auth::check() 
-                    ? Address::where('user_id', Auth::id())->where('is_default', true)->first() 
-                    : null,
-            ],
+            // 'user_address' => [
+            //     'address' => Auth::check() 
+            //         ? Address::where('user_id', Auth::id())->where('is_default', true)->first() 
+            //         : null,
+            // ],
+            'user_address' => function () {
+                $deliveryAddress = Auth::check() 
+                        ? Address::where('user_id', Auth::id())->where('is_default', true)->first() 
+                        : null;
+
+                 return new AddressListResource($deliveryAddress)->resolve();
+            },
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
@@ -74,16 +83,14 @@ class HandleInertiaRequests extends Middleware
                     ];
                 }
 
-                $cartItems = CartItem::where('user_id', Auth::id())
-                    ->with('product:id,name,slug,category_id,thumbnail,price,old_price')
-                    ->get();
+                $cartItems = CartItem::where('user_id', Auth::id())->get();
                 
                 $totalPriceItems = $cartItems->sum(function ($item) {
                     return ($item->product->price ?? 0) * ($item->quantity ?? 1);
                 });
                 
                 return [
-                    'items' => $cartItems,
+                    'items' => CartListResource::collection($cartItems)->resolve(),
                     'total_items' => $cartItems->count(),
                     'total_price_items' => $totalPriceItems
                 ];

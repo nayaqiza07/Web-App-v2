@@ -8,7 +8,7 @@ import { Link } from '@inertiajs/react';
 import { NewspaperIcon } from 'lucide-react';
 
 const BlogDetailPage = () => {
-    const { blogs, selectedBlog } = useBlogStore();
+    const { relatedBlogs, selectedBlog } = useBlogStore();
 
     return (
         <>
@@ -31,7 +31,7 @@ const BlogDetailPage = () => {
                             emptyIcon={NewspaperIcon}
                             emptyTitle="No Related Blogs Found"
                             emptyDesc=""
-                            of={blogs.data}
+                            of={relatedBlogs}
                             render={(_blog) => (
                                 <Link
                                     href={route('blogs.show', { slug: _blog.slug })}

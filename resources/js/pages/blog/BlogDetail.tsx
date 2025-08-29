@@ -2,34 +2,34 @@ import BlogDetailPage from '@/components/templates/Blog/BlogDetailPage';
 import SkeletonDetailBlog from '@/components/templates/SkeletonPage/SkeletonDetailBlog';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useBlogStore } from '@/stores/useBlogStore';
-import { BlogData, BlogList } from '@/types';
+import { BlogData } from '@/types';
 import { Deferred, Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface BlogDetailProps {
     BLOG: BlogData;
-    BLOGS: BlogList;
+    RELATED_BLOGS: BlogData[];
 }
 
 const BlogDetail: React.FC<BlogDetailProps> = (props) => {
-    const { BLOGS, BLOG } = props;
+    const { RELATED_BLOGS, BLOG } = props;
 
-    const { setBlogs, setSelectedBlog } = useBlogStore();
+    const { setRelatedBlogs, setSelectedBlog } = useBlogStore();
 
     useEffect(() => {
         if (BLOG) setSelectedBlog(BLOG);
     }, [BLOG, setSelectedBlog]);
 
     useEffect(() => {
-        if (BLOGS) setBlogs(BLOGS);
-    }, [BLOGS, setBlogs]);
+        if (RELATED_BLOGS) setRelatedBlogs(RELATED_BLOGS);
+    }, [RELATED_BLOGS, setRelatedBlogs]);
 
     return (
         <>
             <Head title="Blog Detail" />
 
             <MainLayout>
-                <Deferred data={['BLOG', 'BLOGS']} fallback={<SkeletonDetailBlog />}>
+                <Deferred data={['BLOG', 'RELATED_BLOGS']} fallback={<SkeletonDetailBlog />}>
                     <BlogDetailPage />
                 </Deferred>
             </MainLayout>

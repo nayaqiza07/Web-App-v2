@@ -3,14 +3,14 @@
 namespace App\Http\Resources\Blog;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class BlogRelatedCollection extends ResourceCollection
+class BlogListResource extends JsonResource
 {
     /**
-     * Transform the resource collection into an array.
+     * Transform the resource into an array.
      *
-     * @return array<int|string, mixed>
+     * @return array<string, mixed>
      */
     public function toArray(Request $request): array
     {
@@ -19,6 +19,7 @@ class BlogRelatedCollection extends ResourceCollection
             'title'        => $this->title,
             'slug'         => $this->slug,
             'thumbnail'    => $this->thumbnail,
+            'published_at' => $this->published_at,
         ];
     }
 }
