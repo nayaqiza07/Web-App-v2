@@ -41,7 +41,7 @@ const ProductList: React.FC<ProductListProps> = (props) => {
         <>
             <Head title="Products" />
             <MainLayout>
-                <Deferred data={'PRODUCTS'} fallback={<SkeletonProductPage />}>
+                <Deferred data={['PRODUCTS', 'CATEGORIES']} fallback={<SkeletonProductPage />}>
                     <ProductPage />
                 </Deferred>
             </MainLayout>

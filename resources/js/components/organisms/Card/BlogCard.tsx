@@ -40,7 +40,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ index, isCarousel, data }) => {
             }}
             viewport={{ once: true }}
         >
-            <Link href={route('blogs.show', { slug: data.slug })}>
+            <Link href={route('blogs.show', { slug: data.slug })} prefetch>
                 <Card className="flex h-[125px] flex-row gap-3 overflow-hidden p-2 md:h-full md:flex-col">
                     <CardContent className="relative w-[150px] overflow-hidden rounded-lg p-0 md:h-[150px] md:w-full">
                         <img

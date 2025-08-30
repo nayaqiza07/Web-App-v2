@@ -1,6 +1,7 @@
 import CustomBadge from '@/components/atoms/Badge/CustomBadge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCartActions } from '@/hooks/useCartActions';
 import { cn, priceFormat, truncateText } from '@/lib/utils';
@@ -39,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
             className="h-fit"
             viewport={{ once: true }}
         >
-            <Link href={route('products.show', { slug: data.slug })}>
+            <Link href={route('products.show', { slug: data.slug })} prefetch>
                 <div className="relative">
                     <div className="absolute top-3 -left-[5px] z-10">
                         {badges.map((badge, index) => (
@@ -120,3 +121,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
 };
 
 export default ProductCard;
+
+export const SkeletonProductCard = () => {
+    return (
+        <Skeleton className="flex h-fit flex-col rounded-xl">
+            <Skeleton className="relative h-[150px] w-full rounded-t-xl rounded-b-none">
+                <Skeleton className="absolute right-3 bottom-3 size-8 rounded-full" />
+            </Skeleton>
+
+            <div className="flex flex-col gap-3 p-5">
+                <Skeleton className="h-4 w-full rounded-xl" />
+                <div className="flex justify-between">
+                    <Skeleton className="h-4 w-1/3 rounded-xl" />
+                </div>
+            </div>
+        </Skeleton>
+    );
+};

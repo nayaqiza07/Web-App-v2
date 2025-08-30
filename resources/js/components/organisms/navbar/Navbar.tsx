@@ -33,7 +33,6 @@ const Navbar = () => {
                                     linkTo={route(menu.linkTo)}
                                     isMobile={false}
                                     active={menu.isActive ?? route().current(menu.linkTo)}
-                                    className="text-muted-foreground"
                                 />
                             ))}
                         </div>
