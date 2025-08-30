@@ -1,13 +1,9 @@
-import CornerPlusBadge from '@/components/atoms/Badge/CornerPlusBadge';
 import ButtonWithBadge from '@/components/molecules/Button/ButtonWithBadge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { EachUtils } from '@/lib/EachUtils';
 import { useCategoryStore } from '@/stores/useCategoryStore';
-import { useProductStore } from '@/stores/useProductStore';
-import { Link } from '@inertiajs/react';
 import { easeOut, motion } from 'framer-motion';
 import { TagsIcon } from 'lucide-react';
 
@@ -17,19 +13,13 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
     const { categories } = useCategoryStore();
-    const { products } = useProductStore();
 
     return (
         <aside className={`${className} sticky top-20 flex h-full flex-col gap-3`}>
             <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1, ease: easeOut }}>
-                <Card className={`bg-background w-full gap-0 py-0 text-xs shadow-none`}>
+                <Card className={`bg-muted w-full gap-0 py-0 text-xs shadow-none`}>
                     <CardHeader className="flex px-3 py-4">
-                        <CardTitle className="flex items-center justify-between">
-                            Category
-                            <Link href={route('products.index')}>
-                                <CornerPlusBadge>{products.total} Products</CornerPlusBadge>
-                            </Link>
-                        </CardTitle>
+                        <CardTitle className="flex items-center justify-between">Category</CardTitle>
                     </CardHeader>
                     <Separator />
                     <CardContent className="p-1.5">
@@ -52,21 +42,6 @@ const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
                                 )}
                             />
                         </ScrollArea>
-                    </CardContent>
-                </Card>
-            </motion.div>
-
-            <motion.div initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1, ease: easeOut }}>
-                <Card className={`bg-background w-full gap-0 py-0 text-xs shadow-none`}>
-                    <CardHeader className="px-3 py-4">
-                        <CardTitle>Price</CardTitle>
-                    </CardHeader>
-                    <Separator />
-                    <CardContent className="p-2">
-                        <div className="flex gap-3">
-                            <Input placeholder="Min" id="min" className="bg-input border-border shadow" />
-                            <Input placeholder="Max" id="max" className="bg-input border-border shadow" />
-                        </div>
                     </CardContent>
                 </Card>
             </motion.div>

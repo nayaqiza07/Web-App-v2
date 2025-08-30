@@ -52,17 +52,16 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            // 'user_address' => [
-            //     'address' => Auth::check() 
-            //         ? Address::where('user_id', Auth::id())->where('is_default', true)->first() 
-            //         : null,
-            // ],
             'user_address' => function () {
-                $deliveryAddress = Auth::check() 
-                        ? Address::where('user_id', Auth::id())->where('is_default', true)->first() 
-                        : null;
+                $deliveryAddress = Address::where('user_id', Auth::id())->where('is_default', true)->first();
 
-                 return new AddressListResource($deliveryAddress)->resolve();
+                if (!Auth::check()) {
+                    return collect();
+                }
+
+                return $deliveryAddress
+                        ? new AddressListResource($deliveryAddress)->resolve()
+                        : collect();
             },
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),

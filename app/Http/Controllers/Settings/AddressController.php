@@ -7,6 +7,7 @@ use App\Http\Requests\Settings\Address\CreateAddressRequest;
 use App\Http\Requests\Settings\Address\DeleteAddressRequest;
 use App\Http\Requests\Settings\Address\SetDefaultAddressRequest;
 use App\Http\Requests\Settings\Address\UpdateAddressRequest;
+use App\Http\Resources\Address\AddressListResource;
 use App\Models\Address;
 use App\Services\Address\AddressService;
 use Illuminate\Http\RedirectResponse;
@@ -27,7 +28,7 @@ class AddressController extends Controller
     {
         $address = $this->addressService->getAllAddresses();
         return Inertia::render('settings/address', [
-            'ADDRESS' => $address,
+            'ADDRESS' => AddressListResource::collection($address)->resolve(),
         ]);
     }
 
