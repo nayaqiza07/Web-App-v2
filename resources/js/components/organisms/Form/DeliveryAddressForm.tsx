@@ -5,8 +5,6 @@ import { usePage } from '@inertiajs/react';
 const DeliveryAddressForm = () => {
     const { user_address } = usePage<SharedData>().props;
 
-    console.log(user_address);
-
     return (
         <>
             <div className="grid gap-3">

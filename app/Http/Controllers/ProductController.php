@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Category\CategoryDetailResource;
+use App\Http\Resources\Category\CategoryListResource;
 use App\Http\Resources\Product\ProductDetailResource;
 use App\Http\Resources\Product\ProductListResource;
 use App\Http\Resources\Product\ProductRelatedResource;
@@ -33,7 +35,7 @@ class ProductController extends Controller
         $categories = $this->categoryService->getAllCategory();
         return Inertia::render('shop/ProductList', [
             'PRODUCTS' => Inertia::defer(fn () => ProductListResource::collection($products)),
-            'CATEGORIES' => $categories,
+            'CATEGORIES' => CategoryListResource::collection($categories)->resolve(),
         ]);
     }
 
@@ -57,9 +59,9 @@ class ProductController extends Controller
         $categories = $this->categoryService->getAllCategory();
 
         return Inertia::render('shop/ProductList', [
-            'CATEGORY' => $category,
-            'PRODUCTS' => Inertia::defer(fn () => $products),
-            'CATEGORIES' => $categories,
+            'CATEGORY' => new CategoryDetailResource($category)->resolve(),
+            'PRODUCTS' => Inertia::defer(fn () => ProductListResource::collection($products)),
+            'CATEGORIES' => CategoryListResource::collection($categories)->resolve(),
         ]);
     }
 }

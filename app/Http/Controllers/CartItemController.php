@@ -25,8 +25,6 @@ class CartItemController extends Controller
 
     public function index()
     {
-        // $items = CartItem::where('user_id', Auth::id())->get();
-        // $userAddress = Auth::check() ? Address::where('user_id', Auth::id())->where('is_default', true)->first() : null;
         return Inertia::render('cart/Cart');
     }
 

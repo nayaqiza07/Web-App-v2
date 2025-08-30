@@ -22,7 +22,6 @@ class BlogController extends Controller
     {
         $page = request('page', 1);
         $perPage = 3;
-        // $cacheKey = "blogs.page:{$page}";
         $blogs = $this->blogService->getPaginatedBlogs($page, $perPage);
         return Inertia::render('blog/BlogList', [
             'BLOGS' => Inertia::defer(fn () => BlogListResource::collection($blogs)),
