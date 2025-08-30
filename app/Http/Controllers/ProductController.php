@@ -35,7 +35,7 @@ class ProductController extends Controller
         $categories = $this->categoryService->getAllCategory();
         return Inertia::render('shop/ProductList', [
             'PRODUCTS' => Inertia::defer(fn () => ProductListResource::collection($products)),
-            'CATEGORIES' => CategoryListResource::collection($categories)->resolve(),
+            'CATEGORIES' => Inertia::defer(fn () => CategoryListResource::collection($categories)->resolve()),
         ]);
     }
 

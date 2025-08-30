@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { easeOut, motion } from 'framer-motion';
@@ -39,10 +40,11 @@ const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({
         <motion.div custom={index} variants={buttonWithBadgeVariants} initial="hidden" animate="visible" viewport={{ once: true }}>
             <Link
                 href={linkTo}
+                prefetch
                 className={cn(
                     buttonVariants({ variant: 'ghost' }),
-                    'text-muted-foreground flex w-full justify-between rounded-lg p-2 text-xs font-bold transition-colors duration-200',
-                    active && 'border-border bg-accent text-accent-foreground shadow',
+                    'text-muted-foreground hover:bg-accent/40 flex w-full justify-between rounded-lg p-2 text-xs font-bold transition-colors duration-200',
+                    active && 'border-border bg-accent text-accent-foreground hover:bg-accent shadow',
                     className,
                 )}
             >
@@ -58,3 +60,7 @@ const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({
 };
 
 export default ButtonWithBadge;
+
+export const SkeletonButtonWithBadge = () => {
+    return <Skeleton className="h-8" />;
+};
