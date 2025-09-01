@@ -42,4 +42,11 @@ class BlogRepositoryImplement extends Eloquent implements BlogRepository{
             return $this->model->filter()->take(5)->get();
         });
     }
+
+    public function getLatestBlogs(): Collection
+    {
+        return Cache::remember('blogs.latest', 3600, function () {
+            return $this->model->filter()->latest()->get();
+        });
+    }
 }

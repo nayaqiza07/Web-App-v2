@@ -22,7 +22,7 @@ const BlogDetailPage = () => {
             <div className="block md:grid md:grid-cols-[3fr_auto_1fr] md:gap-5">
                 <article className="prose dark:prose-invert h-full max-w-none" dangerouslySetInnerHTML={{ __html: selectedBlog?.body ?? '' }} />
 
-                <Separator orientation="vertical" className="via-border bg-gradient-to-b from-transparent to-transparent" />
+                <Separator orientation="vertical" />
 
                 <aside className="h-full space-y-5">
                     <h3>Related Posts</h3>

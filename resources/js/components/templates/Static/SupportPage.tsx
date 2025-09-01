@@ -1,8 +1,8 @@
-import CornerPlusBadge from '@/components/atoms/Badge/CornerPlusBadge';
-import CornerPlusBox from '@/components/atoms/Box/CornerPlusBox';
 import FaqAccordion from '@/components/organisms/Accordion/FaqAccordion';
 import HeroSection from '@/components/organisms/Section/HeroSection';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { useSupportStore } from '@/stores/useSupportStore';
 import { Link } from '@inertiajs/react';
 
@@ -19,28 +19,20 @@ const SupportPage = () => {
 
             <FaqAccordion data={faqs} />
 
-            <div className="mx-auto w-4/5 md:w-5/6 lg:w-full">
-                <CornerPlusBox
-                    border="dashed"
-                    borderColor="blue"
-                    borderTone="faded"
-                    cornerColor="blue"
-                    cornerTone="faded"
-                    className="my-10 flex h-40 flex-col justify-between bg-transparent md:h-fit md:flex-row md:items-center"
-                >
-                    <div className="flex flex-col gap-2">
-                        <h1>Still have questions?</h1>
-                        <p className="text-muted-foreground text-xs">
-                            Can't find the answer you're looking for? <CornerPlusBadge>Please chat to our friendly team.</CornerPlusBadge>
-                        </p>
+            <Card className="bg-primary text-primary-foreground border-none p-4 text-center shadow-none md:text-start">
+                <CardContent className="items-center justify-between space-y-3 p-0 md:inline-flex md:space-y-0">
+                    <div>
+                        <h3 className="text-xl">Still have questions?</h3>
+                        <p className="text-xs">Can't find the answer you're looking for? Please chat to our friendly team.</p>
                     </div>
-                    <Link href={route('contact-us.indexOnContactUs')}>
-                        <Button effect="ringHover" variant="default" size="sm">
-                            Get in touch
-                        </Button>
+                    <Link
+                        href="/contact-us"
+                        className={cn(buttonVariants({ variant: 'secondary' }), 'bg-[#f3f4f6] text-xs text-[#4b5563] hover:bg-[#f3f4f6]/80')}
+                    >
+                        Get in touch
                     </Link>
-                </CornerPlusBox>
-            </div>
+                </CardContent>
+            </Card>
         </>
     );
 };

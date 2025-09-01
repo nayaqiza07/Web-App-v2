@@ -24,7 +24,7 @@ class ProductListResource extends JsonResource
             'old_price'             => $this->old_price,
             'is_new'                => $this->is_new,
             'discount_percentage'   => $this->discount_percentage,
-            'category'              => new CategoryListResource($this->whenLoaded('category'))
+            'category'              => new CategoryListResource($this->whenLoaded('category'))->resolve()
         ];
     }
 }

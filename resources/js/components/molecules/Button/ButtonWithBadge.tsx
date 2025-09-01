@@ -41,6 +41,8 @@ const ButtonWithBadge: React.FC<ButtonWithBadgeProps> = ({
             <Link
                 href={linkTo}
                 prefetch
+                preserveState
+                preserveScroll
                 className={cn(
                     buttonVariants({ variant: 'ghost' }),
                     'text-muted-foreground hover:bg-accent/40 flex w-full justify-between rounded-lg p-2 text-xs font-bold transition-colors duration-200',

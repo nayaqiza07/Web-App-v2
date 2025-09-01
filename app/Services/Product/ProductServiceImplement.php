@@ -45,11 +45,16 @@ class ProductServiceImplement extends ServiceApi implements ProductService{
     
     public function getProductByCategory(string $slug, int $page, int $perPage): LengthAwarePaginator
     {
-        return $this->mainRepository->getProductByCategory($slug, $page, $perPage);
+      return $this->mainRepository->getProductByCategory($slug, $page, $perPage);
     }
 
     public function getRelatedProducts(string $slug): Collection
     {
       return $this->mainRepository->getRelatedProducts($slug);
+    }
+
+    public function getFeaturedProducts(): Collection
+    {
+      return $this->mainRepository->getFeaturedProducts();
     }
 }

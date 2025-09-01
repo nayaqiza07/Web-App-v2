@@ -19,7 +19,7 @@ const CartPage = () => {
 
             <div className="grid gap-5 md:grid-cols-[2fr_auto_1fr]">
                 <AccordionCart />
-                <Separator orientation="vertical" className="via-border hidden bg-gradient-to-b from-transparent to-transparent md:block" />
+                <Separator orientation="vertical" />
                 <SummaryCartCard />
                 <SummaryCartDrawer />
 

@@ -57,4 +57,11 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
             return $this->model->filter()->related($product)->get();
         });
     }
+
+    public function getFeaturedProducts(): Collection
+    {
+        return Cache::remember("products.featured", 3600, function () {
+            return $this->model->filter()->where('old_price', '>', 'price')->get();
+        });
+    }
 }

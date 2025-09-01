@@ -20,6 +20,7 @@ class BlogObserver
 
         Cache::forget("blogs.related");
         Cache::forget("blogs:{$blog->slug}");
+        Cache::forget("blogs.latest");
     }
 
     /**
@@ -35,6 +36,7 @@ class BlogObserver
 
         Cache::forget("blogs.related");
         Cache::forget("blogs:{$blog->slug}");
+        Cache::forget("blogs.latest");
     }
 
     /**
@@ -50,6 +52,7 @@ class BlogObserver
 
         Cache::forget("blogs.related");
         Cache::forget("blogs:{$blog->slug}");
+        Cache::forget("blogs.latest");
     }
 
     /**

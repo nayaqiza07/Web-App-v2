@@ -24,6 +24,7 @@ class ProductObserver
 
         Cache::forget("products:{$product->slug}");
         Cache::forget("products.related:{$product->id}");
+        Cache::forget("products.featured");
     }
 
     /**
@@ -43,6 +44,7 @@ class ProductObserver
 
         Cache::forget("products:{$product->slug}");
         Cache::forget("products.related:{$product->id}");
+        Cache::forget("products.featured");
     }
 
     /**
@@ -62,6 +64,7 @@ class ProductObserver
 
         Cache::forget("products:{$product->slug}");
         Cache::forget("products.related:{$product->id}");
+        Cache::forget("products.featured");
     }
 
     /**

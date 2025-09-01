@@ -24,7 +24,8 @@ class BlogController extends Controller
         $perPage = 3;
         $blogs = $this->blogService->getPaginatedBlogs($page, $perPage);
         return Inertia::render('blog/BlogList', [
-            'BLOGS' => Inertia::defer(fn () => BlogListResource::collection($blogs)),
+            // 'BLOGS' => Inertia::defer(fn () => BlogListResource::collection($blogs)),
+            'BLOGS' => BlogListResource::collection($blogs),
         ]);
     }
 
@@ -33,8 +34,8 @@ class BlogController extends Controller
         $blog = $this->blogService->getBlogBySlug($slug);
         $relatedBlogs = $this->blogService->getRelatedBlogs();
         return Inertia::render('blog/BlogDetail', [
-            'BLOG' => Inertia::defer(fn () => new BlogDetailResource($blog)->resolve()),
-            'RELATED_BLOGS' => Inertia::defer(fn () => BlogRelatedResource::collection($relatedBlogs)->resolve()),
+            'BLOG' => new BlogDetailResource($blog)->resolve(),
+            'RELATED_BLOGS' => BlogRelatedResource::collection($relatedBlogs)->resolve(),
         ]);
     }
 }

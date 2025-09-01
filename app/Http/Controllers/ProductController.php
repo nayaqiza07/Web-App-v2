@@ -33,9 +33,11 @@ class ProductController extends Controller
 
         $products = $this->productService->getPaginatedProducts($page, $perPage);
         $categories = $this->categoryService->getAllCategory();
+        
         return Inertia::render('shop/ProductList', [
-            'PRODUCTS' => Inertia::defer(fn () => ProductListResource::collection($products)),
-            'CATEGORIES' => Inertia::defer(fn () => CategoryListResource::collection($categories)->resolve()),
+            // 'PRODUCTS' => Inertia::defer(fn () => ProductListResource::collection($products)),
+            'products' => ProductListResource::collection($products),
+            'categories' => CategoryListResource::collection($categories)->resolve()
         ]);
     }
 
@@ -43,9 +45,10 @@ class ProductController extends Controller
     {
         $product = $this->productService->getProductBySlug($slug);
         $relatedProducts = $this->productService->getRelatedProducts($slug);
+        
         return Inertia::render('shop/ProductDetail', [
-            'PRODUCT' => Inertia::defer(fn () => new ProductDetailResource($product)->resolve()),
-            'RELATED_PRODUCTS' => Inertia::defer(fn () => ProductRelatedResource::collection($relatedProducts)->resolve())
+            'product' => new ProductDetailResource($product)->resolve(),
+            'relatedProducts' => ProductRelatedResource::collection($relatedProducts)->resolve()
         ]);
     }
 
@@ -59,9 +62,9 @@ class ProductController extends Controller
         $categories = $this->categoryService->getAllCategory();
 
         return Inertia::render('shop/ProductList', [
-            'CATEGORY' => new CategoryDetailResource($category)->resolve(),
-            'PRODUCTS' => Inertia::defer(fn () => ProductListResource::collection($products)),
-            'CATEGORIES' => CategoryListResource::collection($categories)->resolve(),
+            'category' => new CategoryDetailResource($category)->resolve(),
+            'products' => ProductListResource::collection($products),
+            'categories' => CategoryListResource::collection($categories)->resolve()
         ]);
     }
 }

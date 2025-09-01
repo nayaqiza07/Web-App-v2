@@ -21,7 +21,7 @@ const Subscription = () => {
                         viewport={{ once: true }}
                         className="flex h-[168px] flex-col items-center justify-center gap-4"
                     >
-                        <Separator className="via-border bg-gradient-to-r from-transparent to-transparent" />
+                        <Separator />
 
                         <h3 className="text-center font-bold">Sign up for the newsletter and get 10% discount</h3>
                         <InputWithButton

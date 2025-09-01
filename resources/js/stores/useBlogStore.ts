@@ -12,6 +12,9 @@ interface BlogState {
 
     relatedBlogs: BlogData[];
     setRelatedBlogs: (blog: BlogData[]) => void;
+
+    latestBlogs: BlogData[];
+    setLatestBlogs: (latestBlogs: BlogData[]) => void;
 }
 
 export const useBlogStore = create<BlogState>((set) => ({
@@ -43,4 +46,7 @@ export const useBlogStore = create<BlogState>((set) => ({
 
     relatedBlogs: [],
     setRelatedBlogs: (relatedBlogs: BlogData[]) => set({ relatedBlogs }),
+
+    latestBlogs: [],
+    setLatestBlogs: (latestBlogs: BlogData[]) => set({ latestBlogs }),
 }));

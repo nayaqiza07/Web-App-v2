@@ -70,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
 
                             <img
                                 src={`/storage/${data.thumbnail}`}
-                                alt={`Foto Produk ${data.name}`}
+                                alt={data.name}
                                 loading="lazy"
                                 className="h-full w-full object-cover transition-transform duration-200 hover:scale-125"
                             />

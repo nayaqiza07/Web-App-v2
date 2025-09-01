@@ -16,7 +16,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ children, variant = 'default'
     const breadcrumbs = useBreadcrumb();
 
     const variants = {
-        default: 'h-[300px] rounded-2xl',
+        default: 'h-[300px] rounded-xl',
         withBreadcrumb: 'h-[92px] rounded-xl md:h-[120px] lg:h-[208px]',
     };
 
