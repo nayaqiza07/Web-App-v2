@@ -12,4 +12,5 @@ interface ProductRepository extends Repository{
     public function getProductBySlug(string $slug): Product;
     public function getProductByCategory(string $slug, int $page, int $perPage): LengthAwarePaginator;
     public function getRelatedProducts(string $slug): Collection;
+    public function getFeaturedProducts(): Collection;
 }

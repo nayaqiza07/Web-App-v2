@@ -13,15 +13,15 @@ import ProductCard from '../Card/ProductCard';
 
 interface CarouselProductProps {
     headLineTitle: string;
-    isFor?: 'category' | 'product' | 'blog';
+    isFor?: string;
     totalItemShow: string;
     isAutoPlay?: boolean;
 }
 
-const CarouselProduct: React.FC<CarouselProductProps> = ({ headLineTitle = 'Title', isFor = 'product', isAutoPlay, totalItemShow = '' }) => {
-    const RELATED_PRODUCTS = useProductStore((state) => state.relatedProducts);
-    const CATEGORIES = useCategoryStore((state) => state.categories);
-    const BLOGS = useBlogStore((state) => state.blogs);
+const CarouselProduct: React.FC<CarouselProductProps> = ({ headLineTitle = 'Title', isFor = 'relatedProduct', isAutoPlay, totalItemShow = '' }) => {
+    const { featuredProducts, relatedProducts } = useProductStore();
+    const { categories } = useCategoryStore();
+    const { latestBlogs } = useBlogStore();
 
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
@@ -74,10 +74,21 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({ headLineTitle = 'Titl
                     }
                 />
 
-                {isFor === 'product' && (
+                {isFor === 'featuredProducts' && (
                     <CarouselContent>
-                        {RELATED_PRODUCTS.length > 0 &&
-                            RELATED_PRODUCTS.map((data, index) => (
+                        {featuredProducts.length > 0 &&
+                            featuredProducts.map((data, index) => (
+                                <CarouselItem key={index} className={`${totalItemShow} py-1`}>
+                                    <ProductCard data={data} isCarousel />
+                                </CarouselItem>
+                            ))}
+                    </CarouselContent>
+                )}
+
+                {isFor === 'relatedProducts' && (
+                    <CarouselContent>
+                        {relatedProducts.length > 0 &&
+                            relatedProducts.map((data, index) => (
                                 <CarouselItem key={index} className={`${totalItemShow} py-1`}>
                                     <ProductCard data={data} isCarousel />
                                 </CarouselItem>
@@ -87,13 +98,13 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({ headLineTitle = 'Titl
 
                 {isFor === 'category' && (
                     <CarouselContent>
-                        {CATEGORIES.length > 0 &&
-                            CATEGORIES.map((category, index) => (
+                        {categories.length > 0 &&
+                            categories.map((category, index) => (
                                 <CarouselItem key={index} className={`${totalItemShow} py-1`}>
                                     <CategoryCard
                                         srcImage={category.thumbnail}
                                         linkTo={route('products.showByCategory', { slug: category.slug })}
-                                        altImage="Foto Produk ${`9`}"
+                                        altImage={category.name}
                                         title={category.name}
                                         isCarousel
                                     />
@@ -102,10 +113,10 @@ const CarouselProduct: React.FC<CarouselProductProps> = ({ headLineTitle = 'Titl
                     </CarouselContent>
                 )}
 
-                {isFor === 'blog' && (
+                {isFor === 'latestBlogs' && (
                     <CarouselContent>
-                        {BLOGS.data.length > 0 &&
-                            BLOGS.data.map((blog, index) => (
+                        {latestBlogs.length > 0 &&
+                            latestBlogs.map((blog, index) => (
                                 <CarouselItem key={index} className={`${totalItemShow} py-1`}>
                                     <BlogCard isCarousel data={blog} />
                                 </CarouselItem>

@@ -1,49 +1,48 @@
 import ProductPage from '@/components/templates/Shop/ProductPage';
-import SkeletonProductPage from '@/components/templates/SkeletonPage/SkeletonProductPage';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useCategoryStore } from '@/stores/useCategoryStore';
 import { useProductStore } from '@/stores/useProductStore';
 import { Category, ProductList as ProductListType } from '@/types';
-import { Deferred, Head } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface ProductListProps {
-    PRODUCTS: ProductListType;
-    CATEGORIES: Category[];
-    CATEGORY: Category;
+    products: ProductListType;
+    categories: Category[];
+    category: Category;
 }
 
 const ProductList: React.FC<ProductListProps> = (props) => {
-    const { PRODUCTS, CATEGORIES, CATEGORY } = props;
+    const { products, categories, category } = props;
 
     const { setProducts } = useProductStore();
     const { setCategories, setSelectedCategory } = useCategoryStore();
 
     useEffect(() => {
-        if (PRODUCTS) {
-            setProducts(PRODUCTS);
+        if (products) {
+            setProducts(products);
         }
-    }, [PRODUCTS, setProducts]);
+    }, [products, setProducts]);
 
     useEffect(() => {
-        if (CATEGORIES) {
-            setCategories(CATEGORIES);
+        if (categories) {
+            setCategories(categories);
         }
 
-        if (CATEGORY) {
-            setSelectedCategory(CATEGORY);
+        if (category) {
+            setSelectedCategory(category);
         } else {
             setSelectedCategory(null);
         }
-    }, [CATEGORIES, CATEGORY, setCategories, setSelectedCategory]);
+    }, [categories, category, setCategories, setSelectedCategory]);
 
     return (
         <>
             <Head title="Products" />
             <MainLayout>
-                <Deferred data={['PRODUCTS', 'CATEGORIES']} fallback={<SkeletonProductPage />}>
-                    <ProductPage />
-                </Deferred>
+                {/* <Deferred data={['PRODUCTS', 'CATEGORIES']} fallback={<SkeletonProductPage />}> */}
+                <ProductPage />
+                {/* </Deferred> */}
             </MainLayout>
         </>
     );

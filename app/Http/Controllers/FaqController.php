@@ -23,8 +23,10 @@ class FaqController extends Controller
     public function index(): Response
     {
         $faqs = $this->faqService->getAllFaq();
+
         return Inertia::render('static/Support', [
-            'FAQS' => Inertia::defer(fn () => FaqListResource::collection($faqs)->resolve()),
+            // 'FAQS' => Inertia::defer(fn () => FaqListResource::collection($faqs)->resolve()),
+            'faqs' => FaqListResource::collection($faqs)->resolve(),
         ]);
     }
 
@@ -32,9 +34,10 @@ class FaqController extends Controller
     {
         $faqs = $this->faqService->getAllFaq();
         $contacts = $this->contactService->getAllContacts();
+        
         return Inertia::render('static/ContactUs', [
-            'FAQS' => Inertia::defer(fn () => FaqListResource::collection($faqs)->resolve()),
-            'CONTACTS' => Inertia::defer(fn () => ContactListResource::collection($contacts)->resolve()),
+            'faqs' => FaqListResource::collection($faqs)->resolve(),
+            'contacts' => ContactListResource::collection($contacts)->resolve(),
         ]);
     }
 }

@@ -32,7 +32,7 @@ const ProductDetailPage = () => {
             <TabsInformation PRODUCT={selectedProduct} />
 
             {/* Related Products */}
-            <CarouselProduct headLineTitle="Related Products" totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" />
+            <CarouselProduct headLineTitle="Related Products" isFor="relatedProducts" totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" />
         </>
     );
 };

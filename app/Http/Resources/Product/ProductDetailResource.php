@@ -30,7 +30,9 @@ class ProductDetailResource extends JsonResource
             'shipping'              => $this->shipping,
             'sku'                   => $this->sku,
             'stock'                 => $this->stock,
-            'category'              => new CategoryListResource($this->whenLoaded('category'))->resolve()
+            'category'              => new CategoryListResource($this->whenLoaded('category'))->resolve(),
+            'product_images'        => ProductImageResource::collection($this->whenLoaded('productImages'))
+                                        ->resolve()
         ];
     }
 }

@@ -1,45 +1,44 @@
 import Homepage from '@/components/templates/Home/Homepage';
-import SkeletonHomepage from '@/components/templates/SkeletonPage/SkeletonHomepage';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useBlogStore } from '@/stores/useBlogStore';
 import { useCategoryStore } from '@/stores/useCategoryStore';
 import { useProductStore } from '@/stores/useProductStore';
-import { BlogList, Category, ProductList } from '@/types';
-import { Deferred, Head } from '@inertiajs/react';
+import { BlogData, Category, ProductData } from '@/types';
+import { Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface HomeProps {
-    PRODUCTS: ProductList;
-    CATEGORIES: Category[];
-    BLOGS: BlogList;
+    featuredProducts: ProductData[];
+    categories: Category[];
+    latestBlogs: BlogData[];
 }
 
 const Home: React.FC<HomeProps> = (props) => {
-    const { PRODUCTS, CATEGORIES, BLOGS } = props;
+    const { featuredProducts, categories, latestBlogs } = props;
 
-    const { setProducts } = useProductStore();
+    const { setFeaturedProducts } = useProductStore();
     const { setCategories } = useCategoryStore();
-    const { setBlogs } = useBlogStore();
+    const { setLatestBlogs } = useBlogStore();
 
     useEffect(() => {
-        if (PRODUCTS) setProducts(PRODUCTS);
-    }, [PRODUCTS, setProducts]);
+        if (featuredProducts) setFeaturedProducts(featuredProducts);
+    }, [featuredProducts, setFeaturedProducts]);
 
     useEffect(() => {
-        if (CATEGORIES) setCategories(CATEGORIES);
-    }, [CATEGORIES, setCategories]);
+        if (categories) setCategories(categories);
+    }, [categories, setCategories]);
 
     useEffect(() => {
-        if (BLOGS) setBlogs(BLOGS);
-    }, [BLOGS, setBlogs]);
+        if (latestBlogs) setLatestBlogs(latestBlogs);
+    }, [latestBlogs, setLatestBlogs]);
 
     return (
         <>
             <Head title="Home" />
             <MainLayout>
-                <Deferred data={['PRODUCTS', 'CATEGORIES', 'BLOGS']} fallback={<SkeletonHomepage />}>
-                    <Homepage />
-                </Deferred>
+                {/* <Deferred data={['PRODUCTS', 'CATEGORIES', 'BLOGS']} fallback={<SkeletonHomepage />}> */}
+                <Homepage />
+                {/* </Deferred> */}
             </MainLayout>
         </>
     );

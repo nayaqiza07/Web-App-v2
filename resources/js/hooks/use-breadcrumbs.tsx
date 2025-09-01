@@ -13,7 +13,8 @@ export function useBreadcrumb(): BreadcrumbItemType[] {
     const { url } = usePage();
 
     // Contoh konversi dari path ke label
-    const segments = url.split('/').filter(Boolean);
+    const cleanUrl = url.split('?')[0];
+    const segments = cleanUrl.split('/').filter(Boolean);
 
     const breadcrumbs: BreadcrumbItemType[] = [];
 

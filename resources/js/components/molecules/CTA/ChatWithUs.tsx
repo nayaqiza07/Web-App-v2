@@ -4,30 +4,29 @@ import { MailIcon, MapIcon, MapPinIcon, PhoneCallIcon, SendIcon } from 'lucide-r
 
 const ChatWithUs = () => {
     const { contacts } = useContactStore();
-    const contact = contacts[0];
 
     const data = [
         {
             title: 'Chat With Us',
             desc: 'Speak to our friendly team via chat.',
             contacts: [
-                { icon: MailIcon, text: contact.email_us },
-                { icon: SendIcon, text: contact.chat_us },
+                { icon: MailIcon, text: contacts[0]?.email_us },
+                { icon: SendIcon, text: contacts[0]?.chat_us },
             ],
         },
         {
             title: 'Call Us',
             desc: 'Call our team on Monday - Saturday from 8am to 4pm.',
-            contacts: [{ icon: PhoneCallIcon, text: contact.call_us }],
+            contacts: [{ icon: PhoneCallIcon, text: contacts[0]?.call_us }],
         },
         {
             title: 'Visit Us',
             desc: 'Visit to us in person at our Jepara HQ.',
             contacts: [
-                { icon: MapPinIcon, text: contact.visit_us },
+                { icon: MapPinIcon, text: contacts[0]?.visit_us },
                 {
                     icon: MapIcon,
-                    text: contact.our_coordinate,
+                    text: contacts[0]?.our_coordinate,
                     is_link:
                         'https://www.google.com/maps/place/PT.+HORESTCO/@-6.629841,110.738444,14z/data=!4m5!3m4!1s0x0:0x77cc4003e6ac057f!8m2!3d-6.6298414!4d110.7384441?hl=en',
                 },

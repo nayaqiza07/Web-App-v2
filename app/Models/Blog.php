@@ -11,11 +11,6 @@ class Blog extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         /** Detail */
         'title',
@@ -29,27 +24,21 @@ class Blog extends Model
         'published_at',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected $casts = [
         /** Status */
         'is_visible' => 'boolean',
     ];
 
-    /**
-     * Scope to show visible blog
-     */
+    public function scopeLatest(Builder $query): Builder
+    {
+        return $query->orderBy('published_at', 'desc');
+    }
+
     public function scopeFilter(Builder $query): Builder
     {
         return $query->where('is_visible', true);
     }
 
-    /**
-     * Scope to show visible blog by slug
-     */
     public function scopeSlug(Builder $query, string $slug): Builder
     {
         return $query->where('slug', $slug);

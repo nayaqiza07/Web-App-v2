@@ -6,7 +6,7 @@ import { Link } from '@inertiajs/react';
 const CtaCard = () => {
     return (
         <>
-            <Card className="bg-primary text-primary-foreground p-4 text-center">
+            <Card className="bg-primary text-primary-foreground border-none p-4 text-center shadow-none">
                 <CardContent className="p-0">Don’t stop now — discover more great finds!</CardContent>
                 <CardFooter className="mt-auto p-0">
                     <Link

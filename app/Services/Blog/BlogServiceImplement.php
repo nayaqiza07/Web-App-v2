@@ -47,4 +47,9 @@ class BlogServiceImplement extends Service implements BlogService{
     {
       return $this->mainRepository->getRelatedBlogs();
     }
+
+    public function getLatestBlogs(): Collection
+    {
+      return $this->mainRepository->getLatestBlogs();
+    }
 }

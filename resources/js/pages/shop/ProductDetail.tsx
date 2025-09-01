@@ -1,39 +1,36 @@
 import ProductDetailPage from '@/components/templates/Shop/ProductDetailPage';
-import SkeletonDetailProductPage from '@/components/templates/SkeletonPage/SkeletonDetailProductPage';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useProductStore } from '@/stores/useProductStore';
 import { ProductData } from '@/types';
-import { Deferred, Head } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface ProductDetailProps {
-    PRODUCT: ProductData;
-    RELATED_PRODUCTS: ProductData[];
+    product: ProductData;
+    relatedProducts: ProductData[];
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = (props) => {
-    const { RELATED_PRODUCTS, PRODUCT } = props;
-
-    console.log(RELATED_PRODUCTS);
+    const { relatedProducts, product } = props;
 
     const { setRelatedProducts, setSelectedProduct } = useProductStore();
 
     useEffect(() => {
-        if (RELATED_PRODUCTS) setRelatedProducts(RELATED_PRODUCTS);
-    }, [RELATED_PRODUCTS, setRelatedProducts]);
+        if (relatedProducts) setRelatedProducts(relatedProducts);
+    }, [relatedProducts, setRelatedProducts]);
 
     useEffect(() => {
-        if (PRODUCT) setSelectedProduct(PRODUCT);
-    }, [PRODUCT, setSelectedProduct]);
+        if (product) setSelectedProduct(product);
+    }, [product, setSelectedProduct]);
 
     return (
         <>
-            <Head title={PRODUCT?.name} />
+            <Head title={product?.name} />
 
             <MainLayout>
-                <Deferred data={['PRODUCT', 'RELATED_PRODUCTS']} fallback={<SkeletonDetailProductPage />}>
-                    <ProductDetailPage />
-                </Deferred>
+                {/* <Deferred data={['PRODUCT', 'RELATED_PRODUCTS']} fallback={<SkeletonDetailProductPage />}> */}
+                <ProductDetailPage />
+                {/* </Deferred> */}
             </MainLayout>
         </>
     );

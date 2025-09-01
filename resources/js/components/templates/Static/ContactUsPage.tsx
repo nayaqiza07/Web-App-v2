@@ -18,7 +18,7 @@ const ContactUsPage = () => {
             <div className="grid gap-3 md:grid-cols-[2fr_auto_1fr] md:gap-8">
                 <ContactForm />
                 {/* <Separator orientation="vertical" /> */}
-                <Separator orientation="vertical" className="via-border bg-gradient-to-b from-transparent to-transparent" />
+                <Separator orientation="vertical" />
                 <ChatWithUs />
             </div>
             <FaqAccordion data={faqs} />

@@ -1,5 +1,4 @@
 import BlogListPage from '@/components/templates/Blog/BlogListPage';
-import SkeletonBlogPage from '@/components/templates/SkeletonPage/SkeletonBlogPage';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useBlogStore } from '@/stores/useBlogStore';
 import { BlogList as BlogListType } from '@/types';
@@ -25,7 +24,11 @@ const BlogList: React.FC<BlogListProps> = (props) => {
         <>
             <Head title="Blogs" />
 
-            <MainLayout>{!BLOGS ? <SkeletonBlogPage /> : <BlogListPage />}</MainLayout>
+            <MainLayout>
+                {/* <Deferred data={'BLOGS'} fallback={<SkeletonDetailBlog />}> */}
+                <BlogListPage />
+                {/* </Deferred> */}
+            </MainLayout>
         </>
     );
 };

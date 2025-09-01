@@ -12,6 +12,9 @@ interface ProductState {
 
     relatedProducts: ProductData[];
     setRelatedProducts: (relatedProducts: ProductData[]) => void;
+
+    featuredProducts: ProductData[];
+    setFeaturedProducts: (featuredProducts: ProductData[]) => void;
 }
 
 export const useProductStore = create<ProductState>((set) => ({
@@ -43,4 +46,7 @@ export const useProductStore = create<ProductState>((set) => ({
 
     relatedProducts: [],
     setRelatedProducts: (relatedProducts: ProductData[]) => set({ relatedProducts }),
+
+    featuredProducts: [],
+    setFeaturedProducts: (featuredProducts: ProductData[]) => set({ featuredProducts }),
 }));

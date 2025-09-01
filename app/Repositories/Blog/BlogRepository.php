@@ -11,4 +11,5 @@ interface BlogRepository extends Repository{
     public function getPaginatedBlogs(int $page, int $perPage): LengthAwarePaginator;
     public function getBlogBySlug(string $slug): Blog;
     public function getRelatedBlogs(): Collection;
+    public function getLatestBlogs(): Collection;
 }

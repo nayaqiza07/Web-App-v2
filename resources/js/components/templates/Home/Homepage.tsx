@@ -26,7 +26,12 @@ const Homepage = () => {
             </HeroSection>
 
             {/* 2 */}
-            <CarouselProduct headLineTitle="What's New" isAutoPlay totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5" />
+            <CarouselProduct
+                headLineTitle="Featured Products"
+                isFor="featuredProducts"
+                isAutoPlay
+                totalItemShow="basis-1/2 md:basis-1/4 lg:basis-1/5"
+            />
 
             {/* 3 */}
             <CarouselProduct headLineTitle="Categories" isFor="category" isAutoPlay totalItemShow="md:basis-1/2" />
@@ -51,7 +56,7 @@ const Homepage = () => {
             />
 
             {/* 6 */}
-            <CarouselProduct headLineTitle="Recent Blogs" isFor="blog" isAutoPlay totalItemShow="md:basis-1/4 lg:basis-1/5" />
+            <CarouselProduct headLineTitle="Recent Blogs" isFor="latestBlogs" isAutoPlay totalItemShow="md:basis-1/4 lg:basis-1/5" />
         </>
     );
 };

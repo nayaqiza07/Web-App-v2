@@ -1,4 +1,3 @@
-import SkeletonFaq from '@/components/organisms/Skeleton/SkeletonFaq';
 import SupportPage from '@/components/templates/Static/SupportPage';
 import MainLayout from '@/layouts/app/MainLayout';
 import { useSupportStore } from '@/stores/useSupportStore';
@@ -7,25 +6,29 @@ import { Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 
 interface SupportProps {
-    FAQS: Faq[];
+    faqs: Faq[];
 }
 
 const Support: React.FC<SupportProps> = (props) => {
-    const { FAQS } = props;
+    const { faqs } = props;
 
     const { setFaqs } = useSupportStore();
 
     useEffect(() => {
-        if (FAQS) {
-            setFaqs(FAQS);
+        if (faqs) {
+            setFaqs(faqs);
         }
-    }, [FAQS, setFaqs]);
+    }, [faqs, setFaqs]);
 
     return (
         <>
             <Head title="Support" />
 
-            <MainLayout>{!FAQS ? <SkeletonFaq /> : <SupportPage />}</MainLayout>
+            <MainLayout>
+                {/* <Deferred data={'FAQS'} fallback={<SkeletonContactUsPage />}> */}
+                <SupportPage />
+                {/* </Deferred> */}
+            </MainLayout>
         </>
     );
 };

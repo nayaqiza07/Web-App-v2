@@ -1,6 +1,7 @@
 import { Button, buttonVariants } from '@/components/ui/button';
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '@/components/ui/pagination';
 import { BlogList, ProductList } from '@/types';
+import { Link } from '@inertiajs/react';
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 import DropdownPageLink from '../Dropdown/DropdownPageLink';
 
@@ -19,7 +20,15 @@ export const Paginate: React.FC<PaginateProps> = ({ data }) => {
                             <span className="hidden sm:block">Previous</span>
                         </Button>
                     ) : (
-                        <PaginationPrevious href={data.links.prev} className={buttonVariants({ variant: 'secondary', effect: 'shineHover' })} />
+                        <Link
+                            preserveState
+                            preserveScroll
+                            href={data.links.prev}
+                            className={buttonVariants({ variant: 'secondary', effect: 'shineHover' })}
+                        >
+                            <ArrowLeftIcon />
+                            <span className="hidden sm:block">Previous</span>
+                        </Link>
                     )}
                 </PaginationItem>
 
@@ -46,7 +55,15 @@ export const Paginate: React.FC<PaginateProps> = ({ data }) => {
                             <ArrowRightIcon />
                         </Button>
                     ) : (
-                        <PaginationNext href={data.links.next} className={buttonVariants({ variant: 'secondary', effect: 'shineHover' })} />
+                        <Link
+                            preserveScroll
+                            preserveState
+                            href={data.links.next}
+                            className={buttonVariants({ variant: 'secondary', effect: 'shineHover' })}
+                        >
+                            <span className="hidden sm:block">Next</span>
+                            <ArrowRightIcon />
+                        </Link>
                     )}
                 </PaginationItem>
             </PaginationContent>
