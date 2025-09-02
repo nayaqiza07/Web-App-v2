@@ -2,6 +2,7 @@
 
 namespace App\Services\Product;
 
+use App\Data\PaginationParams;
 use App\Models\Product;
 use LaravelEasyRepository\ServiceApi;
 use App\Repositories\Product\ProductRepository;
@@ -33,9 +34,9 @@ class ProductServiceImplement extends ServiceApi implements ProductService{
       $this->mainRepository = $mainRepository;
     }
 
-    public function getPaginatedProducts(int $page, int $perPage): LengthAwarePaginator
+    public function getPaginatedProducts(PaginationParams $pagination): LengthAwarePaginator
     {
-      return $this->mainRepository->getPaginatedProducts($page, $perPage);
+      return $this->mainRepository->getPaginatedProducts($pagination);
     }
 
     public function getProductBySlug(string $slug): Product
@@ -43,9 +44,9 @@ class ProductServiceImplement extends ServiceApi implements ProductService{
       return $this->mainRepository->getProductBySlug($slug);
     }
     
-    public function getProductByCategory(string $slug, int $page, int $perPage): LengthAwarePaginator
+    public function getProductByCategory(string $slug, PaginationParams $pagination): LengthAwarePaginator
     {
-      return $this->mainRepository->getProductByCategory($slug, $page, $perPage);
+      return $this->mainRepository->getProductByCategory($slug, $pagination);
     }
 
     public function getRelatedProducts(string $slug): Collection

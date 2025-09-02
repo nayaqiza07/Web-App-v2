@@ -2,25 +2,17 @@
 
 namespace App\Observers;
 
+use App\CacheInvalidator\BlogCacheInvalidator;
 use App\Models\Blog;
-use Illuminate\Support\Facades\Cache;
 
 class BlogObserver
-{
+{   
     /**
      * Handle the Blog "created" event.
      */
     public function created(Blog $blog): void
     {
-        $maxPage = 20;
-
-        for ($page = 1; $page <= $maxPage; $page++){
-            Cache::forget("blogs.page:{$page}");
-        }
-
-        Cache::forget("blogs.related");
-        Cache::forget("blogs:{$blog->slug}");
-        Cache::forget("blogs.latest");
+        app(BlogCacheInvalidator::class)->invalidate($blog);
     }
 
     /**
@@ -28,15 +20,7 @@ class BlogObserver
      */
     public function updated(Blog $blog): void
     {
-        $maxPage = 20;
-
-        for ($page = 1; $page <= $maxPage; $page++){
-            Cache::forget("blogs.page:{$page}");
-        }
-
-        Cache::forget("blogs.related");
-        Cache::forget("blogs:{$blog->slug}");
-        Cache::forget("blogs.latest");
+        app(BlogCacheInvalidator::class)->invalidate($blog);
     }
 
     /**
@@ -44,15 +28,7 @@ class BlogObserver
      */
     public function deleted(Blog $blog): void
     {
-        $maxPage = 20;
-
-        for ($page = 1; $page <= $maxPage; $page++){
-            Cache::forget("blogs.page:{$page}");
-        }
-
-        Cache::forget("blogs.related");
-        Cache::forget("blogs:{$blog->slug}");
-        Cache::forget("blogs.latest");
+        app(BlogCacheInvalidator::class)->invalidate($blog);
     }
 
     /**

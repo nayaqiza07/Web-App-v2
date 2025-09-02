@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Blog;
 
+use App\Data\PaginationParams;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Blog;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -22,10 +23,10 @@ class BlogRepositoryImplement extends Eloquent implements BlogRepository{
         $this->model = $model;
     }
 
-    public function getPaginatedBlogs(int $page, int $perPage): LengthAwarePaginator
+    public function getPaginatedBlogs(PaginationParams $pagination): LengthAwarePaginator
     {
-        return Cache::remember("blogs.page:{$page}", 3600, function () use ($perPage) {
-            return $this->model->filter()->paginate($perPage);
+        return Cache::remember("blogs.page:{$pagination->page}", 3600, function () use ($pagination) {
+            return $this->model->filter()->paginate($pagination->perPage, ['*'], 'page', $pagination->page);
         });
     }
 
@@ -49,4 +50,6 @@ class BlogRepositoryImplement extends Eloquent implements BlogRepository{
             return $this->model->filter()->latest()->get();
         });
     }
+
+    
 }

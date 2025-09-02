@@ -2,6 +2,7 @@
 
 namespace App\Services\Blog;
 
+use App\Data\PaginationParams;
 use App\Models\Blog;
 use App\Repositories\Blog\BlogRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -33,9 +34,10 @@ class BlogServiceImplement extends Service implements BlogService{
       $this->mainRepository = $mainRepository;
     }
 
-    public function getPaginatedBlogs(int $page, int $perPage): LengthAwarePaginator
+
+    public function getPaginatedBlogs(PaginationParams $pagination): LengthAwarePaginator
     {
-      return $this->mainRepository->getPaginatedBlogs($page, $perPage);
+      return $this->mainRepository->getPaginatedBlogs($pagination);
     }
 
     public function getBlogBySlug(string $slug): Blog

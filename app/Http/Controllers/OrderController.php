@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
+// TODO: midtrans boilerplate: https://github.com/Midtrans/midtrans-php
 class OrderController extends Controller
 {
     protected OrderService $orderService;
@@ -29,7 +30,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function store (StoreOrderRequest $request): RedirectResponse
+    public function store (StoreOrderRequest $request): RedirectResponse // FIXME: order store
     {
         // Alur pembuatan order
         // 1. Pengguna menambahkan product ke dalam keranjang (membuat entri baru pada cart_items)
@@ -37,7 +38,7 @@ class OrderController extends Controller
         // 3. Lalu yang awalnya ada pada cart_items akan ditambahkan entri baru di order_items (dan yang ada pada cart_items dihapus)
         try {
             $this->orderService->createOrder($request);
-            return redirect('/products')->with('success', 'Order created successfully');
+            return redirect('/order')->with('success', 'Order created successfully');
         } catch(EmptyCartException $e) {
             throw $e;
         } catch (\Exception $e) {
@@ -49,8 +50,10 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Failed to place order');
         }
     }
+
+    // TODO: add order show for detail order
     
-    public function destroy (DestroyOrderRequest $request, Order $order): RedirectResponse
+    public function destroy (DestroyOrderRequest $request, Order $order): RedirectResponse // FIXME: order destroy
     {
         // Alur penghapusan / cancel order
         // 1. Pengguna melakukan klik pada tombol cancel (route yang mengarah ke controller destroy dengan method delete)

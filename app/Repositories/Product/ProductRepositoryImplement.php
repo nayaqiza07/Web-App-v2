@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Product;
 
+use App\Data\PaginationParams;
 use App\Models\Category;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Product;
@@ -25,10 +26,10 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
         $this->category = $category;
     }
 
-    public function getPaginatedProducts(int $page, int $perPage): LengthAwarePaginator
+    public function getPaginatedProducts(PaginationParams $pagination): LengthAwarePaginator
     {
-        return Cache::remember("products.page:{$page}", 3600, function () use ($perPage) {
-            return $this->model->filter()->latest()->paginate($perPage);
+        return Cache::remember("products.page:{$pagination->page}", 3600, function () use ($pagination) {
+            return $this->model->filter()->latest()->paginate($pagination->perPage, ['*'], 'page', $pagination->page);
         });
     }
 
@@ -39,13 +40,13 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
         });
     }
 
-    public function getProductByCategory(string $slug, int $page, int $perPage): LengthAwarePaginator
+    public function getProductByCategory(string $slug, PaginationParams $pagination): LengthAwarePaginator
     {
-        return Cache::remember("products.category:{$slug}.page{$page}", 3600, function () use ($slug, $perPage) {
+        return Cache::remember("products.category:{$slug}.page{$pagination->page}", 3600, function () use ($slug, $pagination) {
             $category = Cache::remember("categories:{$slug}", 3600, function () use ($slug) {
                 return $this->category->filter()->slug($slug)->firstOrFail();
             });
-            return $category->products()->latest()->paginate($perPage);
+            return $category->products()->latest()->paginate($pagination->perPage, ['*'], 'page', $pagination->page);
         });
     }
 

@@ -14,7 +14,7 @@ const SummaryCartCard = () => {
         router.post(
             route('order.store'),
             {
-                address_id: user_address.address.id,
+                address_id: user_address.id,
                 // order_status: 'pending',
                 // payment_status: 'unpaid',
                 payment_method: 'manual_transfer',

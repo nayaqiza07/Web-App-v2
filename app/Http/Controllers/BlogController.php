@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Data\PaginationParams;
 use App\Http\Resources\Blog\BlogDetailResource;
 use App\Http\Resources\Blog\BlogListResource;
 use App\Http\Resources\Blog\BlogRelatedResource;
@@ -20,9 +21,9 @@ class BlogController extends Controller
 
     public function index(): Response
     {
-        $page = request('page', 1);
-        $perPage = 3;
-        $blogs = $this->blogService->getPaginatedBlogs($page, $perPage);
+        $pagination = PaginationParams::fromRequest();
+        $blogs = $this->blogService->getPaginatedBlogs($pagination);
+
         return Inertia::render('blog/BlogList', [
             // 'BLOGS' => Inertia::defer(fn () => BlogListResource::collection($blogs)),
             'BLOGS' => BlogListResource::collection($blogs),

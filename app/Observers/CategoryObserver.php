@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\CacheInvalidator\CategoryCacheInvalidator;
 use App\Models\Category;
 use Illuminate\Support\Facades\Cache;
 
@@ -12,14 +13,7 @@ class CategoryObserver
      */
     public function created(Category $category): void
     {
-        Cache::forget('categories.list');
-        Cache::forget("categories:{$category->slug}");
-        
-        $maxPage = 20;
-        for ($page = 1; $page <= $maxPage; $page++){
-            Cache::forget("products.category:{$category->slug}.page:{$page}");
-        }
-        Cache::forget('products.related');
+        app(CategoryCacheInvalidator::class)->invalidate($category);
     }
 
     /**
@@ -27,14 +21,7 @@ class CategoryObserver
      */
     public function updated(Category $category): void
     {
-        Cache::forget('categories.list');
-        Cache::forget("categories:{$category->slug}");
-
-        $maxPage = 20;
-        for ($page = 1; $page <= $maxPage; $page++){
-            Cache::forget("products.category:{$category->slug}.page:{$page}");
-        }
-        Cache::forget('products.related');
+        app(CategoryCacheInvalidator::class)->invalidate($category);
     }
 
     /**
@@ -42,14 +29,7 @@ class CategoryObserver
      */
     public function deleted(Category $category): void
     {
-        Cache::forget('categories.list');
-        Cache::forget("categories:{$category->slug}");
-        
-        $maxPage = 20;
-        for ($page = 1; $page <= $maxPage; $page++){
-            Cache::forget("products.category:{$category->slug}.page:{$page}");
-        }
-        Cache::forget('products.related');
+        app(CategoryCacheInvalidator::class)->invalidate($category);
     }
 
     /**
