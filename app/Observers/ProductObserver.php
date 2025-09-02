@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
+use App\CacheInvalidator\ProductCacheInvalidator;
 use App\Models\Product;
-use Illuminate\Support\Facades\Cache;
 
 class ProductObserver
 {
@@ -12,19 +12,7 @@ class ProductObserver
      */
     public function created(Product $product): void
     {
-        $maxPage = 20;
-
-        for ($page = 1; $page <= $maxPage; $page++){
-            Cache::forget("products.page:{$page}");
-
-            if ($product->category) {
-                Cache::forget("products.category:{$product->category->slug}.page:{$page}");
-            }
-        }
-
-        Cache::forget("products:{$product->slug}");
-        Cache::forget("products.related:{$product->id}");
-        Cache::forget("products.featured");
+        app(ProductCacheInvalidator::class)->invalidate($product);
     }
 
     /**
@@ -32,19 +20,7 @@ class ProductObserver
      */
     public function updated(Product $product): void
     {
-        $maxPage = 20;
-
-        for ($page = 1; $page <= $maxPage; $page++){
-            Cache::forget("products.page:{$page}");
-
-            if ($product->category) {
-                Cache::forget("products.category:{$product->category->slug}.page:{$page}");
-            }
-        }
-
-        Cache::forget("products:{$product->slug}");
-        Cache::forget("products.related:{$product->id}");
-        Cache::forget("products.featured");
+        app(ProductCacheInvalidator::class)->invalidate($product);
     }
 
     /**
@@ -52,19 +28,7 @@ class ProductObserver
      */
     public function deleted(Product $product): void
     {
-        $maxPage = 20;
-
-        for ($page = 1; $page <= $maxPage; $page++){
-            Cache::forget("products.page:{$page}");
-
-            if ($product->category) {
-                Cache::forget("products.category:{$product->category->slug}.page:{$page}");
-            }
-        }
-
-        Cache::forget("products:{$product->slug}");
-        Cache::forget("products.related:{$product->id}");
-        Cache::forget("products.featured");
+        app(ProductCacheInvalidator::class)->invalidate($product);
     }
 
     /**

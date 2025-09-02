@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Data\PaginationParams;
 use App\Http\Resources\Category\CategoryDetailResource;
 use App\Http\Resources\Category\CategoryListResource;
 use App\Http\Resources\Product\ProductDetailResource;
 use App\Http\Resources\Product\ProductListResource;
 use App\Http\Resources\Product\ProductRelatedResource;
-use App\Models\Product;
 use App\Services\Category\CategoryService;
 use App\Services\Product\ProductService;
 use Inertia\Inertia;
@@ -27,11 +27,10 @@ class ProductController extends Controller
     public function index(): Response
     {
         // $sort = request('sort', 'latest');
-        $page = request('page', 1);
-        $perPage = 3;
         // $cacheKey = "products.page:{$page}.sort:{$sort}";
 
-        $products = $this->productService->getPaginatedProducts($page, $perPage);
+        $pagination = PaginationParams::fromRequest();
+        $products = $this->productService->getPaginatedProducts($pagination);
         $categories = $this->categoryService->getAllCategory();
         
         return Inertia::render('shop/ProductList', [
@@ -54,11 +53,10 @@ class ProductController extends Controller
 
     public function showByCategory(string $slug): Response
     {
-        $page = request('page', 1);
-        $perPage = 1;
+        $pagination = PaginationParams::fromRequest();
 
         $category = $this->categoryService->getCategoryBySlug($slug);
-        $products = $this->productService->getProductByCategory($slug, $page, $perPage);
+        $products = $this->productService->getProductByCategory($slug, $pagination);
         $categories = $this->categoryService->getAllCategory();
 
         return Inertia::render('shop/ProductList', [
