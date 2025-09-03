@@ -6,18 +6,9 @@ use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
 use App\Models\Category;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -45,17 +36,17 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 // Detail Section
-                Section::make()
+                Forms\Components\Section::make()
                 ->schema([
-                    Grid::make()
+                    Forms\Components\Grid::make()
                     ->schema([
-                        TextInput::make('name')
+                        Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
                             ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
     
-                        TextInput::make('slug')
+                        Forms\Components\TextInput::make('slug')
                             ->disabled()
                             ->dehydrated()
                             ->required()
@@ -63,7 +54,7 @@ class CategoryResource extends Resource
                             ->unique(Category::class, 'slug', ignoreRecord: true),
                     ]),
 
-                    FileUpload::make('thumbnail')
+                    Forms\Components\FileUpload::make('thumbnail')
                         ->image()
                         ->required()
                         ->directory('images/categories/thumbnails')
@@ -82,7 +73,7 @@ class CategoryResource extends Resource
                         '))
                         ->columnSpanFull(),
 
-                    Toggle::make('is_visible')
+                    Forms\Components\Toggle::make('is_visible')
                         ->label('Visible to customers.')
                         ->helperText(function (bool $state) {
                             if ($state === false) {
@@ -96,13 +87,13 @@ class CategoryResource extends Resource
                 ->columnSpan(['lg' => fn (?Category $record) => $record === null ? 3 : 2]),
 
                 // Timestamp Section (Hidden when record is empty)
-                Section::make()
+                Forms\Components\Section::make()
                 ->schema([
-                    Placeholder::make('created_at')
+                    Forms\Components\Placeholder::make('created_at')
                         ->label('Created at')
                         ->content(fn (Category $record): ?string => $record->created_at?->diffForHumans()),
 
-                    Placeholder::make('updated_at')
+                    Forms\Components\Placeholder::make('updated_at')
                         ->label('Last modified at')
                         ->content(fn (Category $record): ?string => $record->updated_at?->diffForHumans()),
                 ])
@@ -116,20 +107,20 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('thumbnail')
+                Tables\Columns\ImageColumn::make('thumbnail')
                     ->label('Thumbnail')
                     ->square(),
 
-                TextColumn::make('name')
+                Tables\Columns\TextColumn::make('name')
                     ->label('Name')
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('slug')
+                Tables\Columns\TextColumn::make('slug')
                     ->label('Slug')
                     ->searchable(),
                 
-                TextColumn::make('is_visible')
+                Tables\Columns\TextColumn::make('is_visible')
                     ->label('Visibility')
                     ->badge()
                     ->color(fn (bool $state): string => $state ? 'success' : 'danger')
@@ -137,13 +128,13 @@ class CategoryResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                TextColumn::make('published_at')
+                Tables\Columns\TextColumn::make('published_at')
                     ->date()
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
 
-                TextColumn::make('deleted_at')
+                Tables\Columns\TextColumn::make('deleted_at')
                     ->date()
                     ->searchable()
                     ->sortable()
@@ -153,7 +144,7 @@ class CategoryResource extends Resource
             ->emptyStateHeading('No categories yet')
             ->emptyStateDescription('Once you write your category, it will appear here.')
             ->emptyStateActions([
-                Action::make('create')
+                Tables\Actions\Action::make('create')
                     ->icon('heroicon-m-plus')
                     ->label('Create category')
                     ->url(route('filament.admin.resources.shop.categories.create'))
@@ -163,13 +154,14 @@ class CategoryResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->modalHeading(fn ($record) => 'View Product: ' . $record->name),
-                Tables\Actions\EditAction::make(),
-
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make()
+                        ->modalHeading(fn ($record) => 'View Category: ' . $record->name),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ForceDeleteAction::make(),
+                    Tables\Actions\RestoreAction::make()
+                ])
             ])
             ->recordUrl(null)
             ->bulkActions([

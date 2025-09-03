@@ -189,13 +189,14 @@ class BlogResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->modalHeading(fn ($record) => 'View Blog: ' . $record->title),
-                Tables\Actions\EditAction::make(),
-
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make()
+                        ->modalHeading(fn ($record) => 'View Blog: ' . $record->title),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ForceDeleteAction::make(),
+                    Tables\Actions\RestoreAction::make()
+                ])
             ])
             ->recordUrl(null)
             ->bulkActions([
