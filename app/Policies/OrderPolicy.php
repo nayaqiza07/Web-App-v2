@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Contact;
+use App\Models\Order;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ContactPolicy
+class OrderPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class ContactPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_contact');
+        return $user->can('view_any_order');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Contact $contact): bool
+    public function view(User $user, Order $order): bool
     {
-        return $user->can('view_contact');
+        return $user->can('view_order');
     }
 
     /**
@@ -31,23 +31,23 @@ class ContactPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_contact');
+        return $user->can('create_order');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Contact $contact): bool
+    public function update(User $user, Order $order): bool
     {
-        return $user->can('update_contact');
+        return $user->can('update_order');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Contact $contact): bool
+    public function delete(User $user, Order $order): bool
     {
-        return $user->can('delete_contact');
+        return $user->can('delete_order');
     }
 
     /**
@@ -55,15 +55,15 @@ class ContactPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_contact');
+        return $user->can('delete_any_order');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Contact $contact): bool
+    public function forceDelete(User $user, Order $order): bool
     {
-        return $user->can('force_delete_contact');
+        return $user->can('force_delete_order');
     }
 
     /**
@@ -71,15 +71,15 @@ class ContactPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_contact');
+        return $user->can('force_delete_any_order');
     }
 
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Contact $contact): bool
+    public function restore(User $user, Order $order): bool
     {
-        return $user->can('restore_contact');
+        return $user->can('restore_order');
     }
 
     /**
@@ -87,15 +87,15 @@ class ContactPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_contact');
+        return $user->can('restore_any_order');
     }
 
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Contact $contact): bool
+    public function replicate(User $user, Order $order): bool
     {
-        return $user->can('replicate_contact');
+        return $user->can('replicate_order');
     }
 
     /**
@@ -103,6 +103,6 @@ class ContactPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_contact');
+        return $user->can('reorder_order');
     }
 }

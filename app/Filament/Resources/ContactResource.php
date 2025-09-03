@@ -3,19 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ContactResource\Pages;
-use App\Filament\Resources\ContactResource\RelationManagers;
 use App\Models\Contact;
-use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ContactResource extends Resource
 {
@@ -35,27 +28,27 @@ class ContactResource extends Resource
     {
         return $form
             ->schema([
-                Section::make()
+                Forms\Components\Section::make()
                 ->schema([
-                    TextInput::make('email_us')
+                    Forms\Components\TextInput::make('email_us')
                             ->label('Email')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true),
 
-                    TextInput::make('chat_us')
+                    Forms\Components\TextInput::make('chat_us')
                             ->label('Chat')
                             ->maxLength(255),
 
-                    TextInput::make('call_us')
+                    Forms\Components\TextInput::make('call_us')
                             ->label('Call')
                             ->maxLength(255),
 
-                    Textarea::make('visit_us')
+                    Forms\Components\Textarea::make('visit_us')
                             ->label('Visit')
                             ->maxLength(255),
 
-                    TextInput::make('our_coordinate')
+                    Forms\Components\TextInput::make('our_coordinate')
                             ->label('Coordinate')
                             ->maxLength(255),
                 ])

@@ -4,16 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FaqResource\Pages;
 use App\Models\Faq;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
+use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -36,34 +30,34 @@ class FaqResource extends Resource
     {
         return $form
             ->schema([
-                Group::make()
+                Forms\Components\Group::make()
                 ->schema([
-                    Section::make()
+                    Forms\Components\Section::make()
                     ->schema([
-                        TextInput::make('question')
+                        Forms\Components\TextInput::make('question')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true),
 
-                        RichEditor::make('answer'),
+                        Forms\Components\RichEditor::make('answer'),
 
-                        Toggle::make('is_visible')
+                        Forms\Components\Toggle::make('is_visible')
                             ->label('Visible to customers.')
                             ->default(true)
-                    ])
+                    ]),
                 ])
                 ->columnSpan(['lg' => fn (?Faq $record) => $record === null ? 3 : 2]),
 
-                Group::make()
+                Forms\Components\Group::make()
                 ->schema([
                     /** Timestamp Section */
-                    Section::make()
+                    Forms\Components\Section::make()
                     ->schema([
-                        Placeholder::make('created_at')
+                        Forms\Components\Placeholder::make('created_at')
                             ->label('Created at')
                             ->content(fn (Faq $record): ?string => $record->created_at?->diffForHumans()),
 
-                        Placeholder::make('updated_at')
+                        Forms\Components\Placeholder::make('updated_at')
                             ->label('Last modified at')
                             ->content(fn (Faq $record): ?string => $record->updated_at?->diffForHumans())
                     ])
@@ -112,7 +106,7 @@ class FaqResource extends Resource
             ->emptyStateHeading('No faqs yet')
             ->emptyStateDescription('Once you write your faq, it will appear here.')
             ->emptyStateActions([
-                Action::make('create')
+                Tables\Actions\Action::make('create')
                     ->icon('heroicon-m-plus')
                     ->label('Create faq')
                     ->url(route('filament.admin.resources.content.faqs.create'))
@@ -122,13 +116,14 @@ class FaqResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->modalHeading(fn ($record) => 'View Faq: ' . $record->question),
-                Tables\Actions\EditAction::make(),
-
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\ForceDeleteAction::make(),
-                Tables\Actions\RestoreAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make()
+                        ->modalHeading(fn ($record) => 'View Faq: ' . $record->question),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ForceDeleteAction::make(),
+                    Tables\Actions\RestoreAction::make()
+                ])
             ])
             ->recordUrl(null)
             ->bulkActions([

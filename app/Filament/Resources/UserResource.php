@@ -3,20 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Filament\Resources\UserResource\RelationManagers\AddressRelationManager;
-use App\Filament\Resources\UserResource\RelationManagers\RoleRelationManager;
+use App\Filament\Resources\UserResource\RelationManagers\OrdersRelationManager;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
@@ -36,9 +31,9 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Group::make()
+                Forms\Components\Group::make()
                 ->schema([
-                    Section::make()
+                    Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->required()
@@ -58,9 +53,9 @@ class UserResource extends Resource
                     ])->columns(2),
                 ])->columnSpan(2),
 
-                Group::make()
+                Forms\Components\Group::make()
                 ->schema([
-                    Section::make()
+                    Forms\Components\Section::make()
                     ->schema([
                         Forms\Components\Select::make('roles')
                             ->native(false)
@@ -69,8 +64,6 @@ class UserResource extends Resource
                         Forms\Components\DateTimePicker::make('email_verified_at'),
                     ])
                 ])
-                
-                
             ])->columns(3);
     }
 
@@ -97,7 +90,7 @@ class UserResource extends Resource
             ->emptyStateHeading('No users yet')
             ->emptyStateDescription('Once you write your user, it will appear here.')
             ->emptyStateActions([
-                Action::make('create')
+                Tables\Actions\Action::make('create')
                     ->icon('heroicon-m-plug')
                     ->label('Create user')
                     ->url(route('filament.admin.resources.users.index'))
@@ -107,9 +100,11 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->modalHeading(fn ($record) => 'View User: ' . $record->name),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make()
+                        ->modalHeading(fn ($record) => 'View User: ' . $record->name),
+                    Tables\Actions\EditAction::make(),
+                ])
                 // Tables\Actions\DeleteAction::make(),
             ])
             ->recordUrl(null)
@@ -123,8 +118,8 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RoleRelationManager::class,
-            AddressRelationManager::class
+            AddressRelationManager::class,
+            OrdersRelationManager::class
         ];
     }
 

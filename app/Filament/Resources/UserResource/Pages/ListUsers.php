@@ -23,12 +23,12 @@ class ListUsers extends ListRecords
     public function getTabs(): array
     {
         return [
-            'All' => Tab::make()
-                ->badge(
-                    User::count()
-                ),
+            // 'All' => Tab::make()
+            //     ->badge(
+            //         User::count()
+            //     ),
 
-            'Internal' => Tab::make()
+            'Staff' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) =>
                     $query->whereHas('roles', fn ($q) =>
                         $q->whereIn('name', ['Super Admin', 'Admin'])
