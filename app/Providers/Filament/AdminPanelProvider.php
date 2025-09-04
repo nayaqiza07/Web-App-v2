@@ -32,13 +32,16 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->spa()
             ->font('Inter', provider: GoogleFontProvider::class)
+            // ->colors([
+            //     'danger' => Color::Rose,
+            //     'gray' => Color::Gray,
+            //     'info' => Color::Blue,
+            //     'primary' => Color::Indigo,
+            //     'success' => Color::Emerald,
+            //     'warning' => Color::Orange,
+            // ])
             ->colors([
-                'danger' => Color::Rose,
-                'gray' => Color::Gray,
-                'info' => Color::Blue,
-                'primary' => Color::Indigo,
-                'success' => Color::Emerald,
-                'warning' => Color::Orange,
+                'primary' => Color::Blue,
             ])
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('15rem')
