@@ -7,7 +7,7 @@ const ScrollToTopButton = () => {
     };
 
     return (
-        <Button variant="outline" size="icon" onClick={ScrollToTop} className="hidden rounded-full lg:flex">
+        <Button variant="outline" size="icon" onClick={ScrollToTop} aria-label="scroll-to-top" className="hidden rounded-full lg:flex">
             <ArrowUp />
         </Button>
     );

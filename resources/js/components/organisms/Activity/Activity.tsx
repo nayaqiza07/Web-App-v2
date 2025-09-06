@@ -1,5 +1,6 @@
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import React from 'react';
@@ -32,8 +33,8 @@ const Activity: React.FC<ActivityProps> = ({
                 <div className={`${orderText} flex w-full flex-col items-center justify-center gap-6 rounded-xl py-7 md:py-0`}>
                     <h3 className="text-center text-xl font-semibold">{text}</h3>
 
-                    <Link href={btnLink ?? '#'}>
-                        <Button className="font-bold">Learn More</Button>
+                    <Link href={btnLink ?? '#'} className={cn(buttonVariants({ variant: 'default' }), 'font-bold')}>
+                        {text.includes('hotel') ? 'Learn more about our hotel furniture' : 'Learn more about us'}
                     </Link>
                 </div>
 

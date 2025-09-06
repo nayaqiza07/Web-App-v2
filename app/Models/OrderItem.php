@@ -15,6 +15,8 @@ class OrderItem extends Model
         'price_snapshot'
     ];
 
+    protected $with = ['product'];
+    
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);

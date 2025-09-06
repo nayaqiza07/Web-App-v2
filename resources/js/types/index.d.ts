@@ -230,6 +230,29 @@ export interface CartItemsType {
 }
 // Cart Item End
 
+// Order Start
+export interface OrderDataType {
+    id: number | string;
+    code: string;
+    order_status: string;
+    payment_status: string;
+    payment_method: string;
+    subtotal: number;
+    shipping_cost: number;
+    total: number;
+    address: AddressType;
+    user: User;
+    order_items: {
+        id: number;
+        price_snapshot: number;
+        product: ProductData[];
+        product_name: string;
+        quantity: number;
+        length: number;
+    };
+}
+// Order End
+
 // User Adrress Start
 export interface UserAddressType {
     id: number;

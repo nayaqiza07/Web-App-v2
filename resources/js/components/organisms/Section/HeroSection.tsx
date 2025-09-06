@@ -32,7 +32,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ children, variant = 'default'
                 className={`${variants[variant]} ${color} relative overflow-hidden`}
             >
                 {/* image */}
-                <img src={srcImage} alt={altImage} className="h-full w-full object-cover" />
+                <img src={srcImage} alt={altImage} decoding="async" className="h-full w-full object-cover" />
 
                 {/* overlay background */}
                 <div className="absolute inset-0 h-full w-full bg-black/50"></div>
