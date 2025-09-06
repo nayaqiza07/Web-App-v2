@@ -32,21 +32,19 @@ export const Paginate: React.FC<PaginateProps> = ({ data }) => {
                     )}
                 </PaginationItem>
 
-                <div className="flex gap-1">
-                    <PaginationItem className="flex gap-1">
-                        {data.meta?.links?.slice(1, -1).map((link, index) => (
-                            <PaginationLink key={index} href={link.url || '#'} isActive={link.active} className="size-8">
-                                {link.label}
-                            </PaginationLink>
-                        ))}
-                    </PaginationItem>
+                <PaginationItem className="flex gap-1">
+                    {data.meta?.links?.slice(1, -1).map((link, index) => (
+                        <PaginationLink key={index} href={link.url || '#'} isActive={link.active} className="size-8">
+                            {link.label}
+                        </PaginationLink>
+                    ))}
+                </PaginationItem>
 
-                    {data.meta?.links?.slice(1, -1).length > 5 && (
-                        <PaginationItem>
-                            <DropdownPageLink otherLink={data.meta.links} />
-                        </PaginationItem>
-                    )}
-                </div>
+                {data.meta?.links?.slice(1, -1).length > 5 && (
+                    <PaginationItem>
+                        <DropdownPageLink otherLink={data.meta.links} />
+                    </PaginationItem>
+                )}
 
                 <PaginationItem>
                     {data.links.next === null ? (

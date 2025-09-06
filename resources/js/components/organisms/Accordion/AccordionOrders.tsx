@@ -1,54 +1,62 @@
-import AnimatedMotion from '@/components/atoms/Animated/AnimatedMotion';
 import EmptyState from '@/components/molecules/EmptyState/EmptyState';
 import { Accordion, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card } from '@/components/ui/card';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { priceFormat } from '@/lib/utils';
+import { OrderDataType } from '@/types';
 import { motion } from 'framer-motion';
 import { CornerUpLeft, CreditCard, MapPin, ReceiptText, RotateCcw, ShoppingBag, SquareUserRound, TriangleAlert } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InvoiceDrawer from '../Drawer/InvoiceDrawer';
 import HoverCardInvoice from '../HoverCard/HoverCardInvoice';
 import AnimatedAccordionContent from './AnimatedAccordionContent';
 
-interface OrderData {
-    id: string;
-    amount: number | string;
-    products: number;
-    status: string;
-}
-
 interface AccordionOrdersProps {
-    data?: OrderData[];
+    data?: OrderDataType[];
 }
 
 const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
-    const [openItems, setOpenItems] = useState(data[0]?.id ?? '');
+    const [openItems, setOpenItems] = useState<string>('');
+
+    useEffect(() => {
+        if (data.length > 0) {
+            setOpenItems(String(data[0].id));
+        }
+    }, [data]);
 
     const isMobile = useIsMobile();
 
-    return data.length === 0 ? (
-        <div className="flex h-full border">
-            <EmptyState icon={ShoppingBag} title="You don't have any orders" btnText="Continue Shopping" />
-        </div>
-    ) : (
+    if (data.length === 0) {
+        return (
+            <div className="flex h-full border">
+                <EmptyState icon={ShoppingBag} title="You don't have any orders" btnText="Continue Shopping" />
+            </div>
+        );
+    }
+
+    return (
         <Accordion
             type="single"
             collapsible
             className="h-full w-full rounded-lg"
             // defaultValue={data[0].id}
             value={openItems}
-            onValueChange={setOpenItems}
+            onValueChange={(val) => setOpenItems(val ?? '')}
         >
             {data
                 .filter((data) => Boolean(data?.id))
                 .map((dataOrder) => (
-                    <AccordionItem key={dataOrder.id} value={dataOrder.id} className="bg-background my-2 rounded-lg border-0 first:mt-0 last:mb-0">
+                    <AccordionItem
+                        key={dataOrder.id}
+                        value={String(dataOrder.id)}
+                        className="bg-background my-2 rounded-lg border-0 first:mt-0 last:mb-0"
+                    >
                         <AccordionTrigger className="w-full p-4 hover:no-underline">
                             <div className="flex w-full cursor-pointer flex-col gap-3 md:items-center lg:flex-row">
                                 {isMobile ? (
-                                    <InvoiceDrawer trigger={`Order #${dataOrder.id}`} />
+                                    <InvoiceDrawer trigger={`Order ${dataOrder.code}`} />
                                 ) : (
-                                    <HoverCardInvoice trigger={`Order #${dataOrder.id}`} />
+                                    <HoverCardInvoice trigger={`Order ${dataOrder.code}`} />
                                 )}
 
                                 <motion.div
@@ -58,44 +66,51 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
                                     transition={{ delay: 0.2, duration: 0.4, ease: 'easeOut' }}
                                 >
                                     <h5>
-                                        Amount: <span className="text-foreground">{dataOrder.amount}</span>
+                                        Amount: <span className="text-foreground">{priceFormat(dataOrder.total)}</span>
                                     </h5>
                                     <h5>
-                                        Products: <span className="text-foreground">{dataOrder.products}</span>
+                                        Products: <span className="text-foreground">{dataOrder.order_items.length}</span>
                                     </h5>
                                     <h5>
-                                        Status: <span className="text-[#16A34A]">{dataOrder.status}</span>
+                                        Status: <span className="text-[#16A34A]">{dataOrder.order_status}</span>
                                     </h5>
                                 </motion.div>
                             </div>
                         </AccordionTrigger>
 
-                        <AnimatedAccordionContent isOpen={openItems.includes(dataOrder.id)} className="flex flex-col gap-4 px-4 text-balance">
+                        <AnimatedAccordionContent
+                            // isOpen={openItems.includes(String(dataOrder.id))}
+                            isOpen={openItems === String(dataOrder.id)}
+                            className="flex flex-col gap-4 px-4 text-balance"
+                        >
                             <Card className="text-muted-foreground grid rounded-md p-4 text-xs md:grid-cols-3">
                                 <div className="flex flex-col gap-5">
                                     {/* Delivery Information */}
-                                    <AnimatedMotion as="div" delay={0.3} duration={1} variantName="fadeIn" className="flex gap-5" animate="visible">
+                                    <div className="flex gap-5">
                                         <MapPin size={15} />
                                         <div>
                                             <h5 className="text-muted-foreground">Delivery</h5>
-                                            <p className="text-foreground">Lorem ipsum dolor sit amet.</p>
+                                            <p className="text-foreground">
+                                                {dataOrder.address.street}, {dataOrder.address.city}, {dataOrder.address.state},{' '}
+                                                {dataOrder.address.country}, {dataOrder.address.postal_code}
+                                            </p>
                                         </div>
-                                    </AnimatedMotion>
+                                    </div>
 
                                     {/* Recipient Information */}
-                                    <AnimatedMotion as="div" delay={0.4} duration={1} variantName="fadeIn" className="flex gap-5" animate="visible">
+                                    <div className="flex gap-5">
                                         <SquareUserRound size={15} />
                                         <div className="text-foreground flex flex-col gap-2">
                                             <h5 className="text-muted-foreground">Recipient of the order</h5>
-                                            <p>Name</p>
-                                            <p>E-mail</p>
-                                            <p>Phone</p>
+                                            <p>{dataOrder.user.name}</p>
+                                            <p>{dataOrder.user.email}</p>
+                                            <p>{dataOrder.user.phone}</p>
                                         </div>
-                                    </AnimatedMotion>
+                                    </div>
                                 </div>
 
                                 {/* Payment Information */}
-                                <AnimatedMotion as="div" delay={0.5} duration={1} variantName="fadeIn" className="flex gap-5" animate="visible">
+                                <div className="flex gap-5">
                                     <CreditCard size={15} />
                                     <div className="grid w-full grid-cols-2">
                                         <div className="text-muted-foreground flex flex-col gap-2">
@@ -104,22 +119,15 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
                                             <h5>Total</h5>
                                         </div>
                                         <div className="text-foreground flex flex-col gap-2 text-end">
-                                            <p>90</p>
-                                            <p>10</p>
-                                            <p>100</p>
+                                            <p>{priceFormat(dataOrder.subtotal)}</p>
+                                            <p>{priceFormat(dataOrder.shipping_cost)}</p>
+                                            <p>{priceFormat(dataOrder.total)}</p>
                                         </div>
                                     </div>
-                                </AnimatedMotion>
+                                </div>
 
                                 {/* Pasca Order Information */}
-                                <AnimatedMotion
-                                    as="div"
-                                    delay={0.6}
-                                    duration={1}
-                                    variantName="fadeIn"
-                                    className="flex flex-col gap-2"
-                                    animate="visible"
-                                >
+                                <div className="flex flex-col gap-2">
                                     <div className="flex gap-5">
                                         <ReceiptText size={15} />
                                         <h5>Electronic Check</h5>
@@ -136,10 +144,14 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
                                         <CornerUpLeft size={15} />
                                         <h5>Return Products</h5>
                                     </div>
-                                </AnimatedMotion>
+                                </div>
                             </Card>
 
-                            <div className="grid gap-4 lg:grid-cols-2">Test</div>
+                            {/* <div className="grid gap-4 lg:grid-cols-2">
+                                {dataOrder.order_items.map((_item, index) => (
+                                    <Card key={index} className="rounded-md"></Card>
+                                ))}
+                            </div> */}
                         </AnimatedAccordionContent>
                     </AccordionItem>
                 ))}

@@ -81,6 +81,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ isCarousel, data }) => {
                                     <Button
                                         size="icon"
                                         onClick={(e) => handleAddToCart(e, data, quantity)}
+                                        aria-label="add-to-cart"
                                         className="absolute right-3 bottom-3 rounded-full bg-black/60 text-xs font-bold opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-black/80"
                                     >
                                         <ShoppingCart color="white" />

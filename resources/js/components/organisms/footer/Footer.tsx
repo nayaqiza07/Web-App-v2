@@ -42,10 +42,10 @@ const Footer = () => {
                     </div>
 
                     <div className="flex gap-2">
-                        <Button variant="outline" size="icon" className="rounded-full">
+                        <Button variant="outline" size="icon" aria-label="facebook" className="rounded-full">
                             <Facebook />
                         </Button>
-                        <Button variant="outline" size="icon" className="rounded-full">
+                        <Button variant="outline" size="icon" aria-label="instagram" className="rounded-full">
                             <Instagram />
                         </Button>
                     </div>
@@ -56,17 +56,17 @@ const Footer = () => {
                 <nav className="flex flex-col gap-5 md:flex-row md:items-center">
                     <div className="flex items-center gap-3">
                         <Globe size={20} />
-                        <h5>Indonesia</h5>
+                        <p>Indonesia</p>
                     </div>
 
                     <div className="flex flex-col gap-5 md:flex-row">
-                        <h5>Copyright © All Rights Reserved</h5>
-                        <h5>Terms & Condition</h5>
-                        <h5>Privacy Policy</h5>
+                        <p>Copyright © All Rights Reserved</p>
+                        <p>Terms & Condition</p>
+                        <p>Privacy Policy</p>
                     </div>
 
                     <div className="flex items-center justify-between lg:gap-24">
-                        <h5>Email</h5>
+                        <p>Email</p>
                         <ArrowRight size={20} className="sm:hidden lg:block" />
                     </div>
                 </nav>

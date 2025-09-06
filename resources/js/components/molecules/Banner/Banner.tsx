@@ -3,7 +3,7 @@ import { ArrowRightIcon } from 'lucide-react';
 
 export const Banner = () => {
     return (
-        <div className="bg-primary text-primary-foreground px-4 py-1">
+        <div className="bg-background text-foreground px-4 py-1">
             <p className="flex justify-center text-sm">
                 <Link href={'/products'} className="group">
                     Free Shipping for all Online Orders!

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\EmptyCartException;
 use App\Http\Requests\Order\DestroyOrderRequest;
 use App\Http\Requests\Order\StoreOrderRequest;
+use App\Http\Resources\Order\OrderListResource;
 use App\Models\Order;
 use App\Services\Order\OrderService;
 use Illuminate\Http\RedirectResponse;
@@ -25,8 +26,9 @@ class OrderController extends Controller
     public function index (): Response
     {
         $orders = $this->orderService->getAllOrders();
+
         return Inertia::render('order/Order', [
-            'ORDERS' => $orders,
+            'orders' => OrderListResource::collection($orders)->resolve(),
         ]);
     }
 

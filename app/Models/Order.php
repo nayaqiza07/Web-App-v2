@@ -28,7 +28,7 @@ class Order extends Model
         'total'
     ];
 
-    protected $with = ['orderItems'];
+    protected $with = ['orderItems', 'address', 'user'];
 
     protected $casts = [
         'order_status' => OrderStatus::class,

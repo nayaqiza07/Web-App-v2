@@ -54,8 +54,8 @@ const BlogCard: React.FC<BlogCardProps> = ({ index, isCarousel, data }) => {
                     <CardFooter className="flex min-h-20 flex-col justify-between p-1 text-xs font-bold md:gap-3">
                         <h1 className="w-full">{truncateText(data.title, 35)}</h1>
                         <div className="text-muted-foreground flex w-full items-center justify-between">
-                            <h3 className="order-last md:order-first">by Horestco</h3>
-                            <h3 className="text-end">{data.published_at}</h3>
+                            <p className="order-last md:order-first">by Horestco</p>
+                            <p className="text-end">{data.published_at}</p>
                         </div>
                     </CardFooter>
                 </Card>
