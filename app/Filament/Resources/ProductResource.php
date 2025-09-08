@@ -55,12 +55,9 @@ class ProductResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
-    }
+        $count = static::getModel()::count();
 
-    public static function getNavigationBadgeColor(): ?string
-    {
-        return static::getModel()::count() > 0 ? 'success' : 'success';
+        return $count > 0 ? (string) $count : null;
     }
 
     public static function getPages(): array

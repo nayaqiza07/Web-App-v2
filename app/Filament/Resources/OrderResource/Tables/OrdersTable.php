@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\OrderResource\Tables;
 
+use App\Enums\OrderStatus;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
@@ -36,6 +37,10 @@ class OrdersTable
 
                 TextColumn::make('order_status')
                     ->label('Status')
+                    ->formatStateUsing(fn (OrderStatus $state) => $state->label())
+                    ->badge()
+                    ->color(fn (OrderStatus $state) => $state->color())
+                    ->icon(fn (OrderStatus $state) => $state->icon())
                     ->searchable()
                     ->sortable(),
 
