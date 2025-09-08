@@ -4,21 +4,17 @@ namespace App\Filament\Resources\OrderResource\Forms;
 
 use App\Enums\OrderStatus;
 use App\Models\Order;
-use Filament\Forms;
-use Filament\Forms\Components\DateTimePicker;
+use Closure;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Group;
-use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Wizard;
-use Filament\Forms\Components\Wizard\Step;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
-use Illuminate\Support\HtmlString;
 
 class OrderForm
 {
@@ -29,6 +25,7 @@ class OrderForm
                 Group::make()
                     ->schema([
                         Section::make('Order Details')
+                            ->description('You can see details about the order below.')
                             ->schema([
                                 TextInput::make('code')
                                     ->label('Order Number')
@@ -43,18 +40,15 @@ class OrderForm
                                     ->dehydrated()
                                     ->required(),
 
-                                Select::make('order_status')
-                                    ->options([
-                                            'pending' => OrderStatus::PENDING->value,
-                                            'processing' => OrderStatus::PROCESSING->value,
-                                            'shipped' => OrderStatus::SHIPPED->value,
-                                            'delivered' => OrderStatus::DELIVERED->value,
-                                            'cancelled' => OrderStatus::CANCELED->value
-                                    ])
+                                ToggleButtons::make('order_status')
                                     ->label('Order Status')
-                                    ->native(false)
-                                    ->dehydrated()
-                                    ->required(),
+                                    ->options(OrderStatus::options())
+                                    ->colors(OrderStatus::colors())
+                                    ->icons(OrderStatus::icons())
+                                    ->inline()
+                                    // ->grouped()
+                                    ->required()
+                                    ->columnSpanFull(),
 
                                 TextInput::make('payment_status')
                                     ->label('Payment Status')
@@ -74,6 +68,7 @@ class OrderForm
                                     ->disabled()
                                     ->dehydrated()
                                     ->numeric()
+                                    
                                     ->required(),
 
                                 Section::make('Delivery Address')
@@ -112,15 +107,15 @@ class OrderForm
                                             ])
                                             ->relationship('address'),
 
-                                        Placeholder::make('adress')
-                                            ->label('Full Address')
-                                            ->content(fn ($record) => $record->address?->street . ', ' . $record->address?->city . ', ' . $record->address?->state . ', ' .$record->address?->country . ', ' .$record->address?->postal_code),
+                                        Section::make('Full Address')
+                                        ->schema([
+                                            Placeholder::make('adress')
+                                                ->label('')
+                                                ->content(fn ($record) => $record->address?->street . ', ' . $record->address?->city . ', ' . $record->address?->state . ', ' .$record->address?->country . ', ' .$record->address?->postal_code),
+                                        ])
+                                        ->icon('heroicon-m-map-pin')
+                                        ->compact()
                                     ]),
-
-
-                                
-
-                                
                             ])
                             ->columns(2)
                             ->collapsible(),
@@ -129,11 +124,17 @@ class OrderForm
                             ->relationship('orderItems')
                             ->schema([
                                 Select::make('product_id')
-                                    ->label('Product')
+                                    ->label('Product Name')
                                     ->relationship('product', 'name')
                                     ->disabled()
                                     ->dehydrated()
                                     ->columnSpanFull(),
+
+                                Select::make('sku')
+                                    ->label('SKU')
+                                    ->relationship('product', 'sku')
+                                    ->disabled()
+                                    ->dehydrated(),
 
                                 TextInput::make('quantity')
                                     ->label('Qty')
@@ -145,9 +146,10 @@ class OrderForm
                                     ->prefix('Rp.')
                                     ->disabled()
                                     ->numeric()
-                                    ->columnSpan(5)
                             ])
-                            ->columns(6)
+                            ->columns(3)
+                            ->addable(false)
+                            ->deletable(false)
                             ->reorderable(false)
                     ])
                     ->columnSpan(2),

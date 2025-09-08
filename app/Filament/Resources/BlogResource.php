@@ -56,11 +56,6 @@ class BlogResource extends Resource
         return static::getModel()::count();
     }
 
-    public static function getNavigationBadgeColor(): ?string
-    {
-        return static::getModel()::count() > 0 ? 'success' : 'success';
-    }
-
     public static function getPages(): array
     {
         return [
