@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Http\Requests\Cart\DestroyCartItemRequest;
 use App\Http\Requests\Cart\StoreCartItemRequest;
 use App\Http\Requests\Cart\UpdateCartItemRequest;
@@ -35,7 +36,7 @@ class CartItemController extends Controller
             $this->cartItemService->createCartItem($request);
             DB::commit();
             return back()->with('success', 'Product successfully added to cart!');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Log::error("Cart item failed to create", [
                 'message' => $e->getMessage(),
@@ -51,7 +52,7 @@ class CartItemController extends Controller
         try {
             $this->cartItemService->updateCartItem($request, $cartItem);
             return back()->with('info', 'Cart item updated successfully');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Cart item failed to update", [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
@@ -67,7 +68,7 @@ class CartItemController extends Controller
         try {
             $this->cartItemService->deleteCartItem($cartItem);
             return back()->with('success', 'Product successfully removed from cart.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Cart item failed to delete", [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
@@ -86,7 +87,7 @@ class CartItemController extends Controller
                 return back()->with('error', 'You must be logged in to clear your cart.');
             }
             return back()->with('success', 'All products successfully removed from cart.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Cart item failed to clear", [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),

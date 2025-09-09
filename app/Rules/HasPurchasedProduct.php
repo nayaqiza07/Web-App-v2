@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use Illuminate\Translation\PotentiallyTranslatedString;
 use App\Models\User;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -12,7 +13,7 @@ class HasPurchasedProduct implements ValidationRule
     /**
      * Run the validation rule.
      *
-     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param Closure(string, ?string=):PotentiallyTranslatedString $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

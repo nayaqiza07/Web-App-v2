@@ -2,21 +2,21 @@
 
 namespace App\Filament\Resources\FaqResource\Forms;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
 use App\Models\Faq;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 
 class FaqForm
 {
-    public static function configure(Form $form): Form
+    public static function configure(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Group::make()
                 ->schema([
                     Section::make()

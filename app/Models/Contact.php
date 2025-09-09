@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\ContactFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
 class Contact extends Model
 {
-    /** @use HasFactory<\Database\Factories\ContactFactory> */
+    /** @use HasFactory<ContactFactory> */
     use HasFactory;
 
     /**

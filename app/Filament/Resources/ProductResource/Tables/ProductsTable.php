@@ -2,18 +2,18 @@
 
 namespace App\Filament\Resources\ProductResource\Tables;
 
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreBulkAction;
 use App\Models\Product;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ForceDeleteAction;
-use Filament\Tables\Actions\ForceDeleteBulkAction;
-use Filament\Tables\Actions\RestoreAction;
-use Filament\Tables\Actions\RestoreBulkAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -93,7 +93,7 @@ class ProductsTable
             ->filters([
                 TrashedFilter::make(),
             ])
-            ->actions([
+            ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()
                         ->modalHeading(fn ($record) => 'View Product: ' . $record->name),
@@ -104,7 +104,7 @@ class ProductsTable
                 ])
             ])
             ->recordUrl(null)
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),

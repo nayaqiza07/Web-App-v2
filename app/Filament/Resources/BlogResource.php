@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use App\Filament\Resources\BlogResource\Pages\ListBlogs;
+use App\Filament\Resources\BlogResource\Pages\CreateBlog;
+use App\Filament\Resources\BlogResource\Pages\EditBlog;
 use App\Filament\Resources\BlogResource\Forms\BlogForm;
 use App\Filament\Resources\BlogResource\Pages;
 use App\Filament\Resources\BlogResource\Tables\BlogsTable;
 use App\Models\Blog;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,15 +23,15 @@ class BlogResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static ?string $navigationGroup = 'Content Management';
+    protected static string | \UnitEnum | null $navigationGroup = 'Content Management';
 
-    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static ?string $activeNavigationIcon = 'heroicon-m-newspaper';
+    protected static string | \BackedEnum | null $activeNavigationIcon = 'heroicon-m-newspaper';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return BlogForm::configure($form);
+        return BlogForm::configure($schema);
     }
 
     public static function table(Table $table): Table
@@ -59,9 +62,9 @@ class BlogResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBlogs::route('/'),
-            'create' => Pages\CreateBlog::route('/create'),
-            'edit' => Pages\EditBlog::route('/{record}/edit'),
+            'index' => ListBlogs::route('/'),
+            'create' => CreateBlog::route('/create'),
+            'edit' => EditBlog::route('/{record}/edit'),
         ];
     }
 }

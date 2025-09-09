@@ -2,6 +2,7 @@
 
 namespace App\Services\Order;
 
+use Exception;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Exceptions\EmptyCartException;
@@ -83,7 +84,7 @@ class OrderServiceImplement extends Service implements OrderService {
         $product = $cartItem->product;
 
         if (!$product || $product->stock < $cartItem->quantity) {
-          throw new \Exception('Product Stock ' . ($product->name ?? 'Not Found') . ' insufficient. Available stock: ' . ($product->stock ?? 0));
+          throw new Exception('Product Stock ' . ($product->name ?? 'Not Found') . ' insufficient. Available stock: ' . ($product->stock ?? 0));
         }
 
         $orderItems[] = [

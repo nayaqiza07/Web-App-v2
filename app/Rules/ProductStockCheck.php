@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use Illuminate\Translation\PotentiallyTranslatedString;
 use App\Models\CartItem;
 use App\Models\Product;
 use Closure;
@@ -20,7 +21,7 @@ class ProductStockCheck implements ValidationRule
     /**
      * Run the validation rule.
      *
-     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param Closure(string, ?string=):PotentiallyTranslatedString $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

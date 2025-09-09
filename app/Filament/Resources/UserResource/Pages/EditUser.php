@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\UserResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\Resources\UserResource;
 use Filament\Actions;
 use Filament\Notifications\Notification;
@@ -28,7 +29,7 @@ class EditUser extends EditRecord
             $this->getSaveFormAction()
             ->formId('form'),
 
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

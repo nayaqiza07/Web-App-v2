@@ -2,6 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
+use App\Observers\ProductObserver;
+use App\Models\Category;
+use App\Observers\CategoryObserver;
+use App\Models\Blog;
+use App\Observers\BlogObserver;
+use App\Models\Faq;
+use App\Observers\FaqObserver;
+use App\Models\Contact;
+use App\Observers\ContactObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,10 +32,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        \App\Models\Product::observe(\App\Observers\ProductObserver::class);
-        \App\Models\Category::observe(\App\Observers\CategoryObserver::class);
-        \App\Models\Blog::observe(\App\Observers\BlogObserver::class);
-        \App\Models\Faq::observe(\App\Observers\FaqObserver::class);
-        \App\Models\Contact::observe(\App\Observers\ContactObserver::class);
+        Product::observe(ProductObserver::class);
+        Category::observe(CategoryObserver::class);
+        Blog::observe(BlogObserver::class);
+        Faq::observe(FaqObserver::class);
+        Contact::observe(ContactObserver::class);
     }
 }

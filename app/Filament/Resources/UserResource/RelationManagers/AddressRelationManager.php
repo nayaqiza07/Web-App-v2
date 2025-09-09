@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -20,16 +23,16 @@ class AddressRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('label')
+                TextColumn::make('label')
                     ->badge(),
-                Tables\Columns\TextColumn::make('recipient_name'),
-                Tables\Columns\TextColumn::make('phone_number'),
-                Tables\Columns\TextColumn::make('country'),
-                Tables\Columns\TextColumn::make('state'),
-                Tables\Columns\TextColumn::make('city'),
-                Tables\Columns\TextColumn::make('street'),
-                Tables\Columns\TextColumn::make('postal_code'),
-                Tables\Columns\TextColumn::make('is_default')   
+                TextColumn::make('recipient_name'),
+                TextColumn::make('phone_number'),
+                TextColumn::make('country'),
+                TextColumn::make('state'),
+                TextColumn::make('city'),
+                TextColumn::make('street'),
+                TextColumn::make('postal_code'),
+                TextColumn::make('is_default')   
                     ->label('Default Address')
                     ->badge()
                     ->color(fn (bool $state): string => $state ? 'success' : 'danger')
@@ -48,13 +51,13 @@ class AddressRelationManager extends RelationManager
             ->headerActions([
                 // Tables\Actions\CreateAction::make(),
             ])
-            ->actions([
+            ->recordActions([
                 // Tables\Actions\EditAction::make(),
                 // Tables\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
