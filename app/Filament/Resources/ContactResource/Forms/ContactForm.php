@@ -37,6 +37,6 @@ class ContactForm
                             ->label('Coordinate')
                             ->maxLength(255),
                 ])
-            ]);
+            ])->columns(1);
     }
 }

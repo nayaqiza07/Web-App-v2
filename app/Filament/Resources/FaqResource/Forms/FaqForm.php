@@ -42,11 +42,19 @@ class FaqForm
                     ->schema([
                         Placeholder::make('created_at')
                             ->label('Created at')
+                            ->dateTimeTooltip()
                             ->content(fn (Faq $record): ?string => $record->created_at?->diffForHumans()),
 
                         Placeholder::make('updated_at')
                             ->label('Last modified at')
-                            ->content(fn (Faq $record): ?string => $record->updated_at?->diffForHumans())
+                            ->dateTimeTooltip()
+                            ->content(fn (Faq $record): ?string => $record->updated_at?->diffForHumans()),
+                            
+                            Placeholder::make('deleted_at')
+                            ->label('Deleted at')
+                            ->dateTimeTooltip()
+                            ->content(fn (Faq $record): ?string => $record->deleted_at?->diffForHumans())
+                            ->hidden(fn (?Faq $record) => is_null($record?->deleted_at))
                     ])
                     ->hidden(fn (?Faq $record) => $record === null)
                 ])

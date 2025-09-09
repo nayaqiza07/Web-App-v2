@@ -7,6 +7,7 @@ use App\Filament\Resources\BlogResource\Pages\ListBlogs;
 use App\Filament\Resources\BlogResource\Pages\CreateBlog;
 use App\Filament\Resources\BlogResource\Pages\EditBlog;
 use App\Filament\Resources\BlogResource\Forms\BlogForm;
+use App\Filament\Resources\BlogResource\Infolist\BlogsInfolist;
 use App\Filament\Resources\BlogResource\Pages;
 use App\Filament\Resources\BlogResource\Tables\BlogsTable;
 use App\Models\Blog;
@@ -32,6 +33,11 @@ class BlogResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return BlogForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return BlogsInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table
