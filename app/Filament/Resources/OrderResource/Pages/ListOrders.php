@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\OrderResource\Pages;
 
+use Filament\Schemas\Components\Tabs\Tab;
 use App\Filament\Resources\OrderResource;
 use App\Models\Order;
 use Filament\Actions;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 

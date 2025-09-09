@@ -2,12 +2,26 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use App\Filament\Resources\UserResource\Pages\ListUsers;
+use App\Filament\Resources\UserResource\Pages\CreateUser;
+use App\Filament\Resources\UserResource\Pages\EditUser;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers\AddressRelationManager;
 use App\Filament\Resources\UserResource\RelationManagers\OrdersRelationManager;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,49 +33,49 @@ class UserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationGroup = 'User Management';
+    protected static string | \UnitEnum | null $navigationGroup = 'User Management';
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $activeNavigationIcon = 'heroicon-m-user-group';
+    protected static string | \BackedEnum | null $activeNavigationIcon = 'heroicon-m-user-group';
 
     protected static ?int $navigationSort = 1;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Group::make()
+        return $schema
+            ->components([
+                Group::make()
                 ->schema([
-                    Forms\Components\Section::make()
+                    Section::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name')
+                        TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
+                        TextInput::make('email')
                             ->email()
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('phone')
+                        TextInput::make('phone')
                             ->tel()
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('password')
+                        TextInput::make('password')
                             ->password()
                             ->required()
                             ->maxLength(255),
                     ])->columns(2),
                 ])->columnSpan(2),
 
-                Forms\Components\Group::make()
+                Group::make()
                 ->schema([
-                    Forms\Components\Section::make()
+                    Section::make()
                     ->schema([
-                        Forms\Components\Select::make('roles')
+                        Select::make('roles')
                             ->native(false)
                             ->relationship('roles', 'name')
                             ->required(),
-                        Forms\Components\DateTimePicker::make('email_verified_at'),
+                        DateTimePicker::make('email_verified_at'),
                     ])
                 ])
             ])->columns(3);
@@ -71,17 +85,17 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('email')
                     ->icon('heroicon-m-envelope')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phone')
+                TextColumn::make('phone')
                     ->icon('heroicon-m-phone')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('roles.name')
+                TextColumn::make('roles.name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
+                TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -90,7 +104,7 @@ class UserResource extends Resource
             ->emptyStateHeading('No users yet')
             ->emptyStateDescription('Once you write your user, it will appear here.')
             ->emptyStateActions([
-                Tables\Actions\Action::make('create')
+                Action::make('create')
                     ->icon('heroicon-m-plug')
                     ->label('Create user')
                     ->url(route('filament.admin.resources.users.index'))
@@ -99,17 +113,17 @@ class UserResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\ActionGroup::make([
-                    Tables\Actions\ViewAction::make()
+            ->recordActions([
+                ActionGroup::make([
+                    ViewAction::make()
                         ->modalHeading(fn ($record) => 'View User: ' . $record->name),
-                    Tables\Actions\EditAction::make(),
+                    EditAction::make(),
                 ])
                 // Tables\Actions\DeleteAction::make(),
             ])
             ->recordUrl(null)
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+            ->toolbarActions([
+                BulkActionGroup::make([
                     // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -131,9 +145,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => ListUsers::route('/'),
+            'create' => CreateUser::route('/create'),
+            'edit' => EditUser::route('/{record}/edit'),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
+use Exception;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Address\CreateAddressRequest;
 use App\Http\Requests\Settings\Address\DeleteAddressRequest;
@@ -37,7 +38,7 @@ class AddressController extends Controller
         try {
             $this->addressService->createAddress($request);
             return back()->with('success', 'The address has been created successfully.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Address failed to create", [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
@@ -52,7 +53,7 @@ class AddressController extends Controller
         try {
             $this->addressService->setDefaultAddress($request, $address);
             return back()->with('info', 'Address has been set as default.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Address failed to set default", [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
@@ -67,7 +68,7 @@ class AddressController extends Controller
         try {
             $this->addressService->updateAddress($request, $address);
             return back()->with('info', 'The address has been updated successfully');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Address failed to update", [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
@@ -82,7 +83,7 @@ class AddressController extends Controller
         try {
             $this->addressService->deleteAddress($address);
             return back()->with('success', 'The address has been deleted successfully.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Address failed to delete", [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),

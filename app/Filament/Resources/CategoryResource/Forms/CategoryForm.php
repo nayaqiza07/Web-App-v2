@@ -2,15 +2,15 @@
 
 namespace App\Filament\Resources\CategoryResource\Forms;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Utilities\Set;
 use App\Models\Category;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
@@ -18,10 +18,10 @@ use function PHPUnit\Framework\isNull;
 
 class CategoryForm
 {
-    public static function configure(Form $form): Form
+    public static function configure(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 // Detail Section
                 Section::make()
                 ->schema([

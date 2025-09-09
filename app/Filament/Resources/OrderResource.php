@@ -2,12 +2,15 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Schemas\Schema;
+use App\Filament\Resources\OrderResource\Pages\ListOrders;
+use App\Filament\Resources\OrderResource\Pages\CreateOrder;
+use App\Filament\Resources\OrderResource\Pages\EditOrder;
 use App\Filament\Resources\OrderResource\Forms\OrderForm;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers\OrderItemsRelationManager;
 use App\Filament\Resources\OrderResource\Tables\OrdersTable;
 use App\Models\Order;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,17 +22,17 @@ class OrderResource extends Resource
 
     protected static ?string $slug = 'shop/orders';
 
-    protected static ?string $navigationGroup = 'Shop Management';
+    protected static string | \UnitEnum | null $navigationGroup = 'Shop Management';
 
-    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-shopping-bag';
     
-    protected static ?string $activeNavigationIcon = 'heroicon-m-shopping-bag';
+    protected static string | \BackedEnum | null $activeNavigationIcon = 'heroicon-m-shopping-bag';
 
     protected static ?int $navigationSort = 3;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return OrderForm::configure($form);
+        return OrderForm::configure($schema);
     }
 
     public static function table(Table $table): Table
@@ -59,9 +62,9 @@ class OrderResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListOrders::route('/'),
-            'create' => Pages\CreateOrder::route('/create'),
-            'edit' => Pages\EditOrder::route('/{record}/edit'),
+            'index' => ListOrders::route('/'),
+            'create' => CreateOrder::route('/create'),
+            'edit' => EditOrder::route('/{record}/edit'),
         ];
     }
 }

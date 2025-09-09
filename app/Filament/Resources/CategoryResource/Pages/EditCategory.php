@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\CategoryResource\Pages;
 
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
 use App\Filament\Resources\CategoryResource;
 use Filament\Actions;
 use Filament\Notifications\Notification;
@@ -28,9 +31,9 @@ class EditCategory extends EditRecord
             $this->getSaveFormAction()
             ->formId('form'),
 
-            Actions\DeleteAction::make(),
-            Actions\ForceDeleteAction::make(),
-            Actions\RestoreAction::make(),
+            DeleteAction::make(),
+            ForceDeleteAction::make(),
+            RestoreAction::make(),
         ];
     }
 }

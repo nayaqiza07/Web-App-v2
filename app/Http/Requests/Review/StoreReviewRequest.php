@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Review;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use App\Rules\HasPurchasedProduct;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class StoreReviewRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {

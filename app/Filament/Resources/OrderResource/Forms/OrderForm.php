@@ -2,26 +2,27 @@
 
 namespace App\Filament\Resources\OrderResource\Forms;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
 use App\Enums\OrderStatus;
 use App\Models\Order;
 use Closure;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
-use Filament\Forms\Form;
+use Filament\Infolists\Components\TextEntry;
 
 class OrderForm
 {
-    public static function configure(Form $form): Form
+    public static function configure(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Group::make()
                     ->schema([
                         Section::make('Order Details')
@@ -113,9 +114,10 @@ class OrderForm
                                                 ->label('')
                                                 ->content(fn ($record) => $record->address?->street . ', ' . $record->address?->city . ', ' . $record->address?->state . ', ' .$record->address?->country . ', ' .$record->address?->postal_code),
                                         ])
+                                        ->secondary()
                                         ->icon('heroicon-m-map-pin')
                                         ->compact()
-                                    ]),
+                                    ])->columnSpanFull(),
                             ])
                             ->columns(2)
                             ->collapsible(),

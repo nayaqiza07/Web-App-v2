@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Exceptions\EmptyCartException;
 use App\Http\Requests\Order\DestroyOrderRequest;
 use App\Http\Requests\Order\StoreOrderRequest;
@@ -43,7 +44,7 @@ class OrderController extends Controller
             return redirect('/order')->with('success', 'Order created successfully');
         } catch(EmptyCartException $e) {
             throw $e;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Order failed to create", [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
@@ -65,7 +66,7 @@ class OrderController extends Controller
         try {
             $this->orderService->deleteOrder($order);
             return back()->with('success', 'The order has been cancelled.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error("Order failed to cancel", [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
