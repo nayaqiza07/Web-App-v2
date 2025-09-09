@@ -69,8 +69,6 @@ class BlogForm
                     Section::make()
                     ->schema([
                         RichEditor::make('body')
-                            ->disableGrammarly()
-                            ->extraAttributes(['style' => 'height: 500px;']),
                     ])
                 ])
                 ->columnSpan(['lg' => 2]),

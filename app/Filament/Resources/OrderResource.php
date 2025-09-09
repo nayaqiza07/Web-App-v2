@@ -7,6 +7,7 @@ use App\Filament\Resources\OrderResource\Pages\ListOrders;
 use App\Filament\Resources\OrderResource\Pages\CreateOrder;
 use App\Filament\Resources\OrderResource\Pages\EditOrder;
 use App\Filament\Resources\OrderResource\Forms\OrderForm;
+use App\Filament\Resources\OrderResource\Infolist\OrdersInfolist;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers\OrderItemsRelationManager;
 use App\Filament\Resources\OrderResource\Tables\OrdersTable;
@@ -33,6 +34,11 @@ class OrderResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return OrderForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return OrdersInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table

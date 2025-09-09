@@ -47,7 +47,6 @@ class OrderForm
                                     ->colors(OrderStatus::colors())
                                     ->icons(OrderStatus::icons())
                                     ->inline()
-                                    // ->grouped()
                                     ->required()
                                     ->columnSpanFull(),
 
@@ -110,7 +109,7 @@ class OrderForm
 
                                         Section::make('Full Address')
                                         ->schema([
-                                            Placeholder::make('adress')
+                                            Placeholder::make('address')
                                                 ->label('')
                                                 ->content(fn ($record) => $record->address?->street . ', ' . $record->address?->city . ', ' . $record->address?->state . ', ' .$record->address?->country . ', ' .$record->address?->postal_code),
                                         ])

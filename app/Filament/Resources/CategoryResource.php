@@ -7,6 +7,7 @@ use App\Filament\Resources\CategoryResource\Pages\ListCategories;
 use App\Filament\Resources\CategoryResource\Pages\CreateCategory;
 use App\Filament\Resources\CategoryResource\Pages\EditCategory;
 use App\Filament\Resources\CategoryResource\Forms\CategoryForm;
+use App\Filament\Resources\CategoryResource\Infolist\CategoriesInfolist;
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
 use App\Filament\Resources\CategoryResource\Tables\CategoriesTable;
@@ -35,6 +36,11 @@ class CategoryResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return CategoryForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return CategoriesInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table
