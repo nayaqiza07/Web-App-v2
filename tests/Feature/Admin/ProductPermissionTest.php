@@ -2,9 +2,9 @@
 
 use App\Models\User;
 
-describe('Product Permission = view_any_product', function () {
-    test('user with view_any_product permission can access product list', function () {
-        $user = userWithPermission('view_any_product');
+describe('Product Permission = ViewAny:Product', function () {
+    test('user with ViewAny:Product permission can access product list', function () {
+        $user = userWithPermission('ViewAny:Product');
 
         $this->actingAs($user);
 
@@ -12,7 +12,7 @@ describe('Product Permission = view_any_product', function () {
         $response->assertOk();
     });
 
-    test('user without view_any_product permission cannot access product list', function () {
+    test('user without ViewAny:Product permission cannot access product list', function () {
         $user = User::factory()->create();
 
         $this->actingAs($user);

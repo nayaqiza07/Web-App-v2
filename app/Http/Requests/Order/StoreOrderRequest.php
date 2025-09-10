@@ -3,9 +3,6 @@
 namespace App\Http\Requests\Order;
 
 use Illuminate\Contracts\Validation\ValidationRule;
-use App\Enums\OrderStatus;
-use App\Enums\PaymentStatus;
-use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;

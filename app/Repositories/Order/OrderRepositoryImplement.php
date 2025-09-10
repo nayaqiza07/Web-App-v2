@@ -26,6 +26,7 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository {
     public function getAllDataOrder(): Collection
     {
         $order = $this->model->filter()->get();
+        
         return $order;
     }
 

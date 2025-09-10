@@ -14,7 +14,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Order',
-        href: '/order',
+        href: route('order.index'),
         icon: ShoppingBag,
     },
 ];

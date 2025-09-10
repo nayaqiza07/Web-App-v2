@@ -14,22 +14,17 @@ return new class extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
 
-            /** Relation */
             $table->foreignId('order_id')->constrained(
                 table: 'orders', indexName: 'order_items_order_id'
             )->onDelete('cascade');
-            
             $table->foreignId('product_id')->nullable()->constrained(
                 table: 'products', indexName: 'order_items_product_id'
             )->nullOnDelete();
-
-            /** Detail */
             $table->string('product_name');
             $table->integer('quantity');
             $table->decimal('unit_price', total: 15, places: 2);
             $table->decimal('subtotal', total: 15, places: 2);
 
-            /** Limitation Key */
             $table->unique(['order_id', 'product_id']);
 
             $table->timestamps();

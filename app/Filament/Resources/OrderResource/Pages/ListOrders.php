@@ -45,9 +45,9 @@ class ListOrders extends ListRecords
                 ->badge(Order::query()->where('order_status', 'delivered')->count())
                 ->badgeColor('success'),
 
-            'cancelled' => Tab::make('Cancelled')
-                ->query(fn ($query) => $query->where('order_status', 'cancelled'))
-                ->badge(Order::query()->where('order_status', 'cancelled')->count())
+            'canceled' => Tab::make('Canceled')
+                ->query(fn ($query) => $query->where('order_status', 'canceled'))
+                ->badge(Order::query()->where('order_status', 'canceled')->count())
                 ->badgeColor('danger'),
         ];
     }

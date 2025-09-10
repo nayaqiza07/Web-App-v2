@@ -4,12 +4,13 @@ use App\Models\User;
 
 describe('Visit The Order Page', function () {
     test('guests are redirected to the login page', function () {
-        $this->get('/order')->assertRedirect('/login');
+        // $this->assertGuest();
+        $this->get(route('order.index'))->assertRedirect('/login');
     });
     
     test('authenticated user can visit the order', function () {
         $this->actingAs(User::factory()->create());
-        $this->get('/order')->assertOk();
+        $this->get(route('order.index'))->assertOk();
     });
 });
 

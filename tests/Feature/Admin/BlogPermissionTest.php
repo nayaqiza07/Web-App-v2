@@ -2,9 +2,9 @@
 
 use App\Models\User;
 
-describe('Blog Permission = view_any_blog', function () {
-    test('user with view_any_blog permission can access blog list', function () {
-        $user = userWithPermission('view_any_blog');
+describe('Blog Permission = ViewAny:Blog', function () {
+    test('user with ViewAny:Blog permission can access blog list', function () {
+        $user = userWithPermission('ViewAny:Blog');
 
         $this->actingAs($user);
 
@@ -12,7 +12,7 @@ describe('Blog Permission = view_any_blog', function () {
         $response->assertOk();
     });
 
-    test('user without view_any_blog permission cannot access blog list', function () {
+    test('user without ViewAny:Blog permission cannot access blog list', function () {
         $user = User::factory()->create();
 
         $this->actingAs($user);
