@@ -32,7 +32,7 @@ class StoreOrderRequest extends FormRequest
             // 'order_status'   => ['required', Rule::enum(OrderStatus::class)],
             // 'payment_status' => ['required', Rule::enum(PaymentStatus::class)],
             // // 'payment_method' => ['required', Rule::id(['manual_transfer', 'midtrans', 'stripe', 'xendit'])],
-            'payment_method' => ['required', 'string', 'max:255'],
+            // 'payment_method' => ['required', 'string', 'max:255'],
             // 'subtotal'       => ['required', 'decimal:15,2'],
             // 'shipping_cost'  => ['required', 'decimal:15,2'],
             // 'total'          => ['required', 'decimal:15,2'],

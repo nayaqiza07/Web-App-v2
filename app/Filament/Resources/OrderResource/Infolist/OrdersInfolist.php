@@ -24,7 +24,7 @@ class OrdersInfolist
                         Section::make('Order Details')
                             ->description('You can see details about the order below.')
                             ->schema([
-                                TextEntry::make('code')
+                                TextEntry::make('order_code')
                                     ->label('Order Number')
                                     ->badge()
                                     ->color('gray'),
@@ -34,8 +34,6 @@ class OrdersInfolist
                                     ->badge()
                                     ->color(fn (OrderStatus $state) => $state->color())
                                     ->icon(fn (OrderStatus $state) => $state->icon()),
-                                TextEntry::make('payment_status'),
-                                TextEntry::make('payment_method'),
                                 TextEntry::make('total')
                                     ->money('IDR'),
                                 
@@ -69,13 +67,13 @@ class OrdersInfolist
                                             ->color('gray')
                                             ->columnSpan(2),
                                         TextEntry::make('quantity')
-                                            ->numeric()
-                                            ->columnStart(2)
-                                            ->columnSpan(2),
-                                        TextEntry::make('price_snapshot')
+                                            ->numeric(),
+                                        TextEntry::make('unit_price')
                                             ->label('Unit Price')
                                             ->money('IDR')
                                             ->columnSpan(2),
+                                        TextEntry::make('subtotal')
+                                            ->money('IDR'),
                                     ])
                                     ->columns(5)
                             ])

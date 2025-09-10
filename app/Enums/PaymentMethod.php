@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum PaymentMethod: string
 {
-    case MIDTRANS_QRIS = 'midtrans_qris';
-    case MIDTRANS_VA_BCA = 'midtrans_va_bca';
-    case MIDTRANS_VA_BRI = 'midtrans_va_bri';
-    case MIDTRANS_VA_BNI = 'midtrans_va_bni';
-    case MIDTRANS_VA_MANDIRI = 'midtrans_va_mandiri';
+    case CARD               = 'card';
+    case BANK_TRANSFER      = 'bank_transfer';
+    case E_WALLET           = 'e_wallet';
+    case OVER_THE_COUNTER   = 'over_the_counter';
+    case CARDLESS_CREDIT    = 'cardless_credit';
 }

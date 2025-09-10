@@ -2,17 +2,17 @@
 
 namespace App\Filament\Resources\OrderResource\Tables;
 
-use Filament\Actions\ActionGroup;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\RestoreAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\ForceDeleteBulkAction;
-use Filament\Actions\RestoreBulkAction;
 use App\Enums\OrderStatus;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -25,7 +25,7 @@ class OrdersTable
     {
         return $table
             ->columns([
-                TextColumn::make('code')
+                TextColumn::make('order_code')
                     ->label('Order Number')
                     ->searchable()
                     ->sortable(),
@@ -41,16 +41,6 @@ class OrdersTable
                     ->badge()
                     ->color(fn (OrderStatus $state) => $state->color())
                     ->icon(fn (OrderStatus $state) => $state->icon())
-                    ->searchable()
-                    ->sortable(),
-
-                TextColumn::make('payment_status')
-                    ->label('Payment')
-                    ->searchable()
-                    ->sortable(),
-
-                TextColumn::make('payment_method')
-                    ->label('Payment Method')
                     ->searchable()
                     ->sortable(),
 
@@ -76,12 +66,13 @@ class OrdersTable
             ->emptyStateHeading('No orders yet')
             ->emptyStateDescription('Once customer make an order, it will appear here.')
             ->filters([
-                TrashedFilter::make(),
+                TrashedFilter::make()
+                    ->native(false),
             ])
             ->recordActions([
                 ActionGroup::make([
                     ViewAction::make()
-                        ->modalHeading(fn ($record) => 'View Order: ' . $record->name),
+                        ->modalHeading(fn ($record) => 'View Order: ' . $record->order_code),
                     EditAction::make(),
                     DeleteAction::make(),
                     ForceDeleteAction::make(),

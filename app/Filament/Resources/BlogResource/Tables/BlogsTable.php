@@ -70,7 +70,8 @@ class BlogsTable
                     ->button(),
             ])
             ->filters([
-                TrashedFilter::make(),
+                TrashedFilter::make()
+                    ->native(false),
             ])
             ->recordActions([
                 ActionGroup::make([

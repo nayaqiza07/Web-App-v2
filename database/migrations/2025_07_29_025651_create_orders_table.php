@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\OrderStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,24 +20,17 @@ return new class extends Migration
                 table: 'users', indexName: 'orders_user_id'
             )->onDelete('cascade');
             
+            // FIXME: still confusing better address(foreignkey) or add address_snapshot
             $table->foreignId('address_id')->nullable()->constrained(
                 table: 'addresses', indexName: 'orders_address_id'
             )->nullOnDelete();
 
             /** Invoice */
-            $table->string('code')->unique();
+            $table->string('order_code')->unique();
 
             /** Status */
-            $table->enum('order_status', [
-                    'pending', 'processing', 'shipped', 'delivered', 'canceled'
-                ])->default('pending');
-                
-            $table->enum('payment_status', [
-                'unpaid', 'paid', 'refunded', 'failed'
-            ])->default('unpaid');
-
-            $table->string('payment_method')->nullable();
-
+            $table->string('order_status')->default(OrderStatus::PENDING->value);
+            
             /** Amount */
             $table->decimal('subtotal', total: 15, places: 2);
             $table->decimal('shipping_cost', total: 15, places: 2)->default(0);
@@ -47,7 +41,6 @@ return new class extends Migration
 
             /** Indexing */
             $table->index(['user_id', 'order_status']);
-            $table->index(['user_id', 'payment_status']);
         });
     }
 

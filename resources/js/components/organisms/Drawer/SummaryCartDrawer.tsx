@@ -13,13 +13,7 @@ const SummaryCartDrawer = () => {
         router.post(
             route('order.store'),
             {
-                address_id: user_address.address.id,
-                // order_status: 'pending',
-                // payment_status: 'unpaid',
-                payment_method: 'manual_transfer',
-                // subtotal: 100000,
-                // shipping_cost: 0,
-                // total: 100000,
+                address_id: user_address.id,
             },
             { preserveScroll: true },
         );

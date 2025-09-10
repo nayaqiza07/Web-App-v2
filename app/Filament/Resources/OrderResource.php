@@ -8,8 +8,6 @@ use App\Filament\Resources\OrderResource\Pages\CreateOrder;
 use App\Filament\Resources\OrderResource\Pages\EditOrder;
 use App\Filament\Resources\OrderResource\Forms\OrderForm;
 use App\Filament\Resources\OrderResource\Infolist\OrdersInfolist;
-use App\Filament\Resources\OrderResource\Pages;
-use App\Filament\Resources\OrderResource\RelationManagers\OrderItemsRelationManager;
 use App\Filament\Resources\OrderResource\Tables\OrdersTable;
 use App\Models\Order;
 use Filament\Resources\Resource;

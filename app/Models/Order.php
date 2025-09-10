@@ -19,10 +19,8 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'address_id',
-        'code',
+        'order_code',
         'order_status',
-        'payment_status',
-        'payment_method',
         'subtotal',
         'shipping_cost',
         'total'
@@ -31,8 +29,7 @@ class Order extends Model
     protected $with = ['orderItems', 'address', 'user'];
 
     protected $casts = [
-        'order_status' => OrderStatus::class,
-        'payment_status' => PaymentStatus::class
+        'order_status'   => OrderStatus::class,
     ];
 
     public function scopeFilter(Builder $query): Builder
@@ -43,6 +40,11 @@ class Order extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
     }
 
     public function user(): BelongsTo

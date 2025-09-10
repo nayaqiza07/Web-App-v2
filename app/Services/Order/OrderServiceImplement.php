@@ -44,7 +44,7 @@ class OrderServiceImplement extends Service implements OrderService {
     {
         $code = '#' . now()->format('Ymd') . Str::upper(Str::random(4));
         // Loop hingga menemukan kode yang unik di database
-        while (Order::where('code', $code)->exists()) {
+        while (Order::where('order_code', $code)->exists()) {
             $code = '#' . now()->format('Ymd') . Str::upper(Str::random(4));
         }
         return $code;
@@ -70,10 +70,8 @@ class OrderServiceImplement extends Service implements OrderService {
       $orderData = [
           'user_id'           => $user->id,
           'address_id'        => $data->validated('address_id'),
-          'code'              => $this->generateUniqueOrderCode(),
-          'order_status'      => OrderStatus::PENDING,
-          'payment_status'    => PaymentStatus::UNPAID,
-          'payment_method'    => $data->validated('payment_method'),
+          'order_code'        => $this->generateUniqueOrderCode(),
+          'order_status'      => OrderStatus::PENDING->value,
           'subtotal'          => $subtotal,
           'shipping_cost'     => $shippingCost,
           'total'             => $total,
@@ -91,7 +89,8 @@ class OrderServiceImplement extends Service implements OrderService {
           'product_id'        => $product->id,
           'product_name'      => $product->name,
           'quantity'          => $cartItem->quantity,
-          'price_snapshot'    => $product->price,
+          'unit_price'        => $product->price,
+          'subtotal'          => $cartItem->quantity * $product->price
         ];
 
         $product->decrement('stock', $cartItem->quantity);

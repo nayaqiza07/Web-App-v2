@@ -16,6 +16,7 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Filament\Tables;
 
 class FaqsTable
 {
@@ -64,7 +65,8 @@ class FaqsTable
                     ->button(),
             ])
             ->filters([
-                TrashedFilter::make(),
+                TrashedFilter::make()
+                    ->native(false),
             ])
             ->recordActions([
                 ActionGroup::make([

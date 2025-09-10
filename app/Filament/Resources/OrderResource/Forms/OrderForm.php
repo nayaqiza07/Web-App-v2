@@ -28,7 +28,7 @@ class OrderForm
                         Section::make('Order Details')
                             ->description('You can see details about the order below.')
                             ->schema([
-                                TextInput::make('code')
+                                TextInput::make('order_code')
                                     ->label('Order Number')
                                     ->disabled()
                                     ->dehydrated()
@@ -50,26 +50,14 @@ class OrderForm
                                     ->required()
                                     ->columnSpanFull(),
 
-                                TextInput::make('payment_status')
-                                    ->label('Payment Status')
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->required(),
-
-                                TextInput::make('payment_method')
-                                    ->label('Payment Method')
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->required(),
-
                                 TextInput::make('total')
                                     ->prefix('Rp. ')
                                     ->label('Amount')
                                     ->disabled()
                                     ->dehydrated()
                                     ->numeric()
-                                    
-                                    ->required(),
+                                    ->required()
+                                    ->columnSpanFull(),
 
                                 Section::make('Delivery Address')
                                     ->schema([
@@ -142,7 +130,7 @@ class OrderForm
                                     ->disabled()
                                     ->numeric(),
 
-                                TextInput::make('price_snapshot')
+                                TextInput::make('unit_price')
                                     ->label('Unit Price')
                                     ->prefix('Rp.')
                                     ->disabled()
