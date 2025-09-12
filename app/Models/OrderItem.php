@@ -12,7 +12,8 @@ class OrderItem extends Model
         'product_id',
         'product_name',
         'quantity',
-        'price_snapshot'
+        'unit_price',
+        'subtotal'
     ];
 
     protected $with = ['product'];

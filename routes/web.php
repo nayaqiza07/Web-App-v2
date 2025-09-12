@@ -20,10 +20,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
-
-    Route::get('/order', function () {
-        return Inertia::render('order/Order');
-    })->name('order');
 });
 
 Route::fallback(function () {

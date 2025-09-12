@@ -2,9 +2,9 @@
 
 use App\Models\User;
 
-describe('Category Permission = view_any_category', function () {
-    test('user with view_any_category permission can access category list', function () {
-        $user = userWithPermission('view_any_category');
+describe('Category Permission = ViewAny:Category', function () {
+    test('user with ViewAny:Category permission can access category list', function () {
+        $user = userWithPermission('ViewAny:Category');
 
         $this->actingAs($user);
 
@@ -12,7 +12,7 @@ describe('Category Permission = view_any_category', function () {
         $response->assertOk();
     });
 
-    test('user without view_any_category permission cannot access category list', function () {
+    test('user without ViewAny:Category permission cannot access category list', function () {
         $user = User::factory()->create();
 
         $this->actingAs($user);

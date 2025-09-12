@@ -6,7 +6,7 @@ import { useOrderStore } from '@/stores/userOrderStore';
 const OrderPage = () => {
     const { orders } = useOrderStore();
 
-    console.log(orders);
+    // console.log(orders);
 
     return (
         <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">

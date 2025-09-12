@@ -54,8 +54,6 @@ class OrderController extends Controller
         }
     }
 
-    // TODO: add order show for detail order
-    
     public function destroy (DestroyOrderRequest $request, Order $order): RedirectResponse // FIXME: order destroy
     {
         // Alur penghapusan / cancel order

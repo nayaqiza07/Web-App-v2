@@ -233,10 +233,8 @@ export interface CartItemsType {
 // Order Start
 export interface OrderDataType {
     id: number | string;
-    code: string;
+    order_code: string;
     order_status: string;
-    payment_status: string;
-    payment_method: string;
     subtotal: number;
     shipping_cost: number;
     total: number;
@@ -248,6 +246,7 @@ export interface OrderDataType {
         product: ProductData[];
         product_name: string;
         quantity: number;
+        subtotal: number;
         length: number;
     };
 }

@@ -54,9 +54,9 @@ const AccordionOrders: React.FC<AccordionOrdersProps> = ({ data = [] }) => {
                         <AccordionTrigger className="w-full p-4 hover:no-underline">
                             <div className="flex w-full cursor-pointer flex-col gap-3 md:items-center lg:flex-row">
                                 {isMobile ? (
-                                    <InvoiceDrawer trigger={`Order ${dataOrder.code}`} />
+                                    <InvoiceDrawer trigger={`Order ${dataOrder.order_code}`} />
                                 ) : (
-                                    <HoverCardInvoice trigger={`Order ${dataOrder.code}`} />
+                                    <HoverCardInvoice trigger={`Order ${dataOrder.order_code}`} />
                                 )}
 
                                 <motion.div

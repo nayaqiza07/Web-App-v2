@@ -42,6 +42,7 @@ class AddressRelationManager extends RelationManager
                     ->toggleable()
                     ->toggledHiddenByDefault(),
             ])
+            ->heading(fn () => 'Addresses from: ' . $this->ownerRecord->name)
             ->emptyStateIcon('heroicon-o-map')
             ->emptyStateHeading('No address yet')
             ->emptyStateDescription('Once user write their address, it will appear here.')

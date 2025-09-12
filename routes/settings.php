@@ -13,13 +13,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('settings/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('settings/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::prefix('settings/address')->name('address.')->controller(AddressController::class)->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::post('/', 'store')->name('store');
-        Route::patch('/{address}/default', 'setDefault')->name('setDefault');
-        Route::put('/{address}', 'update')->name('update');
-        Route::delete('/{address}', 'destroy')->name('destroy');
-    });
+    Route::prefix('settings/address')->name('address.')
+        ->controller(AddressController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'store')->name('store');
+            Route::patch('/{address}/default', 'setDefault')->name('setDefault');
+            Route::put('/{address}', 'update')->name('update');
+            Route::delete('/{address}', 'destroy')->name('destroy');
+        });
 
     Route::get('settings/password', [PasswordController::class, 'edit'])->name('password.edit');
     Route::put('settings/password', [PasswordController::class, 'update'])->name('password.update');

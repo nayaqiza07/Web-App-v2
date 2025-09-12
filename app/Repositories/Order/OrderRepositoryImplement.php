@@ -26,12 +26,12 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository {
     public function getAllDataOrder(): Collection
     {
         $order = $this->model->filter()->get();
+        
         return $order;
     }
 
     public function createDataOrder(array $orderData, array $orderItems): Order
     {
-        // dd($orderData);
         return DB::transaction(function () use ($orderData, $orderItems) {
             $order = Order::create($orderData);
 

@@ -2,9 +2,9 @@
 
 use App\Models\User;
 
-describe('Contact Permission = view_any_contact', function () {
-    test('user with view_any_contact permission can access contact list', function () {
-        $user = userWithPermission('view_any_contact');
+describe('Contact Permission = ViewAny:Contact', function () {
+    test('user with ViewAny:Contact permission can access contact list', function () {
+        $user = userWithPermission('ViewAny:Contact');
 
         $this->actingAs($user);
 
@@ -12,7 +12,7 @@ describe('Contact Permission = view_any_contact', function () {
         $response->assertOk();
     });
 
-    test('user without view_any_contact permission cannot access contact list', function () {
+    test('user without ViewAny:Contact permission cannot access contact list', function () {
         $user = User::factory()->create();
 
         $this->actingAs($user);

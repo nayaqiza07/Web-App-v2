@@ -7,9 +7,9 @@ use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class);
 
-describe('Faq Permission = view_any_faq', function () {
-    test('user with view_any_faq permission can access faq list', function () {
-        $user = userWithPermission('view_any_faq');
+describe('Faq Permission = ViewAny:Faq', function () {
+    test('user with ViewAny:Faq permission can access faq list', function () {
+        $user = userWithPermission('ViewAny:Faq');
 
         $this->actingAs($user);
 
@@ -17,7 +17,7 @@ describe('Faq Permission = view_any_faq', function () {
         $response->assertOk();
     });
 
-    test('user without view_any_faq permission cannot access faq list', function () {
+    test('user without ViewAny:Faq permission cannot access faq list', function () {
         $user = User::factory()->create();
 
         $this->actingAs($user);

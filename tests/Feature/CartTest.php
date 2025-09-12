@@ -8,9 +8,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 describe('Visit The Cart Page', function () {
-    test('guest can access cart page', function () {
-        $response = $this->get(route('cart.index'));
-        $response->assertStatus(200);
+    test('guest cannot access cart page', function () {
+        $this->get(route('cart.index'))->assertRedirect('/login');
     });
 
     test('authenticated user can access cart page', function () {
