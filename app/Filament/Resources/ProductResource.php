@@ -9,6 +9,7 @@ use App\Filament\Resources\ProductResource\Pages\EditProduct;
 use App\Filament\Resources\ProductResource\Forms\ProductForm;
 use App\Filament\Resources\ProductResource\Infolist\ProductsInfolist;
 use App\Filament\Resources\ProductResource\Pages;
+use App\Filament\Resources\ProductResource\RelationManagers\ReviewsRelationManager;
 use App\Filament\Resources\ProductResource\Tables\ProductsTable;
 use App\Models\Product;
 use Filament\Resources\Resource;
@@ -58,7 +59,7 @@ class ProductResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ReviewsRelationManager::class
         ];
     }
 

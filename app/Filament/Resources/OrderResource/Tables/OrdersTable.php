@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\OrderResource\Tables;
 
 use App\Enums\OrderStatus;
+use App\Filament\Resources\OrderResource;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -73,7 +74,8 @@ class OrdersTable
                 ActionGroup::make([
                     ViewAction::make()
                         ->modalHeading(fn ($record) => 'View Order: ' . $record->order_code),
-                    EditAction::make(),
+                    EditAction::make()
+                        ->url(fn ($record) => OrderResource::getUrl('edit', ['record' => $record])),
                     DeleteAction::make(),
                     ForceDeleteAction::make(),
                     RestoreAction::make()

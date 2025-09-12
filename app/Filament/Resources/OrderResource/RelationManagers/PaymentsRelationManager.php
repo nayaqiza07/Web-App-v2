@@ -2,16 +2,13 @@
 
 namespace App\Filament\Resources\OrderResource\RelationManagers;
 
-use App\Filament\Resources\OrderResource;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ColumnGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
@@ -49,7 +46,8 @@ class PaymentsRelationManager extends RelationManager
                             ->sortable(),
                     ]),
             ])
-            ->emptyStateIcon(Heroicon::CreditCard)
+            ->heading(fn () => 'Payments for Order: ' . $this->ownerRecord->order_code)
+            ->emptyStateIcon('heroicon-m-credit-card')
             ->emptyStateHeading('No payments yet')
             ->emptyStateDescription('Once customer make an order, it will appear here.')
             ->headerActions([
