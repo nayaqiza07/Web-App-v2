@@ -13,15 +13,11 @@ return new class extends Migration
     {
         Schema::create('product_images', function (Blueprint $table) {
             $table->id();
-
-            /** Relation */
             $table->foreignId('product_id')->constrained(
                 table: 'products', indexName: 'product_images_product_id'
             )->onDelete('cascade');
-
             $table->string('path');
             $table->string('alt')->nullable();
-            
             $table->timestamps();
         });
     }
