@@ -2,10 +2,14 @@
 
 namespace App\Filament\Resources\OrderResource\Pages;
 
+use App\Filament\Exports\OrderExporter;
 use Filament\Schemas\Components\Tabs\Tab;
 use App\Filament\Resources\OrderResource;
 use App\Models\Order;
 use Filament\Actions;
+use Filament\Actions\ExportAction;
+use Filament\Actions\Exports\Enums\ExportFormat;
+use Filament\Actions\Exports\Models\Export;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -16,7 +20,17 @@ class ListOrders extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            // Actions\CreateAction::make(),
+            ExportAction::make()
+                ->icon('heroicon-o-document-arrow-down')
+                ->label('Export')
+                ->color('primary')
+                ->exporter(OrderExporter::class)
+                ->columnMappingColumns(3)
+                ->formats([
+                    ExportFormat::Xlsx,
+                    ExportFormat::Csv,
+                ])
+                ->fileName(fn (Export $export): string => "orders-{$export->getKey()}")
         ];
     }
 

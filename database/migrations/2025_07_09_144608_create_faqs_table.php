@@ -13,16 +13,13 @@ return new class extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-
             $table->string('question')->unique();
             $table->text('answer')->nullable();
             $table->boolean('is_visible')->default(false);
             $table->date('published_at')->nullable();
-
             $table->softDeletes();
             $table->timestamps();
 
-            /** Indexing */
             $table->index('is_visible');
         });
     }

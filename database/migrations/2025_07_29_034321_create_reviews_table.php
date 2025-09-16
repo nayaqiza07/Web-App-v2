@@ -15,26 +15,19 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-
-            /** Relation */
             $table->foreignId('user_id')->constrained(
                 table: 'users', indexName: 'reviews_user_id'
             )->onDelete('cascade');
-
             $table->foreignId('product_id')->constrained(
                 table: 'products', indexName: 'reviews_product_id'
             )->onDelete('cascade');
-
-            /** Detail */
             $table->tinyInteger('rating');
             $table->longText('comment')->nullable();
             $table->json('images')->nullable();
-
-            /** Limitation Key */
-            $table->unique(['user_id', 'product_id']);
-
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique(['user_id', 'product_id']);
         });
     }
 

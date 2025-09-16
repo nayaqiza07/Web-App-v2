@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-
             $table->foreignId('order_id')->constrained(
                 table: 'orders', indexName: 'order_items_order_id'
             )->onDelete('cascade');
@@ -24,10 +23,9 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('unit_price', total: 15, places: 2);
             $table->decimal('subtotal', total: 15, places: 2);
+            $table->timestamps();
 
             $table->unique(['order_id', 'product_id']);
-
-            $table->timestamps();
         });
     }
 
