@@ -27,7 +27,8 @@ class Payment extends Model
         'transaction_status' => TransactionStatus::class,
         'fraud_status'       => FraudStatus::class,
         'payment_method'     => PaymentMethod::class,
-        'payment_status'     => PaymentStatus::class
+        'payment_status'     => PaymentStatus::class,
+        'response_raw'       => 'array'
     ];
 
     public function order(): BelongsTo
