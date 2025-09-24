@@ -8,7 +8,6 @@ use App\Filament\Resources\CategoryResource\Pages\CreateCategory;
 use App\Filament\Resources\CategoryResource\Pages\EditCategory;
 use App\Filament\Resources\CategoryResource\Forms\CategoryForm;
 use App\Filament\Resources\CategoryResource\Infolist\CategoriesInfolist;
-use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
 use App\Filament\Resources\CategoryResource\Tables\CategoriesTable;
 use App\Models\Category;

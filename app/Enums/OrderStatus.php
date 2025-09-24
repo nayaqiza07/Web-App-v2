@@ -17,7 +17,7 @@ enum OrderStatus: string
             self::PROCESSING => 'Processing',
             self::SHIPPED    => 'Shipped',
             self::DELIVERED  => 'Delivered',
-            self::CANCELED   => 'Cancelled',
+            self::CANCELED   => 'Canceled',
         };
     }
 

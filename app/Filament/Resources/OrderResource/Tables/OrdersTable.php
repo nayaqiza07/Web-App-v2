@@ -25,6 +25,7 @@ class OrdersTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->deferLoading()
             ->columns([
                 TextColumn::make('order_code')
                     ->label('Order Number')

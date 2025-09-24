@@ -23,6 +23,7 @@ class BlogsTable
     public static function cofigure(Table $table): Table
     {
         return $table
+            ->deferLoading()
             ->columns([
                 ImageColumn::make('thumbnail')
                     ->label('Thumbnail')

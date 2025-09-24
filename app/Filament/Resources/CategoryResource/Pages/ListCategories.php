@@ -7,6 +7,7 @@ use App\Filament\Imports\CategoryImporter;
 use Filament\Actions\CreateAction;
 use Filament\Schemas\Components\Tabs\Tab;
 use App\Filament\Resources\CategoryResource;
+use App\Filament\Resources\CategoryResource\Widgets\CategoryStatsWidget;
 use App\Models\Category;
 use Filament\Actions;
 use Filament\Actions\ExportAction;
@@ -43,6 +44,13 @@ class ListCategories extends ListRecords
                     ExportFormat::Xlsx
                 ])
                 ->fileName(fn (Export $export): string => "categories-{$export->getKey()}")
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            CategoryStatsWidget::class
         ];
     }
 

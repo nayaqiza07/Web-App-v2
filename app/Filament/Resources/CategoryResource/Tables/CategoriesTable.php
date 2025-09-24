@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\CategoryResource\Tables;
 
+use App\Models\Category;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\ViewAction;
@@ -23,6 +24,10 @@ class CategoriesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->deferLoading()
+            ->headerActions([
+                Action::make('Fil')
+            ])
             ->columns([
                 ImageColumn::make('thumbnail')
                     ->label('Thumbnail')
@@ -30,6 +35,7 @@ class CategoriesTable
 
                 TextColumn::make('name')
                     ->label('Name')
+                    ->description(fn (Category $record): string => $record->products->count() . ' products')
                     ->searchable()
                     ->sortable(),
 

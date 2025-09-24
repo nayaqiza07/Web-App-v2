@@ -7,6 +7,7 @@ use App\Filament\Imports\ProductImporter;
 use Filament\Actions\CreateAction;
 use Filament\Schemas\Components\Tabs\Tab;
 use App\Filament\Resources\ProductResource;
+use App\Filament\Resources\ProductResource\Widgets\ProductStatsWidget;
 use App\Models\Product;
 use Filament\Actions\ExportAction;
 use Filament\Actions\Exports\Enums\ExportFormat;
@@ -42,6 +43,13 @@ class ListProducts extends ListRecords
                     ExportFormat::Csv,
                 ])
                 ->fileName(fn (Export $export): string => "products-{$export->getKey()}"),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            ProductStatsWidget::class
         ];
     }
 

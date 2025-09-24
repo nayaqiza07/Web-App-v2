@@ -6,7 +6,6 @@ use Filament\Actions\CreateAction;
 use Filament\Schemas\Components\Tabs\Tab;
 use App\Filament\Resources\UserResource;
 use App\Models\User;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -24,11 +23,6 @@ class ListUsers extends ListRecords
     public function getTabs(): array
     {
         return [
-            // 'All' => Tab::make()
-            //     ->badge(
-            //         User::count()
-            //     ),
-
             'Staff' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) =>
                     $query->whereHas('roles', fn ($q) =>

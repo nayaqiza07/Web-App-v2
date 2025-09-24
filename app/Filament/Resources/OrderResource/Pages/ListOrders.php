@@ -5,6 +5,7 @@ namespace App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Exports\OrderExporter;
 use Filament\Schemas\Components\Tabs\Tab;
 use App\Filament\Resources\OrderResource;
+use App\Filament\Resources\OrderResource\Widgets\OrderStatsWidget;
 use App\Models\Order;
 use Filament\Actions;
 use Filament\Actions\ExportAction;
@@ -31,6 +32,13 @@ class ListOrders extends ListRecords
                     ExportFormat::Csv,
                 ])
                 ->fileName(fn (Export $export): string => "orders-{$export->getKey()}")
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            OrderStatsWidget::class
         ];
     }
 

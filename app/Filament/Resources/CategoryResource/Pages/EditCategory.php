@@ -26,10 +26,10 @@ class EditCategory extends EditRecord
     {
         return [
             $this->getCancelFormAction()
-            ->formId('form'),
+                ->formId('form'),
 
             $this->getSaveFormAction()
-            ->formId('form'),
+                ->formId('form'),
 
             DeleteAction::make(),
             ForceDeleteAction::make(),
