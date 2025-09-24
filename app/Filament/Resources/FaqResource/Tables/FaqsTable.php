@@ -23,6 +23,7 @@ class FaqsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->deferLoading()
             ->columns([
                 TextColumn::make('question')
                     ->limit(30)
