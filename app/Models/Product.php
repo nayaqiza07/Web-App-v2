@@ -11,48 +11,33 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Cache;
+use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
-        /** Detail */
         'name',
         'slug',
-
-        /** Images */
         'thumbnail',
-
-        /** Pricing */
         'price',
         'old_price',
-
-        /** Description */
         'information',
         'dimensions',
         'materials',
         'shipping',
-
-        /** Inventory */
         'sku',
         'stock',
         'security_stock',
-
-        /** Status */
         'is_visible',
         'published_at',
-
-        /** Relation */
         'category_id',
     ];
 
     protected $casts = [
-        /** Description */
         'dimensions' => 'array',
         'materials' => 'array',
-
-        /** Status */
         'is_visible' => 'boolean',
         'published_at' => 'date',
     ];
@@ -82,6 +67,18 @@ class Product extends Model
         return Attribute::make(
             get: fn () => $this->created_at && $this->created_at->gt(now()->subDays(7))
         );
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id'        => $this->id,
+            'thumbnail' => $this->thumbnail,
+            'name'      => $this->name,
+            'slug'      => $this->slug,
+            'price'     => $this->price,
+            'old_price' => $this->old_price,
+        ];
     }
 
     public function scopeFilter(Builder $query): Builder

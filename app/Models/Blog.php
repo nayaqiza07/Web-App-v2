@@ -6,28 +6,33 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Blog extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
-        /** Detail */
         'title',
         'slug',
-
-        /** Body */
         'body',
-
-        /** Status */
         'is_visible',
         'published_at',
     ];
 
     protected $casts = [
-        /** Status */
         'is_visible' => 'boolean',
     ];
+
+    public function toSearchableArray()
+    {
+        return [
+            'id'        => $this->id,
+            'thumbnail' => $this->thumbnail,
+            'name'      => $this->name,
+            'slug'      => $this->slug,
+        ];
+    }
 
     public function scopeLatest(Builder $query): Builder
     {

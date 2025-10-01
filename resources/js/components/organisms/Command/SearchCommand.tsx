@@ -1,4 +1,4 @@
-import { Calculator, Calendar, LayoutGrid, SearchIcon, SearchXIcon, Settings, Smile } from 'lucide-react';
+import { LayoutGrid, SearchIcon, SearchXIcon, Settings } from 'lucide-react';
 
 import AppearanceToggleTab from '@/components/appearance-tabs';
 import CornerPlusBadge from '@/components/atoms/Badge/CornerPlusBadge';
@@ -76,25 +76,16 @@ const SearchCommand = () => {
                         />
                     </CommandEmpty>
 
-                    <CommandGroup heading="Suggestions">
+                    <CommandGroup heading="Search">
                         <CommandItem>
-                            <Calendar />
                             <span>Calendar</span>
-                        </CommandItem>
-                        <CommandItem>
-                            <Smile />
-                            <span>Search Emoji</span>
-                        </CommandItem>
-                        <CommandItem>
-                            <Calculator />
-                            <span>Calculator</span>
                         </CommandItem>
                     </CommandGroup>
                     <CommandSeparator />
 
                     {/* For Categories */}
                     <CommandGroup heading="Categories">
-                        {Array.from({ length: 5 }).map((_, index) => (
+                        {Array.from({ length: 3 }).map((_, index) => (
                             <CommandItem key={index}>
                                 <span>Categories {index + 1}</span>
                                 <CommandShortcut>
@@ -107,7 +98,7 @@ const SearchCommand = () => {
 
                     {/* For Products */}
                     <CommandGroup heading="Products">
-                        {Array.from({ length: 5 }).map((_, index) => (
+                        {Array.from({ length: 3 }).map((_, index) => (
                             <CommandItem key={index}>
                                 <div className="flex w-full gap-3">
                                     <img
